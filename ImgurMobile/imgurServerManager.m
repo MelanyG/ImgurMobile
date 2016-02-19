@@ -8,9 +8,14 @@
 
 #import "AppDelegate.h"
 #import "AFNetworking.h"
+
 #import "imgurServerManager.h"
 
 @interface imgurServerManager ()
+
+@property (strong, nonatomic) AFHTTPRequestOperationManager* requestOperationManager;
+
+@property (strong, nonatomic) NSString *URLString;
 
 @end
 
@@ -24,6 +29,23 @@
         instance = [[imgurServerManager alloc] init];
     });
     return instance;
+}
+
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        
+        NSURL* url = [NSURL URLWithString:@"https://api.imgur.com/3/"];
+        
+        self.requestOperationManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:url];
+    }
+    return self;
+}
+
+- (void)createBaseUrlString
+{
+    self.URLString = @"https://api.imgur.com/3/";
 }
 
 /*
@@ -290,4 +312,102 @@
 
 }
 */
+
+
+- (void)getPhotosForPage:(NSInteger)page Section:(section)section Sort:(sort)sort Window:(window)window
+                Completion:(void(^)(NSDictionary *resp, NSError *error))completion;
+{
+    NSString *sectionStr;
+    switch (section)
+    {
+        case hot:
+            sectionStr = @"hot";
+            break;
+            
+        case top:
+            sectionStr = @"top";
+            break;
+            
+        case user:
+            sectionStr = @"user";
+            break;
+            
+        default:
+            break;
+    }
+    
+    NSString *sortStr;
+    switch (sort)
+    {
+        case viral:
+            sortStr = @"viral";
+            break;
+            
+        case topest:
+            sortStr = @"topest";
+            break;
+            
+        case latest:
+            sortStr = @"latest";
+            break;
+            
+        case rising:
+            sortStr = @"rising";
+            break;
+            
+        default:
+            break;
+    }
+    
+    NSString *windowStr;
+    switch (window)
+    {
+        case day:
+            windowStr = @"day";
+            break;
+            
+        case week:
+            windowStr = @"week";
+            break;
+            
+        case month:
+            windowStr = @"month";
+            break;
+            
+        case year:
+            windowStr = @"year";
+            break;
+            
+        case all:
+            windowStr = @"all";
+            break;
+            
+        default:
+            break;
+    }
+    
+    NSString *url;
+    if (section == top)
+    {
+        url = [NSString stringWithFormat:@"gallery/%@/%@/%@/%ld.json",sectionStr,sortStr,windowStr,page];
+    }
+    else
+    {
+        url = [NSString stringWithFormat:@"gallery/%@/%@/%ld.json",sectionStr,sortStr,page];
+    }
+    
+    [self.requestOperationManager
+     GET:url
+     parameters:nil
+     success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject)
+     {
+         completion(responseObject, nil);
+     }
+     failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+         completion(nil, error);
+     }];
+
+}
+
 @end

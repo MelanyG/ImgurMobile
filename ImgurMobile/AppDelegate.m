@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "imgurServerManager.h"
+#import "imgurJSONParser.h"
 
 @interface AppDelegate ()
 
@@ -16,7 +18,17 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    
+    
+    /*imgurServerManager *manager = [[imgurServerManager alloc] init];
+    [manager getPhotosForPage:0 Section:hot Sort:viral Window:all Completion:^(NSDictionary *resp, NSError *error)
+    {
+        imgurJSONParser *parser = [[imgurJSONParser alloc] init];
+        NSArray *arr = [parser getPostsFromResponceDict:resp];
+        NSLog(@"%@",arr);
+    }];*/
+    
+    
     return YES;
 }
 
