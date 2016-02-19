@@ -71,7 +71,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="XLo-op-i1Y">
-                        <barButtonItem key="rightBarButtonItem" image="socialControllerIcon" id="ahR-jK-SMv">
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="ahR-jK-SMv">
                             <color key="tintColor" red="0.60000002379999995" green="0.60000002379999995" blue="0.60000002379999995" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <segue destination="rMi-99-oAL" kind="show" id="wl2-Bz-cWx"/>
@@ -174,7 +174,4 @@
             <point key="canvasLocation" x="387" y="886.5"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="socialControllerIcon" width="48" height="48"/>
-    </resources>
 </document>

@@ -12,7 +12,6 @@
 		40C4FA6D1C773BD3003CDB34 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 40C4FA6B1C773BD3003CDB34 /* Main.storyboard */; };
 		40C4FA6F1C773BD3003CDB34 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40C4FA6E1C773BD3003CDB34 /* Assets.xcassets */; };
 		40C4FA721C773BD3003CDB34 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 40C4FA701C773BD3003CDB34 /* LaunchScreen.storyboard */; };
-		EF09022A1C774E1100D9CF5E /* socialControllerIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = EF0902291C774E1100D9CF5E /* socialControllerIcon.png */; };
 		EFA6C7241C77474E00EA73D5 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFA6C7231C77474E00EA73D5 /* MainViewController.m */; };
 		EFA6C7291C7747A400EA73D5 /* SocialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFA6C7281C7747A400EA73D5 /* SocialViewController.m */; };
 		EFA6C72C1C77485700EA73D5 /* LibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFA6C72B1C77485700EA73D5 /* LibraryViewController.m */; };
@@ -28,7 +27,6 @@
 		40C4FA6E1C773BD3003CDB34 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		40C4FA711C773BD3003CDB34 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		40C4FA731C773BD3003CDB34 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EF0902291C774E1100D9CF5E /* socialControllerIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = socialControllerIcon.png; sourceTree = "<group>"; };
 		EFA6C7221C77474E00EA73D5 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		EFA6C7231C77474E00EA73D5 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		EFA6C7271C7747A400EA73D5 /* SocialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocialViewController.h; sourceTree = "<group>"; };
@@ -81,7 +79,6 @@
 		40C4FA621C773BD3003CDB34 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				EF0902291C774E1100D9CF5E /* socialControllerIcon.png */,
 				40C4FA6E1C773BD3003CDB34 /* Assets.xcassets */,
 				40C4FA701C773BD3003CDB34 /* LaunchScreen.storyboard */,
 				40C4FA731C773BD3003CDB34 /* Info.plist */,
@@ -165,7 +162,6 @@
 				40C4FA721C773BD3003CDB34 /* LaunchScreen.storyboard in Resources */,
 				40C4FA6F1C773BD3003CDB34 /* Assets.xcassets in Resources */,
 				40C4FA6D1C773BD3003CDB34 /* Main.storyboard in Resources */,
-				EF09022A1C774E1100D9CF5E /* socialControllerIcon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
