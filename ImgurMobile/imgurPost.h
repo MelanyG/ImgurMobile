@@ -12,12 +12,13 @@
 @interface imgurPost : NSObject
 
 @property (strong, nonatomic) imgurUser *owner;
+@property (strong, nonatomic) NSMutableArray *imagesArray;
 @property (strong, nonatomic) NSURL *imageURL;
 @property (strong, nonatomic) NSString *title;
 @property (strong, nonatomic) NSString *postDescription;
 @property (strong, nonatomic) NSString *topic;
 @property (strong, nonatomic) NSArray *comments;
 
-+ (imgurPost *)initWithDictionaryResponce:(NSDictionary *)dictionary;
++ (imgurPost *)initWithDictionaryResponce:(NSDictionary *)dictionary IsAlbum:(BOOL)flag;
 
 @end

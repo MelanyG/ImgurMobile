@@ -10,4 +10,6 @@
 
 @interface EditViewController : UIViewController
 
+@property (nonatomic, strong) UIImage *image;
+
 @end

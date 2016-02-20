@@ -8,7 +8,7 @@
 
 #import "AppDelegate.h"
 #import "AFNetworking.h"
-
+#import "imgurJSONParser.h"
 #import "imgurServerManager.h"
 
 @interface imgurServerManager ()
@@ -43,10 +43,10 @@
     return self;
 }
 
-- (void)createBaseUrlString
+/*- (void)createBaseUrlString
 {
     self.URLString = @"https://api.imgur.com/3/";
-}
+}*/
 
 /*
 - (void) authorizeUser:(void(^)(VKUser* user)) completion
@@ -315,7 +315,7 @@
 
 
 - (void)getPhotosForPage:(NSInteger)page Section:(section)section Sort:(sort)sort Window:(window)window
-                Completion:(void(^)(NSDictionary *resp, NSError *error))completion;
+                Completion:(void(^)(NSDictionary *resp, NSError *error))completion
 {
     NSString *sectionStr;
     switch (section)
@@ -401,6 +401,9 @@
      parameters:nil
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject)
      {
+         imgurJSONParser *parser = [[imgurJSONParser alloc] init];
+         NSArray *arr = [parser getPostsFromResponceDict:responseObject];
+         
          completion(responseObject, nil);
      }
      failure:^(AFHTTPRequestOperation *operation, NSError *error)
@@ -408,6 +411,22 @@
          completion(nil, error);
      }];
 
+}
+
+- (void)getPhotosFromAlbumWithID:(NSString *)albumID Completion:(void(^)(NSDictionary *resp, NSError *error))completion
+{
+    NSString *url = [NSString stringWithFormat:@"gallery/album/%@",albumID];
+    [self.requestOperationManager
+     GET:url
+     parameters:nil
+     success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject)
+     {
+         completion(responseObject, nil);
+     }
+     failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+         completion(nil, error);
+     }];
 }
 
 @end

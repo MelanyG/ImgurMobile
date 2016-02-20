@@ -10,15 +10,23 @@
 
 @implementation imgurPost
 
-+ (imgurPost *)initWithDictionaryResponce:(NSDictionary *)dictionary;
++ (imgurPost *)initWithDictionaryResponce:(NSDictionary *)dictionary IsAlbum:(BOOL)flag
 {
     imgurPost *post = [[imgurPost alloc] init];
     
-    post.owner = [dictionary objectForKey:@"account_id"];
-    post.imageURL = [dictionary objectForKey:@"link"];
-    post.title = [dictionary objectForKey:@"title"];
-    post.postDescription = [dictionary objectForKey:@"description"];
-    post.topic = [dictionary objectForKey:@"topic"];
+    if (flag)
+    {
+        
+    }
+    else
+    {
+        post.owner = [dictionary objectForKey:@"account_id"];
+        post.imageURL = [dictionary objectForKey:@"link"];
+        post.title = [dictionary objectForKey:@"title"];
+        post.postDescription = [dictionary objectForKey:@"description"];
+        post.topic = [dictionary objectForKey:@"topic"];
+        
+    }
     
     return post;
 }

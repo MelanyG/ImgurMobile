@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="DTt-cb-4HE">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="zNk-VS-dcy">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -112,8 +112,22 @@
                     <view key="view" contentMode="scaleToFill" id="dK8-n7-U3a">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zlY-bQ-Iti">
+                                <rect key="frame" x="6" y="244" width="240" height="128"/>
+                            </imageView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="c7h-UO-Nkf" firstAttribute="top" secondItem="zlY-bQ-Iti" secondAttribute="bottom" id="5Rk-r9-3xV"/>
+                            <constraint firstItem="zlY-bQ-Iti" firstAttribute="leading" secondItem="dK8-n7-U3a" secondAttribute="leading" id="6ai-in-AcK"/>
+                            <constraint firstItem="zlY-bQ-Iti" firstAttribute="top" secondItem="TC9-iA-SnJ" secondAttribute="bottom" id="GH0-kJ-bnq"/>
+                            <constraint firstAttribute="trailing" secondItem="zlY-bQ-Iti" secondAttribute="trailing" id="iUA-tV-tEe"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="imageView" destination="zlY-bQ-Iti" id="KxE-0W-hab"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kwN-Qf-aGd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

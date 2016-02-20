@@ -10,28 +10,36 @@
 
 @interface EditViewController ()
 
+@property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @end
 
 @implementation EditViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    CIContext *ctx = [CIContext contextWithOptions:nil];
+    
+    UIImage *image = [UIImage imageNamed:@"sea"];
+    
+    CIImage *beginImage = [CIImage imageWithCGImage:image.CGImage];
+    
+    CIFilter *filter = [CIFilter filterWithName:@"CISepiaTone"
+                                  keysAndValues:
+                        kCIInputImageKey, beginImage,
+                        @"inputIntensity", @0.8, nil];
+    
+    CIImage *outImage = [filter outputImage];
+    
+    CGImageRef cgImg = [ctx createCGImage:outImage fromRect:[outImage extent]];
+    
+    self.imageView.image = [UIImage imageWithCGImage:cgImg];
+    
+    CGImageRelease(cgImg);
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
