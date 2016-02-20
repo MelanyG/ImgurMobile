@@ -32,6 +32,8 @@ typedef enum{
 
 @interface imgurServerManager : NSObject
 
+
+- (void) authorizeUser:(void(^)(imgurUser* user)) completion ;
 + (instancetype)sharedManager;
 
 @property (nonatomic, strong) imgurUser *currentUser;
