@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="DTt-cb-4HE">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="DTt-cb-4HE">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
@@ -71,17 +72,24 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="XLo-op-i1Y">
-                        <barButtonItem key="rightBarButtonItem" image="socialControllerIcon.png" id="ahR-jK-SMv">
-                            <color key="tintColor" red="0.60000002379999995" green="0.60000002379999995" blue="0.60000002379999995" alpha="1" colorSpace="calibratedRGB"/>
-                            <connections>
-                                <segue destination="rMi-99-oAL" kind="show" id="wl2-Bz-cWx"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem image="socialControllerIcon.png" id="ahR-jK-SMv">
+                                <color key="tintColor" red="0.60000002379999995" green="0.60000002379999995" blue="0.60000002379999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <segue destination="rMi-99-oAL" kind="show" id="wl2-Bz-cWx"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Login" id="vQN-Oa-cmX">
+                                <connections>
+                                    <segue destination="4tS-HL-U4B" kind="presentation" id="di5-vT-z33"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="307" y="305"/>
+            <point key="canvasLocation" x="306" y="298"/>
         </scene>
         <!--Library View Controller-->
         <scene sceneID="2QN-me-9tD">
@@ -118,6 +126,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kwN-Qf-aGd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2393" y="305"/>
+        </scene>
+        <!--Imgua Login View Controller-->
+        <scene sceneID="ZHV-Uv-7PF">
+            <objects>
+                <viewController id="4tS-HL-U4B" customClass="ImguaLoginViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="NYR-VN-2ov"/>
+                        <viewControllerLayoutGuide type="bottom" id="c3s-oK-PGV"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Jby-Ae-PU7">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="53m-4u-OkH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1057" y="-338"/>
         </scene>
         <!--Social View Controller-->
         <scene sceneID="ImU-ed-YiO">

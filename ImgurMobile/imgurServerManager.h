@@ -7,12 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-@class imgurUser;
+
+@class ImgurUser;
 
 @interface imgurServerManager : NSObject
 
 + (instancetype)sharedManager;
 
-@property (nonatomic, strong) imgurUser *currentUser;
+@property (nonatomic, strong) ImgurUser *currentUser;
 
 @end

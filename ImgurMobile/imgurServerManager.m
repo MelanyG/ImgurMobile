@@ -9,8 +9,15 @@
 #import "AppDelegate.h"
 #import "AFNetworking.h"
 #import "imgurServerManager.h"
+#import "ImgurUser.h"
+#import "ImguaLoginViewController.h"
+#import "ImguaAccessToken.h"
+
 
 @interface imgurServerManager ()
+
+@property (strong, nonatomic) AFHTTPRequestOperationManager* requestOperationManager;
+@property (strong, nonatomic) ImguaAccessToken* accessToken;
 
 @end
 
@@ -25,6 +32,93 @@
     });
     return instance;
 }
+
+
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        
+        NSURL* url = [NSURL URLWithString:@"https://api.imgur.com/oauth2/authorize/"];
+        
+        self.requestOperationManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:url];
+    }
+    return self;
+}
+- (void) authorizeUser:(void(^)(ImgurUser* user)) completion {
+    
+    ImguaLoginViewController* vc =
+    [[ImguaLoginViewController alloc] initWithCompletionBlock:^(ImguaAccessToken *token) {
+        
+        self.accessToken = token;
+        
+        if (token) {
+            
+            [self getUser:self.accessToken.accountUserName
+                onSuccess:^(ImgurUser *user) {
+                    if (completion) {
+                        completion(user);
+                    }
+                }
+                onFailure:^(NSError *error, NSInteger statusCode) {
+                    if (completion) {
+                        completion(nil);
+                    }
+                }];
+            
+        } else if (completion) {
+            completion(nil);
+        }
+        
+    }];
+    
+    UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:vc];
+    
+    UIViewController* mainVC = [[[[UIApplication sharedApplication] windows] firstObject] rootViewController];
+    
+    [mainVC presentViewController:nav
+                         animated:YES
+                       completion:nil];
+}
+
+- (void) getUser:(NSString*) userID
+       onSuccess:(void(^)(ImgurUser* user)) success
+       onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
+    
+    NSDictionary* params =
+    [NSDictionary dictionaryWithObjectsAndKeys:
+     userID,        @"user_ids",
+     @"photo_50",   @"fields",
+     @"nom",        @"name_case", nil];
+    
+    [self.requestOperationManager
+     GET:@"users.get"
+     parameters:params
+     success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
+         NSLog(@"JSON: %@", responseObject);
+         
+         NSArray* dictsArray = [responseObject objectForKey:@"response"];
+         
+         if ([dictsArray count] > 0) {
+             ImgurUser* user = [[ImgurUser alloc] initWithServerResponse:[dictsArray firstObject]];
+             if (success) {
+                 success(user);
+             }
+         } else {
+             if (failure) {
+                 failure(nil, operation.response.statusCode);
+             }
+         }
+         
+     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+         NSLog(@"Error: %@", error);
+         
+         if (failure) {
+             failure(error, operation.response.statusCode);
+         }
+     }];
+}
+
 
 /*
 - (void) authorizeUser:(void(^)(VKUser* user)) completion
