@@ -13,4 +13,7 @@
 @property (strong, nonatomic) NSString *account_id;
 @property (strong, nonatomic) NSString *account_url;
 
+
+- (id) initWithServerResponse:(NSDictionary*) responseObject;
+
 @end

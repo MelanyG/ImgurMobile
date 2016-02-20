@@ -10,7 +10,7 @@
 
 @class ImgurAccessToken;
 
-typedef void(^ASLoginCompletionBlock)(ImguaAccessToken* token);
+typedef void(^ASLoginCompletionBlock)(ImgurAccessToken* token);
 
 
 @interface ImgurLoginViewController : UIViewController
