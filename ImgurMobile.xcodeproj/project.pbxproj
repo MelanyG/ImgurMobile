@@ -9,12 +9,12 @@
 /* Begin PBXBuildFile section */
 		40C4FA641C773BD3003CDB34 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 40C4FA631C773BD3003CDB34 /* main.m */; };
 		40C4FA671C773BD3003CDB34 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 40C4FA661C773BD3003CDB34 /* AppDelegate.m */; };
-		40C4FA6D1C773BD3003CDB34 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 40C4FA6B1C773BD3003CDB34 /* Main.storyboard */; };
 		40C4FA6F1C773BD3003CDB34 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40C4FA6E1C773BD3003CDB34 /* Assets.xcassets */; };
 		40C4FA721C773BD3003CDB34 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 40C4FA701C773BD3003CDB34 /* LaunchScreen.storyboard */; };
 		40C4FA7B1C778D3D003CDB34 /* ImguaLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 40C4FA7A1C778D3D003CDB34 /* ImguaLoginViewController.m */; };
 		40C4FA7E1C778D69003CDB34 /* ImguaAccessToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 40C4FA7D1C778D69003CDB34 /* ImguaAccessToken.m */; };
 		40C4FA811C778DD1003CDB34 /* ImgurUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 40C4FA801C778DD1003CDB34 /* ImgurUser.m */; };
+		40C4FA831C78AE28003CDB34 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 40C4FA821C78AE28003CDB34 /* Main.storyboard */; };
 		6AC562CB1C776C2B006C03C0 /* imgurServerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AC562CA1C776C2B006C03C0 /* imgurServerManager.m */; };
 		6AC562F31C776C5B006C03C0 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AC562CF1C776C5B006C03C0 /* AFHTTPRequestOperation.m */; };
 		6AC562F41C776C5B006C03C0 /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AC562D11C776C5B006C03C0 /* AFHTTPRequestOperationManager.m */; };
@@ -45,7 +45,6 @@
 		40C4FA631C773BD3003CDB34 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		40C4FA651C773BD3003CDB34 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		40C4FA661C773BD3003CDB34 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		40C4FA6C1C773BD3003CDB34 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		40C4FA6E1C773BD3003CDB34 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		40C4FA711C773BD3003CDB34 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		40C4FA731C773BD3003CDB34 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -55,6 +54,7 @@
 		40C4FA7D1C778D69003CDB34 /* ImguaAccessToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImguaAccessToken.m; sourceTree = "<group>"; };
 		40C4FA7F1C778DD1003CDB34 /* ImgurUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImgurUser.h; sourceTree = "<group>"; };
 		40C4FA801C778DD1003CDB34 /* ImgurUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImgurUser.m; sourceTree = "<group>"; };
+		40C4FA821C78AE28003CDB34 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		6AC562C91C776C2B006C03C0 /* imgurServerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = imgurServerManager.h; sourceTree = "<group>"; };
 		6AC562CA1C776C2B006C03C0 /* imgurServerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = imgurServerManager.m; sourceTree = "<group>"; };
 		6AC562CE1C776C5B006C03C0 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
@@ -138,7 +138,7 @@
 				6AC562C81C776727006C03C0 /* Model */,
 				40C4FA651C773BD3003CDB34 /* AppDelegate.h */,
 				40C4FA661C773BD3003CDB34 /* AppDelegate.m */,
-				40C4FA6B1C773BD3003CDB34 /* Main.storyboard */,
+				40C4FA821C78AE28003CDB34 /* Main.storyboard */,
 				EFA6C7251C77475600EA73D5 /* UI */,
 				40C4FA621C773BD3003CDB34 /* Supporting Files */,
 			);
@@ -304,8 +304,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				40C4FA721C773BD3003CDB34 /* LaunchScreen.storyboard in Resources */,
+				40C4FA831C78AE28003CDB34 /* Main.storyboard in Resources */,
 				40C4FA6F1C773BD3003CDB34 /* Assets.xcassets in Resources */,
-				40C4FA6D1C773BD3003CDB34 /* Main.storyboard in Resources */,
 				EF09022C1C77500000D9CF5E /* socialControllerIcon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -350,14 +350,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		40C4FA6B1C773BD3003CDB34 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				40C4FA6C1C773BD3003CDB34 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		40C4FA701C773BD3003CDB34 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

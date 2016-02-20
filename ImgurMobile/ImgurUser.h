@@ -10,9 +10,9 @@
 
 @interface ImgurUser : NSObject
 
-@property (strong, nonatomic) NSString* firstName;
-@property (strong, nonatomic) NSString* lastName;
-@property (strong, nonatomic) NSURL* imageURL;
+@property (strong, nonatomic) NSString* accountUserName;
+@property (strong, nonatomic) NSString* accountID;
+//@property (strong, nonatomic) NSURL* imageURL;
 
 - (id) initWithServerResponse:(NSDictionary*) responseObject;
 

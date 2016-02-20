@@ -13,6 +13,7 @@
 @interface imgurServerManager : NSObject
 
 + (instancetype)sharedManager;
+- (void) authorizeUser:(void(^)(ImgurUser* user)) completion;
 
 @property (nonatomic, strong) ImgurUser *currentUser;
 

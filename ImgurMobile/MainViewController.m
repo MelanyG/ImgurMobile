@@ -7,8 +7,12 @@
 //
 
 #import "MainViewController.h"
+#import "ImgurUser.h"
+
 
 @interface MainViewController ()
+
+@property (strong, nonatomic) ImgurUser* currentUser;
 
 @end
 
@@ -17,6 +21,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    self.currentUser = [[ImgurUser alloc]init];
 }
 
 - (void)didReceiveMemoryWarning {

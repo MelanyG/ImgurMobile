@@ -48,13 +48,14 @@
 - (void) authorizeUser:(void(^)(ImgurUser* user)) completion {
     
     ImguaLoginViewController* vc =
-    [[ImguaLoginViewController alloc] initWithCompletionBlock:^(ImguaAccessToken *token) {
+    [[ImguaLoginViewController alloc] initWithCompletionBlock:^(ImguaAccessToken *token)
+    {
         
         self.accessToken = token;
         
         if (token) {
             
-            [self getUser:self.accessToken.accountUserName
+            [self getUser:self.accessToken.accountID
                 onSuccess:^(ImgurUser *user) {
                     if (completion) {
                         completion(user);
@@ -71,14 +72,15 @@
         }
         
     }];
-    
-    UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:vc];
-    
-    UIViewController* mainVC = [[[[UIApplication sharedApplication] windows] firstObject] rootViewController];
-    
-    [mainVC presentViewController:nav
-                         animated:YES
-                       completion:nil];
+
+
+//    UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:vc];
+//    
+//    UIViewController* mainVC = [[[[UIApplication sharedApplication] windows] firstObject] rootViewController];
+//    
+//    [mainVC presentViewController:nav
+//                         animated:YES
+//                       completion:nil];
 }
 
 - (void) getUser:(NSString*) userID
