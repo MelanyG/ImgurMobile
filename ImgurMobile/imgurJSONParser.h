@@ -12,6 +12,6 @@
 
 + (instancetype)sharedJSONParser;
 
-- (NSArray *)getPostsFromResponceDict:(NSDictionary *)dict;
+- (void)getPostsFromResponceDict:(NSDictionary *)dict Completion:(void(^)(NSArray *array, NSError *error)) completion;
 
 @end

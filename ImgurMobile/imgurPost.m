@@ -16,7 +16,9 @@
     
     if (flag)
     {
-        
+        post.imageURL = [dictionary objectForKey:@"link"];
+        post.title = [dictionary objectForKey:@"title"];
+        post.postDescription = [dictionary objectForKey:@"description"];
     }
     else
     {

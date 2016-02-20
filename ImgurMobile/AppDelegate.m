@@ -19,15 +19,13 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    
-    /*imgurServerManager *manager = [[imgurServerManager alloc] init];
+  /*
+    imgurServerManager *manager = [[imgurServerManager alloc] init];
     [manager getPhotosForPage:0 Section:hot Sort:viral Window:all Completion:^(NSDictionary *resp, NSError *error)
     {
-        imgurJSONParser *parser = [[imgurJSONParser alloc] init];
-        NSArray *arr = [parser getPostsFromResponceDict:resp];
-        NSLog(@"%@",arr);
-    }];*/
-    
+       // NSLog(@"%@",arr);
+    }];
+    */
     
     return YES;
 }

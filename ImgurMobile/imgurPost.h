@@ -11,8 +11,7 @@
 
 @interface imgurPost : NSObject
 
-@property (strong, nonatomic) imgurUser *owner;
-@property (strong, nonatomic) NSMutableArray *imagesArray;
+@property (strong, nonatomic) NSString *owner;
 @property (strong, nonatomic) NSURL *imageURL;
 @property (strong, nonatomic) NSString *title;
 @property (strong, nonatomic) NSString *postDescription;
