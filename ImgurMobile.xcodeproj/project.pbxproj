@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		404D9C441C7A141E0063B912 /* ImgurPosting.m in Sources */ = {isa = PBXBuildFile; fileRef = 404D9C431C7A141E0063B912 /* ImgurPosting.m */; };
 		40C4FA641C773BD3003CDB34 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 40C4FA631C773BD3003CDB34 /* main.m */; };
 		40C4FA671C773BD3003CDB34 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 40C4FA661C773BD3003CDB34 /* AppDelegate.m */; };
 		40C4FA6D1C773BD3003CDB34 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 40C4FA6B1C773BD3003CDB34 /* Main.storyboard */; };
@@ -45,6 +46,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		404D9C421C7A141E0063B912 /* ImgurPosting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImgurPosting.h; sourceTree = "<group>"; };
+		404D9C431C7A141E0063B912 /* ImgurPosting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImgurPosting.m; sourceTree = "<group>"; };
 		40C4FA5F1C773BD3003CDB34 /* ImgurMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImgurMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		40C4FA631C773BD3003CDB34 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		40C4FA651C773BD3003CDB34 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -152,6 +155,8 @@
 				40C4FA651C773BD3003CDB34 /* AppDelegate.h */,
 				40C4FA661C773BD3003CDB34 /* AppDelegate.m */,
 				40C4FA6B1C773BD3003CDB34 /* Main.storyboard */,
+				404D9C421C7A141E0063B912 /* ImgurPosting.h */,
+				404D9C431C7A141E0063B912 /* ImgurPosting.m */,
 				EFA6C7251C77475600EA73D5 /* UI */,
 				40C4FA621C773BD3003CDB34 /* Supporting Files */,
 			);
@@ -360,6 +365,7 @@
 				40C4FA8F1C78CB80003CDB34 /* ImgurUser.m in Sources */,
 				6AC562F91C776C5B006C03C0 /* AFURLRequestSerialization.m in Sources */,
 				6AC562FC1C776C5B006C03C0 /* AFNetworkActivityIndicatorManager.m in Sources */,
+				404D9C441C7A141E0063B912 /* ImgurPosting.m in Sources */,
 				40C4FA861C78B8F3003CDB34 /* ImgurLoginViewController.m in Sources */,
 				6AC562F71C776C5B006C03C0 /* AFSecurityPolicy.m in Sources */,
 				6AC562F31C776C5B006C03C0 /* AFHTTPRequestOperation.m in Sources */,

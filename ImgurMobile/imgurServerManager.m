@@ -114,6 +114,42 @@
      }];
 }
 
+- (void) postImage:(NSString*) text
+      onGroupWall:(NSString*) groupID
+        onSuccess:(void(^)(id result)) success
+        onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure
+{
+         if (![groupID hasPrefix:@"-"]) {
+            groupID = [@"-" stringByAppendingString:groupID];
+        }
+        
+        NSDictionary* params =
+        [NSDictionary dictionaryWithObjectsAndKeys:
+         groupID,       @"owner_id",
+         text,          @"message",
+         self.accessToken.token, @"access_token", nil];
+        
+        [self.requestOperationManager
+         POST:@"wall.post"
+         parameters:params
+         success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
+             NSLog(@"JSON: %@", responseObject);
+             
+             if (success) {
+                 success(responseObject);
+             }
+             
+         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             NSLog(@"Error: %@", error);
+             
+             if (failure) {
+                 failure(error, operation.response.statusCode);
+             }
+         }];
+        
+ 
+}
+
 /*- (void)createBaseUrlString
 {
     self.URLString = @"https://api.imgur.com/3/";

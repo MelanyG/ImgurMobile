@@ -42,4 +42,10 @@ typedef enum{
               Completion:(void(^)(NSDictionary *resp, NSError *error))completion;
 - (void)getPhotosFromAlbumWithID:(NSString *)albumID Completion:(void(^)(NSDictionary *resp, NSError *error))completion;
 
+- (void) postImage:(NSString*) text
+       onGroupWall:(NSString*) groupID
+         onSuccess:(void(^)(id result)) success
+         onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure;
+
+
 @end
