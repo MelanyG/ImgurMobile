@@ -9,6 +9,7 @@
 #import "imgurJSONParser.h"
 #import "imgurServerManager.h"
 #import "imgurPost.h"
+#import "imgurAlbum.h"
 
 @interface imgurJSONParser ()
 
@@ -37,7 +38,7 @@
     return _manager;
 }
 
-- (NSArray *)getPostsFromResponceDict:(NSDictionary *)dict
+- (void)getPostsFromResponceDict:(NSDictionary *)dict Completion:(void(^)(NSArray *array, NSError *error)) completion
 {
     NSMutableArray *array = [NSMutableArray array];
     
@@ -45,13 +46,33 @@
     for (int i = 0; i < data.count; i++)
     {
         NSDictionary *postDict = [data objectAtIndex:i];
-        if ([[postDict objectForKey:@"is_album"] isEqualToString:@"1"])
+        if ([[postDict objectForKey:@"is_album"] boolValue])
         {
             NSString *albumID = [postDict objectForKey:@"id"];
-            [self.manager getPhotosFromAlbumWithID:albumID
-                                        Completion:^(NSDictionary *resp, NSError *error) {
-                                            
-                                        }];
+            dispatch_queue_t download_queue = dispatch_queue_create("download_queue", DISPATCH_QUEUE_PRIORITY_DEFAULT);
+            dispatch_async(download_queue, ^{
+                [self.manager getPhotosFromAlbumWithID:albumID
+                                            Completion:^(NSDictionary *resp, NSError *error)
+                 {
+                     NSDictionary *parsedDict =[self getArrayOfImagesFromAlbumResponceDict:[resp objectForKey:@"data"]];
+                     
+                     NSArray *imagesArray = [parsedDict objectForKey:@"images"];
+                     NSString *ownerID = [parsedDict objectForKey:@"ownerID"];
+                     NSString *topic = [parsedDict objectForKey:@"topic"];
+                     
+                     imgurAlbum *album = [[imgurAlbum alloc] init];
+                     album.ownerID = ownerID;
+                     album.topic = topic;
+                     
+                     for (int i = 0; i < imagesArray.count; i++)
+                     {
+                         imgurPost *post = [imgurPost initWithDictionaryResponce:[imagesArray objectAtIndex:i] IsAlbum:YES];
+                         [album.posts addObject:post];
+                     }
+                     
+                 }];
+                
+            });
         }
         else
         {
@@ -59,8 +80,20 @@
             [array addObject:post];
         }
     }
+        completion(array, nil);
+}
+
+- (NSDictionary *)getArrayOfImagesFromAlbumResponceDict:(NSDictionary *)responce
+{
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
     
-    return array;
+    NSArray *images = [NSArray arrayWithArray:[responce objectForKey:@"images"]];
+    
+    [dict setObject:[responce objectForKey:@"account_id"] forKey:@"ownerID"];
+    [dict setObject:[responce objectForKey:@"topic"] forKey:@"topic"];
+    [dict setObject:images forKey:@"images"];
+    
+    return dict;
 }
 
 @end

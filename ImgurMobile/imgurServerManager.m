@@ -472,14 +472,20 @@
      parameters:nil
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject)
      {
-         imgurJSONParser *parser = [[imgurJSONParser alloc] init];
-         NSArray *arr = [parser getPostsFromResponceDict:responseObject];
+         dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+             imgurJSONParser *parser = [[imgurJSONParser alloc] init];
+             [parser getPostsFromResponceDict:responseObject Completion:^(NSArray *array, NSError *error) {
+                 NSLog(@"%lu,%@",array.count,array);
+             }];
+         });
          
          completion(responseObject, nil);
      }
      failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
-         completion(nil, error);
+         dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+             completion(nil, error);
+         });
      }];
 
 }
@@ -492,11 +498,15 @@
      parameters:nil
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject)
      {
-         completion(responseObject, nil);
+         dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+             completion(responseObject, nil);
+         });
      }
      failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
-         completion(nil, error);
+         dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+             completion(nil, error);
+         });
      }];
 }
 
