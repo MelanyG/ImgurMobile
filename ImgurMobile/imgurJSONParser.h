@@ -8,10 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
-@interface imgurJSONParser : NSObject
+@class ImgurAlbum;
+
+@interface ImgurJSONParser : NSObject
 
 + (instancetype)sharedJSONParser;
 
-- (void)getPostsFromResponceDict:(NSDictionary *)dict Completion:(void(^)(NSDictionary *dict, NSError *error)) completion;
+- (NSDictionary *)getPostsFromresponceDictionary:(NSDictionary *)dict;
+
+- (ImgurAlbum *)getAlbumFromResponceDict:(NSDictionary *)responce;
 
 @end

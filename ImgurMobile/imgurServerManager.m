@@ -8,7 +8,9 @@
 
 #import "AppDelegate.h"
 #import "AFNetworking.h"
-#import "imgurJSONParser.h"
+#import "ImgurJSONParser.h"
+#import "ImgurLoader.h"
+#import "ImgurAlbum.h"
 #import "imgurServerManager.h"
 #import "ImgurLoginViewController.h"
 #import "imgurUser.h"
@@ -19,7 +21,9 @@
 @property (strong, nonatomic) AFHTTPRequestOperationManager* requestOperationManager;
 @property (strong, nonatomic) ImgurAccessToken* accessToken;
 @property (strong, nonatomic) NSString *URLString;
-@property (strong, nonatomic) URLGen *generator;
+@property (strong, nonatomic) URLGen *URLgenerator;
+@property (strong, nonatomic) ImgurLoader *synchLoader;
+@property (strong, nonatomic) ImgurJSONParser *parcer;
 
 @end
 
@@ -47,14 +51,32 @@
     return self;
 }
 
-- (URLGen *)generator
+- (URLGen *)URLgenerator
 {
-    if (!_generator)
+    if (!_URLgenerator)
     {
-        _generator = [URLGen sharedInstance];
-        _generator.baseURL = @"https://api.imgur.com/3/";
+        _URLgenerator = [URLGen sharedInstance];
+        _URLgenerator.baseURL = @"https://api.imgur.com/3/";
     }
-    return _generator;
+    return _URLgenerator;
+}
+
+- (ImgurLoader *)synchLoader
+{
+    if (!_synchLoader)
+    {
+        _synchLoader = [ImgurLoader sharedLoader];
+    }
+    return _synchLoader;
+}
+
+- (ImgurJSONParser *)parcer
+{
+    if (!_parcer)
+    {
+        _parcer = [ImgurJSONParser sharedJSONParser];
+    }
+    return _parcer;
 }
 
 - (void) authorizeUser:(void(^)(imgurUser* user)) completion {
@@ -126,37 +148,56 @@
 }
 
 - (void)getPhotosForPage:(NSInteger)page Section:(section)section Sort:(sort)sort Window:(window)window
-                Completion:(void(^)(NSDictionary *resp, NSError *error))completion
+                Completion:(void(^)(NSDictionary *resp))completion
 {
+    NSString *url = [self.URLgenerator GetGalleryURLForPage:page Section:section Sort:sort Window:window];
     
-    NSString *url = [self.generator GetGalleryURLForPage:page Section:section Sort:sort Window:window];
+    /*__block NSDictionary *loadedDict;
     
-    [self.requestOperationManager
-     GET:url
-     parameters:nil
-     success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject)
-     {
-         dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-             imgurJSONParser *parser = [[imgurJSONParser alloc] init];
-             [parser getPostsFromResponceDict:responseObject Completion:^(NSArray *array, NSError *error) {
-                 NSLog(@"%lu,%@",array.count,array);
-             }];
-         });
-         
-         completion(responseObject, nil);
-     }
-     failure:^(AFHTTPRequestOperation *operation, NSError *error)
-     {
-         dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-             completion(nil, error);
-         });
-     }];
-
+    dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^
+    {
+        loadedDict = [self.synchLoader loadJSONFromURL:url];
+    });*/
+    
+    NSDictionary *loadedDict = [self.synchLoader loadJSONFromURL:url];
+    
+    NSDictionary *parcedDict = [self.parcer getPostsFromresponceDictionary:loadedDict];
+    
+    NSArray *posts = [parcedDict objectForKey:@"posts"];
+    NSMutableArray *albums = [NSMutableArray array];
+    
+    NSArray *albumIds = [parcedDict objectForKey:@"albumIds"];
+    for (NSString *albumID in albumIds)
+    {
+        NSString *albumUrl = [self.URLgenerator GetAlbumURLForAlbumWithID:albumID];
+        
+        NSDictionary *loadedAlbumDict = [self.synchLoader loadJSONFromURL:albumUrl];
+        
+        ImgurAlbum *album = [self.parcer getAlbumFromResponceDict:loadedAlbumDict];
+        [albums addObject:album];
+    }
+    
+    NSMutableDictionary *albumsAndPosts = [[NSMutableDictionary alloc] init];
+    [albumsAndPosts setObject:posts forKey:@"posts"];
+    [albumsAndPosts setObject:albums forKey:@"albums"];
+    
+    completion(albumsAndPosts);
 }
 
+
+
+
+
+
+
+
+
+
+/*
 - (void)getPhotosFromAlbumWithID:(NSString *)albumID Completion:(void(^)(NSDictionary *resp, NSError *error))completion
 {
-    NSString *url = [NSString stringWithFormat:@"gallery/album/%@",albumID];
+    NSString *url = [self.URLgenerator GetAlbumURLForAlbumWithID:albumID];
+    
     [self.requestOperationManager
      GET:url
      parameters:nil
@@ -172,6 +213,6 @@
              completion(nil, error);
          });
      }];
-}
+}*/
 
 @end

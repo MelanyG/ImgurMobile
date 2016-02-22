@@ -1,0 +1,127 @@
+//
+//  imgurJSONParser.m
+//  ImgurMobile
+//
+//  Created by alex4eetah on 2/19/16.
+//  Copyright © 2016 Melany. All rights reserved.
+//
+
+#import "ImgurJSONParser.h"
+#import "ImgurPost.h"
+#import "ImgurAlbum.h"
+
+@implementation ImgurJSONParser
+
++ (instancetype)sharedJSONParser
+{
+    static ImgurJSONParser *instance;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        instance = [[ImgurJSONParser alloc] init];
+    });
+    return instance;
+}
+
+- (NSDictionary *)getPostsFromresponceDictionary:(NSDictionary *)dict
+{
+    NSMutableArray *postArray = [NSMutableArray array];
+    NSMutableArray *albumIdArray = [NSMutableArray array];
+    
+    NSArray *data = [dict objectForKey:@"data"];
+    for (int i = 0; i < data.count; i++)
+    {
+        NSDictionary *postDict = [data objectAtIndex:i];
+        if ([[postDict objectForKey:@"is_album"] boolValue])
+        {
+            NSString *albumID = [postDict objectForKey:@"id"];
+            [albumIdArray addObject:albumID];
+        }
+        else
+        {
+            ImgurPost *post = [ImgurPost initWithDictionaryResponce:postDict IsAlbum:NO];
+            [postArray addObject:post];
+        }
+    }
+    
+    NSMutableDictionary *outDict = [[NSMutableDictionary alloc] init];
+    [outDict setObject:postArray forKey:@"posts"];
+    [outDict setObject:albumIdArray forKey:@"albumIds"];
+    
+    return outDict;
+}
+
+- (ImgurAlbum *)getAlbumFromResponceDict:(NSDictionary *)responce
+{
+    NSDictionary *data = [responce objectForKey:@"data"];
+    NSArray *images = [NSArray arrayWithArray:[data objectForKey:@"images"]];
+    
+    ImgurAlbum *album = [[ImgurAlbum alloc] init];
+    album.ownerID = [data objectForKey:@"account_id"];
+    album.topic = [data objectForKey:@"topic"];
+    if (!album.posts)
+        album.posts = [NSMutableArray array];
+    
+    for (int i = 0; i < images.count; i++)
+    {
+        ImgurPost *post = [ImgurPost initWithDictionaryResponce:[images objectAtIndex:i] IsAlbum:YES];
+        [album.posts addObject:post];
+    }
+    
+    return album;
+}
+
+
+
+
+
+
+
+
+
+/*
+ - (void)getPostsFromResponceDict:(NSDictionary *)dict Completion:(void(^)(NSDictionary *dict, NSError *error)) completion
+ {
+ NSMutableArray *postArray = [NSMutableArray array];
+ 
+ NSArray *data = [dict objectForKey:@"data"];
+ for (int i = 0; i < data.count; i++)
+ {
+ NSDictionary *postDict = [data objectAtIndex:i];
+ if ([[postDict objectForKey:@"is_album"] boolValue])
+ {
+ NSString *albumID = [postDict objectForKey:@"id"];
+ dispatch_queue_t download_queue = dispatch_queue_create("download_queue", DISPATCH_QUEUE_PRIORITY_DEFAULT);
+ dispatch_async(download_queue, ^{
+ [self.manager getPhotosFromAlbumWithID:albumID
+ Completion:^(NSDictionary *resp, NSError *error)
+ {
+ NSDictionary *parsedDict =[self getArrayOfImagesFromAlbumResponceDict:[resp objectForKey:@"data"]];
+ 
+ NSArray *imagesArray = [parsedDict objectForKey:@"images"];
+ NSString *ownerID = [parsedDict objectForKey:@"ownerID"];
+ NSString *topic = [parsedDict objectForKey:@"topic"];
+ 
+ imgurAlbum *album = [[imgurAlbum alloc] init];
+ album.ownerID = ownerID;
+ album.topic = topic;
+ 
+ for (int i = 0; i < imagesArray.count; i++)
+ {
+ imgurPost *post = [imgurPost initWithDictionaryResponce:[imagesArray objectAtIndex:i] IsAlbum:YES];
+ [album.posts addObject:post];
+ }
+ 
+ }];
+ 
+ });
+ }
+ else
+ {
+ imgurPost *post = [imgurPost initWithDictionaryResponce:postDict IsAlbum:NO];
+ [array addObject:post];
+ }
+ }
+ completion(array, nil);
+ }*/
+
+@end

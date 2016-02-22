@@ -6,8 +6,8 @@
 //  Copyright © 2016 Melany. All rights reserved.
 //
 
-#import "imgurAlbum.h"
+#import "ImgurAlbum.h"
 
-@implementation imgurAlbum
+@implementation ImgurAlbum
 
 @end

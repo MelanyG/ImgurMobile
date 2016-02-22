@@ -12,7 +12,7 @@
 
 + (URLGen *)sharedInstance
 {
-    static URLGen *instance;
+    static URLGen *instance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         instance = [[URLGen alloc] init];
@@ -94,13 +94,19 @@
     NSString *url;
     if (section == top)
     {
-        url = [NSString stringWithFormat:@"gallery/%@/%@/%@/%ld.json",sectionStr,sortStr,windowStr,page];
+        url = [NSString stringWithFormat:@"%@gallery/%@/%@/%@/%ld.json",self.baseURL,sectionStr,sortStr,windowStr,page];
     }
     else
     {
-        url = [NSString stringWithFormat:@"gallery/%@/%@/%ld.json",sectionStr,sortStr,page];
+        url = [NSString stringWithFormat:@"%@gallery/%@/%@/%ld.json",self.baseURL,sectionStr,sortStr,page];
     }
     
+    return url;
+}
+
+- (NSString *)GetAlbumURLForAlbumWithID:(NSString *)albumID
+{
+    NSString *url = [NSString stringWithFormat:@"%@gallery/album/%@",self.baseURL,albumID];
     return url;
 }
 

@@ -6,13 +6,13 @@
 //  Copyright © 2016 Melany. All rights reserved.
 //
 
-#import "imgurPost.h"
+#import "ImgurPost.h"
 
-@implementation imgurPost
+@implementation ImgurPost
 
-+ (imgurPost *)initWithDictionaryResponce:(NSDictionary *)dictionary IsAlbum:(BOOL)flag
++ (ImgurPost *)initWithDictionaryResponce:(NSDictionary *)dictionary IsAlbum:(BOOL)flag
 {
-    imgurPost *post = [[imgurPost alloc] init];
+    ImgurPost *post = [[ImgurPost alloc] init];
     
     if (flag)
     {

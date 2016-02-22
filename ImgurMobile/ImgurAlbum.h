@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface imgurAlbum : NSObject
+@interface ImgurAlbum : NSObject
 
 @property (strong, nonatomic) NSMutableArray *posts;
 @property (strong, nonatomic) NSString *ownerID;

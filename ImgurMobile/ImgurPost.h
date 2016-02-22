@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 @class imgurUser;
 
-@interface imgurPost : NSObject
+@interface ImgurPost : NSObject
 
 @property (strong, nonatomic) NSString *owner;
 @property (strong, nonatomic) NSURL *imageURL;
@@ -18,6 +18,6 @@
 @property (strong, nonatomic) NSString *topic;
 @property (strong, nonatomic) NSArray *comments;
 
-+ (imgurPost *)initWithDictionaryResponce:(NSDictionary *)dictionary IsAlbum:(BOOL)flag;
++ (ImgurPost *)initWithDictionaryResponce:(NSDictionary *)dictionary IsAlbum:(BOOL)flag;
 
 @end
