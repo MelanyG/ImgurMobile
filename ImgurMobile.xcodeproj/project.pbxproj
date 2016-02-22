@@ -45,6 +45,14 @@
 		EFA6C7291C7747A400EA73D5 /* SocialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFA6C7281C7747A400EA73D5 /* SocialViewController.m */; };
 		EFA6C72C1C77485700EA73D5 /* LibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFA6C72B1C77485700EA73D5 /* LibraryViewController.m */; };
 		EFA6C72F1C77486C00EA73D5 /* EditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFA6C72E1C77486C00EA73D5 /* EditViewController.m */; };
+		EFEE04071C7B43E60054EEF2 /* Thumb Up-48.png in Resources */ = {isa = PBXBuildFile; fileRef = EFEE04061C7B43E60054EEF2 /* Thumb Up-48.png */; };
+		EFEE040C1C7B43EF0054EEF2 /* Save Filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = EFEE04081C7B43EF0054EEF2 /* Save Filled-50.png */; };
+		EFEE040D1C7B43EF0054EEF2 /* Settings Filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = EFEE04091C7B43EF0054EEF2 /* Settings Filled-50.png */; };
+		EFEE040E1C7B43EF0054EEF2 /* Share-48.png in Resources */ = {isa = PBXBuildFile; fileRef = EFEE040A1C7B43EF0054EEF2 /* Share-48.png */; };
+		EFEE040F1C7B43EF0054EEF2 /* Speech Bubble-48.png in Resources */ = {isa = PBXBuildFile; fileRef = EFEE040B1C7B43EF0054EEF2 /* Speech Bubble-48.png */; };
+		EFEE04131C7B43F90054EEF2 /* Like-48.png in Resources */ = {isa = PBXBuildFile; fileRef = EFEE04101C7B43F90054EEF2 /* Like-48.png */; };
+		EFEE04141C7B43F90054EEF2 /* Like Filled-48.png in Resources */ = {isa = PBXBuildFile; fileRef = EFEE04111C7B43F90054EEF2 /* Like Filled-48.png */; };
+		EFEE04151C7B43F90054EEF2 /* Thumbs Down-48.png in Resources */ = {isa = PBXBuildFile; fileRef = EFEE04121C7B43F90054EEF2 /* Thumbs Down-48.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -122,6 +130,14 @@
 		EFA6C72B1C77485700EA73D5 /* LibraryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LibraryViewController.m; sourceTree = "<group>"; };
 		EFA6C72D1C77486C00EA73D5 /* EditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditViewController.h; sourceTree = "<group>"; };
 		EFA6C72E1C77486C00EA73D5 /* EditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditViewController.m; sourceTree = "<group>"; };
+		EFEE04061C7B43E60054EEF2 /* Thumb Up-48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Thumb Up-48.png"; sourceTree = "<group>"; };
+		EFEE04081C7B43EF0054EEF2 /* Save Filled-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Save Filled-50.png"; sourceTree = "<group>"; };
+		EFEE04091C7B43EF0054EEF2 /* Settings Filled-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Settings Filled-50.png"; sourceTree = "<group>"; };
+		EFEE040A1C7B43EF0054EEF2 /* Share-48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Share-48.png"; sourceTree = "<group>"; };
+		EFEE040B1C7B43EF0054EEF2 /* Speech Bubble-48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Speech Bubble-48.png"; sourceTree = "<group>"; };
+		EFEE04101C7B43F90054EEF2 /* Like-48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Like-48.png"; sourceTree = "<group>"; };
+		EFEE04111C7B43F90054EEF2 /* Like Filled-48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Like Filled-48.png"; sourceTree = "<group>"; };
+		EFEE04121C7B43F90054EEF2 /* Thumbs Down-48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Thumbs Down-48.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,7 +188,7 @@
 		40C4FA621C773BD3003CDB34 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				EF09022B1C77500000D9CF5E /* socialControllerIcon.png */,
+				EFEE04161C7B441F0054EEF2 /* icons */,
 				40C4FA6E1C773BD3003CDB34 /* Assets.xcassets */,
 				40C4FA701C773BD3003CDB34 /* LaunchScreen.storyboard */,
 				40C4FA731C773BD3003CDB34 /* Info.plist */,
@@ -296,6 +312,22 @@
 			name = UI;
 			sourceTree = "<group>";
 		};
+		EFEE04161C7B441F0054EEF2 /* icons */ = {
+			isa = PBXGroup;
+			children = (
+				EFEE04101C7B43F90054EEF2 /* Like-48.png */,
+				EFEE04111C7B43F90054EEF2 /* Like Filled-48.png */,
+				EFEE04121C7B43F90054EEF2 /* Thumbs Down-48.png */,
+				EFEE04081C7B43EF0054EEF2 /* Save Filled-50.png */,
+				EFEE04091C7B43EF0054EEF2 /* Settings Filled-50.png */,
+				EFEE040A1C7B43EF0054EEF2 /* Share-48.png */,
+				EFEE040B1C7B43EF0054EEF2 /* Speech Bubble-48.png */,
+				EFEE04061C7B43E60054EEF2 /* Thumb Up-48.png */,
+				EF09022B1C77500000D9CF5E /* socialControllerIcon.png */,
+			);
+			name = icons;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -353,10 +385,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EFEE040F1C7B43EF0054EEF2 /* Speech Bubble-48.png in Resources */,
+				EFEE040C1C7B43EF0054EEF2 /* Save Filled-50.png in Resources */,
+				EFEE04131C7B43F90054EEF2 /* Like-48.png in Resources */,
+				EFEE04141C7B43F90054EEF2 /* Like Filled-48.png in Resources */,
+				EFEE04071C7B43E60054EEF2 /* Thumb Up-48.png in Resources */,
 				40C4FA721C773BD3003CDB34 /* LaunchScreen.storyboard in Resources */,
+				EFEE040E1C7B43EF0054EEF2 /* Share-48.png in Resources */,
 				40C4FA6F1C773BD3003CDB34 /* Assets.xcassets in Resources */,
 				40C4FA6D1C773BD3003CDB34 /* Main.storyboard in Resources */,
+				EFEE04151C7B43F90054EEF2 /* Thumbs Down-48.png in Resources */,
 				EF09022C1C77500000D9CF5E /* socialControllerIcon.png in Resources */,
+				EFEE040D1C7B43EF0054EEF2 /* Settings Filled-50.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
