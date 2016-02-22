@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "imgurServerManager.h"
 #import "imgurJSONParser.h"
+#import "NotChalengingQueue.h"
 
 @interface AppDelegate ()
 
@@ -19,11 +20,15 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    /*imgurServerManager *manager = [[imgurServerManager alloc] init];
+    /*NotChalengingQueue *queue = [[NotChalengingQueue alloc] init];
+    imgurServerManager *manager = [[imgurServerManager alloc] init];
     [manager getPhotosForPage:0 Section:hot Sort:viral Window:all Completion:^(NSDictionary *resp)
      {
-         NSLog(@"%@",resp);
+         [queue addObject:resp];
+         
+         NSLog(@"%@",[queue getObject]);
      }];*/
+    
    
     return YES;
 }
