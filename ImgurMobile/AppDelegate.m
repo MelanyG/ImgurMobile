@@ -19,7 +19,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    
+    /*imgurServerManager *manager = [[imgurServerManager alloc] init];
+    [manager getPhotosForPage:0 Section:hot Sort:viral Window:all Completion:^(NSDictionary *resp)
+     {
+         NSLog(@"%@",resp);
+     }];*/
    
     return YES;
 }
