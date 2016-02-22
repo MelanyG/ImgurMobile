@@ -38,9 +38,9 @@
     return _manager;
 }
 
-- (void)getPostsFromResponceDict:(NSDictionary *)dict Completion:(void(^)(NSArray *array, NSError *error)) completion
+- (void)getPostsFromResponceDict:(NSDictionary *)dict Completion:(void(^)(NSDictionary *dict, NSError *error)) completion
 {
-    NSMutableArray *array = [NSMutableArray array];
+    NSMutableArray *postArray = [NSMutableArray array];
     
     NSArray *data = [dict objectForKey:@"data"];
     for (int i = 0; i < data.count; i++)
@@ -83,17 +83,21 @@
         completion(array, nil);
 }
 
-- (NSDictionary *)getArrayOfImagesFromAlbumResponceDict:(NSDictionary *)responce
+- (imgurAlbum *)getArrayOfImagesFromAlbumResponceDict:(NSDictionary *)responce
 {
-    NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
-    
     NSArray *images = [NSArray arrayWithArray:[responce objectForKey:@"images"]];
     
-    [dict setObject:[responce objectForKey:@"account_id"] forKey:@"ownerID"];
-    [dict setObject:[responce objectForKey:@"topic"] forKey:@"topic"];
-    [dict setObject:images forKey:@"images"];
+    imgurAlbum *album = [[imgurAlbum alloc] init];
+    album.ownerID = [responce objectForKey:@"account_id"];
+    album.topic = [responce objectForKey:@"topic"];
     
-    return dict;
+    for (int i = 0; i < images.count; i++)
+    {
+        imgurPost *post = [imgurPost initWithDictionaryResponce:[images objectAtIndex:i] IsAlbum:YES];
+        [album.posts addObject:post];
+    }
+    
+    return album;
 }
 
 @end

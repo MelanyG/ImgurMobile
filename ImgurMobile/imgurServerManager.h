@@ -6,28 +6,10 @@
 //  Copyright © 2016 Roman Stasiv. All rights reserved.
 //
 
-typedef enum{
-    hot,
-    top,
-    user
-}section;
 
-typedef enum{
-    viral,
-    topest,
-    latest,
-    rising
-}sort;
-
-typedef enum{
-    day,
-    week,
-    month,
-    year,
-    all
-}window;
 
 #import <Foundation/Foundation.h>
+#import "URLGen.h"
 @class imgurUser;
 
 @interface imgurServerManager : NSObject
