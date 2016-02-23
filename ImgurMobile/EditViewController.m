@@ -17,6 +17,21 @@
 @property (strong, nonatomic) CIImage *beginImage;
 @property (strong, nonatomic) CIFilter *filter;
 
+//Top menu
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topMenuTopConstraint;
+@property (weak, nonatomic) IBOutlet UIView *topMenuContainerView;
+
+//Right Filters Menu
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *rightFiltersMenuTrailingConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *rightFiltersMenuWidthConstraint;
+@property (weak, nonatomic) IBOutlet UIView *filterMenuContainerView;
+
+//Right Fonts Menu
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *rightFontsMenuTrailingConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *rightFontsMenuWidthConstraint;
+@property (weak, nonatomic) IBOutlet UIView *fontsMenuContainerView;
+
+
 @end
 
 @implementation EditViewController
