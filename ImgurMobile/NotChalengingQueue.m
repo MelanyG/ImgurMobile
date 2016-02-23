@@ -62,7 +62,11 @@
     
     while(self.first == nil)
     {
+        NSDate *waitStart = [NSDate date];
         pthread_cond_wait(&cl, &lock);
+        static float waitTime = 0;
+        waitTime += [waitStart timeIntervalSinceNow]*-1;
+        NSLog(@"%f",waitTime);
     }
     
     id data = self.first.data;
