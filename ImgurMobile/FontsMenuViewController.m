@@ -27,6 +27,12 @@
 
 @implementation FontsMenuViewController
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.view.tag = 2222;
+}
+
 - (IBAction)colorDidChanged:(UISlider *)sender
 {//1234
     

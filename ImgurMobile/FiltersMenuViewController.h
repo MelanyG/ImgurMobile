@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "EditProtocolHeader.h"
 
 @interface FiltersMenuViewController : UIViewController
+
+@property (weak, nonatomic)id <rightMenuDelegate> delegate;
 
 @end

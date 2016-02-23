@@ -14,9 +14,21 @@ typedef enum{
     textEditing
 }WorkingMode;
 
+typedef enum{
+    FilteringMenu,
+    TextEditingMenu
+}RightMenuType;
+
 @protocol topMenuDelegate <NSObject>
 
 - (void)changeWorkingModeTo:(WorkingMode) mode;
+- (void)changeStateOfTopMenu;
+
+@end
+
+@protocol rightMenuDelegate <NSObject>
+
+- (void)changeStateOfRightMenu:(RightMenuType)type;
 
 @end
 
