@@ -127,6 +127,7 @@
 		6ACB13E21C7C6CF9004237DD /* FiltersMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FiltersMenuViewController.m; sourceTree = "<group>"; };
 		6ACB13E41C7C6D0A004237DD /* FontsMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontsMenuViewController.h; sourceTree = "<group>"; };
 		6ACB13E51C7C6D0A004237DD /* FontsMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FontsMenuViewController.m; sourceTree = "<group>"; };
+		6ACB13E71C7C9806004237DD /* EditProtocolHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditProtocolHeader.h; sourceTree = "<group>"; };
 		6AEFD2CF1C7BAB2700ADF2FC /* ImgurLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImgurLoader.h; sourceTree = "<group>"; };
 		6AEFD2D01C7BAB2700ADF2FC /* ImgurLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImgurLoader.m; sourceTree = "<group>"; };
 		6AEFD2D21C7BABAA00ADF2FC /* URLGen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URLGen.h; sourceTree = "<group>"; };
@@ -314,6 +315,7 @@
 				6ACB13E21C7C6CF9004237DD /* FiltersMenuViewController.m */,
 				6ACB13E41C7C6D0A004237DD /* FontsMenuViewController.h */,
 				6ACB13E51C7C6D0A004237DD /* FontsMenuViewController.m */,
+				6ACB13E71C7C9806004237DD /* EditProtocolHeader.h */,
 			);
 			name = Edit;
 			sourceTree = "<group>";

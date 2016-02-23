@@ -9,12 +9,30 @@
 #import "TopMenuViewController.h"
 
 @implementation TopMenuViewController
-- (IBAction)workModeDidChanged:(UIButton *)sender {
+- (IBAction)workModeDidChanged:(UIButton *)sender
+{
+    switch (sender.tag)
+    {
+        case 1:
+            [self.delegate changeWorkingModeTo:imageFiltering];
+            break;
+            
+        case 2:
+            [self.delegate changeWorkingModeTo:textEditing];
+            break;
+            
+        default:
+            break;
+    }
 }
 
-- (IBAction)saveButtonPressed:(UIButton *)sender {
+- (IBAction)saveButtonPressed:(UIButton *)sender
+{
+    
 }
 
-- (IBAction)shareButtonPressed:(UIButton *)sender {
+- (IBAction)shareButtonPressed:(UIButton *)sender
+{
+    
 }
 @end
