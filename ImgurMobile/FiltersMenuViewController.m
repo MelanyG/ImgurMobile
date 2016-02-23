@@ -11,10 +11,15 @@
 @interface FiltersMenuViewController ()
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
-
+@property (weak, nonatomic) IBOutlet UIView *contentView;
 
 @end
 
 @implementation FiltersMenuViewController
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.view.tag = 3333;
+}
 @end

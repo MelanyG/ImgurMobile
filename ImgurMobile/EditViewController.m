@@ -10,11 +10,7 @@
 #import "TopMenuViewController.h"
 #import "FiltersMenuViewController.h"
 #import "FontsMenuViewController.h"
-
-typedef enum{
-    FilteringMenu,
-    TextEditingMenu
-}RightMenuType;
+#import "UIView+SuperClassChecker.h"
 
 @interface EditViewController ()
 
@@ -53,6 +49,7 @@ typedef enum{
 @property (assign, nonatomic)double rightHandleViewHeigh;
 
 @property (strong, nonatomic) UITapGestureRecognizer *tapGesture;
+@property (strong, nonatomic) UIPanGestureRecognizer *panGesture;
 @property (assign, nonatomic) BOOL isTopMenuOpened;
 @property (assign, nonatomic) BOOL isRightFilteringMenuOpened;
 @property (assign, nonatomic) BOOL isRightTextMenuOpened;
@@ -101,6 +98,9 @@ typedef enum{
     self.tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                               action:@selector(handleTap:)];
     [self.view addGestureRecognizer:self.tapGesture];
+    self.panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self
+                                                              action:@selector(handlePan:)];
+    [self.view addGestureRecognizer:self.panGesture];
 }
 
 - (void)addTopMenuHandle
@@ -148,6 +148,7 @@ typedef enum{
     [self.view addSubview:self.rightHandleView];
 }
 
+#pragma mark - gestures
 - (void)handleTap:(UITapGestureRecognizer *)tap
 {
     CGPoint location = [tap locationInView:self.view];
@@ -163,6 +164,55 @@ typedef enum{
         return;
 }
 
+- (void)handlePan:(UIPanGestureRecognizer *)pan
+{
+    UIApplication *app = [UIApplication sharedApplication];
+    
+    if (pan.state == UIGestureRecognizerStateCancelled)
+    {
+        [app endIgnoringInteractionEvents];
+        self.panGesture.enabled = YES;
+    }
+    
+    UIView *view;
+    if (pan.state == UIGestureRecognizerStateBegan)
+    {
+        [app beginIgnoringInteractionEvents];
+        CGPoint location = [pan locationInView:self.view];
+        view = [self.view hitTest:location withEvent:nil];
+    }
+    
+    CGPoint velocity = [pan velocityInView:self.view];
+    
+    if ([view superTag:1111])
+    {
+        if(velocity.y < 0)
+        {
+            [self changeStateOfTopMenu];
+            self.panGesture.enabled = NO;
+        }
+    }
+    else if ([view superTag:2222])
+    {
+        if(velocity.x > 0)
+        {
+            [self changeStateOfRightMenu:TextEditingMenu];
+            self.panGesture.enabled = NO;
+        }
+    }
+    else if ([view superTag:3333])
+    {
+        if(velocity.x > 0)
+        {
+            [self changeStateOfRightMenu:FilteringMenu];
+            self.panGesture.enabled = NO;
+        }
+    }
+    
+   
+}
+
+#pragma mark - constraints changing
 - (void)changeStateOfTopMenu
 {
     if (self.isTopMenuOpened)
