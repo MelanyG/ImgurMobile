@@ -191,8 +191,6 @@
 				40C4FA651C773BD3003CDB34 /* AppDelegate.h */,
 				40C4FA661C773BD3003CDB34 /* AppDelegate.m */,
 				40C4FA6B1C773BD3003CDB34 /* Main.storyboard */,
-				404D9C421C7A141E0063B912 /* ImgurPosting.h */,
-				404D9C431C7A141E0063B912 /* ImgurPosting.m */,
 				EFA6C7251C77475600EA73D5 /* UI */,
 				40C4FA621C773BD3003CDB34 /* Supporting Files */,
 			);
@@ -218,6 +216,8 @@
 				97AEA2301C7B1AEC0010CD99 /* synchronization */,
 				6AC562C91C776C2B006C03C0 /* imgurServerManager.h */,
 				6AC562CA1C776C2B006C03C0 /* imgurServerManager.m */,
+				404D9C421C7A141E0063B912 /* ImgurPosting.h */,
+				404D9C431C7A141E0063B912 /* ImgurPosting.m */,
 				6AC563041C77893A006C03C0 /* imgurJSONParser.h */,
 				6AC563051C77893A006C03C0 /* imgurJSONParser.m */,
 				6AEFD2CF1C7BAB2700ADF2FC /* ImgurLoader.h */,
