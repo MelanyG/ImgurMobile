@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "imgurServerManager.h"
 
 @interface ImgurPosting : UIViewController
+
+- (IBAction)postActionSelected:(id)sender;
 
 @end
