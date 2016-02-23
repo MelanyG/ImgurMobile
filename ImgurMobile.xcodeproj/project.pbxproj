@@ -38,6 +38,9 @@
 		6AC563061C77893A006C03C0 /* imgurJSONParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AC563051C77893A006C03C0 /* imgurJSONParser.m */; };
 		6AC5630C1C778A64006C03C0 /* imgurAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AC5630B1C778A64006C03C0 /* imgurAlbum.m */; };
 		6AC5630F1C778AF9006C03C0 /* imgurPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AC5630E1C778AF9006C03C0 /* imgurPost.m */; };
+		6ACB13E01C7C6CDD004237DD /* TopMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6ACB13DF1C7C6CDD004237DD /* TopMenuViewController.m */; };
+		6ACB13E31C7C6CF9004237DD /* FiltersMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6ACB13E21C7C6CF9004237DD /* FiltersMenuViewController.m */; };
+		6ACB13E61C7C6D0A004237DD /* FontsMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6ACB13E51C7C6D0A004237DD /* FontsMenuViewController.m */; };
 		6AEFD2D11C7BAB2700ADF2FC /* ImgurLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AEFD2D01C7BAB2700ADF2FC /* ImgurLoader.m */; };
 		6AEFD2D41C7BABAA00ADF2FC /* URLGen.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AEFD2D31C7BABAA00ADF2FC /* URLGen.m */; };
 		97AEA2331C7B1B520010CD99 /* Node.m in Sources */ = {isa = PBXBuildFile; fileRef = 97AEA2321C7B1B520010CD99 /* Node.m */; };
@@ -118,6 +121,12 @@
 		6AC5630B1C778A64006C03C0 /* imgurAlbum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = imgurAlbum.m; sourceTree = "<group>"; };
 		6AC5630D1C778AF9006C03C0 /* imgurPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = imgurPost.h; sourceTree = "<group>"; };
 		6AC5630E1C778AF9006C03C0 /* imgurPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = imgurPost.m; sourceTree = "<group>"; };
+		6ACB13DE1C7C6CDD004237DD /* TopMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopMenuViewController.h; sourceTree = "<group>"; };
+		6ACB13DF1C7C6CDD004237DD /* TopMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopMenuViewController.m; sourceTree = "<group>"; };
+		6ACB13E11C7C6CF9004237DD /* FiltersMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FiltersMenuViewController.h; sourceTree = "<group>"; };
+		6ACB13E21C7C6CF9004237DD /* FiltersMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FiltersMenuViewController.m; sourceTree = "<group>"; };
+		6ACB13E41C7C6D0A004237DD /* FontsMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontsMenuViewController.h; sourceTree = "<group>"; };
+		6ACB13E51C7C6D0A004237DD /* FontsMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FontsMenuViewController.m; sourceTree = "<group>"; };
 		6AEFD2CF1C7BAB2700ADF2FC /* ImgurLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImgurLoader.h; sourceTree = "<group>"; };
 		6AEFD2D01C7BAB2700ADF2FC /* ImgurLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImgurLoader.m; sourceTree = "<group>"; };
 		6AEFD2D21C7BABAA00ADF2FC /* URLGen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URLGen.h; sourceTree = "<group>"; };
@@ -294,6 +303,21 @@
 			name = models;
 			sourceTree = "<group>";
 		};
+		6ACB13DD1C7C6C95004237DD /* Edit */ = {
+			isa = PBXGroup;
+			children = (
+				EFA6C72D1C77486C00EA73D5 /* EditViewController.h */,
+				EFA6C72E1C77486C00EA73D5 /* EditViewController.m */,
+				6ACB13DE1C7C6CDD004237DD /* TopMenuViewController.h */,
+				6ACB13DF1C7C6CDD004237DD /* TopMenuViewController.m */,
+				6ACB13E11C7C6CF9004237DD /* FiltersMenuViewController.h */,
+				6ACB13E21C7C6CF9004237DD /* FiltersMenuViewController.m */,
+				6ACB13E41C7C6D0A004237DD /* FontsMenuViewController.h */,
+				6ACB13E51C7C6D0A004237DD /* FontsMenuViewController.m */,
+			);
+			name = Edit;
+			sourceTree = "<group>";
+		};
 		97AEA2301C7B1AEC0010CD99 /* synchronization */ = {
 			isa = PBXGroup;
 			children = (
@@ -308,14 +332,13 @@
 		EFA6C7251C77475600EA73D5 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				6ACB13DD1C7C6C95004237DD /* Edit */,
 				EFA6C7221C77474E00EA73D5 /* MainViewController.h */,
 				EFA6C7231C77474E00EA73D5 /* MainViewController.m */,
 				EFA6C7271C7747A400EA73D5 /* SocialViewController.h */,
 				EFA6C7281C7747A400EA73D5 /* SocialViewController.m */,
 				EFA6C72A1C77485700EA73D5 /* LibraryViewController.h */,
 				EFA6C72B1C77485700EA73D5 /* LibraryViewController.m */,
-				EFA6C72D1C77486C00EA73D5 /* EditViewController.h */,
-				EFA6C72E1C77486C00EA73D5 /* EditViewController.m */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -426,6 +449,8 @@
 				6AC562FF1C776C5B006C03C0 /* UIButton+AFNetworking.m in Sources */,
 				6AC562CB1C776C2B006C03C0 /* imgurServerManager.m in Sources */,
 				6AC562FD1C776C5B006C03C0 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
+				6ACB13E31C7C6CF9004237DD /* FiltersMenuViewController.m in Sources */,
+				6ACB13E61C7C6D0A004237DD /* FontsMenuViewController.m in Sources */,
 				6AC563061C77893A006C03C0 /* imgurJSONParser.m in Sources */,
 				40C4FA8F1C78CB80003CDB34 /* ImgurUser.m in Sources */,
 				6AC562F91C776C5B006C03C0 /* AFURLRequestSerialization.m in Sources */,
@@ -438,6 +463,7 @@
 				6AC562F31C776C5B006C03C0 /* AFHTTPRequestOperation.m in Sources */,
 				6AC562FB1C776C5B006C03C0 /* AFURLSessionManager.m in Sources */,
 				EFA6C7241C77474E00EA73D5 /* MainViewController.m in Sources */,
+				6ACB13E01C7C6CDD004237DD /* TopMenuViewController.m in Sources */,
 				EFA6C72F1C77486C00EA73D5 /* EditViewController.m in Sources */,
 				6AC562F51C776C5B006C03C0 /* AFHTTPSessionManager.m in Sources */,
 				EFA6C7291C7747A400EA73D5 /* SocialViewController.m in Sources */,
