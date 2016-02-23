@@ -136,7 +136,7 @@
                                     </mask>
                                 </variation>
                                 <connections>
-                                    <segue destination="1NR-KH-YKy" kind="embed" id="ISD-5z-3ZZ"/>
+                                    <segue destination="1NR-KH-YKy" kind="embed" identifier="TopMenuVC_seague" id="ISD-5z-3ZZ"/>
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X8m-ak-u8S">
@@ -145,7 +145,7 @@
                                     <constraint firstAttribute="width" constant="200" id="25Z-bF-6Ee"/>
                                 </constraints>
                                 <connections>
-                                    <segue destination="tJA-J8-PaX" kind="embed" id="shD-dr-Ayv"/>
+                                    <segue destination="tJA-J8-PaX" kind="embed" identifier="FiltersMenuVC_seague" id="shD-dr-Ayv"/>
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rig-le-oLO">
@@ -154,7 +154,7 @@
                                     <constraint firstAttribute="width" constant="200" id="nxS-J8-fMj"/>
                                 </constraints>
                                 <connections>
-                                    <segue destination="LjT-Xm-sVE" kind="embed" id="ibW-ZI-xcL"/>
+                                    <segue destination="LjT-Xm-sVE" kind="embed" identifier="FontsMenuVC_seague" id="ibW-ZI-xcL"/>
                                 </connections>
                             </containerView>
                         </subviews>
@@ -522,7 +522,11 @@
         <!--Fonts Menu View Controller-->
         <scene sceneID="ky2-LD-klF">
             <objects>
-                <viewController id="LjT-Xm-sVE" customClass="FontsMenuViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FontsMenuVC" id="LjT-Xm-sVE" customClass="FontsMenuViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="hTK-FW-AXl"/>
+                        <viewControllerLayoutGuide type="bottom" id="Q3f-ps-qMf"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="HjS-qH-mPM">
                         <rect key="frame" x="0.0" y="0.0" width="200" height="580"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -742,7 +746,11 @@
         <!--Filters Menu View Controller-->
         <scene sceneID="68f-bI-zML">
             <objects>
-                <viewController id="tJA-J8-PaX" customClass="FiltersMenuViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FiltersMenuVC" id="tJA-J8-PaX" customClass="FiltersMenuViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="kwe-eb-XKU"/>
+                        <viewControllerLayoutGuide type="bottom" id="W5I-k7-9yK"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="UXp-IR-9dc">
                         <rect key="frame" x="0.0" y="0.0" width="200" height="580"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -770,7 +778,11 @@
         <!--Top Menu View Controller-->
         <scene sceneID="j6T-7j-Knt">
             <objects>
-                <viewController id="1NR-KH-YKy" customClass="TopMenuViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TopMenuVC" id="1NR-KH-YKy" customClass="TopMenuViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="cAn-C3-nY2"/>
+                        <viewControllerLayoutGuide type="bottom" id="y50-G0-ivr"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ATk-gn-q9Q">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

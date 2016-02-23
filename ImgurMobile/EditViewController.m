@@ -8,6 +8,13 @@
 
 #import "EditViewController.h"
 #import "TopMenuViewController.h"
+#import "FiltersMenuViewController.h"
+#import "FontsMenuViewController.h"
+
+typedef enum{
+    FilteringMenu,
+    TextEditingMenu
+}RightMenuType;
 
 @interface EditViewController ()
 
@@ -20,19 +27,22 @@
 @property (strong, nonatomic) CIImage *beginImage;
 @property (strong, nonatomic) CIFilter *filter;
 
-//Top menu
+//TopMenuVC
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topMenuTopConstraint;
 @property (weak, nonatomic) IBOutlet UIView *topMenuContainerView;
+@property (weak, nonatomic) TopMenuViewController *TopMenuVC;
 
-//Right Filters Menu
+//FiltersMenuVC
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *rightFiltersMenuTrailingConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *rightFiltersMenuWidthConstraint;
 @property (weak, nonatomic) IBOutlet UIView *filterMenuContainerView;
+@property (weak, nonatomic) FiltersMenuViewController *FiltersMenuVC;
 
-//Right Fonts Menu
+//FontsMenuVC
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *rightFontsMenuTrailingConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *rightFontsMenuWidthConstraint;
 @property (weak, nonatomic) IBOutlet UIView *fontsMenuContainerView;
+@property (weak, nonatomic) FontsMenuViewController *FontsMenuVC;
 
 //Handle Views
 @property (strong, nonatomic)UIView *topHandleView;
@@ -44,6 +54,8 @@
 
 @property (strong, nonatomic) UITapGestureRecognizer *tapGesture;
 @property (assign, nonatomic) BOOL isTopMenuOpened;
+@property (assign, nonatomic) BOOL isRightFilteringMenuOpened;
+@property (assign, nonatomic) BOOL isRightTextMenuOpened;
 
 @end
 
@@ -54,24 +66,45 @@
     [super viewDidLoad];
     
     self.imageView.image = [UIImage imageNamed:@"sea"];
-    
+    [self prepare];
     [self addHandlesLogic];
+}
+
+- (void)prepare
+{
+    self.mode = FilteringMenu;
+    self.isTopMenuOpened = NO;
+    self.isRightFilteringMenuOpened = NO;
+    self.isRightTextMenuOpened = NO;
+    self.topHandleViewHeigh = 20;
+    self.topHandleViewWidth = 100;
+    self.rightHandleViewHeigh = 100;
+    self.rightHandleViewWidth = 20;
+}
+
+- (void)removeAllHandes
+{
+    for (UIView *v in self.view.subviews)
+    {
+        if (v.tag == 113 || v.tag == 114 || v.tag == 115)
+        {
+            [v removeFromSuperview];
+        }
+    }
 }
 
 - (void)addHandlesLogic
 {
+    [self removeAllHandes];
     [self addTopMenuHandle];
+    [self addRightMenuHandle];
     self.tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                               action:@selector(handleTap:)];
     [self.view addGestureRecognizer:self.tapGesture];
-    self.isTopMenuOpened = NO;
-    self.topMenuContainerView.tag = 1133;
 }
 
 - (void)addTopMenuHandle
 {
-    self.topHandleViewHeigh = 20;
-    self.topHandleViewWidth = 100;
     CGRect frame = CGRectMake(self.view.frame.size.width / 2 - self.topHandleViewWidth / 2,
                                self.view.frame.origin.y,
                                self.topHandleViewWidth ,
@@ -86,7 +119,33 @@
 
 - (void)addRightMenuHandle
 {
-    
+    CGRect frame = CGRectMake(self.view.frame.size.width - self.rightHandleViewWidth,
+                              self.view.frame.size.height / 2 - self.rightHandleViewHeigh / 2,
+                              self.rightHandleViewWidth ,
+                              self.rightHandleViewHeigh);
+    switch (self.mode)
+    {
+        case imageFiltering:
+        {
+            self.rightHandleView = [[UIView alloc] initWithFrame:frame];
+            self.rightHandleView.backgroundColor = [UIColor blueColor];
+            self.rightHandleView.tag = 114;
+        }
+            break;
+            
+        case textEditing:
+        {
+            self.rightHandleView = [[UIView alloc] initWithFrame:frame];
+            self.rightHandleView.backgroundColor = [UIColor greenColor];
+            self.rightHandleView.tag = 115;
+        }
+            break;
+            
+        default:
+            break;
+    }
+    self.rightHandleView.userInteractionEnabled = YES;
+    [self.view addSubview:self.rightHandleView];
 }
 
 - (void)handleTap:(UITapGestureRecognizer *)tap
@@ -95,12 +154,13 @@
     UIView *view = [self.view hitTest:location withEvent:nil];
     
     if(view.tag == 113)
-    {
         [self changeStateOfTopMenu];
-    }
+    if(view.tag == 114)
+        [self changeStateOfRightMenu:FilteringMenu];
+    if(view.tag == 115)
+        [self changeStateOfRightMenu:TextEditingMenu];
     else
         return;
-
 }
 
 - (void)changeStateOfTopMenu
@@ -117,6 +177,61 @@
         self.tapGesture.enabled = NO;
         [self animateChangingOfConstraint:self.topMenuTopConstraint ToValue:0];
         self.isTopMenuOpened = YES;
+        self.tapGesture.enabled = YES;
+    }
+}
+
+- (void)changeStateOfRightMenu:(RightMenuType)type
+{
+    switch (type)
+    {
+        case FilteringMenu:
+            [self changeStateOfFilteringMenu];
+            break;
+            
+        case TextEditingMenu:
+            [self changeStateOfTextEditingMenu];
+            break;
+            
+        default:
+            break;
+    }
+}
+
+- (void)changeStateOfFilteringMenu
+{
+    if (self.isRightFilteringMenuOpened)
+    {
+        self.tapGesture.enabled = NO;
+        [self animateChangingOfConstraint:self.rightFiltersMenuTrailingConstraint
+                                  ToValue:-self.rightFiltersMenuWidthConstraint.constant];
+        self.isRightFilteringMenuOpened = NO;
+        self.tapGesture.enabled = YES;
+    }
+    else
+    {
+        self.tapGesture.enabled = NO;
+        [self animateChangingOfConstraint:self.rightFiltersMenuTrailingConstraint ToValue:0];
+        self.isRightFilteringMenuOpened = YES;
+        self.tapGesture.enabled = YES;
+    }
+}
+
+- (void)changeStateOfTextEditingMenu
+{
+    if (self.isRightTextMenuOpened)
+    {
+        self.tapGesture.enabled = NO;
+        [self animateChangingOfConstraint:self.rightFontsMenuTrailingConstraint
+                                  ToValue:-self.rightFontsMenuWidthConstraint.constant];
+        self.isRightTextMenuOpened = NO;
+        self.tapGesture.enabled = YES;
+    }
+    else
+    {
+        self.tapGesture.enabled = NO;
+        [self animateChangingOfConstraint:self.rightFontsMenuTrailingConstraint ToValue:0];
+        self.isRightTextMenuOpened = YES;
         self.tapGesture.enabled = YES;
     }
 }
@@ -139,6 +254,24 @@
 {
     self.mode = mode;
     [self addHandlesLogic];
+}
+
+#pragma mark - navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"TopMenuVC_seague"])
+    {
+        self.TopMenuVC = (TopMenuViewController *)[segue destinationViewController];
+        self.TopMenuVC.delegate = self;
+    }
+    else if ([segue.identifier isEqualToString:@"FiltersMenuVC_seague"])
+    {
+        self.FiltersMenuVC = (FiltersMenuViewController *)[segue destinationViewController];
+    }
+    else if ([segue.identifier isEqualToString:@"FontsMenuVC_seague"])
+    {
+        self.FontsMenuVC = (FontsMenuViewController *)[segue destinationViewController];
+    }
 }
 
 /*
