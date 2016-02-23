@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "EditProtocolHeader.h"
 
-@interface EditViewController : UIViewController
+@interface EditViewController : UIViewController <topMenuDelegate>
 
 @property (nonatomic, strong) UIImage *image;
 
