@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="DTt-cb-4HE">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="DTt-cb-4HE">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
@@ -530,10 +530,10 @@
         <!--Fonts Menu View Controller-->
         <scene sceneID="ky2-LD-klF">
             <objects>
-                <viewController id="LjT-Xm-sVE" customClass="FontsMenuViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FontsMenuVC" id="LjT-Xm-sVE" customClass="FontsMenuViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="2L7-cA-kHW"/>
-                        <viewControllerLayoutGuide type="bottom" id="QMH-Td-YA7"/>
+                        <viewControllerLayoutGuide type="top" id="hTK-FW-AXl"/>
+                        <viewControllerLayoutGuide type="bottom" id="Q3f-ps-qMf"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="HjS-qH-mPM">
                         <rect key="frame" x="0.0" y="0.0" width="200" height="580"/>
@@ -754,10 +754,10 @@
         <!--Filters Menu View Controller-->
         <scene sceneID="68f-bI-zML">
             <objects>
-                <viewController id="tJA-J8-PaX" customClass="FiltersMenuViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FiltersMenuVC" id="tJA-J8-PaX" customClass="FiltersMenuViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="xZG-uz-hO8"/>
-                        <viewControllerLayoutGuide type="bottom" id="Nx0-Zz-my0"/>
+                        <viewControllerLayoutGuide type="top" id="kwe-eb-XKU"/>
+                        <viewControllerLayoutGuide type="bottom" id="W5I-k7-9yK"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="UXp-IR-9dc">
                         <rect key="frame" x="0.0" y="0.0" width="200" height="580"/>
@@ -786,10 +786,10 @@
         <!--Top Menu View Controller-->
         <scene sceneID="j6T-7j-Knt">
             <objects>
-                <viewController id="1NR-KH-YKy" customClass="TopMenuViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TopMenuVC" id="1NR-KH-YKy" customClass="TopMenuViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Gae-QU-cgv"/>
-                        <viewControllerLayoutGuide type="bottom" id="Wb1-7t-EHz"/>
+                        <viewControllerLayoutGuide type="top" id="cAn-C3-nY2"/>
+                        <viewControllerLayoutGuide type="bottom" id="y50-G0-ivr"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ATk-gn-q9Q">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
