@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "EditProtocolHeader.h"
 
 @interface TopMenuViewController : UIViewController
+
+@property (weak, nonatomic) id <topMenuDelegate> delegate;
 
 @end

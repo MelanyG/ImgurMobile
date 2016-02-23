@@ -12,7 +12,7 @@
 @interface imgurPost : NSObject
 
 @property (strong, nonatomic) NSString *owner;
-@property (strong, nonatomic) NSURL *imageURL;
+@property (strong, nonatomic) NSString *imageURL;
 @property (strong, nonatomic) NSString *title;
 @property (strong, nonatomic) NSString *postDescription;
 @property (strong, nonatomic) NSString *topic;
