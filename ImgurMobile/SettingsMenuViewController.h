@@ -9,8 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "EditProtocolHeader.h"
 
-@interface TopMenuViewController : UIViewController
+@interface SettingsMenuViewController : UIViewController
 
 @property (weak, nonatomic) id <topMenuDelegate> delegate;
+
+@property (assign, nonatomic) BOOL *shouldRespondToTouchEvents;
 
 @end
