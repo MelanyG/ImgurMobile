@@ -17,6 +17,7 @@
 		40C4FA891C78BA00003CDB34 /* ImgurAccessToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 40C4FA881C78BA00003CDB34 /* ImgurAccessToken.m */; };
 		40C4FA8F1C78CB80003CDB34 /* ImgurUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 40C4FA8E1C78CB80003CDB34 /* ImgurUser.m */; };
 		6A6A6B0A1C7E166000DE946E /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A6A6B091C7E166000DE946E /* UIImage+Resize.m */; };
+		6A6A6B0D1C7E257E00DE946E /* ImageFilterProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A6A6B0C1C7E257E00DE946E /* ImageFilterProcessor.m */; };
 		6AA3C7DE1C78A513001091F0 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AA3C7DD1C78A513001091F0 /* CoreImage.framework */; };
 		6AC562CB1C776C2B006C03C0 /* imgurServerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AC562CA1C776C2B006C03C0 /* imgurServerManager.m */; };
 		6AC562F31C776C5B006C03C0 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AC562CF1C776C5B006C03C0 /* AFHTTPRequestOperation.m */; };
@@ -80,6 +81,8 @@
 		40C4FA8E1C78CB80003CDB34 /* ImgurUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImgurUser.m; sourceTree = "<group>"; };
 		6A6A6B081C7E166000DE946E /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
 		6A6A6B091C7E166000DE946E /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
+		6A6A6B0B1C7E257E00DE946E /* ImageFilterProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageFilterProcessor.h; sourceTree = "<group>"; };
+		6A6A6B0C1C7E257E00DE946E /* ImageFilterProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageFilterProcessor.m; sourceTree = "<group>"; };
 		6AA3C7DD1C78A513001091F0 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		6AC562C91C776C2B006C03C0 /* imgurServerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = imgurServerManager.h; sourceTree = "<group>"; };
 		6AC562CA1C776C2B006C03C0 /* imgurServerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = imgurServerManager.m; sourceTree = "<group>"; };
@@ -326,6 +329,8 @@
 				6ACB13E91C7CE38F004237DD /* UIView+SuperClassChecker.m */,
 				6A6A6B081C7E166000DE946E /* UIImage+Resize.h */,
 				6A6A6B091C7E166000DE946E /* UIImage+Resize.m */,
+				6A6A6B0B1C7E257E00DE946E /* ImageFilterProcessor.h */,
+				6A6A6B0C1C7E257E00DE946E /* ImageFilterProcessor.m */,
 			);
 			name = Edit;
 			sourceTree = "<group>";
@@ -473,6 +478,7 @@
 				404D9C441C7A141E0063B912 /* ImgurPosting.m in Sources */,
 				40C4FA861C78B8F3003CDB34 /* ImgurLoginViewController.m in Sources */,
 				6AC562F71C776C5B006C03C0 /* AFSecurityPolicy.m in Sources */,
+				6A6A6B0D1C7E257E00DE946E /* ImageFilterProcessor.m in Sources */,
 				97AEA2361C7B20DA0010CD99 /* NotChalengingQueue.m in Sources */,
 				6AC562F31C776C5B006C03C0 /* AFHTTPRequestOperation.m in Sources */,
 				6AC562FB1C776C5B006C03C0 /* AFURLSessionManager.m in Sources */,
