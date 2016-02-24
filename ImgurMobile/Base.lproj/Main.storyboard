@@ -836,13 +836,14 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="WDG-Xt-Qj4"/>
                                 <exclude reference="tYq-Kk-TX8"/>
+                                <exclude reference="WDG-Xt-Qj4"/>
                                 <exclude reference="897-sF-VYf"/>
                             </mask>
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="containerViewHeighConstraint" destination="izd-LB-RgY" id="XzU-J8-ZGq"/>
                         <outlet property="contentView" destination="3Mn-Ci-0S4" id="AXF-fb-b7G"/>
                         <outlet property="scrollView" destination="L2Q-yM-nNg" id="h99-N4-53S"/>
                         <outlet property="slider" destination="Adj-Q1-4iV" id="cUN-nd-3s6"/>

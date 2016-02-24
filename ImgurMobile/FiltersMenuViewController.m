@@ -7,6 +7,7 @@
 //
 
 #import "FiltersMenuViewController.h"
+#import "UIImage+Resize.h"
 
 typedef enum{
     CISepiaTone,
@@ -45,9 +46,12 @@ NSString * NSStringFromFilterName(FilterName name)
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIView *contentView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *containerViewHeighConstraint;
 @property (weak, nonatomic) IBOutlet UILabel *sliderLabel;
 @property (weak, nonatomic) IBOutlet UISlider *slider;
-@property (strong, nonatomic) NSArray *processedSampleImages;
+@property (strong, nonatomic) NSMutableArray *processedSampleImages;
+@property (assign, nonatomic) CGSize sampleImageSize;
+@property (strong, nonatomic) UIImage *sampleImage;
 
 @property (strong, nonatomic) CIContext *ctx;
 @property (strong, nonatomic) CIImage *beginImage;
@@ -61,77 +65,143 @@ NSString * NSStringFromFilterName(FilterName name)
 {
     [super viewDidLoad];
     self.view.tag = 3333;
+    [self prepareSampleImage];
+    [self processAndSetSampleImages];
+    [self configure];
+}
+
+- (void)prepareSampleImage
+{
+    double coef = self.currentImage.size.width / self.contentView.frame.size.width;
+    self.sampleImageSize = CGSizeMake(self.currentImage.size.width / coef,
+                                      self.currentImage.size.height / coef);
+    self.sampleImage = [UIImage imageWithImage:self.currentImage scaledToSize:self.sampleImageSize];
+}
+
+- (void)configure
+{
+    self.containerViewHeighConstraint.constant =  self.sampleImageSize.height * self.processedSampleImages.count;
+    self.scrollView.contentSize = CGSizeMake(self.contentView.frame.size.width,
+                                             self.sampleImageSize.height * self.processedSampleImages.count);
+    [self setImagesIntoContentView];
+}
+
+- (void)setImagesIntoContentView
+{
+    double yCoordinate = 0;
+    for (int i = 0; i < self.processedSampleImages.count; i++)
+    {
+        CGRect frame = CGRectMake(0,yCoordinate + self.sampleImageSize.height*i,
+                                  self.sampleImageSize.width,
+                                  self.sampleImageSize.height);
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:frame];
+        imageView.image = [self.processedSampleImages objectAtIndex:i];
+        [self.contentView addSubview:imageView];
+    }
 }
 
 - (void)processAndSetSampleImages
 {
+    self.ctx = [CIContext contextWithOptions:nil];
     
-}/*
+    self.beginImage = [CIImage imageWithCGImage:self.sampleImage.CGImage];
+    
+    self.processedSampleImages = [NSMutableArray array];
+    [self.processedSampleImages addObject:[self CISepiaToneFromCurrentImage]];
+    [self.processedSampleImages addObject:[self CIBoxBlurFromCurrentImage]];
+    [self.processedSampleImages addObject:[self CIGammaAdjustFromCurrentImage]];
+    [self.processedSampleImages addObject:[self CIVibranceFromCurrentImage]];
+    [self.processedSampleImages addObject:[self CIColorCubeFromCurrentImage]];
+    [self.processedSampleImages addObject:[self CIColorMonochromeFromCurrentImage]];
+    [self.processedSampleImages addObject:[self CIDepthOfFieldFromCurrentImage]];
+}
 
 - (UIImage *)CISepiaToneFromCurrentImage
 {
-    self.ctx = [CIContext contextWithOptions:nil];
+    CIFilter *filter = [CIFilter filterWithName:NSStringFromFilterName(CISepiaTone)
+                                  keysAndValues:
+                        kCIInputImageKey, self.beginImage,
+                        kCIInputIntensityKey, [NSNumber numberWithFloat:self.slider.value], nil];
     
-    self.beginImage = [CIImage imageWithCGImage:self.currentImage.CGImage];
-    
-    self.filter = [CIFilter filterWithName:NSStringFromFilterName(CISepiaTone)
-                             keysAndValues:
-                   kCIInputImageKey, self.beginImage,
-                   @"inputIntensity", @0.8, nil];
-    
-    CIImage *outImage = [self.filter outputImage];
-    
-    CGImageRef cgImg = [self.ctx createCGImage:outImage fromRect:[outImage extent]];
-    
-    self.imageView.image = [UIImage imageWithCGImage:cgImg];
-    
-    CGImageRelease(cgImg);
+    return [self getFilteredImageWithFilter:filter];
 }
 
 - (UIImage *)CIBoxBlurFromCurrentImage
 {
-    self.ctx = [CIContext contextWithOptions:nil];
+    CIFilter *filter = [CIFilter filterWithName:NSStringFromFilterName(CIBoxBlur)
+                                    keysAndValues:
+                          kCIInputImageKey, self.beginImage,
+                          kCIInputRadiusKey, [NSNumber numberWithFloat:self.slider.value * 10], nil];
     
-    self.beginImage = [CIImage imageWithCGImage:self.currentImage.CGImage];
+    return [self getFilteredImageWithFilter:filter];
+}
+
+- (UIImage *)CIGammaAdjustFromCurrentImage
+{
+    CIFilter *filter = [CIFilter filterWithName:NSStringFromFilterName(CIGammaAdjust)
+                                  keysAndValues:
+                        kCIInputImageKey, self.beginImage,
+                        @"inputPower", [NSNumber numberWithFloat:self.slider.value], nil];
     
-    self.filter = [CIFilter filterWithName:NSStringFromFilterName(CISepiaTone)
-                             keysAndValues:
-                   kCIInputImageKey, self.beginImage,
-                   @"inputIntensity", @0.8, nil];
+    return [self getFilteredImageWithFilter:filter];
+}
+
+- (UIImage *)CIVibranceFromCurrentImage
+{
+    CIFilter *filter = [CIFilter filterWithName:NSStringFromFilterName(CIVibrance)
+                                  keysAndValues:
+                        kCIInputImageKey, self.beginImage,
+                        @"inputAmount", [NSNumber numberWithFloat:self.slider.value], nil];
+    
+    return [self getFilteredImageWithFilter:filter];
+}
+
+- (UIImage *)CIColorCubeFromCurrentImage
+{
+#warning non
+    CIFilter *filter = [CIFilter filterWithName:NSStringFromFilterName(CIVibrance)
+                                  keysAndValues:
+                        kCIInputImageKey, self.beginImage,
+                        @"inputAmount", [NSNumber numberWithFloat:self.slider.value], nil];
+    
+    return [self getFilteredImageWithFilter:filter];
+}
+
+- (UIImage *)CIColorMonochromeFromCurrentImage
+{
+    CIFilter *filter = [CIFilter filterWithName:NSStringFromFilterName(CIColorMonochrome)
+                                  keysAndValues:
+                        kCIInputImageKey, self.beginImage,
+                        kCIInputColorKey, [CIColor colorWithRed:0.67 green:0.13 blue:0.83 alpha:0.74],
+                        @"inputIntensity", [NSNumber numberWithFloat:self.slider.value], nil];
+    
+    return [self getFilteredImageWithFilter:filter];
+}
+
+- (UIImage *)CIDepthOfFieldFromCurrentImage
+{
+    CIFilter *filter = [CIFilter filterWithName:NSStringFromFilterName(CIDepthOfField)
+                                  keysAndValues:
+                        kCIInputImageKey, self.beginImage,
+                        kCIInputRadiusKey, [NSNumber numberWithFloat:self.slider.value * 10], nil];
+    
+    return [self getFilteredImageWithFilter:filter];
+}
+
+- (UIImage *)getFilteredImageWithFilter:(CIFilter *)filter
+{
+    self.filter = filter;
     
     CIImage *outImage = [self.filter outputImage];
     
     CGImageRef cgImg = [self.ctx createCGImage:outImage fromRect:[outImage extent]];
     
-    self.imageView.image = [UIImage imageWithCGImage:cgImg];
+    UIImage *image = [UIImage imageWithCGImage:cgImg];
     
     CGImageRelease(cgImg);
-}
-
-- (UIImage *)CIGammaAdjustFromCurrentImage
-{
     
+    return image;
 }
-
-- (UIImage *)CIVibranceFromCurrentImage
-{
-    
-}
-
-- (UIImage *)CIColorCubeFromCurrentImage
-{
-    
-}
-
-- (UIImage *)CIColorMonochromeFromCurrentImage
-{
-    
-}
-
-- (UIImage *)CIDepthOfFieldFromCurrentImage
-{
-    
-}*/
 
 /* - (void)viewDidLoad
  {
