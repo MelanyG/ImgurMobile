@@ -7,7 +7,7 @@
 //
 
 #import "EditViewController.h"
-#import "TopMenuViewController.h"
+#import "SettingsMenuViewController.h"
 #import "FiltersMenuViewController.h"
 #import "FontsMenuViewController.h"
 #import "UIView+SuperClassChecker.h"
@@ -23,10 +23,11 @@
 @property (strong, nonatomic) CIImage *beginImage;
 @property (strong, nonatomic) CIFilter *filter;
 
-//TopMenuVC
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topMenuTopConstraint;
-@property (weak, nonatomic) IBOutlet UIView *topMenuContainerView;
-@property (weak, nonatomic) TopMenuViewController *TopMenuVC;
+//SettingsMenuVC
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *settingsMenuLeadingConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *settingsMenuWidthConstraint;
+@property (weak, nonatomic) IBOutlet UIView *leftMenuContainerView;
+@property (weak, nonatomic) SettingsMenuViewController *settingsMenuVC;
 
 //FiltersMenuVC
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *rightFiltersMenuTrailingConstraint;
@@ -41,16 +42,14 @@
 @property (weak, nonatomic) FontsMenuViewController *FontsMenuVC;
 
 //Handle Views
-@property (strong, nonatomic)UIView *topHandleView;
-@property (assign, nonatomic)double topHandleViewWidth;
-@property (assign, nonatomic)double topHandleViewHeigh;
+@property (strong, nonatomic)UIView *leftHandleView;
 @property (strong, nonatomic)UIView *rightHandleView;
-@property (assign, nonatomic)double rightHandleViewWidth;
-@property (assign, nonatomic)double rightHandleViewHeigh;
+@property (assign, nonatomic)double handleViewHeigh;
+@property (assign, nonatomic)double handleViewWidth;
 
 @property (strong, nonatomic) UITapGestureRecognizer *tapGesture;
 @property (strong, nonatomic) UIPanGestureRecognizer *panGesture;
-@property (assign, nonatomic) BOOL isTopMenuOpened;
+@property (assign, nonatomic) BOOL isLeftMenuOpened;
 @property (assign, nonatomic) BOOL isRightFilteringMenuOpened;
 @property (assign, nonatomic) BOOL isRightTextMenuOpened;
 
@@ -70,13 +69,11 @@
 - (void)prepare
 {
     self.mode = FilteringMenu;
-    self.isTopMenuOpened = NO;
+    self.isLeftMenuOpened = NO;
     self.isRightFilteringMenuOpened = NO;
     self.isRightTextMenuOpened = NO;
-    self.topHandleViewHeigh = 20;
-    self.topHandleViewWidth = 100;
-    self.rightHandleViewHeigh = 100;
-    self.rightHandleViewWidth = 20;
+    self.handleViewHeigh = 100;
+    self.handleViewWidth = 20;
 }
 
 - (void)removeAllHandes
@@ -93,7 +90,7 @@
 - (void)addHandlesLogic
 {
     [self removeAllHandes];
-    [self addTopMenuHandle];
+    [self addLeftMenuHandle];
     [self addRightMenuHandle];
     self.tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                               action:@selector(handleTap:)];
@@ -103,26 +100,26 @@
     [self.view addGestureRecognizer:self.panGesture];
 }
 
-- (void)addTopMenuHandle
+- (void)addLeftMenuHandle
 {
-    CGRect frame = CGRectMake(self.view.frame.size.width / 2 - self.topHandleViewWidth / 2,
-                               self.view.frame.origin.y,
-                               self.topHandleViewWidth ,
-                               self.topHandleViewHeigh);
+    CGRect frame = CGRectMake(self.view.frame.origin.x,
+                               self.view.frame.size.height / 2 - self.handleViewHeigh / 2,
+                               self.handleViewWidth ,
+                               self.handleViewHeigh);
     
-    self.topHandleView = [[UIView alloc] initWithFrame:frame];
-    self.topHandleView.backgroundColor = [UIColor redColor];
-    self.topHandleView.tag = 113;
-    self.topHandleView.userInteractionEnabled = YES;
-    [self.view addSubview:self.topHandleView];
+    self.leftHandleView = [[UIView alloc] initWithFrame:frame];
+    self.leftHandleView.backgroundColor = [UIColor redColor];
+    self.leftHandleView.tag = 113;
+    self.leftHandleView.userInteractionEnabled = YES;
+    [self.view addSubview:self.leftHandleView];
 }
 
 - (void)addRightMenuHandle
 {
-    CGRect frame = CGRectMake(self.view.frame.size.width - self.rightHandleViewWidth,
-                              self.view.frame.size.height / 2 - self.rightHandleViewHeigh / 2,
-                              self.rightHandleViewWidth ,
-                              self.rightHandleViewHeigh);
+    CGRect frame = CGRectMake(self.view.frame.size.width - self.handleViewWidth,
+                              self.view.frame.size.height / 2 - self.handleViewHeigh / 2,
+                              self.handleViewWidth ,
+                              self.handleViewHeigh);
     switch (self.mode)
     {
         case imageFiltering:
@@ -155,13 +152,21 @@
     UIView *view = [self.view hitTest:location withEvent:nil];
     
     if(view.tag == 113)
-        [self changeStateOfTopMenu];
+        [self changeStateOfLeftMenu];
     if(view.tag == 114)
         [self changeStateOfRightMenu:FilteringMenu];
     if(view.tag == 115)
         [self changeStateOfRightMenu:TextEditingMenu];
     else
         return;
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch{
+    
+    if ([touch.view isKindOfClass:[UIButton class]]) {      //change it to your condition
+        return NO;
+    }
+    return YES;
 }
 
 - (void)handlePan:(UIPanGestureRecognizer *)pan
@@ -186,9 +191,9 @@
     
     if ([view superTag:1111])
     {
-        if(velocity.y < 0)
+        if(velocity.x < 0)
         {
-            [self changeStateOfTopMenu];
+            [self changeStateOfLeftMenu];
             self.panGesture.enabled = NO;
         }
     }
@@ -213,20 +218,20 @@
 }
 
 #pragma mark - constraints changing
-- (void)changeStateOfTopMenu
+- (void)changeStateOfLeftMenu
 {
-    if (self.isTopMenuOpened)
+    if (self.isLeftMenuOpened)
     {
         self.tapGesture.enabled = NO;
-        [self animateChangingOfConstraint:self.topMenuTopConstraint ToValue:-100];
-        self.isTopMenuOpened = NO;
+        [self animateChangingOfConstraint:self.settingsMenuLeadingConstraint ToValue:-self.settingsMenuWidthConstraint.constant];
+        self.isLeftMenuOpened = NO;
         self.tapGesture.enabled = YES;
     }
     else
     {
         self.tapGesture.enabled = NO;
-        [self animateChangingOfConstraint:self.topMenuTopConstraint ToValue:0];
-        self.isTopMenuOpened = YES;
+        [self animateChangingOfConstraint:self.settingsMenuLeadingConstraint ToValue:0];
+        self.isLeftMenuOpened = YES;
         self.tapGesture.enabled = YES;
     }
 }
@@ -311,8 +316,8 @@
 {
     if ([segue.identifier isEqualToString:@"TopMenuVC_seague"])
     {
-        self.TopMenuVC = (TopMenuViewController *)[segue destinationViewController];
-        self.TopMenuVC.delegate = self;
+        self.settingsMenuVC = (SettingsMenuViewController *)[segue destinationViewController];
+        self.settingsMenuVC.delegate = self;
     }
     else if ([segue.identifier isEqualToString:@"FiltersMenuVC_seague"])
     {

@@ -22,7 +22,7 @@ typedef enum{
 @protocol topMenuDelegate <NSObject>
 
 - (void)changeWorkingModeTo:(WorkingMode) mode;
-- (void)changeStateOfTopMenu;
+- (void)changeStateOfLeftMenu;
 
 @end
 

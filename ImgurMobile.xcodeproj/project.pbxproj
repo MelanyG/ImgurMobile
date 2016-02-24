@@ -38,7 +38,7 @@
 		6AC563061C77893A006C03C0 /* imgurJSONParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AC563051C77893A006C03C0 /* imgurJSONParser.m */; };
 		6AC5630C1C778A64006C03C0 /* imgurAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AC5630B1C778A64006C03C0 /* imgurAlbum.m */; };
 		6AC5630F1C778AF9006C03C0 /* imgurPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AC5630E1C778AF9006C03C0 /* imgurPost.m */; };
-		6ACB13E01C7C6CDD004237DD /* TopMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6ACB13DF1C7C6CDD004237DD /* TopMenuViewController.m */; };
+		6ACB13E01C7C6CDD004237DD /* SettingsMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6ACB13DF1C7C6CDD004237DD /* SettingsMenuViewController.m */; };
 		6ACB13E31C7C6CF9004237DD /* FiltersMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6ACB13E21C7C6CF9004237DD /* FiltersMenuViewController.m */; };
 		6ACB13E61C7C6D0A004237DD /* FontsMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6ACB13E51C7C6D0A004237DD /* FontsMenuViewController.m */; };
 		6ACB13EA1C7CE38F004237DD /* UIView+SuperClassChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 6ACB13E91C7CE38F004237DD /* UIView+SuperClassChecker.m */; };
@@ -122,8 +122,8 @@
 		6AC5630B1C778A64006C03C0 /* imgurAlbum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = imgurAlbum.m; sourceTree = "<group>"; };
 		6AC5630D1C778AF9006C03C0 /* imgurPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = imgurPost.h; sourceTree = "<group>"; };
 		6AC5630E1C778AF9006C03C0 /* imgurPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = imgurPost.m; sourceTree = "<group>"; };
-		6ACB13DE1C7C6CDD004237DD /* TopMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopMenuViewController.h; sourceTree = "<group>"; };
-		6ACB13DF1C7C6CDD004237DD /* TopMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopMenuViewController.m; sourceTree = "<group>"; };
+		6ACB13DE1C7C6CDD004237DD /* SettingsMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsMenuViewController.h; sourceTree = "<group>"; };
+		6ACB13DF1C7C6CDD004237DD /* SettingsMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsMenuViewController.m; sourceTree = "<group>"; };
 		6ACB13E11C7C6CF9004237DD /* FiltersMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FiltersMenuViewController.h; sourceTree = "<group>"; };
 		6ACB13E21C7C6CF9004237DD /* FiltersMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FiltersMenuViewController.m; sourceTree = "<group>"; };
 		6ACB13E41C7C6D0A004237DD /* FontsMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontsMenuViewController.h; sourceTree = "<group>"; };
@@ -312,8 +312,8 @@
 			children = (
 				EFA6C72D1C77486C00EA73D5 /* EditViewController.h */,
 				EFA6C72E1C77486C00EA73D5 /* EditViewController.m */,
-				6ACB13DE1C7C6CDD004237DD /* TopMenuViewController.h */,
-				6ACB13DF1C7C6CDD004237DD /* TopMenuViewController.m */,
+				6ACB13DE1C7C6CDD004237DD /* SettingsMenuViewController.h */,
+				6ACB13DF1C7C6CDD004237DD /* SettingsMenuViewController.m */,
 				6ACB13E11C7C6CF9004237DD /* FiltersMenuViewController.h */,
 				6ACB13E21C7C6CF9004237DD /* FiltersMenuViewController.m */,
 				6ACB13E41C7C6D0A004237DD /* FontsMenuViewController.h */,
@@ -471,7 +471,7 @@
 				6AC562F31C776C5B006C03C0 /* AFHTTPRequestOperation.m in Sources */,
 				6AC562FB1C776C5B006C03C0 /* AFURLSessionManager.m in Sources */,
 				EFA6C7241C77474E00EA73D5 /* MainViewController.m in Sources */,
-				6ACB13E01C7C6CDD004237DD /* TopMenuViewController.m in Sources */,
+				6ACB13E01C7C6CDD004237DD /* SettingsMenuViewController.m in Sources */,
 				EFA6C72F1C77486C00EA73D5 /* EditViewController.m in Sources */,
 				6AC562F51C776C5B006C03C0 /* AFHTTPSessionManager.m in Sources */,
 				EFA6C7291C7747A400EA73D5 /* SocialViewController.m in Sources */,
