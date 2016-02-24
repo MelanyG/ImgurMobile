@@ -13,6 +13,7 @@
 {
     [super viewDidLoad];
     self.view.tag = 1111;
+    self.shouldRespondToTouchEvents = YES;
 }
 - (IBAction)workModeDidChanged:(UIButton *)sender
 {

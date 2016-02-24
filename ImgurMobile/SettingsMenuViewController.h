@@ -13,6 +13,6 @@
 
 @property (weak, nonatomic) id <topMenuDelegate> delegate;
 
-@property (assign, nonatomic) BOOL *shouldRespondToTouchEvents;
+@property (assign, nonatomic) BOOL shouldRespondToTouchEvents;
 
 @end

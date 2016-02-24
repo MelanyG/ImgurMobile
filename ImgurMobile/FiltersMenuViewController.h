@@ -12,5 +12,6 @@
 @interface FiltersMenuViewController : UIViewController
 
 @property (weak, nonatomic)id <rightMenuDelegate> delegate;
+@property (strong, nonatomic) UIImage *currentImage;
 
 @end

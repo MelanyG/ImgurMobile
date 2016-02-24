@@ -66,6 +66,11 @@
     [self addHandlesLogic];
 }
 
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [self addHandlesLogic];
+}
+
 - (void)prepare
 {
     self.mode = FilteringMenu;
@@ -175,6 +180,7 @@
     
     if (pan.state == UIGestureRecognizerStateCancelled)
     {
+        
         [app endIgnoringInteractionEvents];
         self.panGesture.enabled = YES;
     }
@@ -191,6 +197,7 @@
     
     if ([view superTag:1111])
     {
+        self.settingsMenuVC.shouldRespondToTouchEvents = NO;
         if(velocity.x < 0)
         {
             [self changeStateOfLeftMenu];
@@ -233,6 +240,7 @@
         [self animateChangingOfConstraint:self.settingsMenuLeadingConstraint ToValue:0];
         self.isLeftMenuOpened = YES;
         self.tapGesture.enabled = YES;
+        self.settingsMenuVC.shouldRespondToTouchEvents = YES;
     }
 }
 
@@ -329,50 +337,7 @@
     }
 }
 
-/*
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    self.image = [UIImage imageNamed:@"sea"];
-    
-    
-    self.ctx = [CIContext contextWithOptions:nil];
 
-    self.beginImage = [CIImage imageWithCGImage:self.image.CGImage];
-    
-    self.filter = [CIFilter filterWithName:@"CISepiaTone"
-                                  keysAndValues:
-                        kCIInputImageKey, self.beginImage,
-                        @"inputIntensity", @0.8, nil];
-    
-    CIImage *outImage = [self.filter outputImage];
-    
-    CGImageRef cgImg = [self.ctx createCGImage:outImage fromRect:[outImage extent]];
-    
-    self.imageView.image = [UIImage imageWithCGImage:cgImg];
-    
-    CGImageRelease(cgImg);
-}
-
-- (IBAction)intensityBeenChanged:(UISlider *)sender
-{
-    float slideValue = sender.value;
-    
-    [self.filter setValue:@(slideValue)
-              forKey:@"inputIntensity"];
-    CIImage *outImage = [self.filter outputImage];
-    
-    CGImageRef cgImg = [self.ctx createCGImage:outImage fromRect:[outImage extent]];
-    
-    self.imageView.image = [UIImage imageWithCGImage:cgImg];
-    
-    CGImageRelease(cgImg);
-}
-
-- (void)addScrollView
-{
-    
-}*/
 
 
 @end
