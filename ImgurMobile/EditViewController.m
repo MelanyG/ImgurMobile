@@ -330,6 +330,7 @@
     else if ([segue.identifier isEqualToString:@"FiltersMenuVC_seague"])
     {
         self.FiltersMenuVC = (FiltersMenuViewController *)[segue destinationViewController];
+        self.FiltersMenuVC.currentImage = [UIImage imageNamed:@"sea"];
     }
     else if ([segue.identifier isEqualToString:@"FontsMenuVC_seague"])
     {
