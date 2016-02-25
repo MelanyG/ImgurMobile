@@ -47,7 +47,7 @@
         
         NSURL* url = [NSURL URLWithString:@"https://api.imgur.com/3/"];
         
-        self.requestOperationManager = [[AFHTTPRequestOperationManager alloc] init];
+        self.requestOperationManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:url];
     }
     return self;
 }
@@ -149,42 +149,112 @@
      }];
 }
 
-- (void) postImage:(NSString*) text
-      onGroupWall:(NSString*) groupID
-        onSuccess:(void(^)(id result)) success
-        onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure
++ (void)uploadPhoto:(NSData*)imageData
+              title:(NSString*)title
+        description:(NSString*)description
+    completionBlock:(void(^)(NSString* result))completion
+       failureBlock:(void(^)(NSURLResponse *response, NSError *error, NSInteger status))failureBlock
 {
-         if (![groupID hasPrefix:@"-"]) {
-            groupID = [@"-" stringByAppendingString:groupID];
+    NSAssert(imageData, @"Image data is required");
+    //NSAssert(access_token, @"Access token is required");
+    
+    NSMutableDictionary* _params = [[NSMutableDictionary alloc] init];
+    _params[@"type"] = @"base64";
+    _params[@"name"] = @"myImage";
+    
+    NSString *urlString = @"https://api.imgur.com/endpoints/image.json";
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init] ;
+    
+    [request setURL:[NSURL URLWithString:urlString]];
+    //[request setHTTPMethod:@"POST"];
+    [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
+    [request setHTTPShouldHandleCookies:NO];
+    [request setTimeoutInterval:30];
+    [request setHTTPMethod:@"POST"];
+
+    NSMutableData *body = [[NSMutableData alloc] init];
+    
+    NSString *BoundaryConstant = @"---------------------------0983745982375409872438752038475287";
+    
+   // NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    
+    NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", BoundaryConstant];
+    [request addValue:contentType forHTTPHeaderField:@"Content-Type"];
+    // add params (all params are strings)
+    for (NSString *param in _params) {
+        [body appendData:[[NSString stringWithFormat:@"--%@\r\n", BoundaryConstant] dataUsingEncoding:NSUTF8StringEncoding]];
+        [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", param] dataUsingEncoding:NSUTF8StringEncoding]];
+        [body appendData:[[NSString stringWithFormat:@"%@\r\n", [_params objectForKey:param]] dataUsingEncoding:NSUTF8StringEncoding]];
+    }
+    
+    // add image data
+    //NSData *imageData = UIImageJPEGRepresentation(imageData, 1.0);
+    if (imageData) {
+        [body appendData:[[NSString stringWithFormat:@"--%@\r\n", BoundaryConstant] dataUsingEncoding:NSUTF8StringEncoding]];
+        [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"; filename=\"image.jpg\"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+        [body appendData:[@"Content-Type: image/jpeg\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+        [body appendData:imageData];
+        [body appendData:[[NSString stringWithFormat:@"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+    }
+    
+    [body appendData:[[NSString stringWithFormat:@"--%@--\r\n", BoundaryConstant] dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    // setting the body of the post to the reqeust
+    [request setHTTPBody:body];
+    
+    // set the content-length
+ //   NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[body length]];
+ //   [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
+    
+    // set URL
+ //   [request setHTTPBody:body];    //[request addValue:[NSString stringWithFormat:@"access_token %@", access_token] forHTTPHeaderField:@"access_token"];
+ 
+//    [requestBody appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+//    [requestBody appendData:[@"Content-Disposition: attachment; name=\"image\"; filename=\".jpg\"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+//    
+//    [requestBody appendData:[@"Content-Type: application/octet-stream\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+//    [requestBody appendData:[NSData dataWithData:imageData]];
+//    [requestBody appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+//    
+//
+//    if (title) {
+//        [requestBody appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+//        [requestBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"title\"\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+//        [requestBody appendData:[title dataUsingEncoding:NSUTF8StringEncoding]];
+//        [requestBody appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+//    }
+//    
+//
+//    if (description) {
+//        [requestBody appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+//        [requestBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"description\"\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+//        [requestBody appendData:[description dataUsingEncoding:NSUTF8StringEncoding]];
+//        [requestBody appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+//    }
+//    
+//    [requestBody appendData:[[NSString stringWithFormat:@"--%@--\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+//    
+//    [request setHTTPBody:requestBody];
+    
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+        NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+        if ([responseDictionary valueForKeyPath:@"data.error"]) {
+            if (failureBlock) {
+                if (!error) {
+                   
+                    error = [NSError errorWithDomain:@"imguruploader" code:10000 userInfo:@{NSLocalizedFailureReasonErrorKey : [responseDictionary valueForKeyPath:@"data.error"]}];
+                }
+                failureBlock(response, error, [[responseDictionary valueForKey:@"status"] intValue]);
+            }
+        } else {
+            if (completion) {
+                completion([responseDictionary valueForKeyPath:@"data.link"]);
+            }
+            
         }
         
-        NSDictionary* params =
-        [NSDictionary dictionaryWithObjectsAndKeys:
-         groupID,       @"owner_id",
-         text,          @"message",
-         self.accessToken.token, @"access_token", nil];
-        
-        [self.requestOperationManager
-         POST:@"wall.post"
-         parameters:params
-         success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
-             NSLog(@"JSON: %@", responseObject);
-             
-             if (success) {
-                 success(responseObject);
-             }
-             
-         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             NSLog(@"Error: %@", error);
-             
-             if (failure) {
-                 failure(error, operation.response.statusCode);
-             }
-         }];
-        
- 
+    }];
 }
-
 - (void)getPhotosForPage:(NSInteger)page Section:(section)section Sort:(sort)sort Window:(window)window
               Completion:(void(^)(NSDictionary *resp))completion
 {

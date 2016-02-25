@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="DTt-cb-4HE">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="DTt-cb-4HE">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
@@ -298,7 +298,7 @@
                                     </mask>
                                 </variation>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="space" translatesAutoresizingMaskIntoConstraints="NO" id="LGZ-Yr-JAL">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sea" translatesAutoresizingMaskIntoConstraints="NO" id="LGZ-Yr-JAL">
                                 <rect key="frame" x="20" y="394" width="560" height="196"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="157" id="6i9-8b-HsZ"/>
@@ -338,6 +338,11 @@
                             <constraint firstItem="MFy-gE-XP5" firstAttribute="centerX" secondItem="qMf-Nr-ELw" secondAttribute="centerX" id="yEh-r1-NCb"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="commentTextField" destination="Mbi-CK-8A1" id="7Ja-VW-3pW"/>
+                        <outlet property="currentImage" destination="LGZ-Yr-JAL" id="wD5-lP-A6O"/>
+                        <outlet property="titleTextField" destination="Ovy-Vu-2Ah" id="Vas-yy-WH0"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h0s-ox-HN7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -814,7 +819,7 @@
                                     <constraint firstAttribute="height" constant="21" id="3Di-9V-rrc"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -967,7 +972,7 @@
         <image name="Speech Bubble-48.png" width="48" height="48"/>
         <image name="Thumb Up-48.png" width="48" height="48"/>
         <image name="Thumbs Down-48.png" width="48" height="48"/>
+        <image name="sea" width="1920" height="1080"/>
         <image name="socialControllerIcon.png" width="48" height="48"/>
-        <image name="space" width="717" height="449"/>
     </resources>
 </document>

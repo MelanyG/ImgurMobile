@@ -21,10 +21,11 @@
 - (void)getPhotosForPage:(NSInteger)page Section:(section)section Sort:(sort)sort Window:(window)window
               Completion:(void(^)(NSDictionary *resp))completion;
 
-- (void) postImage:(NSString*) text
-       onGroupWall:(NSString*) groupID
-         onSuccess:(void(^)(id result)) success
-         onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure;
++ (void)uploadPhoto:(NSData*)imageData
+              title:(NSString*)title
+        description:(NSString*)description
+    completionBlock:(void(^)(NSString* result))completion
+       failureBlock:(void(^)(NSURLResponse *response, NSError *error, NSInteger status))failureBlock;
 
 
 @end
