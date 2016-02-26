@@ -33,4 +33,11 @@
        failureBlock:(void(^)(NSURLResponse *response, NSError *error, NSInteger status))failureBlock;
 
 
+- (void) shareImageWithImgurCommunity:(NSString*)title
+                          description:(NSString*)description
+                         access_token:(NSString*)token
+                                topic:(NSString*) topic
+                      completionBlock:(void(^)(NSString* result))completion
+                         failureBlock:(void(^)(NSURLResponse *response, NSError *error, NSInteger status))failureBlock;
+
 @end

@@ -13,6 +13,10 @@
 
 @interface ImgurPosting : UIViewController <UIPickerViewDelegate>
 
+
+
+- (IBAction)ShareWithCommunity:(UIButton *)sender;
+
 - (void)postActionSelected;
 
 @end

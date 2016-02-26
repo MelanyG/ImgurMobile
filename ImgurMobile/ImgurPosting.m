@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UIPickerView *selectedTopic;
 @property (strong, nonatomic) NSArray* array;
 @property (strong, nonatomic) NSString* topic;
+@property (weak, nonatomic) IBOutlet UIButton *sharedButton;
 
 @end
 
@@ -32,6 +33,9 @@
                                                   target:self
                                                   action:@selector(postActionSelected)];
     
+    
+    self.sharedButton.enabled = NO;
+     
     self.navigationItem.rightBarButtonItem = plus;
     self.selectedTopic.delegate = self;
     self.array = [[NSArray alloc]initWithObjects:@"Funny", @"Aww", @"Storytime", @"Design & Art", @"No topic", @"Awesome", @"The More You Know", @"Current Events", @"Reaction", @"Inspiring", nil];
@@ -55,17 +59,56 @@ self.topic = [self.array objectAtIndex:row];
     NSLog(@"Topic selected: %@",self.topic );
     return [self.array objectAtIndex:row];
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    
+- (void)didReceiveMemoryWarning
+{
+         [super didReceiveMemoryWarning];
+         // Dispose of any resources that can be recreated.
 }
+     
 
+- (IBAction)ShareWithCommunity:(UIButton *)sender
+{
+    imgurServerManager*x = [[imgurServerManager alloc]init];
+    NSString *title = [[self titleTextField] text];
+    NSString *description = [[self commentTextField] text];
+
+         [x shareImageWithImgurCommunity:title
+                             description:description
+                      access_token: self.token.token
+                                   topic:self.topic
+                         completionBlock:^(NSString *result) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+            UIAlertView *av = [[UIAlertView alloc]
+                               initWithTitle:@"Sucessfully posted to wall!"
+                               message:@"Check out your Imgur Wall to see!"
+                               delegate:nil
+                               cancelButtonTitle:@"OK"
+                               otherButtonTitles:nil];
+            [av show];
+             NSLog(@"%@",result);                         });
+    } failureBlock:^(NSURLResponse *response, NSError *error, NSInteger status) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+           [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+           
+           [[[UIAlertView alloc] initWithTitle:@"Upload Failed"
+                                       message:[NSString stringWithFormat:@"%@ (Status code %ld)", [error localizedDescription], (long)status]
+                                      delegate:nil
+                             cancelButtonTitle:nil
+                             otherButtonTitles:@"OK", nil] show];
+           NSLog(@"%@", [error localizedDescription]);
+           NSLog(@"Err details: %@", [error description]);
+       });
+   }];
+    
+
+}
 
 - (void) postActionSelected
 {
-
-        NSString *title = [[self titleTextField] text];
+    
+  NSString *title = [[self titleTextField] text];
     NSString *description = [[self commentTextField] text];
     
     NSData *imageData = UIImageJPEGRepresentation(self.currentImage.image, 0.5);
@@ -82,11 +125,19 @@ self.topic = [self.array objectAtIndex:row];
                      topic: self.topic
            completionBlock:^(NSString *result) {
                dispatch_async(dispatch_get_main_queue(), ^{
-                   [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                   [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+                   UIAlertView *av = [[UIAlertView alloc]
+                                       initWithTitle:@"Sucessfully posted to photos & wall!"
+                                       message:@"Check out your Imgur Gallery to see!"
+                                       delegate:nil
+                                       cancelButtonTitle:@"OK"
+                                       otherButtonTitles:nil];
+                   [av show];
+                    self.sharedButton.enabled = YES;
                    NSLog(@"%@",result);                         });
            } failureBlock:^(NSURLResponse *response, NSError *error, NSInteger status) {
                dispatch_async(dispatch_get_main_queue(), ^{
-                   [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                   [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
                    
                    [[[UIAlertView alloc] initWithTitle:@"Upload Failed"
                                                message:[NSString stringWithFormat:@"%@ (Status code %ld)", [error localizedDescription], (long)status]
