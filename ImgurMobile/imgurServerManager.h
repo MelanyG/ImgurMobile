@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import "URLGen.h"
+#import "ImgurAccessToken.h"
+
 @class imgurUser;
 
 @interface imgurServerManager : NSObject
@@ -17,13 +19,15 @@
 + (instancetype)sharedManager;
 
 @property (nonatomic, strong) imgurUser *currentUser;
+@property (strong, nonatomic) ImgurAccessToken* accessToken;
 
 - (void)getPhotosForPage:(NSInteger)page Section:(section)section Sort:(sort)sort Window:(window)window
               Completion:(void(^)(NSDictionary *resp))completion;
 
-+ (void)uploadPhoto:(NSData*)imageData
+- (void)uploadPhoto:(NSData*)imageData
               title:(NSString*)title
         description:(NSString*)description
+       access_token:(NSString*)token
     completionBlock:(void(^)(NSString* result))completion
        failureBlock:(void(^)(NSURLResponse *response, NSError *error, NSInteger status))failureBlock;
 

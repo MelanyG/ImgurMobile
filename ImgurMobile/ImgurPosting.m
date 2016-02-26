@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *titleTextField;
 @property (weak, nonatomic) IBOutlet UITextField *commentTextField;
 @property (weak, nonatomic) IBOutlet UIImageView *currentImage;
+@property (strong, nonatomic) ImgurAccessToken* token;
 
 @end
 
@@ -20,8 +21,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    self.navigationItem.title = @"Login";
+    self.token = [ImgurAccessToken sharedToken];
+    self.navigationItem.title = @"Post";
     
     UIBarButtonItem* plus =
     [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
@@ -51,12 +52,13 @@
        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-
-        
+            imgurServerManager*x = [[imgurServerManager alloc]init];
+            NSLog(@"token in Post view Controler is: %@",self.token.token);
         //__weak ImgurPosting *weakSelf = self;
-        [imgurServerManager uploadPhoto:imageData
+        [x uploadPhoto:imageData
                                title:title
                          description:description
+                         access_token: self.token.token
                      completionBlock:^(NSString *result) {
                          dispatch_async(dispatch_get_main_queue(), ^{
                              [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
@@ -70,10 +72,12 @@
                                                         delegate:nil
                                                cancelButtonTitle:nil
                                                otherButtonTitles:@"OK", nil] show];
-                             NSLog(@"%@", error);
+                             NSLog(@"%@", [error localizedDescription]);
+                             NSLog(@"Err details: %@", [error description]);
                          });
                      }];
         
     });
 }
+
 @end

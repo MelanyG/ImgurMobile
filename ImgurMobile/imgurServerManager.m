@@ -20,7 +20,7 @@
 @interface imgurServerManager ()
 
 @property (strong, nonatomic) AFHTTPRequestOperationManager* requestOperationManager;
-@property (strong, nonatomic) ImgurAccessToken* accessToken;
+
 @property (strong, nonatomic) NSString *URLString;
 @property (strong, nonatomic) URLGen *URLgenerator;
 @property (strong, nonatomic) ImgurLoader *synchLoader;
@@ -108,7 +108,7 @@
          }
          
      }];
-
+//self.accessToken = token;
 }
 
 - (void) getUser:(NSString*) userID
@@ -149,26 +149,29 @@
      }];
 }
 
-+ (void)uploadPhoto:(NSData*)imageData
+- (void)uploadPhoto:(NSData*)imageData
               title:(NSString*)title
         description:(NSString*)description
+       access_token:(NSString*)token
     completionBlock:(void(^)(NSString* result))completion
        failureBlock:(void(^)(NSURLResponse *response, NSError *error, NSInteger status))failureBlock
 {
     NSAssert(imageData, @"Image data is required");
-    //NSAssert(access_token, @"Access token is required");
+    //NSAssert(self.  , @"Access token is required");
     
     NSMutableDictionary* _params = [[NSMutableDictionary alloc] init];
     _params[@"type"] = @"base64";
     _params[@"name"] = @"myImage";
-    
-    NSString *urlString = @"https://api.imgur.com/endpoints/image.json";
+    NSLog(@"Token: %@", token);
+    NSString *urlString = @"https://api.imgur.com/3/image.json";
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init] ;
     
+    [request setValue:[NSString stringWithFormat:@"Bearer %@", token] forHTTPHeaderField:@"Authorization"];
+
     [request setURL:[NSURL URLWithString:urlString]];
     //[request setHTTPMethod:@"POST"];
     [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
-    [request setHTTPShouldHandleCookies:NO];
+    //[request setHTTPShouldHandleCookies:NO];
     [request setTimeoutInterval:30];
     [request setHTTPMethod:@"POST"];
 
@@ -181,20 +184,28 @@
     NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", BoundaryConstant];
     [request addValue:contentType forHTTPHeaderField:@"Content-Type"];
     // add params (all params are strings)
-    for (NSString *param in _params) {
-        [body appendData:[[NSString stringWithFormat:@"--%@\r\n", BoundaryConstant] dataUsingEncoding:NSUTF8StringEncoding]];
-        [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", param] dataUsingEncoding:NSUTF8StringEncoding]];
-        [body appendData:[[NSString stringWithFormat:@"%@\r\n", [_params objectForKey:param]] dataUsingEncoding:NSUTF8StringEncoding]];
-    }
+//    for (NSString *param in _params) {
+//        [body appendData:[[NSString stringWithFormat:@"--%@\r\n", BoundaryConstant] dataUsingEncoding:NSUTF8StringEncoding]];
+//        [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", param] dataUsingEncoding:NSUTF8StringEncoding]];
+//        [body appendData:[[NSString stringWithFormat:@"%@\r\n", [_params objectForKey:param]] dataUsingEncoding:NSUTF8StringEncoding]];
+//    }
     
     // add image data
     //NSData *imageData = UIImageJPEGRepresentation(imageData, 1.0);
     if (imageData) {
+//        [body appendData:[[NSString stringWithFormat:@"--%@\r\n", BoundaryConstant] dataUsingEncoding:NSUTF8StringEncoding]];
+//        [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"; filename=\"image.jpg\"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+//        [body appendData:[@"Content-Type: image/jpeg\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+//        [body appendData:imageData];
+//        [body appendData:[[NSString stringWithFormat:@"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+        
         [body appendData:[[NSString stringWithFormat:@"--%@\r\n", BoundaryConstant] dataUsingEncoding:NSUTF8StringEncoding]];
-        [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"; filename=\"image.jpg\"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
-        [body appendData:[@"Content-Type: image/jpeg\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-        [body appendData:imageData];
-        [body appendData:[[NSString stringWithFormat:@"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+        [body appendData:[@"Content-Disposition: attachment; name=\"image\"; filename=\".tiff\"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        [body appendData:[@"Content-Type: application/octet-stream\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+        [body appendData:[NSData dataWithData:imageData]];
+        [body appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+        
     }
     
     [body appendData:[[NSString stringWithFormat:@"--%@--\r\n", BoundaryConstant] dataUsingEncoding:NSUTF8StringEncoding]];

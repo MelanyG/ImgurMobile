@@ -15,6 +15,7 @@ typedef void(^ASLoginCompletionBlock)(ImgurAccessToken* token);
 
 @interface ImgurLoginViewController : UIViewController
 
+@property (strong, nonatomic)ImgurAccessToken* token;
 
 - (id) initWithCompletionBlock:(ASLoginCompletionBlock) completionBlock;
 
