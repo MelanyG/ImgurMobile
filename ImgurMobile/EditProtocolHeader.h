@@ -35,6 +35,8 @@ typedef enum{
 @protocol filteringDelegate <NSObject>
 
 - (void)updateUIWithImage:(UIImage *)image;
+- (void)startLoadIndicating;
+- (void)stopLoadIndicating;
 
 @end
 

@@ -9,6 +9,7 @@
 #import "FiltersMenuViewController.h"
 #import "ImageFilterProcessor.h"
 #import "UIImage+Resize.h"
+#import "UIActivityIndicatorView+manager.h"
 
 @interface FiltersMenuViewController ()
 
@@ -20,8 +21,6 @@
 @property (strong, nonatomic) NSMutableArray *processedSampleImages;
 @property (assign, nonatomic) CGSize sampleImageSize;
 @property (strong, nonatomic) UIImage *sampleImage;
-
-@property (strong, nonatomic) UIActivityIndicatorView *indicator;
 
 @property (strong, nonatomic) ImageFilterProcessor *processor;
 
@@ -57,7 +56,10 @@
                                   self.sampleImageSize.height);
         
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:frame];
-        imageView.backgroundColor = [UIColor grayColor];
+        imageView.backgroundColor = [UIColor lightGrayColor];
+        
+        [UIActivityIndicatorView addActivityIndicatorToView:imageView];
+        
         [self.contentView addSubview:imageView];
         [self.processedSampleImages addObject:imageView];
     }
@@ -66,8 +68,8 @@
 - (void)prepareSampleImage
 {
     double coef = self.currentImage.size.width / self.contentView.frame.size.width;
-    self.sampleImageSize = CGSizeMake(self.currentImage.size.width / coef,
-                                      self.currentImage.size.height / coef);
+    self.sampleImageSize = CGSizeMake((NSInteger)self.currentImage.size.width / coef,
+                                      (NSInteger)self.currentImage.size.height / coef);
     self.sampleImage = [UIImage imageWithImage:self.currentImage scaledToSize:CGSizeMake(self.sampleImageSize.width / 2, self.sampleImageSize.height / 2)];
 }
 
@@ -84,10 +86,12 @@
 - (void)handleTap:(UITapGestureRecognizer *)tap
 {
     CGPoint location = [tap locationInView:self.contentView];
-    UIView *view = [self.view hitTest:location withEvent:nil];
+    UIView *view = [self.contentView hitTest:location withEvent:nil];
     
     if ([view isKindOfClass:[UIImageView class]])
     {
+        [self.delegate changeStateOfRightMenu:FilteringMenu];
+        [self.filterDelegate startLoadIndicating];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
         {
             
@@ -95,6 +99,7 @@
             {
                 dispatch_async(dispatch_get_main_queue(), ^
                 {
+                    [self.filterDelegate stopLoadIndicating];
                     [self.filterDelegate updateUIWithImage:[imageAndTag objectForKey:KEY_FOR_IMAGE]];
                 });
             }];
@@ -112,34 +117,9 @@
     return _processor;
 }
 
-- (UIActivityIndicatorView *)indicator
-{
-    if (!_indicator)
-    {
-        _indicator = [[UIActivityIndicatorView alloc] init];
-    }
-    return _indicator;
-}
-
-
-
-- (void)configureIndicator
-{
-    CGRect frame = CGRectMake(self.view.frame.size.width / 2 - 50,
-                              self.view.frame.size.height / 2 - 50,
-                              100,
-                              100);
-    self.indicator.frame = frame;
-    [self.contentView addSubview:self.indicator];
-}
-
 - (void)getSampleImages
 {
-   /* self.processor.currentImage = self.currentImage;
-    self.processor.sampleImage = self.sampleImage;*/
     self.processor.sliderValue = self.slider.value;
-   
-#warning indicator?
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
     {
@@ -165,6 +145,7 @@
         {
             view.image = [imageAndTag objectForKey:KEY_FOR_IMAGE];
             view.tag = [[imageAndTag objectForKey:KEY_FOR_TAG] intValue];
+            [UIActivityIndicatorView removeActivityIndicatorFromView:view];
             view.userInteractionEnabled = YES;
             break;
         }

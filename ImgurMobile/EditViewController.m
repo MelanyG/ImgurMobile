@@ -11,6 +11,7 @@
 #import "FiltersMenuViewController.h"
 #import "FontsMenuViewController.h"
 #import "UIView+SuperClassChecker.h"
+#import "UIActivityIndicatorView+manager.h"
 
 @interface EditViewController ()
 
@@ -327,6 +328,26 @@
     self.imageView.image = image;
 }
 
+- (void)startLoadIndicating
+{
+    UIView *background = [[UIView alloc] initWithFrame:self.view.frame];
+    background.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.75];
+    background.tag = 1001;
+    [self.view addSubview:background];
+    [UIActivityIndicatorView addActivityIndicatorToView:self.view];
+}
+- (void)stopLoadIndicating
+{
+    for (UIView *subview in self.view.subviews)
+    {
+        if (subview.tag == 1001)
+        {
+            [subview removeFromSuperview];
+        }
+    }
+    [UIActivityIndicatorView removeActivityIndicatorFromView:self.view];
+}
+
 #pragma mark - navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -338,6 +359,7 @@
     else if ([segue.identifier isEqualToString:@"FiltersMenuVC_seague"])
     {
         self.FiltersMenuVC = (FiltersMenuViewController *)[segue destinationViewController];
+        self.FiltersMenuVC.delegate = self;
         self.FiltersMenuVC.filterDelegate = self;
     }
     else if ([segue.identifier isEqualToString:@"FontsMenuVC_seague"])
