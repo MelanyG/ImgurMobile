@@ -15,6 +15,6 @@
 @property (weak, nonatomic)id <filteringDelegate> filterDelegate;
 @property (strong, nonatomic) UIImage *currentImage;
 
-- (void)UpdateYourself;
+- (void)updateYourself;
 
 @end

@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+UIColor * RGBA(CGFloat red, CGFloat green, CGFloat blue, CGFloat alpha);
+
 @interface FontsMenuViewController : UIViewController
 
-- (void)UpdateYourself;
+- (void)updateYourself;
 
 @end

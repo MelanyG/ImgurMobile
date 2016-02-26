@@ -67,7 +67,7 @@
     [self addHandlesLogic];
     
     self.FiltersMenuVC.currentImage = self.image;
-    [self.FiltersMenuVC UpdateYourself];
+    [self.FiltersMenuVC updateYourself];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation

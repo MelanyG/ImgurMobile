@@ -30,7 +30,7 @@
 
 @implementation FiltersMenuViewController
 
-- (void)UpdateYourself
+- (void)updateYourself
 {
     self.view.tag = 3333;
     self.tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self

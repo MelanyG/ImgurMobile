@@ -10,7 +10,7 @@
 
 @implementation SettingsMenuViewController
 
-- (void)UpdateYourself
+- (void)updateYourself
 {
     self.view.tag = 1111;
     self.shouldRespondToTouchEvents = YES;
