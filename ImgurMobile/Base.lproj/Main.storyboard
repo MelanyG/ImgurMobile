@@ -341,6 +341,7 @@
                     <connections>
                         <outlet property="commentTextField" destination="Mbi-CK-8A1" id="7Ja-VW-3pW"/>
                         <outlet property="currentImage" destination="LGZ-Yr-JAL" id="wD5-lP-A6O"/>
+                        <outlet property="selectedTopic" destination="Wrj-KW-FCF" id="7kg-Cp-ecj"/>
                         <outlet property="titleTextField" destination="Ovy-Vu-2Ah" id="Vas-yy-WH0"/>
                     </connections>
                 </viewController>

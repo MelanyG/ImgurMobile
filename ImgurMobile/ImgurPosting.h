@@ -11,7 +11,7 @@
 #import "ImgurAccessToken.h"
 
 
-@interface ImgurPosting : UIViewController
+@interface ImgurPosting : UIViewController <UIPickerViewDelegate>
 
 - (void)postActionSelected;
 

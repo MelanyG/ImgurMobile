@@ -14,6 +14,9 @@
 @property (weak, nonatomic) IBOutlet UITextField *commentTextField;
 @property (weak, nonatomic) IBOutlet UIImageView *currentImage;
 @property (strong, nonatomic) ImgurAccessToken* token;
+@property (weak, nonatomic) IBOutlet UIPickerView *selectedTopic;
+@property (strong, nonatomic) NSArray* array;
+@property (strong, nonatomic) NSString* topic;
 
 @end
 
@@ -30,10 +33,27 @@
                                                   action:@selector(postActionSelected)];
     
     self.navigationItem.rightBarButtonItem = plus;
+    self.selectedTopic.delegate = self;
+    self.array = [[NSArray alloc]initWithObjects:@"Funny", @"Aww", @"Storytime", @"Design & Art", @"No topic", @"Awesome", @"The More You Know", @"Current Events", @"Reaction", @"Inspiring", nil];
     
     
-    
-    
+}
+
+-(NSInteger) numberOfComponentsInPickerView:(UIPickerView*) pickerView
+{
+    return 1;
+}
+
+-(NSInteger) pickerView:(UIPickerView*)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    return [self.array count];
+}
+
+-(NSString*) pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+self.topic = [self.array objectAtIndex:row];
+    NSLog(@"Topic selected: %@",self.topic );
+    return [self.array objectAtIndex:row];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -55,29 +75,30 @@
             imgurServerManager*x = [[imgurServerManager alloc]init];
             NSLog(@"token in Post view Controler is: %@",self.token.token);
         //__weak ImgurPosting *weakSelf = self;
-        [x uploadPhoto:imageData
-                               title:title
-                         description:description
-                         access_token: self.token.token
-                     completionBlock:^(NSString *result) {
-                         dispatch_async(dispatch_get_main_queue(), ^{
-                             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-                            NSLog(@"%@",result);                         });
-                     } failureBlock:^(NSURLResponse *response, NSError *error, NSInteger status) {
-                         dispatch_async(dispatch_get_main_queue(), ^{
-                             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-                             
-                             [[[UIAlertView alloc] initWithTitle:@"Upload Failed"
-                                                         message:[NSString stringWithFormat:@"%@ (Status code %ld)", [error localizedDescription], (long)status]
-                                                        delegate:nil
-                                               cancelButtonTitle:nil
-                                               otherButtonTitles:@"OK", nil] show];
-                             NSLog(@"%@", [error localizedDescription]);
-                             NSLog(@"Err details: %@", [error description]);
-                         });
-                     }];
-        
-    });
+            [x uploadPhoto:imageData
+                     title:title
+               description:description
+              access_token: self.token.token
+                     topic: self.topic
+           completionBlock:^(NSString *result) {
+               dispatch_async(dispatch_get_main_queue(), ^{
+                   [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                   NSLog(@"%@",result);                         });
+           } failureBlock:^(NSURLResponse *response, NSError *error, NSInteger status) {
+               dispatch_async(dispatch_get_main_queue(), ^{
+                   [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                   
+                   [[[UIAlertView alloc] initWithTitle:@"Upload Failed"
+                                               message:[NSString stringWithFormat:@"%@ (Status code %ld)", [error localizedDescription], (long)status]
+                                              delegate:nil
+                                     cancelButtonTitle:nil
+                                     otherButtonTitles:@"OK", nil] show];
+                   NSLog(@"%@", [error localizedDescription]);
+                   NSLog(@"Err details: %@", [error description]);
+               });
+           }];
+            
+        });
 }
 
 @end

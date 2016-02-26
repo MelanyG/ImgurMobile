@@ -153,6 +153,7 @@
               title:(NSString*)title
         description:(NSString*)description
        access_token:(NSString*)token
+              topic:(NSString*) topic
     completionBlock:(void(^)(NSString* result))completion
        failureBlock:(void(^)(NSURLResponse *response, NSError *error, NSInteger status))failureBlock
 {
@@ -169,7 +170,7 @@
     [request setValue:[NSString stringWithFormat:@"Bearer %@", token] forHTTPHeaderField:@"Authorization"];
 
     [request setURL:[NSURL URLWithString:urlString]];
-    //[request setHTTPMethod:@"POST"];
+    
     [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
     //[request setHTTPShouldHandleCookies:NO];
     [request setTimeoutInterval:30];
@@ -177,11 +178,11 @@
 
     NSMutableData *body = [[NSMutableData alloc] init];
     
-    NSString *BoundaryConstant = @"---------------------------0983745982375409872438752038475287";
+    NSString *boundary = @"---------------------------0983745982375409872438752038475287";
     
    // NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
     
-    NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", BoundaryConstant];
+    NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary];
     [request addValue:contentType forHTTPHeaderField:@"Content-Type"];
     // add params (all params are strings)
 //    for (NSString *param in _params) {
@@ -199,7 +200,7 @@
 //        [body appendData:imageData];
 //        [body appendData:[[NSString stringWithFormat:@"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
         
-        [body appendData:[[NSString stringWithFormat:@"--%@\r\n", BoundaryConstant] dataUsingEncoding:NSUTF8StringEncoding]];
+        [body appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
         [body appendData:[@"Content-Disposition: attachment; name=\"image\"; filename=\".tiff\"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
         
         [body appendData:[@"Content-Type: application/octet-stream\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
@@ -207,8 +208,28 @@
         [body appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
         
     }
+        if (title) {
+            [body appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+            [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"title\"\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+            [body appendData:[title dataUsingEncoding:NSUTF8StringEncoding]];
+            [body appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+        }
     
-    [body appendData:[[NSString stringWithFormat:@"--%@--\r\n", BoundaryConstant] dataUsingEncoding:NSUTF8StringEncoding]];
+    
+        if (description) {
+            [body appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+            [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"description\"\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+            [body appendData:[description dataUsingEncoding:NSUTF8StringEncoding]];
+            [body appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+        }
+        if (topic) {
+            [body appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+            [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"topic\"\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+            [body appendData:[title dataUsingEncoding:NSUTF8StringEncoding]];
+            [body appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+        }
+    
+    [body appendData:[[NSString stringWithFormat:@"--%@--\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
     
     // setting the body of the post to the reqeust
     [request setHTTPBody:body];
@@ -260,6 +281,8 @@
         } else {
             if (completion) {
                 completion([responseDictionary valueForKeyPath:@"data.link"]);
+                NSString* id = [[responseDictionary objectForKey:@"data"]objectForKey:@"id"];
+                NSLog(@"Id is: %@", id);
             }
             
         }
