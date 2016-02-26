@@ -8,6 +8,10 @@
 
 #import "ImageFilterProcessor.h"
 
+NSInteger const FILTERS_COUNT = 7;
+NSString * const KEY_FOR_TAG = @"tag";
+NSString * const KEY_FOR_IMAGE = @"image";
+
 NSString * NSStringFromFilterName(FilterName name)
 {
     switch (name)
@@ -33,7 +37,7 @@ NSString * NSStringFromFilterName(FilterName name)
 
 @interface ImageFilterProcessor ()
 
-@property (strong, nonatomic) NSMutableArray *imagesArray;
+@property (strong, nonatomic) UIImage *completeImage;
 
 @property (strong, nonatomic) CIContext *ctx;
 @property (strong, nonatomic) CIImage *beginImage;
@@ -53,22 +57,56 @@ NSString * NSStringFromFilterName(FilterName name)
     return instance;
 }
 
-- (void)getFilteredImages:(void(^)(NSArray * images)) completion
+- (void)getFilteredImage:(UIImage *)image WithFilter:(FilterName) filterName Completion:(void(^)(NSDictionary * imageAndTag)) completion
 {
     self.ctx = [CIContext contextWithOptions:nil];
     
-    self.beginImage = [CIImage imageWithCGImage:self.sampleImage.CGImage];
+    self.beginImage = [CIImage imageWithCGImage:image.CGImage];
     
-    self.imagesArray = [NSMutableArray array];
-    [self.imagesArray addObject:[self CISepiaToneFromCurrentImage]];
-    [self.imagesArray addObject:[self CIBoxBlurFromCurrentImage]];
-    [self.imagesArray addObject:[self CIGammaAdjustFromCurrentImage]];
-    [self.imagesArray addObject:[self CIVibranceFromCurrentImage]];
-    [self.imagesArray addObject:[self CIColorCubeFromCurrentImage]];
-    [self.imagesArray addObject:[self CIColorMonochromeFromCurrentImage]];
-    [self.imagesArray addObject:[self CIDepthOfFieldFromCurrentImage]];
+    NSMutableDictionary *responce = [[NSMutableDictionary alloc] init];
     
-    completion(self.imagesArray);
+    switch (filterName)
+    {
+        case CIBoxBlur:
+            [responce setValue:[self CIBoxBlurFromCurrentImage] forKey:KEY_FOR_IMAGE];
+            [responce setValue:[NSNumber numberWithInteger:(NSInteger)filterName] forKey:KEY_FOR_TAG];
+            break;
+            
+        case CIColorMonochrome:
+            [responce setValue:[self CIColorMonochromeFromCurrentImage] forKey:KEY_FOR_IMAGE];
+            [responce setValue:[NSNumber numberWithInteger:(NSInteger)filterName] forKey:KEY_FOR_TAG];
+            break;
+            
+        case CIColorCube:
+            [responce setValue:[self CIColorCubeFromCurrentImage] forKey:KEY_FOR_IMAGE];
+            [responce setValue:[NSNumber numberWithInteger:(NSInteger)filterName] forKey:KEY_FOR_TAG];
+            break;
+            
+        case CIDepthOfField:
+            [responce setValue:[self CIDepthOfFieldFromCurrentImage] forKey:KEY_FOR_IMAGE];
+            [responce setValue:[NSNumber numberWithInteger:(NSInteger)filterName] forKey:KEY_FOR_TAG];
+            break;
+            
+        case CIGammaAdjust:
+            [responce setValue:[self CIGammaAdjustFromCurrentImage] forKey:KEY_FOR_IMAGE];
+            [responce setValue:[NSNumber numberWithInteger:(NSInteger)filterName] forKey:KEY_FOR_TAG];
+            break;
+            
+        case CISepiaTone:
+            [responce setValue:[self CISepiaToneFromCurrentImage] forKey:KEY_FOR_IMAGE];
+            [responce setValue:[NSNumber numberWithInteger:(NSInteger)filterName] forKey:KEY_FOR_TAG];
+            break;
+            
+        case CIVibrance:
+            [responce setValue:[self CIVibranceFromCurrentImage] forKey:KEY_FOR_IMAGE];
+            [responce setValue:[NSNumber numberWithInteger:(NSInteger)filterName] forKey:KEY_FOR_TAG];
+            break;
+            
+        default:
+            break;
+    }
+    
+    completion(responce);
 }
 
 - (UIImage *)CISepiaToneFromCurrentImage
@@ -152,6 +190,7 @@ NSString * NSStringFromFilterName(FilterName name)
     CGImageRef cgImg = [self.ctx createCGImage:outImage fromRect:[outImage extent]];
     
     UIImage *image = [UIImage imageWithCGImage:cgImg];
+    //case filter tag
     
     CGImageRelease(cgImg);
     

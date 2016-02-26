@@ -32,4 +32,10 @@ typedef enum{
 
 @end
 
+@protocol filteringDelegate <NSObject>
+
+- (void)updateUIWithImage:(UIImage *)image;
+
+@end
+
 #endif /* EditProtocolHeader_h */

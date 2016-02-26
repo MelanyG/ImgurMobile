@@ -27,9 +27,8 @@
 
 @implementation FontsMenuViewController
 
-- (void)viewDidLoad
+- (void)UpdateYourself
 {
-    [super viewDidLoad];
     self.view.tag = 2222;
 }
 

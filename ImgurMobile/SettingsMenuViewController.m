@@ -9,9 +9,9 @@
 #import "SettingsMenuViewController.h"
 
 @implementation SettingsMenuViewController
-- (void)viewDidLoad
+
+- (void)UpdateYourself
 {
-    [super viewDidLoad];
     self.view.tag = 1111;
     self.shouldRespondToTouchEvents = YES;
 }

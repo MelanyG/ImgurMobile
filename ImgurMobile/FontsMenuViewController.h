@@ -10,4 +10,6 @@
 
 @interface FontsMenuViewController : UIViewController
 
+- (void)UpdateYourself;
+
 @end

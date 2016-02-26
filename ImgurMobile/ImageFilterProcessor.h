@@ -20,16 +20,20 @@ typedef enum{
     CIDepthOfField
 }FilterName;
 
+extern NSInteger const FILTERS_COUNT;
+extern NSString * const KEY_FOR_TAG;
+extern NSString * const KEY_FOR_IMAGE;
+
 NSString * NSStringFromFilterName(FilterName name);
 
 @interface ImageFilterProcessor : UIViewController
 
-@property (strong, nonatomic) UIImage *currentImage;
-@property (strong, nonatomic) UIImage *sampleImage;
+//@property (strong, nonatomic) UIImage *currentImage;
+//@property (strong, nonatomic) UIImage *sampleImage;
 @property (assign, nonatomic) double sliderValue;
 
 + (ImageFilterProcessor *)sharedProcessor;
 
-- (void)getFilteredImages:(void(^)(NSArray * images)) completion;
+- (void)getFilteredImage:(UIImage *)image WithFilter:(FilterName) filterName Completion:(void(^)(NSDictionary * imageAndTag)) completion;
 
 @end

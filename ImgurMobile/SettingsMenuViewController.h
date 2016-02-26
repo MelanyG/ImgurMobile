@@ -15,4 +15,6 @@
 
 @property (assign, nonatomic) BOOL shouldRespondToTouchEvents;
 
+- (void)UpdateYourself;
+
 @end

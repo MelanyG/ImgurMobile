@@ -60,10 +60,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.imageView.image = [UIImage imageNamed:@"sea"];
+    self.image = [UIImage imageNamed:@"sea"];
+    self.imageView.image = self.image;
     [self prepare];
     [self addHandlesLogic];
+    
+    self.FiltersMenuVC.currentImage = self.image;
+    [self.FiltersMenuVC UpdateYourself];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
@@ -312,11 +315,16 @@
 }
 
 #pragma mark - topMenuDelegate
-
 - (void)changeWorkingModeTo:(WorkingMode) mode
 {
     self.mode = mode;
     [self addHandlesLogic];
+}
+
+#pragma mark - filteringDelegate
+- (void)updateUIWithImage:(UIImage *)image
+{
+    self.imageView.image = image;
 }
 
 #pragma mark - navigation
@@ -330,7 +338,7 @@
     else if ([segue.identifier isEqualToString:@"FiltersMenuVC_seague"])
     {
         self.FiltersMenuVC = (FiltersMenuViewController *)[segue destinationViewController];
-        self.FiltersMenuVC.currentImage = [UIImage imageNamed:@"sea"];
+        self.FiltersMenuVC.filterDelegate = self;
     }
     else if ([segue.identifier isEqualToString:@"FontsMenuVC_seague"])
     {
