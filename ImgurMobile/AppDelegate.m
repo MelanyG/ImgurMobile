@@ -34,6 +34,7 @@
     self.token = [ImgurAccessToken sharedToken];
     self.token.userName = [defaults objectForKey:@"userName"];
     self.token.token = [defaults objectForKey:@"access_token"];
+    self.token.refresh_token = [defaults objectForKey:@"refresh_token"];
     self.token.accountID = [defaults objectForKey:@"account_id"];
     self.token.expirationDate = [defaults objectForKey:@"expires_in"];
     

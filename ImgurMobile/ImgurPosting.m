@@ -18,6 +18,7 @@
 @property (strong, nonatomic) NSArray* array;
 @property (strong, nonatomic) NSString* topic;
 @property (weak, nonatomic) IBOutlet UIButton *sharedButton;
+@property (weak, nonatomic) NSString* imageID;
 
 @end
 
@@ -34,11 +35,11 @@
                                                   action:@selector(postActionSelected)];
     
     
-    self.sharedButton.enabled = NO;
+    self.sharedButton.enabled = YES;
      
     self.navigationItem.rightBarButtonItem = plus;
     self.selectedTopic.delegate = self;
-    self.array = [[NSArray alloc]initWithObjects:@"Funny", @"Aww", @"Storytime", @"Design & Art", @"No topic", @"Awesome", @"The More You Know", @"Current Events", @"Reaction", @"Inspiring", nil];
+    self.array = [[NSArray alloc]initWithObjects:@"funny", @"Aww", @"Storytime", @"Design & Art", @"No topic", @"Awesome", @"The More You Know", @"Current Events", @"Reaction", @"Inspiring", nil];
     
     
 }
@@ -56,7 +57,7 @@
 -(NSString*) pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
 self.topic = [self.array objectAtIndex:row];
-    NSLog(@"Topic selected: %@",self.topic );
+    //NSLog(@"Topic selected: %@",self.topic );
     return [self.array objectAtIndex:row];
 }
     
@@ -107,9 +108,8 @@ self.topic = [self.array objectAtIndex:row];
 
 - (void) postActionSelected
 {
-    
   NSString *title = [[self titleTextField] text];
-    NSString *description = [[self commentTextField] text];
+  NSString *description = [[self commentTextField] text];
     
     NSData *imageData = UIImageJPEGRepresentation(self.currentImage.image, 0.5);
        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
@@ -117,13 +117,13 @@ self.topic = [self.array objectAtIndex:row];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             imgurServerManager*x = [[imgurServerManager alloc]init];
             NSLog(@"token in Post view Controler is: %@",self.token.token);
-        //__weak ImgurPosting *weakSelf = self;
-            [x uploadPhoto:imageData
+             [x uploadPhoto:imageData
                      title:title
                description:description
               access_token: self.token.token
                      topic: self.topic
-           completionBlock:^(NSString *result) {
+           completionBlock:^(NSString *result)
+            {
                dispatch_async(dispatch_get_main_queue(), ^{
                    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
                    UIAlertView *av = [[UIAlertView alloc]
@@ -133,9 +133,11 @@ self.topic = [self.array objectAtIndex:row];
                                        cancelButtonTitle:@"OK"
                                        otherButtonTitles:nil];
                    [av show];
-                    self.sharedButton.enabled = YES;
-                   NSLog(@"%@",result);                         });
-           } failureBlock:^(NSURLResponse *response, NSError *error, NSInteger status) {
+                  self.sharedButton.enabled = YES;
+                  NSLog(@"%@",result);                         });
+           }
+               failureBlock:^(NSURLResponse *response, NSError *error, NSInteger status)
+            {
                dispatch_async(dispatch_get_main_queue(), ^{
                    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
                    
