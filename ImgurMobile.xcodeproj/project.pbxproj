@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		400E64E01C8215F600B85330 /* ProcessingRequestsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 400E64DF1C8215F600B85330 /* ProcessingRequestsViewController.m */; };
 		404D9C441C7A141E0063B912 /* ImgurPosting.m in Sources */ = {isa = PBXBuildFile; fileRef = 404D9C431C7A141E0063B912 /* ImgurPosting.m */; };
 		40C4FA641C773BD3003CDB34 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 40C4FA631C773BD3003CDB34 /* main.m */; };
 		40C4FA671C773BD3003CDB34 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 40C4FA661C773BD3003CDB34 /* AppDelegate.m */; };
@@ -64,6 +65,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		400E64DE1C8215F600B85330 /* ProcessingRequestsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProcessingRequestsViewController.h; path = ../ProcessingRequestsViewController.h; sourceTree = "<group>"; };
+		400E64DF1C8215F600B85330 /* ProcessingRequestsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProcessingRequestsViewController.m; path = ../ProcessingRequestsViewController.m; sourceTree = "<group>"; };
 		404D9C421C7A141E0063B912 /* ImgurPosting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImgurPosting.h; sourceTree = "<group>"; };
 		404D9C431C7A141E0063B912 /* ImgurPosting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImgurPosting.m; sourceTree = "<group>"; };
 		40C4FA5F1C773BD3003CDB34 /* ImgurMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImgurMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -228,6 +231,8 @@
 				97AEA2301C7B1AEC0010CD99 /* synchronization */,
 				6AC562C91C776C2B006C03C0 /* imgurServerManager.h */,
 				6AC562CA1C776C2B006C03C0 /* imgurServerManager.m */,
+				400E64DE1C8215F600B85330 /* ProcessingRequestsViewController.h */,
+				400E64DF1C8215F600B85330 /* ProcessingRequestsViewController.m */,
 				404D9C421C7A141E0063B912 /* ImgurPosting.h */,
 				404D9C431C7A141E0063B912 /* ImgurPosting.m */,
 				6AC563041C77893A006C03C0 /* imgurJSONParser.h */,
@@ -486,6 +491,7 @@
 				6AC562F71C776C5B006C03C0 /* AFSecurityPolicy.m in Sources */,
 				6A6A6B0D1C7E257E00DE946E /* ImageFilterProcessor.m in Sources */,
 				97AEA2361C7B20DA0010CD99 /* NotChalengingQueue.m in Sources */,
+				400E64E01C8215F600B85330 /* ProcessingRequestsViewController.m in Sources */,
 				6AC562F31C776C5B006C03C0 /* AFHTTPRequestOperation.m in Sources */,
 				6AC562FB1C776C5B006C03C0 /* AFURLSessionManager.m in Sources */,
 				EFA6C7241C77474E00EA73D5 /* MainViewController.m in Sources */,

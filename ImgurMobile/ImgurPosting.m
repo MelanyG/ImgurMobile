@@ -11,6 +11,7 @@
 @interface ImgurPosting ()
 
 @property (weak, nonatomic) IBOutlet UITextField *titleTextField;
+
 @property (weak, nonatomic) IBOutlet UITextField *commentTextField;
 @property (weak, nonatomic) IBOutlet UIImageView *currentImage;
 @property (strong, nonatomic) ImgurAccessToken* token;
@@ -29,17 +30,21 @@
     self.token = [ImgurAccessToken sharedToken];
     self.navigationItem.title = @"Post";
     
-    UIBarButtonItem* plus =
-    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
-                                                  target:self
-                                                  action:@selector(postActionSelected)];
+//    UIBarButtonItem* plus =
+//    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+//                                                  target:self
+//                                                  action:@selector(postActionSelected)];
+    // Two buttons at the right side of nav bar
+//    UIBarButtonItem *addAttachButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(postActionSelected)];
+//    UIBarButtonItem *sendButton = [[UIBarButtonItem alloc] initWithTitle:@"Share" style:UIBarButtonItemStylePlain target:self action:@selector(ShareWithCommunity:)];
+//    self.navigationItem.rightBarButtonItems = @[addAttachButton,sendButton];
     
     
     self.sharedButton.enabled = YES;
-     
-    self.navigationItem.rightBarButtonItem = plus;
+    
+    //self.navigationItem.rightBarButtonItem = plus;
     self.selectedTopic.delegate = self;
-    self.array = [[NSArray alloc]initWithObjects:@"funny", @"Aww", @"Storytime", @"Design & Art", @"No topic", @"Awesome", @"The More You Know", @"Current Events", @"Reaction", @"Inspiring", nil];
+    self.array = [[NSArray alloc]initWithObjects:@"Funny", @"Aww", @"Storytime", @"Design & Art", @"No topic", @"Awesome", @"The More You Know", @"Current Events", @"Reaction", @"Inspiring", nil];
     
     
 }
@@ -60,7 +65,14 @@ self.topic = [self.array objectAtIndex:row];
     //NSLog(@"Topic selected: %@",self.topic );
     return [self.array objectAtIndex:row];
 }
-    
+//- (NSAttributedString *)pickerView:(UIPickerView *)pickerView attributedTitleForRow:(NSInteger)row forComponent:(NSInteger)component
+//{
+//    //NSString *title = @"sample title";
+//    NSAttributedString *attString = [[NSAttributedString alloc] initWithString:title attributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+//    
+//    return attString;
+//    
+//}
 - (void)didReceiveMemoryWarning
 {
          [super didReceiveMemoryWarning];
@@ -106,7 +118,7 @@ self.topic = [self.array objectAtIndex:row];
 
 }
 
-- (void) postActionSelected
+- (IBAction)postActionSelected:(UIButton *)sender
 {
   NSString *title = [[self titleTextField] text];
   NSString *description = [[self commentTextField] text];
