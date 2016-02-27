@@ -9,9 +9,9 @@
 #import "SettingsMenuViewController.h"
 
 @implementation SettingsMenuViewController
-- (void)viewDidLoad
+
+- (void)updateYourself
 {
-    [super viewDidLoad];
     self.view.tag = 1111;
     self.shouldRespondToTouchEvents = YES;
 }
@@ -44,7 +44,7 @@
 
 - (IBAction)saveButtonPressed:(UIButton *)sender
 {
-    
+    [self.delegate saveImageAndShowPostVC];
 }
 
 - (IBAction)shareButtonPressed:(UIButton *)sender

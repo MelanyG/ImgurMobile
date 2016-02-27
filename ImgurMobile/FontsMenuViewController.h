@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "EditProtocolHeader.h"
+
+UIColor * RGBA(CGFloat red, CGFloat green, CGFloat blue, CGFloat alpha);
 
 @interface FontsMenuViewController : UIViewController
+
+@property (weak, nonatomic) id<fontDelegate> delegate;
+
+- (void)updateYourself;
 
 @end

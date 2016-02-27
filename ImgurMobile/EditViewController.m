@@ -11,6 +11,7 @@
 #import "FiltersMenuViewController.h"
 #import "FontsMenuViewController.h"
 #import "UIView+SuperClassChecker.h"
+#import "UIActivityIndicatorView+manager.h"
 
 @interface EditViewController ()
 
@@ -60,10 +61,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.imageView.image = [UIImage imageNamed:@"sea"];
+    self.image = [UIImage imageNamed:@"sea"];
+    self.imageView.image = self.image;
     [self prepare];
     [self addHandlesLogic];
+    
+    self.FiltersMenuVC.currentImage = self.image;
+    [self.FiltersMenuVC updateYourself];
+    [self.FontsMenuVC updateYourself];
+    [self.settingsMenuVC updateYourself];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
@@ -311,12 +317,112 @@
      }];
 }
 
-#pragma mark - topMenuDelegate
-
+#pragma mark - settingsMenuDelegate
 - (void)changeWorkingModeTo:(WorkingMode) mode
 {
     self.mode = mode;
     [self addHandlesLogic];
+}
+
+- (void)saveImageAndShowPostVC
+{
+    UIGraphicsBeginImageContextWithOptions(self.view.frame.size, NO, 0.0);
+    [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+#warning show nextVC
+}
+
+#pragma mark - filteringDelegate
+- (void)updateUIWithImage:(UIImage *)image
+{
+    self.imageView.image = image;
+}
+
+- (void)startLoadIndicating
+{
+    UIView *background = [[UIView alloc] initWithFrame:self.view.frame];
+    background.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.75];
+    background.tag = 1001;
+    [self.view addSubview:background];
+    [UIActivityIndicatorView addActivityIndicatorToView:self.view];
+}
+- (void)stopLoadIndicating
+{
+    for (UIView *subview in self.view.subviews)
+    {
+        if (subview.tag == 1001)
+        {
+            [subview removeFromSuperview];
+        }
+    }
+    [UIActivityIndicatorView removeActivityIndicatorFromView:self.view];
+}
+
+#pragma mark - fontDelegate
+- (void)setLabel:(UILabel *)label withPosition:(PositionType)position
+{
+    switch (position)
+    {
+        case LeftTop:
+        {
+            CGRect frame = CGRectMake(self.view.frame.origin.x,
+                               self.view.frame.origin.y,
+                               label.frame.size.width,
+                               label.frame.size.height);
+            label.frame = frame;
+            [self.view addSubview:label];
+        }
+            break;
+            
+        case RightTop:
+        {
+            CGRect frame = CGRectMake(self.view.frame.size.width - label.frame.size.width,
+                               self.view.frame.origin.y,
+                               label.frame.size.width,
+                               label.frame.size.height);
+            label.frame = frame;
+            [self.view addSubview:label];
+        }
+            break;
+            
+        case LeftBottom:
+        {
+            CGRect frame = CGRectMake(self.view.frame.origin.x,
+                               self.view.frame.size.height - label.frame.size.height,
+                               label.frame.size.width,
+                               label.frame.size.height);
+            label.frame = frame;
+            [self.view addSubview:label];
+        }
+            break;
+            
+        case RightBottom:
+        {
+            CGRect frame = CGRectMake(self.view.frame.size.width - label.frame.size.width,
+                               self.view.frame.size.height - label.frame.size.height,
+                               label.frame.size.width,
+                               label.frame.size.height);
+            label.frame = frame;
+            [self.view addSubview:label];
+        }
+            break;
+            
+        case Center:
+        {
+            CGRect frame = CGRectMake(self.view.frame.size.width / 2 - label.frame.size.width / 2,
+                                      self.view.frame.size.height / 2 - label.frame.size.height / 2,
+                                      label.frame.size.width,
+                                      label.frame.size.height);
+            label.frame = frame;
+            [self.view addSubview:label];
+        }
+            break;
+            
+        default:
+            break;
+    }
 }
 
 #pragma mark - navigation
@@ -330,11 +436,13 @@
     else if ([segue.identifier isEqualToString:@"FiltersMenuVC_seague"])
     {
         self.FiltersMenuVC = (FiltersMenuViewController *)[segue destinationViewController];
-        self.FiltersMenuVC.currentImage = [UIImage imageNamed:@"sea"];
+        self.FiltersMenuVC.delegate = self;
+        self.FiltersMenuVC.filterDelegate = self;
     }
     else if ([segue.identifier isEqualToString:@"FontsMenuVC_seague"])
     {
         self.FontsMenuVC = (FontsMenuViewController *)[segue destinationViewController];
+        self.FontsMenuVC.delegate = self;
     }
 }
 
