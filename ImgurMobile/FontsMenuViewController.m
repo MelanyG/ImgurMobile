@@ -28,6 +28,7 @@ UIColor * RGBA(CGFloat red, CGFloat green, CGFloat blue, CGFloat alpha)
 @property (weak, nonatomic) IBOutlet UIPickerView *fontPicker;
 @property (weak, nonatomic) IBOutlet UILabel *fontSizeLabel;
 
+@property (weak, nonatomic) IBOutlet UITextField *inputTextField;
 @property (assign, nonatomic) CGFloat red;
 @property (assign, nonatomic) CGFloat green;
 @property (assign, nonatomic) CGFloat blue;
@@ -38,13 +39,28 @@ UIColor * RGBA(CGFloat red, CGFloat green, CGFloat blue, CGFloat alpha)
 
 @property (strong, nonatomic) UIFont *currentFont;
 
+@property (strong, nonatomic) NSString *currentText;
+
+@property (strong, nonatomic)  UILabel *outLabel;
+
 @end
 
 @implementation FontsMenuViewController
 
+- (UILabel *)outLabel
+{
+    if (!_outLabel)
+    {
+        _outLabel = [[UILabel alloc] init];
+        _outLabel.adjustsFontSizeToFitWidth = NO;
+    }
+    return _outLabel;
+}
+
 - (void)updateYourself
 {
     self.view.tag = 2222;
+    self.inputTextField.text = @"choose text, You need";
     [self setInitialColor];
     [self setInitialFontSize];
 }
@@ -53,7 +69,8 @@ UIColor * RGBA(CGFloat red, CGFloat green, CGFloat blue, CGFloat alpha)
 {
     self.fontSize = 10;
     self.currentFont = [UIFont systemFontOfSize:self.fontSize];
-    [self updateFontSizeLabel];
+    [self updateLabel];
+#warning FONT SIZE 
 }
 
 - (void)setInitialColor
@@ -95,21 +112,23 @@ UIColor * RGBA(CGFloat red, CGFloat green, CGFloat blue, CGFloat alpha)
 {
     self.fontSize = sender.value;
     self.currentFont = [self.currentFont fontWithSize:self.fontSize];
-    [self updateFontSizeLabel];
+    [self updateLabel];
 }
 
-- (void)updateFontSizeLabel
+- (void)updateLabel
 {
-    CGSize size = [@"font 20" sizeWithAttributes:
-                   @{NSFontAttributeName: self.currentFont}];
+    CGSize size = [self.inputTextField.text sizeWithAttributes:
+                   @{NSFontAttributeName: [self.currentFont fontWithSize:self.fontSize + 1]}];
     
-    CGRect frame = CGRectMake(self.fontSizeLabel.frame.origin.x,
-                              self.fontSizeLabel.frame.origin.y,
-                              self.fontSizeLabel.frame.size.width,
-                              MAX(self.fontSizeLabel.frame.size.height, ceilf(size.height)));
-    self.fontSizeLabel.frame = frame;
+    CGRect frame = CGRectMake(0,
+                              0,
+                              size.width,
+                              size.height);
+    self.outLabel.frame = frame;
     
-    self.fontSizeLabel.text = [NSString stringWithFormat:@"%@ %f",self.currentFont.fontName, self.fontSize];
+    self.outLabel.text = self.inputTextField.text;
+    
+    [self.delegate setLabel:self.outLabel withPosition:Center];
 }
 
 @end

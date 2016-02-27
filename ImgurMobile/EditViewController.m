@@ -68,6 +68,8 @@
     
     self.FiltersMenuVC.currentImage = self.image;
     [self.FiltersMenuVC updateYourself];
+    [self.FontsMenuVC updateYourself];
+    [self.settingsMenuVC updateYourself];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
@@ -315,11 +317,21 @@
      }];
 }
 
-#pragma mark - topMenuDelegate
+#pragma mark - settingsMenuDelegate
 - (void)changeWorkingModeTo:(WorkingMode) mode
 {
     self.mode = mode;
     [self addHandlesLogic];
+}
+
+- (void)saveImageAndShowPostVC
+{
+    UIGraphicsBeginImageContextWithOptions(self.view.frame.size, NO, 0.0);
+    [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+#warning show nextVC
 }
 
 #pragma mark - filteringDelegate
@@ -348,6 +360,71 @@
     [UIActivityIndicatorView removeActivityIndicatorFromView:self.view];
 }
 
+#pragma mark - fontDelegate
+- (void)setLabel:(UILabel *)label withPosition:(PositionType)position
+{
+    switch (position)
+    {
+        case LeftTop:
+        {
+            CGRect frame = CGRectMake(self.view.frame.origin.x,
+                               self.view.frame.origin.y,
+                               label.frame.size.width,
+                               label.frame.size.height);
+            label.frame = frame;
+            [self.view addSubview:label];
+        }
+            break;
+            
+        case RightTop:
+        {
+            CGRect frame = CGRectMake(self.view.frame.size.width - label.frame.size.width,
+                               self.view.frame.origin.y,
+                               label.frame.size.width,
+                               label.frame.size.height);
+            label.frame = frame;
+            [self.view addSubview:label];
+        }
+            break;
+            
+        case LeftBottom:
+        {
+            CGRect frame = CGRectMake(self.view.frame.origin.x,
+                               self.view.frame.size.height - label.frame.size.height,
+                               label.frame.size.width,
+                               label.frame.size.height);
+            label.frame = frame;
+            [self.view addSubview:label];
+        }
+            break;
+            
+        case RightBottom:
+        {
+            CGRect frame = CGRectMake(self.view.frame.size.width - label.frame.size.width,
+                               self.view.frame.size.height - label.frame.size.height,
+                               label.frame.size.width,
+                               label.frame.size.height);
+            label.frame = frame;
+            [self.view addSubview:label];
+        }
+            break;
+            
+        case Center:
+        {
+            CGRect frame = CGRectMake(self.view.frame.size.width / 2 - label.frame.size.width / 2,
+                                      self.view.frame.size.height / 2 - label.frame.size.height / 2,
+                                      label.frame.size.width,
+                                      label.frame.size.height);
+            label.frame = frame;
+            [self.view addSubview:label];
+        }
+            break;
+            
+        default:
+            break;
+    }
+}
+
 #pragma mark - navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -365,6 +442,7 @@
     else if ([segue.identifier isEqualToString:@"FontsMenuVC_seague"])
     {
         self.FontsMenuVC = (FontsMenuViewController *)[segue destinationViewController];
+        self.FontsMenuVC.delegate = self;
     }
 }
 

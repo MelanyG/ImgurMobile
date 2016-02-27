@@ -44,7 +44,7 @@
 
 - (IBAction)saveButtonPressed:(UIButton *)sender
 {
-    
+    [self.delegate saveImageAndShowPostVC];
 }
 
 - (IBAction)shareButtonPressed:(UIButton *)sender
