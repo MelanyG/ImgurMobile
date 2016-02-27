@@ -114,6 +114,10 @@ UIColor * RGBA(CGFloat red, CGFloat green, CGFloat blue, CGFloat alpha)
     self.currentFont = [self.currentFont fontWithSize:self.fontSize];
     [self updateLabel];
 }
+- (IBAction)inputTextDidChanged:(UITextField *)sender
+{
+    
+}
 
 - (void)updateLabel
 {

@@ -107,6 +107,10 @@
         
     }
 }
+- (IBAction)discardFiltering:(UIButton *)sender
+{
+    
+}
 
 - (ImageFilterProcessor *)processor
 {
