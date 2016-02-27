@@ -11,8 +11,10 @@
 
 @interface SettingsMenuViewController : UIViewController
 
-@property (weak, nonatomic) id <topMenuDelegate> delegate;
+@property (weak, nonatomic) id <settingsMenuDelegate> delegate;
 
 @property (assign, nonatomic) BOOL shouldRespondToTouchEvents;
+
+- (void)updateYourself;
 
 @end

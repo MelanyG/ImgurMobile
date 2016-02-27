@@ -7,40 +7,9 @@
 //
 
 #import "FiltersMenuViewController.h"
+#import "ImageFilterProcessor.h"
 #import "UIImage+Resize.h"
-
-typedef enum{
-    CISepiaTone,
-    CIBoxBlur,
-    CIGammaAdjust,
-    CIVibrance,
-    CIColorCube,
-    CIColorMonochrome,
-    CIDepthOfField
-}FilterName;
-
-NSString * NSStringFromFilterName(FilterName name)
-{
-    switch (name)
-    {
-        case CIBoxBlur: return @"CIBoxBlur";
-            
-        case CIColorMonochrome: return @"CIColorMonochrome";
-            
-        case CIColorCube: return @"CIColorCube";
-            
-        case CIDepthOfField: return @"CIDepthOfField";
-            
-        case CIGammaAdjust: return @"CIGammaAdjust";
-            
-        case CISepiaTone: return @"CISepiaTone";
-            
-        case CIVibrance: return @"CIVibrance";
-            
-        default:
-            break;
-    }
-}
+#import "UIActivityIndicatorView+manager.h"
 
 @interface FiltersMenuViewController ()
 
@@ -53,155 +22,153 @@ NSString * NSStringFromFilterName(FilterName name)
 @property (assign, nonatomic) CGSize sampleImageSize;
 @property (strong, nonatomic) UIImage *sampleImage;
 
-@property (strong, nonatomic) CIContext *ctx;
-@property (strong, nonatomic) CIImage *beginImage;
-@property (strong, nonatomic) CIFilter *filter;
+@property (strong, nonatomic) ImageFilterProcessor *processor;
+
+@property (strong, nonatomic) UITapGestureRecognizer *tapGesture;
 
 @end
 
 @implementation FiltersMenuViewController
 
-- (void)viewDidLoad
+- (void)updateYourself
 {
-    [super viewDidLoad];
     self.view.tag = 3333;
-    [self prepareSampleImage];
-    [self processAndSetSampleImages];
-    [self configure];
+    self.tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                              action:@selector(handleTap:)];
+    [self.contentView addGestureRecognizer:self.tapGesture];
+    
+    [self configureScrollView];
+    
+    [self fillImagesArrayWithPlaceHolders];
+    
+    [self getSampleImages];
+}
+
+- (void)fillImagesArrayWithPlaceHolders
+{
+    self.processedSampleImages = [NSMutableArray array];
+    double yCoordinate = self.scrollView.frame.size.height / 2 - self.sampleImageSize.height;
+    
+    for (int i = 0; i < FILTERS_COUNT; i++)
+    {
+        CGRect frame = CGRectMake(0, yCoordinate + (self.sampleImageSize.height + 10) * i,
+                                  self.sampleImageSize.width,
+                                  self.sampleImageSize.height);
+        
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:frame];
+        imageView.backgroundColor = [UIColor lightGrayColor];
+        
+        [UIActivityIndicatorView addActivityIndicatorToView:imageView];
+        
+        [self.contentView addSubview:imageView];
+        [self.processedSampleImages addObject:imageView];
+    }
 }
 
 - (void)prepareSampleImage
 {
     double coef = self.currentImage.size.width / self.contentView.frame.size.width;
-    self.sampleImageSize = CGSizeMake(self.currentImage.size.width / coef,
-                                      self.currentImage.size.height / coef);
-    self.sampleImage = [UIImage imageWithImage:self.currentImage scaledToSize:self.sampleImageSize];
+    self.sampleImageSize = CGSizeMake((NSInteger)self.currentImage.size.width / coef,
+                                      (NSInteger)self.currentImage.size.height / coef);
+    self.sampleImage = [UIImage imageWithImage:self.currentImage scaledToSize:CGSizeMake(self.sampleImageSize.width / 2, self.sampleImageSize.height / 2)];
 }
 
-- (void)configure
+- (void)configureScrollView
 {
-    self.containerViewHeighConstraint.constant =  self.sampleImageSize.height * self.processedSampleImages.count;
+    [self prepareSampleImage];
+    double scrollViewOffset = self.scrollView.frame.size.height / 2;
+    
+    self.containerViewHeighConstraint.constant =  (10 + self.sampleImageSize.height) * FILTERS_COUNT + scrollViewOffset;
     self.scrollView.contentSize = CGSizeMake(self.contentView.frame.size.width,
-                                             self.sampleImageSize.height * self.processedSampleImages.count);
-    [self setImagesIntoContentView];
+                                             (self.scrollView.frame.size.height / 2 + self.sampleImageSize.height / 2) * self.processedSampleImages.count);
 }
 
-- (void)setImagesIntoContentView
+- (void)handleTap:(UITapGestureRecognizer *)tap
 {
-    double yCoordinate = 0;
-    for (int i = 0; i < self.processedSampleImages.count; i++)
+    CGPoint location = [tap locationInView:self.contentView];
+    UIView *view = [self.contentView hitTest:location withEvent:nil];
+    
+    if ([view isKindOfClass:[UIImageView class]])
     {
-        CGRect frame = CGRectMake(0,yCoordinate + self.sampleImageSize.height*i,
-                                  self.sampleImageSize.width,
-                                  self.sampleImageSize.height);
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:frame];
-        imageView.image = [self.processedSampleImages objectAtIndex:i];
-        [self.contentView addSubview:imageView];
+        [self.delegate changeStateOfRightMenu:FilteringMenu];
+        [self.filterDelegate startLoadIndicating];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
+        {
+            
+            [self.processor getFilteredImage:self.currentImage WithFilter:(FilterName)view.tag Completion:^(NSDictionary *imageAndTag)
+            {
+                dispatch_async(dispatch_get_main_queue(), ^
+                {
+                    [self.filterDelegate stopLoadIndicating];
+                    [self.filterDelegate updateUIWithImage:[imageAndTag objectForKey:KEY_FOR_IMAGE]];
+                });
+            }];
+        });
+        
+    }
+}
+- (IBAction)discardFiltering:(UIButton *)sender
+{
+    
+}
+
+- (ImageFilterProcessor *)processor
+{
+    if (!_processor)
+    {
+        _processor = [ImageFilterProcessor sharedProcessor];
+    }
+    return _processor;
+}
+
+- (void)getSampleImages
+{
+    self.processor.sliderValue = self.slider.value;
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
+    {
+        for (int i = 0; i < FILTERS_COUNT; i++)
+        {
+            [self.processor getFilteredImage:self.sampleImage WithFilter:(FilterName)i Completion:^(NSDictionary *imageAndTag)
+            {
+                 dispatch_async(dispatch_get_main_queue(), ^
+                                {
+                                    [self setImageIntoContentView:imageAndTag];
+                                });
+             }];
+        }
+    });
+    
+}
+
+- (void)setImageIntoContentView:(NSDictionary *)imageAndTag
+{
+    for (UIImageView *view in self.contentView.subviews)
+    {
+        if (!view.image)
+        {
+            view.image = [imageAndTag objectForKey:KEY_FOR_IMAGE];
+            view.tag = [[imageAndTag objectForKey:KEY_FOR_TAG] intValue];
+            [UIActivityIndicatorView removeActivityIndicatorFromView:view];
+            view.userInteractionEnabled = YES;
+            break;
+        }
     }
 }
 
-- (void)processAndSetSampleImages
+/*- (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    self.ctx = [CIContext contextWithOptions:nil];
-    
-    self.beginImage = [CIImage imageWithCGImage:self.sampleImage.CGImage];
-    
-    self.processedSampleImages = [NSMutableArray array];
-    [self.processedSampleImages addObject:[self CISepiaToneFromCurrentImage]];
-    [self.processedSampleImages addObject:[self CIBoxBlurFromCurrentImage]];
-    [self.processedSampleImages addObject:[self CIGammaAdjustFromCurrentImage]];
-    [self.processedSampleImages addObject:[self CIVibranceFromCurrentImage]];
-    [self.processedSampleImages addObject:[self CIColorCubeFromCurrentImage]];
-    [self.processedSampleImages addObject:[self CIColorMonochromeFromCurrentImage]];
-    [self.processedSampleImages addObject:[self CIDepthOfFieldFromCurrentImage]];
+    [self loadVisiblePage];
 }
 
-- (UIImage *)CISepiaToneFromCurrentImage
-{
-    CIFilter *filter = [CIFilter filterWithName:NSStringFromFilterName(CISepiaTone)
-                                  keysAndValues:
-                        kCIInputImageKey, self.beginImage,
-                        kCIInputIntensityKey, [NSNumber numberWithFloat:self.slider.value], nil];
-    
-    return [self getFilteredImageWithFilter:filter];
-}
 
-- (UIImage *)CIBoxBlurFromCurrentImage
-{
-    CIFilter *filter = [CIFilter filterWithName:NSStringFromFilterName(CIBoxBlur)
-                                    keysAndValues:
-                          kCIInputImageKey, self.beginImage,
-                          kCIInputRadiusKey, [NSNumber numberWithFloat:self.slider.value * 10], nil];
-    
-    return [self getFilteredImageWithFilter:filter];
-}
 
-- (UIImage *)CIGammaAdjustFromCurrentImage
+- (void)loadVisiblePage
 {
-    CIFilter *filter = [CIFilter filterWithName:NSStringFromFilterName(CIGammaAdjust)
-                                  keysAndValues:
-                        kCIInputImageKey, self.beginImage,
-                        @"inputPower", [NSNumber numberWithFloat:self.slider.value], nil];
+    NSInteger page = (NSInteger)self.scrollView.contentOffset.y / (self.scrollView.frame.size.height / 2 - self.sampleImageSize.height / 2) + self.sampleImageSize.height + 1;
     
-    return [self getFilteredImageWithFilter:filter];
-}
-
-- (UIImage *)CIVibranceFromCurrentImage
-{
-    CIFilter *filter = [CIFilter filterWithName:NSStringFromFilterName(CIVibrance)
-                                  keysAndValues:
-                        kCIInputImageKey, self.beginImage,
-                        @"inputAmount", [NSNumber numberWithFloat:self.slider.value], nil];
-    
-    return [self getFilteredImageWithFilter:filter];
-}
-
-- (UIImage *)CIColorCubeFromCurrentImage
-{
-#warning non
-    CIFilter *filter = [CIFilter filterWithName:NSStringFromFilterName(CIVibrance)
-                                  keysAndValues:
-                        kCIInputImageKey, self.beginImage,
-                        @"inputAmount", [NSNumber numberWithFloat:self.slider.value], nil];
-    
-    return [self getFilteredImageWithFilter:filter];
-}
-
-- (UIImage *)CIColorMonochromeFromCurrentImage
-{
-    CIFilter *filter = [CIFilter filterWithName:NSStringFromFilterName(CIColorMonochrome)
-                                  keysAndValues:
-                        kCIInputImageKey, self.beginImage,
-                        kCIInputColorKey, [CIColor colorWithRed:0.67 green:0.13 blue:0.83 alpha:0.74],
-                        @"inputIntensity", [NSNumber numberWithFloat:self.slider.value], nil];
-    
-    return [self getFilteredImageWithFilter:filter];
-}
-
-- (UIImage *)CIDepthOfFieldFromCurrentImage
-{
-    CIFilter *filter = [CIFilter filterWithName:NSStringFromFilterName(CIDepthOfField)
-                                  keysAndValues:
-                        kCIInputImageKey, self.beginImage,
-                        kCIInputRadiusKey, [NSNumber numberWithFloat:self.slider.value * 10], nil];
-    
-    return [self getFilteredImageWithFilter:filter];
-}
-
-- (UIImage *)getFilteredImageWithFilter:(CIFilter *)filter
-{
-    self.filter = filter;
-    
-    CIImage *outImage = [self.filter outputImage];
-    
-    CGImageRef cgImg = [self.ctx createCGImage:outImage fromRect:[outImage extent]];
-    
-    UIImage *image = [UIImage imageWithCGImage:cgImg];
-    
-    CGImageRelease(cgImg);
-    
-    return image;
-}
+    self.pageControl.currentPage = page;
+}*/
 
 /* - (void)viewDidLoad
  {
@@ -228,17 +195,17 @@ NSString * NSStringFromFilterName(FilterName name)
  }
  */
  - (IBAction)sliderValueBeenChanged:(UISlider *)sender
- {
- /*float slideValue = sender.value;
- 
- [self.filter setValue:@(slideValue)
- forKey:@"inputIntensity"];
- CIImage *outImage = [self.filter outputImage];
- 
- CGImageRef cgImg = [self.ctx createCGImage:outImage fromRect:[outImage extent]];
- 
- self.imageView.image = [UIImage imageWithCGImage:cgImg];
- 
- CGImageRelease(cgImg);*/
+{
+    /*float slideValue = sender.value;
+    
+    [self.filter setValue:@(slideValue)
+                   forKey:@"inputIntensity"];
+    CIImage *outImage = [self.filter outputImage];
+    
+    CGImageRef cgImg = [self.ctx createCGImage:outImage fromRect:[outImage extent]];
+    
+    self.imageView.image = [UIImage imageWithCGImage:cgImg];
+    
+    CGImageRelease(cgImg);*/
  }
 @end
