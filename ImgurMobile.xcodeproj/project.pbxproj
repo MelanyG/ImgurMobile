@@ -51,6 +51,7 @@
 		97AEA2331C7B1B520010CD99 /* Node.m in Sources */ = {isa = PBXBuildFile; fileRef = 97AEA2321C7B1B520010CD99 /* Node.m */; };
 		97AEA2361C7B20DA0010CD99 /* NotChalengingQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 97AEA2351C7B20DA0010CD99 /* NotChalengingQueue.m */; };
 		EF09022C1C77500000D9CF5E /* socialControllerIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = EF09022B1C77500000D9CF5E /* socialControllerIcon.png */; };
+		EF11841F1C8335F8000FB6A1 /* RESTAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = EF11841E1C8335F8000FB6A1 /* RESTAPI.m */; };
 		EF1F25101C7C583C0061DD53 /* Like Filled-48.png in Resources */ = {isa = PBXBuildFile; fileRef = EF1F250F1C7C583C0061DD53 /* Like Filled-48.png */; };
 		EFA6C7241C77474E00EA73D5 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFA6C7231C77474E00EA73D5 /* MainViewController.m */; };
 		EFA6C7291C7747A400EA73D5 /* SocialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFA6C7281C7747A400EA73D5 /* SocialViewController.m */; };
@@ -152,6 +153,8 @@
 		97AEA2341C7B20DA0010CD99 /* NotChalengingQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotChalengingQueue.h; sourceTree = "<group>"; };
 		97AEA2351C7B20DA0010CD99 /* NotChalengingQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotChalengingQueue.m; sourceTree = "<group>"; };
 		EF09022B1C77500000D9CF5E /* socialControllerIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = socialControllerIcon.png; sourceTree = "<group>"; };
+		EF11841D1C8335F8000FB6A1 /* RESTAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RESTAPI.h; sourceTree = "<group>"; };
+		EF11841E1C8335F8000FB6A1 /* RESTAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RESTAPI.m; sourceTree = "<group>"; };
 		EF1F250F1C7C583C0061DD53 /* Like Filled-48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Like Filled-48.png"; sourceTree = "<group>"; };
 		EFA6C7221C77474E00EA73D5 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		EFA6C7231C77474E00EA73D5 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
@@ -356,14 +359,24 @@
 			name = synchronization;
 			sourceTree = "<group>";
 		};
+		EF11841C1C8335C8000FB6A1 /* Social */ = {
+			isa = PBXGroup;
+			children = (
+				EF11841D1C8335F8000FB6A1 /* RESTAPI.h */,
+				EF11841E1C8335F8000FB6A1 /* RESTAPI.m */,
+				EFA6C7271C7747A400EA73D5 /* SocialViewController.h */,
+				EFA6C7281C7747A400EA73D5 /* SocialViewController.m */,
+			);
+			name = Social;
+			sourceTree = "<group>";
+		};
 		EFA6C7251C77475600EA73D5 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				EF11841C1C8335C8000FB6A1 /* Social */,
 				6ACB13DD1C7C6C95004237DD /* Edit */,
 				EFA6C7221C77474E00EA73D5 /* MainViewController.h */,
 				EFA6C7231C77474E00EA73D5 /* MainViewController.m */,
-				EFA6C7271C7747A400EA73D5 /* SocialViewController.h */,
-				EFA6C7281C7747A400EA73D5 /* SocialViewController.m */,
 				EFA6C72A1C77485700EA73D5 /* LibraryViewController.h */,
 				EFA6C72B1C77485700EA73D5 /* LibraryViewController.m */,
 			);
@@ -487,6 +500,7 @@
 				6AEFD2D41C7BABAA00ADF2FC /* URLGen.m in Sources */,
 				6ACB13EA1C7CE38F004237DD /* UIView+SuperClassChecker.m in Sources */,
 				404D9C441C7A141E0063B912 /* ImgurPosting.m in Sources */,
+				EF11841F1C8335F8000FB6A1 /* RESTAPI.m in Sources */,
 				40C4FA861C78B8F3003CDB34 /* ImgurLoginViewController.m in Sources */,
 				6AC562F71C776C5B006C03C0 /* AFSecurityPolicy.m in Sources */,
 				6A6A6B0D1C7E257E00DE946E /* ImageFilterProcessor.m in Sources */,
