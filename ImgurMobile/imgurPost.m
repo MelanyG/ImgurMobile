@@ -22,6 +22,7 @@
     }
     else
     {
+        post.postID = [dictionary objectForKey:@"id"];
         post.owner = [dictionary objectForKey:@"account_id"];
         post.imageURL = [dictionary objectForKey:@"link"];
         post.title = [dictionary objectForKey:@"title"];
