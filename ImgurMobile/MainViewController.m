@@ -28,6 +28,8 @@
 @property (strong, nonatomic) NSMutableDictionary* pageInfo;
 @property (assign, nonatomic) NSUInteger pageNumber;
 
+@property (strong, nonatomic) imgurServerManager *manager;
+
 @end
 
 @implementation MainViewController
@@ -45,7 +47,7 @@
     
     NSMutableDictionary * info = [[NSMutableDictionary alloc] init];
     
-    [info setObject:[NSNumber numberWithInt:2] forKey:@"section"];
+    [info setObject:[NSNumber numberWithInt:0] forKey:@"section"];
     [info setObject:[NSNumber numberWithInt:0] forKey:@"sort"];
     [info setObject:[NSNumber numberWithInt:0] forKey:@"window"];
     
@@ -64,8 +66,11 @@
 -(void) reloadPage
 {
     NotChalengingQueue *queue = [[NotChalengingQueue alloc] init];
-    imgurServerManager *manager = [[imgurServerManager alloc] init];
-    [manager getPhotosForPage:self.pageNumber
+    
+    if (!self.manager)
+        self.manager = [[imgurServerManager alloc] init];
+    
+    [self.manager getPhotosForPage:self.pageNumber
                       Section:[[self.pageInfo objectForKey:@"section"] intValue]
                          Sort:[[self.pageInfo objectForKey:@"sort"] intValue]
                        Window:[[self.pageInfo objectForKey:@"window"] intValue] Completion:^(NSDictionary *resp)

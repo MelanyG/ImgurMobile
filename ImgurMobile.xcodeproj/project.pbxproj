@@ -19,7 +19,6 @@
 		40C4FA8F1C78CB80003CDB34 /* ImgurUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 40C4FA8E1C78CB80003CDB34 /* ImgurUser.m */; };
 		6A6A6B0A1C7E166000DE946E /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A6A6B091C7E166000DE946E /* UIImage+Resize.m */; };
 		6A6A6B0D1C7E257E00DE946E /* ImageFilterProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A6A6B0C1C7E257E00DE946E /* ImageFilterProcessor.m */; };
-		6A8EE1991C833F17002DF4B6 /* UIButton+highlighter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A8EE1981C833F17002DF4B6 /* UIButton+highlighter.m */; };
 		6A8EE19C1C834AD7002DF4B6 /* UIImageView+imageRectGetter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A8EE19B1C834AD6002DF4B6 /* UIImageView+imageRectGetter.m */; };
 		6AA3C7DE1C78A513001091F0 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AA3C7DD1C78A513001091F0 /* CoreImage.framework */; };
 		6AC562CB1C776C2B006C03C0 /* imgurServerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AC562CA1C776C2B006C03C0 /* imgurServerManager.m */; };
@@ -413,8 +412,6 @@
 			children = (
 				EF11841D1C8335F8000FB6A1 /* RESTAPI.h */,
 				EF11841E1C8335F8000FB6A1 /* RESTAPI.m */,
-				EFA6C7271C7747A400EA73D5 /* SocialViewController.h */,
-				EFA6C7281C7747A400EA73D5 /* SocialViewController.m */,
 			);
 			name = Social;
 			sourceTree = "<group>";
@@ -555,8 +552,10 @@
 				40C4FA861C78B8F3003CDB34 /* ImgurLoginViewController.m in Sources */,
 				6AC562F71C776C5B006C03C0 /* AFSecurityPolicy.m in Sources */,
 				975D23051C7F3D9000D3A4B7 /* PageInfoViewController.m in Sources */,
+				6A6A6B0D1C7E257E00DE946E /* ImageFilterProcessor.m in Sources */,
 				97AEA2361C7B20DA0010CD99 /* NotChalengingQueue.m in Sources */,
 				976842251C7C8D6700F613B5 /* imgurCell.m in Sources */,
+				400E64E01C8215F600B85330 /* ProcessingRequestsViewController.m in Sources */,
 				6AC562F31C776C5B006C03C0 /* AFHTTPRequestOperation.m in Sources */,
 				6AC562FB1C776C5B006C03C0 /* AFURLSessionManager.m in Sources */,
 				EFA6C7241C77474E00EA73D5 /* MainViewController.m in Sources */,
