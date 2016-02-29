@@ -298,10 +298,10 @@
             </objects>
             <point key="canvasLocation" x="2492" y="413"/>
         </scene>
-        <!--View Controller-->
+        <!--Imgur Posting-->
         <scene sceneID="kef-qf-1Sr">
             <objects>
-                <viewController id="hLo-eg-a4X" sceneMemberID="viewController">
+                <viewController id="hLo-eg-a4X" customClass="ImgurPosting" sceneMemberID="viewController">
                     <containerView key="view" opaque="NO" contentMode="scaleToFill" id="c6R-Ta-kLc">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
