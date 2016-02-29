@@ -80,17 +80,6 @@
     [self.collectionView reloadData];
 }
 
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([segue.identifier isEqualToString:@"PageInfoEmbed"])
-    {
-        PageInfoViewController * pivc = segue.destinationViewController;
-        pivc.delegate = self;
-        
-    }
-}
-
-
 
 -(void)preparePhotos
 {
@@ -239,14 +228,22 @@
     [self reloadPage];
 }
 
-/*
+
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender 
+ {
+     if ([segue.identifier isEqualToString:@"PageInfoEmbed"])
+     {
+         PageInfoViewController * pivc = segue.destinationViewController;
+         pivc.delegate = self;
+     }
+     if ([segue.identifier isEqualToString:@"SocialVCEmbed"])
+     {
+         
+     }
 }
-*/
+
 
 @end
