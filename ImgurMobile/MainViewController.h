@@ -7,8 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-
-@interface MainViewController : UIViewController
+#import "PageInfoDelegate.h"
+@interface MainViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, PageInfoDelegate>
 
 @end
