@@ -7,6 +7,7 @@
 //
 
 #import "SettingsMenuViewController.h"
+#import "EditViewController.h"
 
 @implementation SettingsMenuViewController
 
@@ -23,12 +24,12 @@
         {
             case 1:
                 [self.delegate changeWorkingModeTo:imageFiltering];
-                [self.delegate changeStateOfLeftMenu];
+                [self hideMenus];
                 break;
                 
             case 2:
                 [self.delegate changeWorkingModeTo:textEditing];
-                [self.delegate changeStateOfLeftMenu];
+                [self hideMenus];
                 break;
                 
             default:
@@ -39,6 +40,15 @@
     {
         return;
     }
+}
+
+- (void)hideMenus
+{
+    [self.delegate changeStateOfLeftMenu];
+    if (((EditViewController *)self.delegate).isRightFilteringMenuOpened)
+        [self.delegate changeStateOfRightMenu:FilteringMenu];
+    if (((EditViewController *)self.delegate).isRightTextMenuOpened)
+        [self.delegate changeStateOfRightMenu:TextEditingMenu];
 }
 
 - (IBAction)saveButtonPressed:(UIButton *)sender

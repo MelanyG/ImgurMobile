@@ -15,6 +15,17 @@
 #import "UIImageView+imageRectGetter.h"
 #import "ImgurPosting.h"
 
+typedef enum{
+    settings,
+    fonts,
+    filters
+}handleType;
+
+typedef enum{
+    forward,
+    back
+}movingHandleType;
+
 @interface EditViewController ()
 
 @property (assign, nonatomic) WorkingMode mode;
@@ -45,16 +56,17 @@
 @property (weak, nonatomic) FontsMenuViewController *FontsMenuVC;
 
 //Handle Views
-@property (strong, nonatomic)UIView *leftHandleView;
-@property (strong, nonatomic)UIView *rightHandleView;
-@property (assign, nonatomic)double handleViewHeigh;
-@property (assign, nonatomic)double handleViewWidth;
+@property (strong, nonatomic) UIView *leftHandleView;
+@property (strong, nonatomic) UIView *rightHandleView;
+@property (assign, nonatomic) double handleViewHeigh;
+@property (assign, nonatomic) double handleViewWidth;
+@property (strong, nonatomic) UIImageView *settingsArrow;
+@property (strong, nonatomic) UIImageView *filtersArrow;
+@property (strong, nonatomic) UIImageView *fontsArrow;
 
 @property (strong, nonatomic) UITapGestureRecognizer *tapGesture;
 @property (strong, nonatomic) UIPanGestureRecognizer *panGesture;
-@property (assign, nonatomic) BOOL isLeftMenuOpened;
-@property (assign, nonatomic) BOOL isRightFilteringMenuOpened;
-@property (assign, nonatomic) BOOL isRightTextMenuOpened;
+
 
 @end
 
@@ -91,7 +103,7 @@
     self.isRightFilteringMenuOpened = NO;
     self.isRightTextMenuOpened = NO;
     self.handleViewHeigh = 100;
-    self.handleViewWidth = 20;
+    self.handleViewWidth = 100;
 }
 
 - (void)removeAllHandes
@@ -105,8 +117,97 @@
     }
 }
 
+- (void)moveHandle:(handleType)handle inDirection:(movingHandleType)direction
+{
+    if (handle == settings)
+    {
+        UIView *view = [self getViewForHandleType:settings];
+        if (direction == forward)
+        {
+            [self hideView:view ForTime:1.2];
+            CGRect frame = CGRectMake(self.settingsMenuWidthConstraint.constant,
+                                      view.frame.origin.y,
+                                      view.frame.size.width,
+                                      view.frame.size.height);
+            view.frame = frame;
+        }
+        else if (direction == back)
+        {
+            [self hideView:view ForTime:1.2];
+            CGRect frame = CGRectMake(0,
+                                      view.frame.origin.y,
+                                      view.frame.size.width,
+                                      view.frame.size.height);
+            view.frame = frame;
+        }
+    }
+    else if (handle == filters)
+    {
+        UIView *view = [self getViewForHandleType:filters];
+        if (direction == forward)
+        {
+            [self hideView:view ForTime:1.2];
+            CGRect frame = CGRectMake(self.view.frame.size.width - view.frame.size.width - self.rightFiltersMenuWidthConstraint.constant,
+                                      view.frame.origin.y,
+                                      view.frame.size.width,
+                                      view.frame.size.height);
+            view.frame = frame;
+        }
+        else if (direction == back)
+        {
+            [self hideView:view ForTime:1.2];
+            CGRect frame = CGRectMake(self.view.frame.size.width - view.frame.size.width,
+                                      view.frame.origin.y,
+                                      view.frame.size.width,
+                                      view.frame.size.height);
+            view.frame = frame;
+        }
+    }
+    else if (handle == fonts)
+    {
+        UIView *view = [self getViewForHandleType:fonts];
+        if (direction == forward)
+        {
+            [self hideView:view ForTime:1.2];
+            CGRect frame = CGRectMake(self.view.frame.size.width - view.frame.size.width - self.rightFontsMenuWidthConstraint.constant,
+                                      view.frame.origin.y,
+                                      view.frame.size.width,
+                                      view.frame.size.height);
+            view.frame = frame;
+        }
+        else if (direction == back)
+        {
+            [self hideView:view ForTime:1.2];
+            CGRect frame = CGRectMake(self.view.frame.size.width - view.frame.size.width,
+                                      view.frame.origin.y,
+                                      view.frame.size.width,
+                                      view.frame.size.height);
+            view.frame = frame;
+        }
+    }
+}
+
+- (UIView *)getViewForHandleType:(handleType)handle
+{
+    NSInteger tag = 100;
+    if (handle == settings)
+        tag = 113;
+    else if (handle == fonts)
+        tag = 115;
+    else if (handle == filters)
+        tag = 114;
+    
+    for (UIView *subview in self.view.subviews)
+    {
+        if (subview.tag == tag)
+            return subview;
+    }
+    return nil;
+}
+
 - (void)addHandlesLogic
 {
+    [self removeAllHandes];
     [self addLeftMenuHandle];
     [self addRightMenuHandle];
     self.tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self
@@ -125,10 +226,29 @@
                                self.handleViewHeigh);
     
     self.leftHandleView = [[UIView alloc] initWithFrame:frame];
-    self.leftHandleView.backgroundColor = [UIColor redColor];
+    [self configureViewDesign:self.leftHandleView];
+    
+    CGRect labelFrame = CGRectMake(0,
+                                   - self.handleViewHeigh / 2,
+                                   self.handleViewWidth,
+                                   self.handleViewHeigh / 2);
+    UILabel *label = [[UILabel alloc] initWithFrame:labelFrame];
+    label.text = @"settings";
+    label.textAlignment = NSTextAlignmentCenter;
+    [self.leftHandleView addSubview:label];
+    
+    CGRect iconFrame = CGRectMake(5,
+                                  5,
+                                   self.handleViewWidth,
+                                   self.handleViewHeigh);
+    self.settingsArrow = [[UIImageView alloc] initWithFrame:iconFrame];
+    self.settingsArrow.image = [UIImage imageNamed:@"arrow_right"];
+    [self.leftHandleView addSubview:self.settingsArrow];
+    
     self.leftHandleView.tag = 113;
     self.leftHandleView.userInteractionEnabled = YES;
     [self.view addSubview:self.leftHandleView];
+    [self hideView:self.leftHandleView ForTime:1.2];
 }
 
 - (void)addRightMenuHandle
@@ -137,21 +257,46 @@
                               self.view.frame.size.height / 2 - self.handleViewHeigh / 2,
                               self.handleViewWidth ,
                               self.handleViewHeigh);
+    self.rightHandleView = [[UIView alloc] initWithFrame:frame];
+    [self configureViewDesign:self.rightHandleView];
+    
+    CGRect labelFrame = CGRectMake(0,
+                                   - self.handleViewHeigh / 2,
+                                   self.handleViewWidth,
+                                   self.handleViewHeigh / 2);
+    UILabel *label = [[UILabel alloc] initWithFrame:labelFrame];
+    label.textAlignment = NSTextAlignmentCenter;
+    
+    
+    CGRect iconFrame = CGRectMake(5,
+                                  5,
+                                  self.handleViewWidth,
+                                  self.handleViewHeigh);
+    
+    
     switch (self.mode)
     {
         case imageFiltering:
         {
-            self.rightHandleView = [[UIView alloc] initWithFrame:frame];
-            self.rightHandleView.backgroundColor = [UIColor blueColor];
             self.rightHandleView.tag = 114;
+            label.text = @"filters";
+            [self.rightHandleView addSubview:label];
+            
+            self.filtersArrow = [[UIImageView alloc] initWithFrame:iconFrame];
+            self.filtersArrow.image = [UIImage imageNamed:@"arrow_left"];
+            [self.rightHandleView addSubview:self.filtersArrow];
         }
             break;
             
         case textEditing:
         {
-            self.rightHandleView = [[UIView alloc] initWithFrame:frame];
-            self.rightHandleView.backgroundColor = [UIColor greenColor];
             self.rightHandleView.tag = 115;
+            label.text = @"fonts";
+            [self.rightHandleView addSubview:label];
+            
+            self.fontsArrow = [[UIImageView alloc] initWithFrame:iconFrame];
+            self.fontsArrow.image = [UIImage imageNamed:@"arrow_left"];
+            [self.rightHandleView addSubview:self.fontsArrow];
         }
             break;
             
@@ -160,6 +305,25 @@
     }
     self.rightHandleView.userInteractionEnabled = YES;
     [self.view addSubview:self.rightHandleView];
+    [self hideView:self.rightHandleView ForTime:1.2];
+}
+
+- (void)configureViewDesign:(UIView *)view
+{
+    view.backgroundColor = [UIColor colorWithRed:0.22 green:0.91 blue:0.87 alpha:0.5];
+    
+    // border radius
+    view.layer.cornerRadius = 5;
+    
+    // border
+    [view.layer setBorderColor:[UIColor lightGrayColor].CGColor];
+    [view.layer setBorderWidth:0.05f];
+    
+    // drop shadow
+    [view.layer setShadowColor:[UIColor blackColor].CGColor];
+    [view.layer setShadowOpacity:0.3];
+    [view.layer setShadowRadius:15.0];
+    [view.layer setShadowOffset:CGSizeMake(5.0, 5.0)];
 }
 
 #pragma mark - gestures
@@ -178,21 +342,12 @@
         return;
 }
 
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch{
-    
-    if ([touch.view isKindOfClass:[UIButton class]]) {      //change it to your condition
-        return NO;
-    }
-    return YES;
-}
-
 - (void)handlePan:(UIPanGestureRecognizer *)pan
 {
     UIApplication *app = [UIApplication sharedApplication];
     
     if (pan.state == UIGestureRecognizerStateCancelled)
     {
-        
         [app endIgnoringInteractionEvents];
         self.panGesture.enabled = YES;
     }
@@ -207,7 +362,7 @@
     
     CGPoint velocity = [pan velocityInView:self.view];
     
-    if ([view superTag:1111])
+    if ([view superTag:1111]) // settingsMenu
     {
         self.settingsMenuVC.shouldRespondToTouchEvents = NO;
         if(velocity.x < 0)
@@ -216,7 +371,17 @@
             self.panGesture.enabled = NO;
         }
     }
-    else if ([view superTag:2222])
+    if (view.tag == 113)
+    {
+        self.settingsMenuVC.shouldRespondToTouchEvents = NO;
+        if(velocity.x > 0)
+        {
+            [self changeStateOfLeftMenu];
+            self.panGesture.enabled = NO;
+        }
+    }
+    
+    else if ([view superTag:2222]) // FontsMenu
     {
         if (self.FontsMenuVC.shouldRespondOnSlideEvents)
         {
@@ -227,7 +392,17 @@
             }
         }
     }
-    else if ([view superTag:3333])
+    if (view.tag == 115)
+    {
+        self.settingsMenuVC.shouldRespondToTouchEvents = NO;
+        if(velocity.x < 0)
+        {
+            [self changeStateOfRightMenu:TextEditingMenu];
+            self.panGesture.enabled = NO;
+        }
+    }
+    
+    else if ([view superTag:3333]) // FiltersMenu
     {
         if(velocity.x > 0)
         {
@@ -235,8 +410,15 @@
             self.panGesture.enabled = NO;
         }
     }
-    
-   
+    if (view.tag == 114)
+    {
+        self.settingsMenuVC.shouldRespondToTouchEvents = NO;
+        if(velocity.x < 0)
+        {
+            [self changeStateOfRightMenu:FilteringMenu];
+            self.panGesture.enabled = NO;
+        }
+    }
 }
 
 #pragma mark - constraints changing
@@ -265,16 +447,20 @@
     {
         self.tapGesture.enabled = NO;
         [self animateChangingOfConstraint:self.settingsMenuLeadingConstraint ToValue:-self.settingsMenuWidthConstraint.constant];
+        [self moveHandle:settings inDirection:back];
         self.isLeftMenuOpened = NO;
         self.tapGesture.enabled = YES;
+        self.settingsArrow.image = [UIImage imageNamed:@"arrow_right"];
     }
     else
     {
         self.tapGesture.enabled = NO;
         [self animateChangingOfConstraint:self.settingsMenuLeadingConstraint ToValue:0];
+        [self moveHandle:settings inDirection:forward];
         self.isLeftMenuOpened = YES;
         self.tapGesture.enabled = YES;
         self.settingsMenuVC.shouldRespondToTouchEvents = YES;
+        self.settingsArrow.image = [UIImage imageNamed:@"arrow_left"];
     }
 }
 
@@ -302,15 +488,19 @@
         self.tapGesture.enabled = NO;
         [self animateChangingOfConstraint:self.rightFiltersMenuTrailingConstraint
                                   ToValue:-self.rightFiltersMenuWidthConstraint.constant];
+        [self moveHandle:filters inDirection:back];
         self.isRightFilteringMenuOpened = NO;
         self.tapGesture.enabled = YES;
+        self.filtersArrow.image = [UIImage imageNamed:@"arrow_left"];
     }
     else
     {
         self.tapGesture.enabled = NO;
         [self animateChangingOfConstraint:self.rightFiltersMenuTrailingConstraint ToValue:0];
+        [self moveHandle:filters inDirection:forward];
         self.isRightFilteringMenuOpened = YES;
         self.tapGesture.enabled = YES;
+        self.filtersArrow.image = [UIImage imageNamed:@"arrow_right"];
     }
 }
 
@@ -321,28 +511,41 @@
         self.tapGesture.enabled = NO;
         [self animateChangingOfConstraint:self.rightFontsMenuTrailingConstraint
                                   ToValue:-self.rightFontsMenuWidthConstraint.constant];
+        [self moveHandle:fonts inDirection:back];
         self.isRightTextMenuOpened = NO;
         self.tapGesture.enabled = YES;
+        self.fontsArrow.image = [UIImage imageNamed:@"arrow_left"];
     }
     else
     {
         self.tapGesture.enabled = NO;
         [self animateChangingOfConstraint:self.rightFontsMenuTrailingConstraint ToValue:0];
+        [self moveHandle:fonts inDirection:forward];
         self.isRightTextMenuOpened = YES;
         self.tapGesture.enabled = YES;
+        self.fontsArrow.image = [UIImage imageNamed:@"arrow_right"];
     }
     self.FontsMenuVC.shouldRespondOnSlideEvents = YES;
 }
 
+#pragma mark - animations
+- (void)hideView:(UIView *)view ForTime:(double)seconds
+{
+    [UIView animateWithDuration:seconds animations:^()
+    {
+        view.alpha = 0.0;
+        view.alpha = 1.0;
+    }];
+}
+
 - (void)animateChangingOfConstraint:(NSLayoutConstraint *)constraint ToValue:(CGFloat)value
 {
-    
     constraint.constant = value;
     [self.view setNeedsUpdateConstraints];
-    
+    __weak typeof(self) weakSelf = self;
     [UIView animateWithDuration:0.8f animations:^
      {
-         [self.view layoutIfNeeded];
+         [weakSelf.view layoutIfNeeded];
      }];
 }
 
@@ -425,7 +628,7 @@
                                       label.frame.size.width,
                                       label.frame.size.height);
             label.frame = frame;
-            [self.view addSubview:label];
+            [self.view insertSubview:label aboveSubview:self.imageView];
         }
             break;
             
@@ -436,7 +639,7 @@
                                label.frame.size.width,
                                label.frame.size.height);
             label.frame = frame;
-            [self.view addSubview:label];
+            [self.view insertSubview:label aboveSubview:self.imageView];
         }
             break;
             
@@ -447,7 +650,7 @@
                                label.frame.size.width,
                                label.frame.size.height);
             label.frame = frame;
-            [self.view addSubview:label];
+            [self.view insertSubview:label aboveSubview:self.imageView];
         }
             break;
             
@@ -458,7 +661,7 @@
                                label.frame.size.width,
                                label.frame.size.height);
             label.frame = frame;
-            [self.view addSubview:label];
+            [self.view insertSubview:label aboveSubview:self.imageView];
         }
             break;
             
@@ -469,7 +672,7 @@
                                       label.frame.size.width,
                                       label.frame.size.height);
             label.frame = frame;
-            [self.view addSubview:label];
+            [self.view insertSubview:label aboveSubview:self.imageView];
         }
             break;
             

@@ -31,6 +31,7 @@ typedef enum{
 
 - (void)changeWorkingModeTo:(WorkingMode) mode;
 - (void)changeStateOfLeftMenu;
+- (void)changeStateOfRightMenu:(RightMenuType)type;
 - (void)closeAllMenus;
 - (void)giveImageToShareVC;
 - (void)saveImageToGallery;
