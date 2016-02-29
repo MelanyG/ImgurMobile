@@ -8,6 +8,13 @@
 
 #import "ImgurLoader.h"
 #import "AFNetworking.h"
+#import "ImgurAccessToken.h"
+
+@interface ImgurLoader ()
+
+@property (strong, nonatomic) NSString *token;
+
+@end
 
 @implementation ImgurLoader
 
@@ -17,19 +24,61 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         instance = [[ImgurLoader alloc] init];
+        instance.token = [ImgurAccessToken sharedToken].token;
     });
     return instance;
 }
 
+
+
 - (NSDictionary *)loadJSONFromURL:(NSString *)urlString
 {
-    AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] init];
+
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]];
     
+    [request setValue:[NSString stringWithFormat:@"Bearer %@", self.token] forHTTPHeaderField:@"Authorization"];
+    
+    [request setHTTPMethod:@"GET"];
+
+    NSURLResponse *res = nil;
+    NSError *error = nil;
+    
+    NSDictionary *responceDict = [NSJSONSerialization JSONObjectWithData:
+                                        [NSURLConnection sendSynchronousRequest:request returningResponse:&res error:&error]
+                                                                       options:NSJSONReadingMutableContainers error:nil];
+    if (!error)
+    {
+        if ([[responceDict objectForKey:@"success"] boolValue])
+        {
+            return responceDict;
+        }
+        else
+        {
+            return [NSDictionary dictionaryWithObjectsAndKeys:@"status",[responceDict objectForKey:@"status"], nil];
+        }
+    }
+    else
+    {
+        return [NSDictionary dictionaryWithObjectsAndKeys:@"error",error.localizedDescription, nil];
+    }
+}
+
+
+
+
+
+
+
+
+/*- (NSDictionary *)loadJSONFromURL:(NSString *)urlString
+{
+    AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] init];
+ 
     __block NSDictionary *responceDict;
     __block NSError *respError = nil;
-    
+ 
     dispatch_semaphore_t sem = dispatch_semaphore_create(0);
-    
+ 
     [manager GET:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject)
      {
          responceDict = responseObject;
@@ -54,6 +103,6 @@
     {
         return nil;
     }
-}
+}*/
 
 @end

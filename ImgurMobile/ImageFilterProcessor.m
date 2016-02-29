@@ -114,7 +114,7 @@ NSString * NSStringFromFilterName(FilterName name)
     CIFilter *filter = [CIFilter filterWithName:NSStringFromFilterName(CISepiaTone)
                                   keysAndValues:
                         kCIInputImageKey, self.beginImage,
-                        kCIInputIntensityKey, [NSNumber numberWithFloat:self.sliderValue], nil];
+                        kCIInputIntensityKey, [NSNumber numberWithFloat:0.8], nil];
     
     return [self getFilteredImageWithFilter:filter];
 }
@@ -124,7 +124,7 @@ NSString * NSStringFromFilterName(FilterName name)
     CIFilter *filter = [CIFilter filterWithName:NSStringFromFilterName(CIBoxBlur)
                                   keysAndValues:
                         kCIInputImageKey, self.beginImage,
-                        kCIInputRadiusKey, [NSNumber numberWithFloat:self.sliderValue * 10], nil];
+                        kCIInputRadiusKey, [NSNumber numberWithFloat:50], nil];
     
     return [self getFilteredImageWithFilter:filter];
 }
@@ -134,7 +134,7 @@ NSString * NSStringFromFilterName(FilterName name)
     CIFilter *filter = [CIFilter filterWithName:NSStringFromFilterName(CIGammaAdjust)
                                   keysAndValues:
                         kCIInputImageKey, self.beginImage,
-                        @"inputPower", [NSNumber numberWithFloat:self.sliderValue], nil];
+                        @"inputPower", [NSNumber numberWithFloat:0.7], nil];
     
     return [self getFilteredImageWithFilter:filter];
 }
@@ -144,7 +144,7 @@ NSString * NSStringFromFilterName(FilterName name)
     CIFilter *filter = [CIFilter filterWithName:NSStringFromFilterName(CIVibrance)
                                   keysAndValues:
                         kCIInputImageKey, self.beginImage,
-                        @"inputAmount", [NSNumber numberWithFloat:self.sliderValue], nil];
+                        @"inputAmount", [NSNumber numberWithFloat:1.0], nil];
     
     return [self getFilteredImageWithFilter:filter];
 }
@@ -155,7 +155,7 @@ NSString * NSStringFromFilterName(FilterName name)
     CIFilter *filter = [CIFilter filterWithName:NSStringFromFilterName(CIVibrance)
                                   keysAndValues:
                         kCIInputImageKey, self.beginImage,
-                        @"inputAmount", [NSNumber numberWithFloat:self.sliderValue], nil];
+                        @"inputAmount", [NSNumber numberWithFloat:0.3], nil];
     
     return [self getFilteredImageWithFilter:filter];
 }
@@ -166,7 +166,7 @@ NSString * NSStringFromFilterName(FilterName name)
                                   keysAndValues:
                         kCIInputImageKey, self.beginImage,
                         kCIInputColorKey, [CIColor colorWithRed:0.67 green:0.13 blue:0.83 alpha:0.74],
-                        @"inputIntensity", [NSNumber numberWithFloat:self.sliderValue], nil];
+                        @"inputIntensity", [NSNumber numberWithFloat:1.0], nil];
     
     return [self getFilteredImageWithFilter:filter];
 }
@@ -176,7 +176,7 @@ NSString * NSStringFromFilterName(FilterName name)
     CIFilter *filter = [CIFilter filterWithName:NSStringFromFilterName(CIDepthOfField)
                                   keysAndValues:
                         kCIInputImageKey, self.beginImage,
-                        kCIInputRadiusKey, [NSNumber numberWithFloat:self.sliderValue * 10], nil];
+                        kCIInputRadiusKey, [NSNumber numberWithFloat:25], nil];
     
     return [self getFilteredImageWithFilter:filter];
 }
@@ -190,7 +190,6 @@ NSString * NSStringFromFilterName(FilterName name)
     CGImageRef cgImg = [self.ctx createCGImage:outImage fromRect:[outImage extent]];
     
     UIImage *image = [UIImage imageWithCGImage:cgImg];
-    //case filter tag
     
     CGImageRelease(cgImg);
     

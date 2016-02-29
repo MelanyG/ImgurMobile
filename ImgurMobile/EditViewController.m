@@ -12,6 +12,7 @@
 #import "FontsMenuViewController.h"
 #import "UIView+SuperClassChecker.h"
 #import "UIActivityIndicatorView+manager.h"
+#import "UIImageView+imageRectGetter.h"
 
 @interface EditViewController ()
 
@@ -77,6 +78,11 @@
     [self addHandlesLogic];
 }
 
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [self removeAllHandes];
+}
+
 - (void)prepare
 {
     self.mode = FilteringMenu;
@@ -100,7 +106,6 @@
 
 - (void)addHandlesLogic
 {
-    [self removeAllHandes];
     [self addLeftMenuHandle];
     [self addRightMenuHandle];
     self.tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self
@@ -212,10 +217,13 @@
     }
     else if ([view superTag:2222])
     {
-        if(velocity.x > 0)
+        if (self.FontsMenuVC.shouldRespondOnSlideEvents)
         {
-            [self changeStateOfRightMenu:TextEditingMenu];
-            self.panGesture.enabled = NO;
+            if(velocity.x > 0)
+            {
+                [self changeStateOfRightMenu:TextEditingMenu];
+                self.panGesture.enabled = NO;
+            }
         }
     }
     else if ([view superTag:3333])
@@ -231,6 +239,25 @@
 }
 
 #pragma mark - constraints changing
+- (void)closeAllMenus
+{
+    if (self.isLeftMenuOpened)
+    {
+        self.settingsMenuLeadingConstraint.constant = -self.settingsMenuWidthConstraint.constant;
+        self.isLeftMenuOpened = NO;
+    }
+    if (self.isRightFilteringMenuOpened)
+    {
+        self.rightFiltersMenuTrailingConstraint.constant = -self.rightFiltersMenuWidthConstraint.constant;
+        self.isRightFilteringMenuOpened = NO;
+    }
+    if (self.isRightTextMenuOpened)
+    {
+        self.rightFontsMenuTrailingConstraint.constant = -self.rightFontsMenuWidthConstraint.constant;
+        self.isRightTextMenuOpened = NO;
+    }
+}
+
 - (void)changeStateOfLeftMenu
 {
     if (self.isLeftMenuOpened)
@@ -303,6 +330,7 @@
         self.isRightTextMenuOpened = YES;
         self.tapGesture.enabled = YES;
     }
+    self.FontsMenuVC.shouldRespondOnSlideEvents = YES;
 }
 
 - (void)animateChangingOfConstraint:(NSLayoutConstraint *)constraint ToValue:(CGFloat)value
@@ -324,14 +352,28 @@
     [self addHandlesLogic];
 }
 
-- (void)saveImageAndShowPostVC
+- (void)saveImageToGallery
 {
-    UIGraphicsBeginImageContextWithOptions(self.view.frame.size, NO, 0.0);
+    UIImageWriteToSavedPhotosAlbum([self getImageFromCurrentContext], nil, nil, nil);
+}
+
+- (void)giveImageToShareVC
+{
+#warning GIVE IT!
+}
+
+- (UIImage *)getImageFromCurrentContext
+{
+    [self removeAllHandes];
+    
+    UIGraphicsBeginImageContextWithOptions([self.imageView calculateClientRectOfImage].size, NO, 0.0);
     [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    
     UIGraphicsEndImageContext();
-#warning show nextVC
+    
+    [self addHandlesLogic];
+    
+    return image;
 }
 
 #pragma mark - filteringDelegate
@@ -348,6 +390,7 @@
     [self.view addSubview:background];
     [UIActivityIndicatorView addActivityIndicatorToView:self.view];
 }
+
 - (void)stopLoadIndicating
 {
     for (UIView *subview in self.view.subviews)
@@ -363,14 +406,19 @@
 #pragma mark - fontDelegate
 - (void)setLabel:(UILabel *)label withPosition:(PositionType)position
 {
+    [self removeTextLabels];
+    label.tag = 911;
+    
+    CGRect imageRect = [self.imageView calculateClientRectOfImage];
+    
     switch (position)
     {
         case LeftTop:
         {
-            CGRect frame = CGRectMake(self.view.frame.origin.x,
-                               self.view.frame.origin.y,
-                               label.frame.size.width,
-                               label.frame.size.height);
+            CGRect frame = CGRectMake(imageRect.origin.x,
+                                      imageRect.origin.y,
+                                      label.frame.size.width,
+                                      label.frame.size.height);
             label.frame = frame;
             [self.view addSubview:label];
         }
@@ -378,8 +426,8 @@
             
         case RightTop:
         {
-            CGRect frame = CGRectMake(self.view.frame.size.width - label.frame.size.width,
-                               self.view.frame.origin.y,
+            CGRect frame = CGRectMake(imageRect.size.width - label.frame.size.width,
+                               imageRect.origin.y,
                                label.frame.size.width,
                                label.frame.size.height);
             label.frame = frame;
@@ -389,8 +437,8 @@
             
         case LeftBottom:
         {
-            CGRect frame = CGRectMake(self.view.frame.origin.x,
-                               self.view.frame.size.height - label.frame.size.height,
+            CGRect frame = CGRectMake(imageRect.origin.x,
+                               imageRect.size.height - label.frame.size.height,
                                label.frame.size.width,
                                label.frame.size.height);
             label.frame = frame;
@@ -400,8 +448,8 @@
             
         case RightBottom:
         {
-            CGRect frame = CGRectMake(self.view.frame.size.width - label.frame.size.width,
-                               self.view.frame.size.height - label.frame.size.height,
+            CGRect frame = CGRectMake(imageRect.size.width - label.frame.size.width,
+                               imageRect.size.height - label.frame.size.height,
                                label.frame.size.width,
                                label.frame.size.height);
             label.frame = frame;
@@ -411,8 +459,8 @@
             
         case Center:
         {
-            CGRect frame = CGRectMake(self.view.frame.size.width / 2 - label.frame.size.width / 2,
-                                      self.view.frame.size.height / 2 - label.frame.size.height / 2,
+            CGRect frame = CGRectMake(imageRect.size.width / 2 - label.frame.size.width / 2,
+                                      imageRect.size.height / 2 - label.frame.size.height / 2,
                                       label.frame.size.width,
                                       label.frame.size.height);
             label.frame = frame;
@@ -422,6 +470,17 @@
             
         default:
             break;
+    }
+}
+
+- (void)removeTextLabels
+{
+    for (UIView *subview in self.view.subviews)
+    {
+        if (subview.tag == 911)
+        {
+            [subview removeFromSuperview];
+        }
     }
 }
 

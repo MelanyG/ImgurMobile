@@ -16,8 +16,6 @@
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIView *contentView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *containerViewHeighConstraint;
-@property (weak, nonatomic) IBOutlet UILabel *sliderLabel;
-@property (weak, nonatomic) IBOutlet UISlider *slider;
 @property (strong, nonatomic) NSMutableArray *processedSampleImages;
 @property (assign, nonatomic) CGSize sampleImageSize;
 @property (strong, nonatomic) UIImage *sampleImage;
@@ -123,8 +121,6 @@
 
 - (void)getSampleImages
 {
-    self.processor.sliderValue = self.slider.value;
-    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
     {
         for (int i = 0; i < FILTERS_COUNT; i++)
