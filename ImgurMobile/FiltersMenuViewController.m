@@ -107,7 +107,8 @@
 }
 - (IBAction)discardFiltering:(UIButton *)sender
 {
-    
+    [self.delegate changeStateOfRightMenu:FilteringMenu];
+    [self.filterDelegate updateUIWithImage:self.currentImage];
 }
 
 - (ImageFilterProcessor *)processor
@@ -152,56 +153,4 @@
     }
 }
 
-/*- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    [self loadVisiblePage];
-}
-
-
-
-- (void)loadVisiblePage
-{
-    NSInteger page = (NSInteger)self.scrollView.contentOffset.y / (self.scrollView.frame.size.height / 2 - self.sampleImageSize.height / 2) + self.sampleImageSize.height + 1;
-    
-    self.pageControl.currentPage = page;
-}*/
-
-/* - (void)viewDidLoad
- {
- [super viewDidLoad];
- self.image = [UIImage imageNamed:@"sea"];
- 
- 
- self.ctx = [CIContext contextWithOptions:nil];
- 
- self.beginImage = [CIImage imageWithCGImage:self.image.CGImage];
- 
- self.filter = [CIFilter filterWithName:@"CISepiaTone"
- keysAndValues:
- kCIInputImageKey, self.beginImage,
- @"inputIntensity", @0.8, nil];
- 
- CIImage *outImage = [self.filter outputImage];
- 
- CGImageRef cgImg = [self.ctx createCGImage:outImage fromRect:[outImage extent]];
- 
- self.imageView.image = [UIImage imageWithCGImage:cgImg];
- 
- CGImageRelease(cgImg);
- }
- */
- - (IBAction)sliderValueBeenChanged:(UISlider *)sender
-{
-    /*float slideValue = sender.value;
-    
-    [self.filter setValue:@(slideValue)
-                   forKey:@"inputIntensity"];
-    CIImage *outImage = [self.filter outputImage];
-    
-    CGImageRef cgImg = [self.ctx createCGImage:outImage fromRect:[outImage extent]];
-    
-    self.imageView.image = [UIImage imageWithCGImage:cgImg];
-    
-    CGImageRelease(cgImg);*/
- }
 @end
