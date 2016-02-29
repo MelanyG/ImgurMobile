@@ -8,10 +8,12 @@
 
 #import "SocialViewController.h"
 #import "RESTAPI.h"
+#import "ImgurAccessToken.h"
 @interface SocialViewController () <RESTAPIDelegate>
 
 @property (strong, nonatomic) RESTAPI *restApi;
 @property (strong, nonatomic) NSCharacterSet* set;
+@property (strong, nonatomic) NSString* accessToken;
 
 @end
 
@@ -31,6 +33,7 @@
 {
     [super viewDidLoad];
     self.set = [NSCharacterSet URLQueryAllowedCharacterSet];
+    self.accessToken = [ImgurAccessToken sharedToken].token;
     [self httpGetRequest];
 }
 
@@ -40,6 +43,7 @@
     str = [str stringByAddingPercentEncodingWithAllowedCharacters:self.set];
     NSURL *url = [NSURL URLWithString:str];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setValue:[NSString stringWithFormat:@"Bearer %@", self.accessToken] forHTTPHeaderField:@"Authorization"];
     [request setHTTPMethod:GET];
     self.restApi.delegate = self;
     [self.restApi httpRequest:request];

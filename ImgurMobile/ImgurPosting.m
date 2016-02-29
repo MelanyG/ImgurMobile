@@ -29,8 +29,8 @@
     [super viewDidLoad];
     self.token = [ImgurAccessToken sharedToken];
     self.navigationItem.title = @"Post";
-    
-//    UIBarButtonItem* plus =
+   // self.currentImage.image = self.image;
+ //    UIBarButtonItem* plus =
 //    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
 //                                                  target:self
 //                                                  action:@selector(postActionSelected)];
