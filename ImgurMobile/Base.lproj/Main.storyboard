@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="DTt-cb-4HE">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="DTt-cb-4HE">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
@@ -466,10 +466,10 @@
             </objects>
             <point key="canvasLocation" x="307" y="757.5"/>
         </scene>
-        <!--View Controller-->
+        <!--ButtonsVC-->
         <scene sceneID="Tel-Bf-Sab">
             <objects>
-                <viewController id="vtK-aE-O7K" sceneMemberID="viewController">
+                <viewController id="vtK-aE-O7K" customClass="buttonsVC" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="OWW-zU-1mj"/>
                         <viewControllerLayoutGuide type="bottom" id="ofq-tT-lgZ"/>
@@ -478,33 +478,52 @@
                         <rect key="frame" x="0.0" y="0.0" width="598" height="73"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UeY-dg-Urh">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UeY-dg-Urh">
                                 <rect key="frame" x="171" y="1" width="85" height="71"/>
                                 <state key="normal" backgroundImage="Thumb Up-48.png"/>
+                                <connections>
+                                    <action selector="likeAction" destination="vtK-aE-O7K" eventType="touchUpInside" id="1nZ-69-ai5"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vOa-C8-Fks">
                                 <rect key="frame" x="256" y="1" width="85" height="71"/>
                                 <state key="normal" backgroundImage="Thumbs Down-48.png"/>
+                                <connections>
+                                    <action selector="dislikeAction" destination="vtK-aE-O7K" eventType="touchUpInside" id="yXU-ld-wmS"/>
+                                </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b9B-SN-XRs">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b9B-SN-XRs">
                                 <rect key="frame" x="342" y="1" width="85" height="71"/>
                                 <state key="normal" backgroundImage="Settings Filled-50.png"/>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RA2-1x-7hi">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RA2-1x-7hi">
                                 <rect key="frame" x="427" y="1" width="84" height="71"/>
                                 <state key="normal" backgroundImage="Save Filled-50.png"/>
+                                <connections>
+                                    <action selector="saveAction" destination="vtK-aE-O7K" eventType="touchUpInside" id="dzD-AO-EHw"/>
+                                </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9gP-2a-RW6">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9gP-2a-RW6">
                                 <rect key="frame" x="512" y="1" width="85" height="71"/>
                                 <state key="normal" backgroundImage="Share-48.png"/>
+                                <connections>
+                                    <action selector="shareAction" destination="vtK-aE-O7K" eventType="touchUpInside" id="2kD-WH-5fc"/>
+                                </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vt7-tl-ij4">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vt7-tl-ij4">
                                 <rect key="frame" x="87" y="1" width="84" height="71"/>
                                 <state key="normal" backgroundImage="Speech Bubble-48.png"/>
+                                <connections>
+                                    <action selector="commentsAction" destination="vtK-aE-O7K" eventType="touchUpInside" id="B6f-au-Iex"/>
+                                    <segue destination="EO5-hd-pjk" kind="show" id="wDF-R4-jSg"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="49Z-av-M6q">
                                 <rect key="frame" x="0.0" y="1" width="84" height="71"/>
                                 <state key="normal" backgroundImage="Like Filled-48.png"/>
+                                <connections>
+                                    <action selector="favouritesAction" destination="vtK-aE-O7K" eventType="touchUpInside" id="qKX-am-vVN"/>
+                                </connections>
                             </button>
                         </subviews>
                         <constraints>
@@ -548,6 +567,27 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7gz-6i-LN9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1067" y="872.5"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="g4m-t4-8Pu">
+            <objects>
+                <viewController id="EO5-hd-pjk" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="PfL-n1-Ikb"/>
+                        <viewControllerLayoutGuide type="bottom" id="WW1-Zq-bsG"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="5iK-aw-LNI">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="vox-qN-XhA"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="600" height="600"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LlV-2I-6w5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1068" y="1377"/>
         </scene>
         <!--Fonts Menu View Controller-->
         <scene sceneID="ky2-LD-klF">

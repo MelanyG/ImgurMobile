@@ -15,6 +15,9 @@
 @property (strong, nonatomic) NSCharacterSet* set;
 @property (strong, nonatomic) NSString* accessToken;
 
+
+
+
 @end
 
 @implementation SocialViewController
