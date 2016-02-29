@@ -23,7 +23,6 @@
         {
             case 1:
                 [self.delegate changeWorkingModeTo:imageFiltering];
-                
                 [self.delegate changeStateOfLeftMenu];
                 break;
                 
@@ -44,11 +43,13 @@
 
 - (IBAction)saveButtonPressed:(UIButton *)sender
 {
-    [self.delegate saveImageAndShowPostVC];
+    [self.delegate closeAllMenus];
+    [self.delegate saveImageToGallery];
 }
 
 - (IBAction)shareButtonPressed:(UIButton *)sender
 {
-    
+    [self.delegate closeAllMenus];
+    [self.delegate giveImageToShareVC];
 }
 @end

@@ -31,7 +31,9 @@ typedef enum{
 
 - (void)changeWorkingModeTo:(WorkingMode) mode;
 - (void)changeStateOfLeftMenu;
-- (void)saveImageAndShowPostVC;
+- (void)closeAllMenus;
+- (void)giveImageToShareVC;
+- (void)saveImageToGallery;
 
 @end
 
@@ -52,6 +54,7 @@ typedef enum{
 @protocol fontDelegate <NSObject>
 
 - (void)setLabel:(UILabel *)label withPosition:(PositionType)position;
+- (void)removeTextLabels;
 
 @end
 

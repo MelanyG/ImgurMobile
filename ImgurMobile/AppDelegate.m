@@ -13,7 +13,7 @@
 
 @interface AppDelegate ()
 
-@property (strong, nonatomic) ImgurAccessToken* token;
+
 
 @end
 
@@ -22,14 +22,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    /*NotChalengingQueue *queue = [[NotChalengingQueue alloc] init];
-    imgurServerManager *manager = [[imgurServerManager alloc] init];
-    [manager getPhotosForPage:0 Section:hot Sort:viral Window:all Completion:^(NSDictionary *resp)
-     {
-         [queue addObject:resp];
-         
-         NSLog(@"%@",[queue getObject]);
-     }];*/
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     self.token = [ImgurAccessToken sharedToken];
     self.token.userName = [defaults objectForKey:@"userName"];
@@ -37,6 +29,27 @@
     self.token.accountID = [defaults objectForKey:@"account_id"];
     self.token.expirationDate = [defaults objectForKey:@"expires_in"];
     
+    /*NotChalengingQueue *queue = [[NotChalengingQueue alloc] init];
+    imgurServerManager *manager = [imgurServerManager sharedManager];
+    
+    [manager getPhotosForPage:0 Section:hot Sort:viral Window:all Completion:^(NSDictionary *resp)
+     {
+         if ([resp objectForKey:IMGUR_SERVER_MANAGER_ERROR_KEY])
+         {
+             //get error
+         }
+         else if ([resp objectForKey:IMGUR_SERVER_MANAGER_STATUS_KEY])
+         {
+             //get statuscode
+         }
+         else
+         {
+             [queue addObject:resp];
+             
+             NSLog(@"%@",[queue getObject]);
+         }
+     }];*/
+
     
     return YES;
 }
