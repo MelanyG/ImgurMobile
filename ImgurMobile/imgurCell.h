@@ -11,5 +11,8 @@
 @interface imgurCell : UICollectionViewCell
 @property (nonatomic, strong) IBOutlet UIImageView *imageView;
 @property (nonatomic, strong) UIImage *image;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *ownerLabel;
+@property (weak, nonatomic) IBOutlet UILabel *pointsLabel;
 
 @end

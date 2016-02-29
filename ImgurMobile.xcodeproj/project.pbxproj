@@ -43,6 +43,9 @@
 		6ACB13E61C7C6D0A004237DD /* FontsMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6ACB13E51C7C6D0A004237DD /* FontsMenuViewController.m */; };
 		6AEFD2D11C7BAB2700ADF2FC /* ImgurLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AEFD2D01C7BAB2700ADF2FC /* ImgurLoader.m */; };
 		6AEFD2D41C7BABAA00ADF2FC /* URLGen.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AEFD2D31C7BABAA00ADF2FC /* URLGen.m */; };
+		97305C051C80764200663B6C /* UIImage+animatedGIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 97305C041C80764200663B6C /* UIImage+animatedGIF.m */; };
+		973F0AE71C7DDF3200C67BCD /* ImgurPost+Description.m in Sources */ = {isa = PBXBuildFile; fileRef = 973F0AE61C7DDF3200C67BCD /* ImgurPost+Description.m */; };
+		975D23051C7F3D9000D3A4B7 /* PageInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 975D23041C7F3D9000D3A4B7 /* PageInfoViewController.m */; };
 		976842251C7C8D6700F613B5 /* imgurCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 976842241C7C8D6700F613B5 /* imgurCell.m */; };
 		97AEA2331C7B1B520010CD99 /* Node.m in Sources */ = {isa = PBXBuildFile; fileRef = 97AEA2321C7B1B520010CD99 /* Node.m */; };
 		97AEA2361C7B20DA0010CD99 /* NotChalengingQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 97AEA2351C7B20DA0010CD99 /* NotChalengingQueue.m */; };
@@ -133,6 +136,13 @@
 		6AEFD2D01C7BAB2700ADF2FC /* ImgurLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImgurLoader.m; sourceTree = "<group>"; };
 		6AEFD2D21C7BABAA00ADF2FC /* URLGen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URLGen.h; sourceTree = "<group>"; };
 		6AEFD2D31C7BABAA00ADF2FC /* URLGen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLGen.m; sourceTree = "<group>"; };
+		97305C031C80764200663B6C /* UIImage+animatedGIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+animatedGIF.h"; sourceTree = "<group>"; };
+		97305C041C80764200663B6C /* UIImage+animatedGIF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+animatedGIF.m"; sourceTree = "<group>"; };
+		973F0AE51C7DDEDB00C67BCD /* ImgurPost+Description.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ImgurPost+Description.h"; sourceTree = "<group>"; };
+		973F0AE61C7DDF3200C67BCD /* ImgurPost+Description.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ImgurPost+Description.m"; sourceTree = "<group>"; };
+		975D23031C7F3D9000D3A4B7 /* PageInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageInfoViewController.h; sourceTree = "<group>"; };
+		975D23041C7F3D9000D3A4B7 /* PageInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageInfoViewController.m; sourceTree = "<group>"; };
+		975D23061C7F495600D3A4B7 /* PageInfoDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PageInfoDelegate.h; sourceTree = "<group>"; };
 		976842231C7C8D6700F613B5 /* imgurCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = imgurCell.h; sourceTree = "<group>"; };
 		976842241C7C8D6700F613B5 /* imgurCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = imgurCell.m; sourceTree = "<group>"; };
 		97AEA2311C7B1B520010CD99 /* Node.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Node.h; sourceTree = "<group>"; };
@@ -323,6 +333,32 @@
 			name = Edit;
 			sourceTree = "<group>";
 		};
+		97305C061C80764800663B6C /* TPLib */ = {
+			isa = PBXGroup;
+			children = (
+				97305C031C80764200663B6C /* UIImage+animatedGIF.h */,
+				97305C041C80764200663B6C /* UIImage+animatedGIF.m */,
+			);
+			name = TPLib;
+			sourceTree = "<group>";
+		};
+		975D23021C7F357E00D3A4B7 /* mainScreen */ = {
+			isa = PBXGroup;
+			children = (
+				EFA6C7221C77474E00EA73D5 /* MainViewController.h */,
+				EFA6C7231C77474E00EA73D5 /* MainViewController.m */,
+				976842231C7C8D6700F613B5 /* imgurCell.h */,
+				976842241C7C8D6700F613B5 /* imgurCell.m */,
+				973F0AE51C7DDEDB00C67BCD /* ImgurPost+Description.h */,
+				973F0AE61C7DDF3200C67BCD /* ImgurPost+Description.m */,
+				975D23061C7F495600D3A4B7 /* PageInfoDelegate.h */,
+				975D23031C7F3D9000D3A4B7 /* PageInfoViewController.h */,
+				975D23041C7F3D9000D3A4B7 /* PageInfoViewController.m */,
+				97305C061C80764800663B6C /* TPLib */,
+			);
+			name = mainScreen;
+			sourceTree = "<group>";
+		};
 		97AEA2301C7B1AEC0010CD99 /* synchronization */ = {
 			isa = PBXGroup;
 			children = (
@@ -338,10 +374,7 @@
 			isa = PBXGroup;
 			children = (
 				6ACB13DD1C7C6C95004237DD /* Edit */,
-				EFA6C7221C77474E00EA73D5 /* MainViewController.h */,
-				EFA6C7231C77474E00EA73D5 /* MainViewController.m */,
-				976842231C7C8D6700F613B5 /* imgurCell.h */,
-				976842241C7C8D6700F613B5 /* imgurCell.m */,
+				975D23021C7F357E00D3A4B7 /* mainScreen */,
 				EFA6C7271C7747A400EA73D5 /* SocialViewController.h */,
 				EFA6C7281C7747A400EA73D5 /* SocialViewController.m */,
 				EFA6C72A1C77485700EA73D5 /* LibraryViewController.h */,
@@ -456,6 +489,7 @@
 				6AC562FF1C776C5B006C03C0 /* UIButton+AFNetworking.m in Sources */,
 				6AC562CB1C776C2B006C03C0 /* imgurServerManager.m in Sources */,
 				6AC562FD1C776C5B006C03C0 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
+				97305C051C80764200663B6C /* UIImage+animatedGIF.m in Sources */,
 				6ACB13E31C7C6CF9004237DD /* FiltersMenuViewController.m in Sources */,
 				6ACB13E61C7C6D0A004237DD /* FontsMenuViewController.m in Sources */,
 				6AC563061C77893A006C03C0 /* imgurJSONParser.m in Sources */,
@@ -466,6 +500,7 @@
 				404D9C441C7A141E0063B912 /* ImgurPosting.m in Sources */,
 				40C4FA861C78B8F3003CDB34 /* ImgurLoginViewController.m in Sources */,
 				6AC562F71C776C5B006C03C0 /* AFSecurityPolicy.m in Sources */,
+				975D23051C7F3D9000D3A4B7 /* PageInfoViewController.m in Sources */,
 				97AEA2361C7B20DA0010CD99 /* NotChalengingQueue.m in Sources */,
 				976842251C7C8D6700F613B5 /* imgurCell.m in Sources */,
 				6AC562F31C776C5B006C03C0 /* AFHTTPRequestOperation.m in Sources */,
@@ -478,6 +513,7 @@
 				6AEFD2D11C7BAB2700ADF2FC /* ImgurLoader.m in Sources */,
 				6AC563031C776C5B006C03C0 /* UIWebView+AFNetworking.m in Sources */,
 				6AC5630F1C778AF9006C03C0 /* imgurPost.m in Sources */,
+				973F0AE71C7DDF3200C67BCD /* ImgurPost+Description.m in Sources */,
 				6AC562F61C776C5B006C03C0 /* AFNetworkReachabilityManager.m in Sources */,
 				6AC563001C776C5B006C03C0 /* UIImageView+AFNetworking.m in Sources */,
 				40C4FA891C78BA00003CDB34 /* ImgurAccessToken.m in Sources */,
