@@ -19,6 +19,7 @@
 		40C4FA8F1C78CB80003CDB34 /* ImgurUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 40C4FA8E1C78CB80003CDB34 /* ImgurUser.m */; };
 		6A6A6B0A1C7E166000DE946E /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A6A6B091C7E166000DE946E /* UIImage+Resize.m */; };
 		6A6A6B0D1C7E257E00DE946E /* ImageFilterProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A6A6B0C1C7E257E00DE946E /* ImageFilterProcessor.m */; };
+		6A8EE19C1C834AD7002DF4B6 /* UIImageView+imageRectGetter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A8EE19B1C834AD6002DF4B6 /* UIImageView+imageRectGetter.m */; };
 		6AA3C7DE1C78A513001091F0 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AA3C7DD1C78A513001091F0 /* CoreImage.framework */; };
 		6AC562CB1C776C2B006C03C0 /* imgurServerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AC562CA1C776C2B006C03C0 /* imgurServerManager.m */; };
 		6AC562F31C776C5B006C03C0 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AC562CF1C776C5B006C03C0 /* AFHTTPRequestOperation.m */; };
@@ -48,9 +49,14 @@
 		6AE7F17A1C80CC4F005C4F80 /* UIActivityIndicatorView+manager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AE7F1791C80CC4F005C4F80 /* UIActivityIndicatorView+manager.m */; };
 		6AEFD2D11C7BAB2700ADF2FC /* ImgurLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AEFD2D01C7BAB2700ADF2FC /* ImgurLoader.m */; };
 		6AEFD2D41C7BABAA00ADF2FC /* URLGen.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AEFD2D31C7BABAA00ADF2FC /* URLGen.m */; };
+		97305C051C80764200663B6C /* UIImage+animatedGIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 97305C041C80764200663B6C /* UIImage+animatedGIF.m */; };
+		973F0AE71C7DDF3200C67BCD /* ImgurPost+Description.m in Sources */ = {isa = PBXBuildFile; fileRef = 973F0AE61C7DDF3200C67BCD /* ImgurPost+Description.m */; };
+		975D23051C7F3D9000D3A4B7 /* PageInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 975D23041C7F3D9000D3A4B7 /* PageInfoViewController.m */; };
+		976842251C7C8D6700F613B5 /* imgurCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 976842241C7C8D6700F613B5 /* imgurCell.m */; };
 		97AEA2331C7B1B520010CD99 /* Node.m in Sources */ = {isa = PBXBuildFile; fileRef = 97AEA2321C7B1B520010CD99 /* Node.m */; };
 		97AEA2361C7B20DA0010CD99 /* NotChalengingQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 97AEA2351C7B20DA0010CD99 /* NotChalengingQueue.m */; };
 		EF09022C1C77500000D9CF5E /* socialControllerIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = EF09022B1C77500000D9CF5E /* socialControllerIcon.png */; };
+		EF11841F1C8335F8000FB6A1 /* RESTAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = EF11841E1C8335F8000FB6A1 /* RESTAPI.m */; };
 		EF1F25101C7C583C0061DD53 /* Like Filled-48.png in Resources */ = {isa = PBXBuildFile; fileRef = EF1F250F1C7C583C0061DD53 /* Like Filled-48.png */; };
 		EFA6C7241C77474E00EA73D5 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFA6C7231C77474E00EA73D5 /* MainViewController.m */; };
 		EFA6C7291C7747A400EA73D5 /* SocialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFA6C7281C7747A400EA73D5 /* SocialViewController.m */; };
@@ -87,6 +93,10 @@
 		6A6A6B091C7E166000DE946E /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
 		6A6A6B0B1C7E257E00DE946E /* ImageFilterProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageFilterProcessor.h; sourceTree = "<group>"; };
 		6A6A6B0C1C7E257E00DE946E /* ImageFilterProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageFilterProcessor.m; sourceTree = "<group>"; };
+		6A8EE1971C833F17002DF4B6 /* UIButton+highlighter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+highlighter.h"; sourceTree = "<group>"; };
+		6A8EE1981C833F17002DF4B6 /* UIButton+highlighter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+highlighter.m"; sourceTree = "<group>"; };
+		6A8EE19A1C834AD6002DF4B6 /* UIImageView+imageRectGetter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+imageRectGetter.h"; sourceTree = "<group>"; };
+		6A8EE19B1C834AD6002DF4B6 /* UIImageView+imageRectGetter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+imageRectGetter.m"; sourceTree = "<group>"; };
 		6AA3C7DD1C78A513001091F0 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		6AC562C91C776C2B006C03C0 /* imgurServerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = imgurServerManager.h; sourceTree = "<group>"; };
 		6AC562CA1C776C2B006C03C0 /* imgurServerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = imgurServerManager.m; sourceTree = "<group>"; };
@@ -147,11 +157,22 @@
 		6AEFD2D01C7BAB2700ADF2FC /* ImgurLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImgurLoader.m; sourceTree = "<group>"; };
 		6AEFD2D21C7BABAA00ADF2FC /* URLGen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URLGen.h; sourceTree = "<group>"; };
 		6AEFD2D31C7BABAA00ADF2FC /* URLGen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLGen.m; sourceTree = "<group>"; };
+		97305C031C80764200663B6C /* UIImage+animatedGIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+animatedGIF.h"; sourceTree = "<group>"; };
+		97305C041C80764200663B6C /* UIImage+animatedGIF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+animatedGIF.m"; sourceTree = "<group>"; };
+		973F0AE51C7DDEDB00C67BCD /* ImgurPost+Description.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ImgurPost+Description.h"; sourceTree = "<group>"; };
+		973F0AE61C7DDF3200C67BCD /* ImgurPost+Description.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ImgurPost+Description.m"; sourceTree = "<group>"; };
+		975D23031C7F3D9000D3A4B7 /* PageInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageInfoViewController.h; sourceTree = "<group>"; };
+		975D23041C7F3D9000D3A4B7 /* PageInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageInfoViewController.m; sourceTree = "<group>"; };
+		975D23061C7F495600D3A4B7 /* PageInfoDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PageInfoDelegate.h; sourceTree = "<group>"; };
+		976842231C7C8D6700F613B5 /* imgurCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = imgurCell.h; sourceTree = "<group>"; };
+		976842241C7C8D6700F613B5 /* imgurCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = imgurCell.m; sourceTree = "<group>"; };
 		97AEA2311C7B1B520010CD99 /* Node.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Node.h; sourceTree = "<group>"; };
 		97AEA2321C7B1B520010CD99 /* Node.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Node.m; sourceTree = "<group>"; };
 		97AEA2341C7B20DA0010CD99 /* NotChalengingQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotChalengingQueue.h; sourceTree = "<group>"; };
 		97AEA2351C7B20DA0010CD99 /* NotChalengingQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotChalengingQueue.m; sourceTree = "<group>"; };
 		EF09022B1C77500000D9CF5E /* socialControllerIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = socialControllerIcon.png; sourceTree = "<group>"; };
+		EF11841D1C8335F8000FB6A1 /* RESTAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RESTAPI.h; sourceTree = "<group>"; };
+		EF11841E1C8335F8000FB6A1 /* RESTAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RESTAPI.m; sourceTree = "<group>"; };
 		EF1F250F1C7C583C0061DD53 /* Like Filled-48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Like Filled-48.png"; sourceTree = "<group>"; };
 		EFA6C7221C77474E00EA73D5 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		EFA6C7231C77474E00EA73D5 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
@@ -314,9 +335,9 @@
 				6AC5630A1C778A64006C03C0 /* imgurAlbum.h */,
 				6AC5630B1C778A64006C03C0 /* imgurAlbum.m */,
 				6AC5630D1C778AF9006C03C0 /* imgurPost.h */,
+				6AC5630E1C778AF9006C03C0 /* imgurPost.m */,
 				40C4FA8D1C78CB80003CDB34 /* imgurUser.h */,
 				40C4FA8E1C78CB80003CDB34 /* ImgurUser.m */,
-				6AC5630E1C778AF9006C03C0 /* imgurPost.m */,
 			);
 			name = models;
 			sourceTree = "<group>";
@@ -340,9 +361,39 @@
 				6A6A6B0C1C7E257E00DE946E /* ImageFilterProcessor.m */,
 				6AE7F1791C80CC4F005C4F80 /* UIActivityIndicatorView+manager.m */,
 				6AE7F1781C80CC4F005C4F80 /* UIActivityIndicatorView+manager.h */,
+				6A8EE1971C833F17002DF4B6 /* UIButton+highlighter.h */,
+				6A8EE1981C833F17002DF4B6 /* UIButton+highlighter.m */,
+				6A8EE19A1C834AD6002DF4B6 /* UIImageView+imageRectGetter.h */,
+				6A8EE19B1C834AD6002DF4B6 /* UIImageView+imageRectGetter.m */,
 				6ACB13E71C7C9806004237DD /* EditProtocolHeader.h */,
 			);
 			name = Edit;
+			sourceTree = "<group>";
+		};
+		97305C061C80764800663B6C /* TPLib */ = {
+			isa = PBXGroup;
+			children = (
+				97305C031C80764200663B6C /* UIImage+animatedGIF.h */,
+				97305C041C80764200663B6C /* UIImage+animatedGIF.m */,
+			);
+			name = TPLib;
+			sourceTree = "<group>";
+		};
+		975D23021C7F357E00D3A4B7 /* mainScreen */ = {
+			isa = PBXGroup;
+			children = (
+				EFA6C7221C77474E00EA73D5 /* MainViewController.h */,
+				EFA6C7231C77474E00EA73D5 /* MainViewController.m */,
+				976842231C7C8D6700F613B5 /* imgurCell.h */,
+				976842241C7C8D6700F613B5 /* imgurCell.m */,
+				973F0AE51C7DDEDB00C67BCD /* ImgurPost+Description.h */,
+				973F0AE61C7DDF3200C67BCD /* ImgurPost+Description.m */,
+				975D23061C7F495600D3A4B7 /* PageInfoDelegate.h */,
+				975D23031C7F3D9000D3A4B7 /* PageInfoViewController.h */,
+				975D23041C7F3D9000D3A4B7 /* PageInfoViewController.m */,
+				97305C061C80764800663B6C /* TPLib */,
+			);
+			name = mainScreen;
 			sourceTree = "<group>";
 		};
 		97AEA2301C7B1AEC0010CD99 /* synchronization */ = {
@@ -356,12 +407,21 @@
 			name = synchronization;
 			sourceTree = "<group>";
 		};
+		EF11841C1C8335C8000FB6A1 /* Social */ = {
+			isa = PBXGroup;
+			children = (
+				EF11841D1C8335F8000FB6A1 /* RESTAPI.h */,
+				EF11841E1C8335F8000FB6A1 /* RESTAPI.m */,
+			);
+			name = Social;
+			sourceTree = "<group>";
+		};
 		EFA6C7251C77475600EA73D5 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				EF11841C1C8335C8000FB6A1 /* Social */,
 				6ACB13DD1C7C6C95004237DD /* Edit */,
-				EFA6C7221C77474E00EA73D5 /* MainViewController.h */,
-				EFA6C7231C77474E00EA73D5 /* MainViewController.m */,
+				975D23021C7F357E00D3A4B7 /* mainScreen */,
 				EFA6C7271C7747A400EA73D5 /* SocialViewController.h */,
 				EFA6C7281C7747A400EA73D5 /* SocialViewController.m */,
 				EFA6C72A1C77485700EA73D5 /* LibraryViewController.h */,
@@ -478,6 +538,7 @@
 				6AC562FF1C776C5B006C03C0 /* UIButton+AFNetworking.m in Sources */,
 				6AC562CB1C776C2B006C03C0 /* imgurServerManager.m in Sources */,
 				6AC562FD1C776C5B006C03C0 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
+				97305C051C80764200663B6C /* UIImage+animatedGIF.m in Sources */,
 				6ACB13E31C7C6CF9004237DD /* FiltersMenuViewController.m in Sources */,
 				6ACB13E61C7C6D0A004237DD /* FontsMenuViewController.m in Sources */,
 				6AC563061C77893A006C03C0 /* imgurJSONParser.m in Sources */,
@@ -487,10 +548,13 @@
 				6AEFD2D41C7BABAA00ADF2FC /* URLGen.m in Sources */,
 				6ACB13EA1C7CE38F004237DD /* UIView+SuperClassChecker.m in Sources */,
 				404D9C441C7A141E0063B912 /* ImgurPosting.m in Sources */,
+				EF11841F1C8335F8000FB6A1 /* RESTAPI.m in Sources */,
 				40C4FA861C78B8F3003CDB34 /* ImgurLoginViewController.m in Sources */,
 				6AC562F71C776C5B006C03C0 /* AFSecurityPolicy.m in Sources */,
+				975D23051C7F3D9000D3A4B7 /* PageInfoViewController.m in Sources */,
 				6A6A6B0D1C7E257E00DE946E /* ImageFilterProcessor.m in Sources */,
 				97AEA2361C7B20DA0010CD99 /* NotChalengingQueue.m in Sources */,
+				976842251C7C8D6700F613B5 /* imgurCell.m in Sources */,
 				400E64E01C8215F600B85330 /* ProcessingRequestsViewController.m in Sources */,
 				6AC562F31C776C5B006C03C0 /* AFHTTPRequestOperation.m in Sources */,
 				6AC562FB1C776C5B006C03C0 /* AFURLSessionManager.m in Sources */,
@@ -502,10 +566,12 @@
 				6AEFD2D11C7BAB2700ADF2FC /* ImgurLoader.m in Sources */,
 				6AC563031C776C5B006C03C0 /* UIWebView+AFNetworking.m in Sources */,
 				6AC5630F1C778AF9006C03C0 /* imgurPost.m in Sources */,
+				973F0AE71C7DDF3200C67BCD /* ImgurPost+Description.m in Sources */,
 				6AC562F61C776C5B006C03C0 /* AFNetworkReachabilityManager.m in Sources */,
 				6AC563001C776C5B006C03C0 /* UIImageView+AFNetworking.m in Sources */,
 				40C4FA891C78BA00003CDB34 /* ImgurAccessToken.m in Sources */,
 				6AC562F41C776C5B006C03C0 /* AFHTTPRequestOperationManager.m in Sources */,
+				6A8EE19C1C834AD7002DF4B6 /* UIImageView+imageRectGetter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

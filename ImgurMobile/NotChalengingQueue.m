@@ -35,6 +35,16 @@
     }
     return self;
 }
++(NotChalengingQueue *) sharedQueue
+{
+    static NotChalengingQueue *sharedInstance;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken,
+                  ^{
+                      sharedInstance = [[self alloc] init];
+                  });
+    return sharedInstance;
+}
 
 -(void)addObject: (id) object
 {

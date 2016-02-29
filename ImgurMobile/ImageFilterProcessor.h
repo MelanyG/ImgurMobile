@@ -28,10 +28,6 @@ NSString * NSStringFromFilterName(FilterName name);
 
 @interface ImageFilterProcessor : UIViewController
 
-//@property (strong, nonatomic) UIImage *currentImage;
-//@property (strong, nonatomic) UIImage *sampleImage;
-@property (assign, nonatomic) double sliderValue;
-
 + (ImageFilterProcessor *)sharedProcessor;
 
 - (void)getFilteredImage:(UIImage *)image WithFilter:(FilterName) filterName Completion:(void(^)(NSDictionary * imageAndTag)) completion;

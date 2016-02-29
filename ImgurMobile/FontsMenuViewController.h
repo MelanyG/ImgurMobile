@@ -11,9 +11,11 @@
 
 UIColor * RGBA(CGFloat red, CGFloat green, CGFloat blue, CGFloat alpha);
 
-@interface FontsMenuViewController : UIViewController
+@interface FontsMenuViewController : UIViewController <UIPickerViewDelegate, UIPickerViewDataSource>
 
 @property (weak, nonatomic) id<fontDelegate> delegate;
+
+@property (assign, nonatomic) BOOL shouldRespondOnSlideEvents;
 
 - (void)updateYourself;
 

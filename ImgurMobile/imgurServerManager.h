@@ -10,6 +10,9 @@
 #import "URLGen.h"
 #import "ImgurAccessToken.h"
 
+extern NSString * const IMGUR_SERVER_MANAGER_STATUS_KEY;
+extern NSString * const IMGUR_SERVER_MANAGER_ERROR_KEY;
+
 @class imgurUser;
 
 @interface imgurServerManager : NSObject
