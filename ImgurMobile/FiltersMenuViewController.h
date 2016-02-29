@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "EditProtocolHeader.h"
 
-@interface FiltersMenuViewController : UIViewController
+@interface FiltersMenuViewController : UIViewController <UIScrollViewDelegate>
+
+@property (weak, nonatomic)id <rightMenuDelegate> delegate;
+@property (weak, nonatomic)id <filteringDelegate> filterDelegate;
+@property (strong, nonatomic) UIImage *currentImage;
+
+- (void)updateYourself;
 
 @end

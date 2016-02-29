@@ -38,7 +38,7 @@
     // Do any additional setup after loading the view.
     self.firstTimeAppear = YES;    CGRect r = self.view.bounds;
     r.origin = CGPointZero;
-    
+    self.token = [ImgurAccessToken sharedToken];
     UIWebView* webView = [[UIWebView alloc] initWithFrame:r];
     
     webView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
@@ -113,7 +113,7 @@
 #pragma mark - UIWebViewDelegete
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
-    ImgurAccessToken* token = [[ImgurAccessToken alloc] init];
+    //ImgurAccessToken* token = [[ImgurAccessToken alloc] init];
     
     //#access_token=83cbcfabbe307897a21d062df1515fcad3d66765&expires_in=2419200&token_type=bearer&refresh_token=621ec2e692b00b4d8336aa21c06ae1ceca308a31&account_username=MostPerfectUser&account_id=31463385
     
@@ -147,23 +147,27 @@
                 
                 if ([key isEqualToString:@"access_token"])
                 {
-                    token.token = [values lastObject];
+                    self.token.token = [values lastObject];
+                }
+                else if ([key isEqualToString:@"refresh_token"])
+                {
+                    self.token.refresh_token = [values lastObject];
                 }
                 else if ([key isEqualToString:@"expires_in"])
                 {
                     
                     NSTimeInterval interval = [[values lastObject] doubleValue];
                     
-                    token.expirationDate = [NSDate dateWithTimeIntervalSinceNow:interval];
+                    self.token.expirationDate = [NSDate dateWithTimeIntervalSinceNow:interval];
                     
                 }
                 else if ([key isEqualToString:@"account_username"]) {
                     
-                    token.userName = [values lastObject];
+                    self.token.userName = [values lastObject];
                 }
                 else if ([key isEqualToString:@"account_id"]) {
                     
-                    token.accountID = [values lastObject];
+                    self.token.accountID = [values lastObject];
                 }
                 
             }
@@ -172,13 +176,21 @@
         self.webView.delegate = nil;
         
         if (self.completionBlock) {
-            self.completionBlock(token);
+            self.completionBlock(self.token);
         }
         
+        // Store the data
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        
+        [defaults setObject:self.token.userName forKey:@"userName"];
+        [defaults setObject:self.token.token forKey:@"access_token"];
+        [defaults setObject:self.token.token forKey:@"refresh_token"];
+        [defaults setObject:self.token.accountID forKey:@"account_id"];
+        [defaults setObject:self.token.expirationDate forKey:@"expires_in"];
         
         
-        //[self dismissViewControllerAnimated:YES
-        //                         completion:nil];
+        [self dismissViewControllerAnimated:YES
+                                 completion:nil];
         
         return NO;
     }

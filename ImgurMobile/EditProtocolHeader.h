@@ -14,9 +14,47 @@ typedef enum{
     textEditing
 }WorkingMode;
 
-@protocol topMenuDelegate <NSObject>
+typedef enum{
+    FilteringMenu,
+    TextEditingMenu
+}RightMenuType;
+
+typedef enum{
+    RightTop,
+    LeftTop,
+    RightBottom,
+    LeftBottom,
+    Center
+}PositionType;
+
+@protocol settingsMenuDelegate <NSObject>
 
 - (void)changeWorkingModeTo:(WorkingMode) mode;
+- (void)changeStateOfLeftMenu;
+- (void)closeAllMenus;
+- (void)giveImageToShareVC;
+- (void)saveImageToGallery;
+
+@end
+
+@protocol rightMenuDelegate <NSObject>
+
+- (void)changeStateOfRightMenu:(RightMenuType)type;
+
+@end
+
+@protocol filteringDelegate <NSObject>
+
+- (void)updateUIWithImage:(UIImage *)image;
+- (void)startLoadIndicating;
+- (void)stopLoadIndicating;
+
+@end
+
+@protocol fontDelegate <NSObject>
+
+- (void)setLabel:(UILabel *)label withPosition:(PositionType)position;
+- (void)removeTextLabels;
 
 @end
 

@@ -8,6 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import "URLGen.h"
+#import "ImgurAccessToken.h"
+
+extern NSString * const IMGUR_SERVER_MANAGER_STATUS_KEY;
+extern NSString * const IMGUR_SERVER_MANAGER_ERROR_KEY;
+
 @class imgurUser;
 
 @interface imgurServerManager : NSObject
@@ -17,14 +22,25 @@
 + (instancetype)sharedManager;
 
 @property (nonatomic, strong) imgurUser *currentUser;
+@property (strong, nonatomic) ImgurAccessToken* accessToken;
 
 - (void)getPhotosForPage:(NSInteger)page Section:(section)section Sort:(sort)sort Window:(window)window
               Completion:(void(^)(NSDictionary *resp))completion;
 
-- (void) postImage:(NSString*) text
-       onGroupWall:(NSString*) groupID
-         onSuccess:(void(^)(id result)) success
-         onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure;
+- (void)uploadPhoto:(NSData*)imageData
+              title:(NSString*)title
+        description:(NSString*)description
+       access_token:(NSString*)token
+              topic:(NSString*) topic
+    completionBlock:(void(^)(NSString* result))completion
+       failureBlock:(void(^)(NSURLResponse *response, NSError *error, NSInteger status))failureBlock;
 
+
+- (void) shareImageWithImgurCommunity:(NSString*)title
+                          description:(NSString*)description
+                         access_token:(NSString*)token
+                                topic:(NSString*) topic
+                      completionBlock:(void(^)(NSString* result))completion
+                         failureBlock:(void(^)(NSURLResponse *response, NSError *error, NSInteger status))failureBlock;
 
 @end

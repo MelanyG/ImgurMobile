@@ -28,26 +28,33 @@
     NSMutableArray *albumIdArray = [NSMutableArray array];
     
     NSArray *data = [dict objectForKey:@"data"];
-    for (int i = 0; i < data.count; i++)
+    if (data)
     {
-        NSDictionary *postDict = [data objectAtIndex:i];
-        if ([[postDict objectForKey:@"is_album"] boolValue])
+        for (int i = 0; i < data.count; i++)
         {
-            NSString *albumID = [postDict objectForKey:@"id"];
-            [albumIdArray addObject:albumID];
+            NSDictionary *postDict = [data objectAtIndex:i];
+            if ([[postDict objectForKey:@"is_album"] boolValue])
+            {
+                NSString *albumID = [postDict objectForKey:@"id"];
+                [albumIdArray addObject:albumID];
+            }
+            else
+            {
+                imgurPost *post = [imgurPost initWithDictionaryResponce:postDict IsAlbum:NO];
+                [postArray addObject:post];
+            }
         }
-        else
-        {
-            imgurPost *post = [imgurPost initWithDictionaryResponce:postDict IsAlbum:NO];
-            [postArray addObject:post];
-        }
+        
+        NSMutableDictionary *outDict = [[NSMutableDictionary alloc] init];
+        [outDict setObject:postArray forKey:@"posts"];
+        [outDict setObject:albumIdArray forKey:@"albumIds"];
+        
+        return outDict;
     }
-    
-    NSMutableDictionary *outDict = [[NSMutableDictionary alloc] init];
-    [outDict setObject:postArray forKey:@"posts"];
-    [outDict setObject:albumIdArray forKey:@"albumIds"];
-    
-    return outDict;
+    else
+    {
+        return dict;
+    }
 }
 
 - (imgurAlbum *)getAlbumFromResponceDict:(NSDictionary *)responce

@@ -8,9 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import "imgurServerManager.h"
+#import "ImgurAccessToken.h"
 
-@interface ImgurPosting : UIViewController
 
-- (IBAction)postActionSelected:(id)sender;
+@interface ImgurPosting : UIViewController <UIPickerViewDelegate>
+
+
+- (IBAction)postActionSelected:(UIButton *)sender;
+
+- (IBAction)ShareWithCommunity:(UIButton *)sender;
+;
+
+- (void)postActionSelected;
 
 @end

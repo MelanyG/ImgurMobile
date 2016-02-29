@@ -11,8 +11,9 @@
 @interface ImgurAccessToken : NSObject
 
 @property (strong, nonatomic) NSString* token;
+@property (strong, nonatomic) NSString* refresh_token;
 @property (strong, nonatomic) NSDate* expirationDate;
 @property (strong, nonatomic) NSString* accountID;
 @property (strong, nonatomic) NSString* userName;
-
++ (instancetype)sharedToken;
 @end
