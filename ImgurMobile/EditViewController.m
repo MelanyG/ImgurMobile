@@ -13,6 +13,7 @@
 #import "UIView+SuperClassChecker.h"
 #import "UIActivityIndicatorView+manager.h"
 #import "UIImageView+imageRectGetter.h"
+#import "ImgurPosting.h"
 
 @interface EditViewController ()
 
@@ -359,7 +360,11 @@
 
 - (void)giveImageToShareVC
 {
-#warning GIVE IT!
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    ImgurPosting * postingStoryboardVC = (ImgurPosting *)[sb instantiateViewControllerWithIdentifier:@"postingStoryboardVC"];
+    postingStoryboardVC.image = [self getImageFromCurrentContext];
+    
+    [self.navigationController pushViewController:postingStoryboardVC animated:YES];
 }
 
 - (UIImage *)getImageFromCurrentContext
