@@ -417,7 +417,7 @@ static NSString* imageID;
                        }
                        
                        NSMutableDictionary *albumsAndPosts = [[NSMutableDictionary alloc] init];
-                       [albumsAndPosts setObject:posts forKey:@"posts"];
+                       //[albumsAndPosts setObject:posts forKey:@"posts"];
                        [albumsAndPosts setObject:albums forKey:@"albums"];
                        
                        dispatch_async(dispatch_get_main_queue(), ^
