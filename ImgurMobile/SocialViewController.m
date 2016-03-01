@@ -39,6 +39,13 @@
     [super viewDidLoad];
     self.set = [NSCharacterSet URLQueryAllowedCharacterSet];
     self.accessToken = [ImgurAccessToken sharedToken].token;
+    if ([self.post.postDescription isKindOfClass:[NSString class]]) {
+        self.socialImageDescription.text = self.post.postDescription;
+    }
+    else{
+        self.socialImageDescription.text = @"NO DESCRIPTION";
+    }
+    
     [self httpGetRequest];
 }
 

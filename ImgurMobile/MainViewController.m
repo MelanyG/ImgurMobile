@@ -302,8 +302,8 @@
          
          [svc.socialImage setImage:self.selectedImage];
          
-         svc.imageID = self.selectedPost;
-         svc.socialImageDescription.text = self.selectedPost.description;
+         svc.imageID = self.selectedPost.postID;
+         //svc.socialImageDescription.text = (![self.selectedPost.postDescription isKindOfClass:[NSNull class]])?self.selectedPost.postDescription:@"null description";
          svc.imageTitel.title = (![self.selectedPost.title isKindOfClass:[NSNull class]])?self.selectedPost.title:@"null title";
          
          svc.image = self.selectedImage;
