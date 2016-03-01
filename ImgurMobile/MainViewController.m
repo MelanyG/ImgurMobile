@@ -28,7 +28,7 @@
 @property (strong, nonatomic) NSCache* imageCache;
 @property (strong, nonatomic) ImgurAccessToken* token;
 @property (strong, nonatomic) NSMutableDictionary* pageInfo;
-@property (assign, nonatomic) NSUInteger pageNumber;
+@property (assign, nonatomic) NSInteger pageNumber;
 
 @property (strong, nonatomic) imgurServerManager *manager;
 
@@ -181,8 +181,9 @@
             [tempCell.imageView setImage: image];
             [self.imageCache setObject:image forKey:post.imageURL];
         }
-        
-        NSLog(@"ura");
+        static int a = 0;
+        a++;
+        NSLog(@"images loaded from disk %d", a);
     }
     else
     {// if no such image in cache fill cell with default image and start load
@@ -283,6 +284,11 @@
     if ([info isKindOfClass:[NSDictionary class]])
         self.pageInfo = info;
     [self reloadPage];
+}
+
+-(void) pageNumDidChange: (NSInteger) param
+{
+    self.pageNumber = ((param + self.pageNumber) < 0)?0:(self.pageNumber + param);
 }
 
 

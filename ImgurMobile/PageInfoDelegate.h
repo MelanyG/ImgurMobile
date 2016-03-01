@@ -12,6 +12,8 @@
 @required
 
 -(void) pageInfoDidChange: (NSMutableDictionary *)info;
+-(void) pageNumDidChange: (NSInteger) param;
+
 @end
 
 
