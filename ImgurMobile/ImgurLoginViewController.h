@@ -15,6 +15,10 @@ typedef void(^ASLoginCompletionBlock)(ImgurAccessToken* token);
 
 @interface ImgurLoginViewController : UIViewController
 
+- (IBAction)backButtonSelected:(id)sender;
+- (IBAction)cancelButtonSelected:(id)sender;
+
+
 @property (strong, nonatomic)ImgurAccessToken* token;
 
 - (id) initWithCompletionBlock:(ASLoginCompletionBlock) completionBlock;
