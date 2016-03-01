@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="DTt-cb-4HE">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="DTt-cb-4HE">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
@@ -510,7 +510,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="598" height="73"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UeY-dg-Urh">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UeY-dg-Urh">
                                 <rect key="frame" x="171" y="1" width="85" height="71"/>
                                 <state key="normal" backgroundImage="Thumb Up-48.png"/>
                                 <connections>
@@ -524,25 +524,25 @@
                                     <action selector="dislikeAction" destination="vtK-aE-O7K" eventType="touchUpInside" id="yXU-ld-wmS"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b9B-SN-XRs">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b9B-SN-XRs">
                                 <rect key="frame" x="342" y="1" width="85" height="71"/>
                                 <state key="normal" backgroundImage="Settings Filled-50.png"/>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RA2-1x-7hi">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RA2-1x-7hi">
                                 <rect key="frame" x="427" y="1" width="84" height="71"/>
                                 <state key="normal" backgroundImage="Save Filled-50.png"/>
                                 <connections>
                                     <action selector="saveAction" destination="vtK-aE-O7K" eventType="touchUpInside" id="dzD-AO-EHw"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9gP-2a-RW6">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9gP-2a-RW6">
                                 <rect key="frame" x="512" y="1" width="85" height="71"/>
                                 <state key="normal" backgroundImage="Share-48.png"/>
                                 <connections>
                                     <action selector="shareAction" destination="vtK-aE-O7K" eventType="touchUpInside" id="2kD-WH-5fc"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vt7-tl-ij4">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vt7-tl-ij4">
                                 <rect key="frame" x="87" y="1" width="84" height="71"/>
                                 <state key="normal" backgroundImage="Speech Bubble-48.png"/>
                                 <connections>
@@ -554,7 +554,7 @@
                                 <rect key="frame" x="0.0" y="1" width="84" height="71"/>
                                 <state key="normal" backgroundImage="Like Filled-48.png"/>
                                 <connections>
-                                    <action selector="favouritesAction" destination="vtK-aE-O7K" eventType="touchUpInside" id="qKX-am-vVN"/>
+                                    <action selector="favoritesAction" destination="vtK-aE-O7K" eventType="touchUpInside" id="n14-q7-rhA"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1041,8 +1041,8 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="897-sF-VYf"/>
                                 <exclude reference="by0-U3-xEx"/>
+                                <exclude reference="897-sF-VYf"/>
                             </mask>
                         </variation>
                     </view>
