@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="DTt-cb-4HE">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="DTt-cb-4HE">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
@@ -721,8 +721,9 @@
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dOb-sX-xqD">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Chose text, You need" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dOb-sX-xqD">
                                                 <rect key="frame" x="8" y="8" width="184" height="30"/>
+                                                <color key="backgroundColor" red="0.86868686868686873" green="0.86868686868686873" blue="0.86868686868686873" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="GmV-Bn-mAE"/>
                                                 </constraints>
@@ -836,6 +837,11 @@
                                                     <constraint firstItem="rxZ-yv-3st" firstAttribute="leading" secondItem="bUW-5h-aNi" secondAttribute="leading" id="yFD-wY-3RZ"/>
                                                     <constraint firstAttribute="trailing" secondItem="T6W-nY-Ieu" secondAttribute="trailing" id="yU9-uh-SHY"/>
                                                 </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="10"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
                                             </view>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -970,10 +976,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L2Q-yM-nNg">
-                                <rect key="frame" x="0.0" y="46" width="250" height="534"/>
+                                <rect key="frame" x="8" y="46" width="234" height="534"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Mn-Ci-0S4">
-                                        <rect key="frame" x="0.0" y="0.0" width="250" height="580"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="234" height="580"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="580" id="izd-LB-RgY"/>
@@ -997,7 +1003,8 @@
                                 </variation>
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zdC-Jn-CTT">
-                                <rect key="frame" x="71" y="8" width="108" height="30"/>
+                                <rect key="frame" x="8" y="8" width="234" height="30"/>
+                                <color key="backgroundColor" red="0.40482494851426892" green="0.86868686868686873" blue="0.86868686868686873" alpha="0.31" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="108" id="4SB-XA-dPS"/>
                                     <constraint firstAttribute="height" constant="30" id="age-90-KiJ"/>
@@ -1005,6 +1012,16 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="No filter"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="4SB-XA-dPS"/>
+                                    </mask>
+                                </variation>
                                 <connections>
                                     <action selector="discardFiltering:" destination="tJA-J8-PaX" eventType="touchUpInside" id="P52-wg-Sus"/>
                                 </connections>
@@ -1014,15 +1031,18 @@
                         <constraints>
                             <constraint firstItem="L2Q-yM-nNg" firstAttribute="top" secondItem="UXp-IR-9dc" secondAttribute="top" id="897-sF-VYf"/>
                             <constraint firstItem="L2Q-yM-nNg" firstAttribute="top" secondItem="zdC-Jn-CTT" secondAttribute="bottom" constant="8" id="E8X-gb-WNU"/>
+                            <constraint firstItem="zdC-Jn-CTT" firstAttribute="leading" secondItem="UXp-IR-9dc" secondAttribute="leading" constant="8" id="Eut-yO-NKA"/>
                             <constraint firstAttribute="bottom" secondItem="L2Q-yM-nNg" secondAttribute="bottom" id="VlW-IQ-1tN"/>
                             <constraint firstItem="zdC-Jn-CTT" firstAttribute="top" secondItem="kwe-eb-XKU" secondAttribute="bottom" constant="8" id="YAD-Lg-izq"/>
                             <constraint firstItem="zdC-Jn-CTT" firstAttribute="centerX" secondItem="UXp-IR-9dc" secondAttribute="centerX" id="by0-U3-xEx"/>
-                            <constraint firstAttribute="trailing" secondItem="L2Q-yM-nNg" secondAttribute="trailing" id="nsE-wW-ebP"/>
-                            <constraint firstItem="L2Q-yM-nNg" firstAttribute="leading" secondItem="UXp-IR-9dc" secondAttribute="leading" id="qVq-me-NdU"/>
+                            <constraint firstAttribute="trailing" secondItem="zdC-Jn-CTT" secondAttribute="trailing" constant="8" id="nM0-t0-qTm"/>
+                            <constraint firstAttribute="trailing" secondItem="L2Q-yM-nNg" secondAttribute="trailing" constant="8" id="nsE-wW-ebP"/>
+                            <constraint firstItem="L2Q-yM-nNg" firstAttribute="leading" secondItem="UXp-IR-9dc" secondAttribute="leading" constant="8" id="qVq-me-NdU"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="897-sF-VYf"/>
+                                <exclude reference="by0-U3-xEx"/>
                             </mask>
                         </variation>
                     </view>
