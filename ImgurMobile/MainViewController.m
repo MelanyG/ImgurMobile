@@ -60,7 +60,7 @@
     [info setObject:[NSNumber numberWithInt:0] forKey:@"window"];
      self.navigationItem.title = self.token.userName;
     self.pageInfo = info;
-    self.pageNumber = 1;
+    self.pageNumber = 0;
     
     [self reloadPage];
 }
@@ -89,8 +89,6 @@
          NSLog(@"%@", self.photosData);
          [self.collectionView reloadData];
      }];
-    
-    [self.collectionView reloadData];
 }
 
 
