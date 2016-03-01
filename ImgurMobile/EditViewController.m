@@ -78,7 +78,7 @@ typedef enum{
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor darkGrayColor];
     self.image = [UIImage imageNamed:@"sea"];
-    self.imageView.image = self.image;
+    [self updateUIWithImage:self.image];
     [self prepare];
     [self addHandlesLogic];
     
@@ -429,16 +429,22 @@ typedef enum{
     if (self.isLeftMenuOpened)
     {
         self.settingsMenuLeadingConstraint.constant = -self.settingsMenuWidthConstraint.constant;
+        [self moveHandle:settings inDirection:back];
+        self.settingsArrow.image = [UIImage imageNamed:@"arrow_right"];
         self.isLeftMenuOpened = NO;
     }
     if (self.isRightFilteringMenuOpened)
     {
         self.rightFiltersMenuTrailingConstraint.constant = -self.rightFiltersMenuWidthConstraint.constant;
+        [self moveHandle:filters inDirection:back];
+        self.filtersArrow.image = [UIImage imageNamed:@"arrow_left"];
         self.isRightFilteringMenuOpened = NO;
     }
     if (self.isRightTextMenuOpened)
     {
         self.rightFontsMenuTrailingConstraint.constant = -self.rightFontsMenuWidthConstraint.constant;
+        [self moveHandle:fonts inDirection:back];
+        self.fontsArrow.image = [UIImage imageNamed:@"arrow_left"];
         self.isRightTextMenuOpened = NO;
     }
 }
@@ -623,7 +629,12 @@ typedef enum{
     
     CGRect imageRect = [self.imageView calculateClientRectOfImage];
     CGRect renderingImageRect = self.readyToGoImageView.frame;
-    UILabel *renderLabel = label;
+    UILabel *renderLabel = [self deepLabelCopy:label];
+    
+    for (UIView *subview in self.readyToGoImageView.subviews)
+    {
+        [subview removeFromSuperview];
+    }
     
     switch (position)
     {
@@ -641,7 +652,7 @@ typedef enum{
                                       label.frame.size.width,
                                       label.frame.size.height);
             renderLabel.frame = renderFrame;
-            [self.readyToGoImageView insertSubview:label aboveSubview:self.imageView];
+            [self.readyToGoImageView insertSubview:renderLabel aboveSubview:self.imageView];
         }
             break;
             
@@ -659,7 +670,7 @@ typedef enum{
                                             label.frame.size.width,
                                             label.frame.size.height);
             renderLabel.frame = renderFrame;
-            [self.readyToGoImageView insertSubview:label aboveSubview:self.imageView];
+            [self.readyToGoImageView insertSubview:renderLabel aboveSubview:self.imageView];
         }
             break;
             
@@ -677,7 +688,7 @@ typedef enum{
                                             label.frame.size.width,
                                             label.frame.size.height);
             renderLabel.frame = renderFrame;
-            [self.readyToGoImageView insertSubview:label aboveSubview:self.imageView];
+            [self.readyToGoImageView insertSubview:renderLabel aboveSubview:self.imageView];
         }
             break;
             
@@ -695,7 +706,7 @@ typedef enum{
                                             label.frame.size.width,
                                             label.frame.size.height);
             renderLabel.frame = renderFrame;
-            [self.readyToGoImageView insertSubview:label aboveSubview:self.imageView];
+            [self.readyToGoImageView insertSubview:renderLabel aboveSubview:self.imageView];
         }
             break;
             
@@ -713,7 +724,7 @@ typedef enum{
                                             label.frame.size.width,
                                             label.frame.size.height);
             renderLabel.frame = renderFrame;
-            [self.readyToGoImageView insertSubview:label aboveSubview:self.imageView];
+            [self.readyToGoImageView insertSubview:renderLabel aboveSubview:self.imageView];
         }
             break;
             
