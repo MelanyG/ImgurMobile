@@ -75,6 +75,7 @@ typedef enum{
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor darkGrayColor];
     self.image = [UIImage imageNamed:@"sea"];
     self.imageView.image = self.image;
     [self prepare];
@@ -310,7 +311,7 @@ typedef enum{
 
 - (void)configureViewDesign:(UIView *)view
 {
-    view.backgroundColor = [UIColor colorWithRed:0.22 green:0.91 blue:0.87 alpha:0.5];
+    view.backgroundColor = [UIColor colorWithRed:0.22 green:0.91 blue:0.87 alpha:0.3];
     
     // border radius
     view.layer.cornerRadius = 5;

@@ -11,6 +11,21 @@
 
 @implementation SettingsMenuViewController
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"glas_texture"]];
+    
+    // border radius
+    self.view.layer.cornerRadius = 5;
+    
+    // drop shadow
+    [self.view.layer setShadowColor:[UIColor blackColor].CGColor];
+    [self.view.layer setShadowOpacity:0.8];
+    [self.view.layer setShadowRadius:5.0];
+    [self.view.layer setShadowOffset:CGSizeMake(5.0, 5.0)];
+}
+
 - (void)updateYourself
 {
     self.view.tag = 1111;

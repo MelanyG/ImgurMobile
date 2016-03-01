@@ -16,6 +16,7 @@ UIColor * RGBA(CGFloat red, CGFloat green, CGFloat blue, CGFloat alpha)
 
 @interface FontsMenuViewController ()
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UIView *contentView;
 
 //Sliders
 @property (weak, nonatomic) IBOutlet UISlider *redSlider;
@@ -53,6 +54,23 @@ UIColor * RGBA(CGFloat red, CGFloat green, CGFloat blue, CGFloat alpha)
 @end
 
 @implementation FontsMenuViewController
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    [super viewDidLoad];
+    self.view.backgroundColor = [UIColor clearColor];
+    self.contentView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"glas_texture"]];
+    
+    // border radius
+    self.contentView.layer.cornerRadius = 5;
+    
+    // drop shadow
+    [self.view.layer setShadowColor:[UIColor blackColor].CGColor];
+    [self.view.layer setShadowOpacity:0.8];
+    [self.view.layer setShadowRadius:5.0];
+    [self.view.layer setShadowOffset:CGSizeMake(5.0, 5.0)];
+}
 
 - (UILabel *)outLabel
 {
