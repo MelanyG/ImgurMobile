@@ -155,17 +155,28 @@
         
         if ([[path pathExtension] isEqualToString:@"gif"])
         {
-            NSData *imageData = [NSData dataWithContentsOfFile:path];
-            UIImage *image = [UIImage animatedImageWithAnimatedGIFData:imageData];
-            [tempCell.imageView setImage: image];
-            [self.imageCache setObject:image forKey:post.imageURL];
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                NSData *imageData = [NSData dataWithContentsOfFile:path];
+                UIImage *image = [UIImage animatedImageWithAnimatedGIFData:imageData];
+                
+                [self.imageCache setObject:image forKey:post.imageURL];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [tempCell.imageView setImage: image];
+                });
+            });
+
         }
         else
         {
-            NSData *imageData = [NSData dataWithContentsOfFile:path];
-            UIImage *image = [UIImage imageWithData:imageData];
-            [tempCell.imageView setImage: image];
-            [self.imageCache setObject:image forKey:post.imageURL];
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                NSData *imageData = [NSData dataWithContentsOfFile:path];
+                UIImage *image = [UIImage imageWithData:imageData];
+                
+                [self.imageCache setObject:image forKey:post.imageURL];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [tempCell.imageView setImage: image];
+                });
+            });
         }
         static int a = 0;
         a++;
