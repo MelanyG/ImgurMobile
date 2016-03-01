@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="DTt-cb-4HE">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="DTt-cb-4HE">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
@@ -151,10 +151,11 @@
                             </barButtonItem>
                             <barButtonItem title="Login" id="qUn-1i-mrO">
                                 <connections>
-                                    <segue destination="sAE-mJ-C4u" kind="show" id="qPc-sS-hrE"/>
+                                    <segue destination="sAE-mJ-C4u" kind="popoverPresentation" popoverAnchorBarButtonItem="qUn-1i-mrO" id="3x4-kP-w1A">
+                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                    </segue>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem title="Post" id="Sku-fk-f9v"/>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
@@ -328,7 +329,38 @@
                     <view key="view" contentMode="scaleToFill" id="q9i-QA-JHf">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g3O-FP-E9M">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="GAs-0r-6Ob"/>
+                                </constraints>
+                                <color key="barTintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <items>
+                                    <navigationItem title="Login" id="5g0-3S-bix">
+                                        <barButtonItem key="backBarButtonItem" title="Back" id="Djr-Op-ck6"/>
+                                        <barButtonItem key="leftBarButtonItem" title="&lt;&lt;Back" id="w5T-j2-C4g">
+                                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <connections>
+                                                <action selector="backButtonSelected:" destination="sAE-mJ-C4u" id="Trq-vd-8oY"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="XEn-pa-OE3">
+                                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <connections>
+                                                <action selector="cancelButtonSelected:" destination="sAE-mJ-C4u" id="CgB-Ei-fLZ"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="g3O-FP-E9M" secondAttribute="trailing" id="0UR-N1-5KA"/>
+                            <constraint firstItem="g3O-FP-E9M" firstAttribute="leading" secondItem="q9i-QA-JHf" secondAttribute="leading" id="GaG-ud-r3Y"/>
+                            <constraint firstItem="g3O-FP-E9M" firstAttribute="top" secondItem="q9i-QA-JHf" secondAttribute="top" id="HuN-8d-71e"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="avr-iY-z1F" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -478,7 +510,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="598" height="73"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UeY-dg-Urh">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UeY-dg-Urh">
                                 <rect key="frame" x="171" y="1" width="85" height="71"/>
                                 <state key="normal" backgroundImage="Thumb Up-48.png"/>
                                 <connections>
@@ -492,25 +524,25 @@
                                     <action selector="dislikeAction" destination="vtK-aE-O7K" eventType="touchUpInside" id="yXU-ld-wmS"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b9B-SN-XRs">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b9B-SN-XRs">
                                 <rect key="frame" x="342" y="1" width="85" height="71"/>
                                 <state key="normal" backgroundImage="Settings Filled-50.png"/>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RA2-1x-7hi">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RA2-1x-7hi">
                                 <rect key="frame" x="427" y="1" width="84" height="71"/>
                                 <state key="normal" backgroundImage="Save Filled-50.png"/>
                                 <connections>
                                     <action selector="saveAction" destination="vtK-aE-O7K" eventType="touchUpInside" id="dzD-AO-EHw"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9gP-2a-RW6">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9gP-2a-RW6">
                                 <rect key="frame" x="512" y="1" width="85" height="71"/>
                                 <state key="normal" backgroundImage="Share-48.png"/>
                                 <connections>
                                     <action selector="shareAction" destination="vtK-aE-O7K" eventType="touchUpInside" id="2kD-WH-5fc"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vt7-tl-ij4">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vt7-tl-ij4">
                                 <rect key="frame" x="87" y="1" width="84" height="71"/>
                                 <state key="normal" backgroundImage="Speech Bubble-48.png"/>
                                 <connections>
