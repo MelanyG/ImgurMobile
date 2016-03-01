@@ -24,7 +24,7 @@
 
 
 
-- (IBAction)favouritesAction
+- (IBAction)favoritesAction
 {
     
 }

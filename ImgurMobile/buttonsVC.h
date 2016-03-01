@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface buttonsVC : UIViewController
-- (IBAction)favouritesAction;
+- (IBAction)favoritesAction;
 - (IBAction)commentsAction;
 - (IBAction)likeAction;
 - (IBAction)dislikeAction;
