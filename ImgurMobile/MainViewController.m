@@ -256,7 +256,7 @@
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     self.selectedCell = indexPath;
-    [self performSegueWithIdentifier:@"SocialVCEmbed" sender:self];
+
     
     if (self.selectedCell.row < [[self.photosData objectForKey:@"albums"] count])
     {
@@ -271,6 +271,8 @@
     imgurCell *selectedCell = (imgurCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
     
     self.selectedImage = [[selectedCell imageView] image];
+    
+    [self performSegueWithIdentifier:@"SocialVC" sender:self];
 }
 
 
@@ -294,7 +296,7 @@
          PageInfoViewController * pivc = segue.destinationViewController;
          pivc.delegate = self;
      }
-     if ([segue.identifier isEqualToString:@"SocialVCEmbed"])
+     if ([segue.identifier isEqualToString:@"SocialVC"])
      {
          SocialViewController * svc = segue.destinationViewController;
          
@@ -302,7 +304,10 @@
          
          svc.imageID = self.selectedPost;
          svc.socialImageDescription.text = self.selectedPost.description;
-         svc.imageTitel.title = self.selectedPost.title;
+         svc.imageTitel.title = (![self.selectedPost.title isKindOfClass:[NSNull class]])?self.selectedPost.title:@"null title";
+         
+         svc.image = self.selectedImage;
+         svc.post = self.selectedPost;
      }
 }
 //@property (weak, nonatomic) IBOutlet UIImageView *socialImage;

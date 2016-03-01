@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "imgurPost.h"
 
 @interface SocialViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UIImageView *socialImage;
@@ -14,5 +15,9 @@
 @property (weak, nonatomic) IBOutlet UITextView *socialImageDescription;
 @property (weak, nonatomic) IBOutlet UINavigationItem *imageTitel;
 @property (strong, nonatomic) NSString* albumID;
+
+
+@property (strong, nonatomic) imgurPost * post;
+@property (strong, nonatomic) UIImage * image;
 
 @end
