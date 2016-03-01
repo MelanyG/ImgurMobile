@@ -18,6 +18,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.nextPageButton.layer.cornerRadius = 4;
 }
 
 - (void)didReceiveMemoryWarning
@@ -27,7 +29,7 @@
 }
 - (IBAction)buttonPressed:(id)sender
 {
-    
+    [self.delegate pageNumDidChange:[sender tag]];
 }
 
 /*

@@ -17,6 +17,7 @@
 #import "PageInfoViewController.h"
 #import "imgurAlbum.h"
 #import "SocialViewController.h"
+#import "PageSelectViewController.h"
 
 #import "UIImage+animatedGIF.h"
 
@@ -83,43 +84,28 @@
                          Sort:[[self.pageInfo objectForKey:@"sort"] intValue]
                        Window:[[self.pageInfo objectForKey:@"window"] intValue] Completion:^(NSDictionary *resp)
      {
-         [queue addObject:resp];
-         
-         self.photosData = [queue getObject];
-         NSLog(@"%@", self.photosData);
-         [self.collectionView reloadData];
+         if ([resp objectForKey:IMGUR_SERVER_MANAGER_ERROR_KEY])
+         {
+             NSLog(@"%@", [resp objectForKey:IMGUR_SERVER_MANAGER_ERROR_KEY]);
+         }
+         else if ([resp objectForKey:IMGUR_SERVER_MANAGER_STATUS_KEY])
+         {
+             NSLog(@"%@", [resp objectForKey:IMGUR_SERVER_MANAGER_STATUS_KEY]);
+         }
+         else
+         {
+             [queue addObject:resp];
+             
+             self.photosData = [queue getObject];
+             NSLog(@"%@", self.photosData);
+             [self.collectionView reloadData];
+             if (([[self.photosData objectForKey:@"posts"] count] + [[self.photosData objectForKey:@"albums"] count]) != 0)
+                 [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]
+                                             atScrollPosition:UICollectionViewScrollPositionTop
+                                                     animated:YES];
+         }
      }];
 }
-
-
--(void)preparePhotos
-{
-    self.photos = [NSMutableArray array];
-    NSArray *posts = [self.photosData objectForKey:@"posts"];
-    for (imgurPost *post in posts)
-    {
-        //UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:post.imageURL]]];
-        
-
-        NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:post.imageURL]];
-        
-        AFHTTPRequestOperation *requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
-        requestOperation.responseSerializer = [AFImageResponseSerializer serializer];
-        [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject)
-        {
-            //operation.request.URL
-            NSLog(@"Response: %@", responseObject);
-            UIImage *image = responseObject;
-            [self.photos addObject:image];
-        }
-        failure:^(AFHTTPRequestOperation *operation, NSError *error)
-        {
-            NSLog(@"Image error: %@", error);
-        }];
-        [requestOperation start];
-    }
-}
-
 
 #pragma mark- UICollectionViewDataSource
 
@@ -289,6 +275,7 @@
 -(void) pageNumDidChange: (NSInteger) param
 {
     self.pageNumber = ((param + self.pageNumber) < 0)?0:(self.pageNumber + param);
+    [self reloadPage];
 }
 
 
@@ -314,6 +301,11 @@
          
          svc.image = self.selectedImage;
          svc.post = self.selectedPost;
+     }
+     if ([segue.identifier isEqualToString:@"pageSelectVC"])
+     {
+         PageSelectViewController * psvc = segue.destinationViewController;
+         psvc.delegate = self;
      }
 }
 //@property (weak, nonatomic) IBOutlet UIImageView *socialImage;
