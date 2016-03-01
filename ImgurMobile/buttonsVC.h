@@ -7,8 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+@class SocialViewController;
 
 @interface buttonsVC : UIViewController
+
+@property (strong, nonatomic) SocialViewController* socialVC;
+
 - (IBAction)favoritesAction;
 - (IBAction)commentsAction;
 - (IBAction)likeAction;

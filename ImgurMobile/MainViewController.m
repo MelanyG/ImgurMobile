@@ -36,6 +36,7 @@
 @property (strong, nonatomic) UIImage *selectedImage;
 @property (strong, nonatomic) imgurPost * selectedPost;
 
+
 @end
 
 @implementation MainViewController
@@ -299,8 +300,9 @@
      if ([segue.identifier isEqualToString:@"SocialVC"])
      {
          SocialViewController * svc = segue.destinationViewController;
-         
-         [svc.socialImage setImage:self.selectedImage];
+         //self.bvc = [[buttonsVC alloc] init];
+         svc.socialVCDelegate = svc;
+         //[svc.socialImage setImage:self.selectedImage];
          
          svc.imageID = self.selectedPost.postID;
          //svc.socialImageDescription.text = (![self.selectedPost.postDescription isKindOfClass:[NSNull class]])?self.selectedPost.postDescription:@"null description";
