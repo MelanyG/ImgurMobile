@@ -54,7 +54,7 @@
                                     <segue destination="8BY-1E-hBs" kind="embed" identifier="PageInfoEmbed" id="nuj-P5-69I"/>
                                 </connections>
                             </containerView>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="h89-6k-lz1">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="h89-6k-lz1">
                                 <rect key="frame" x="0.0" y="64" width="600" height="455"/>
                                 <animations/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="9Wp-IJ-0AN">
@@ -175,14 +175,15 @@
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="pTe-vR-CIn" firstAttribute="top" secondItem="h89-6k-lz1" secondAttribute="bottom" id="20m-d7-3vc"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="KcM-oy-Y5x" secondAttribute="bottom" id="5Om-k6-6p3"/>
                             <constraint firstAttribute="trailing" secondItem="pTe-vR-CIn" secondAttribute="trailing" id="7Ip-21-4Kh"/>
-                            <constraint firstItem="h89-6k-lz1" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="8LB-cz-xGm"/>
                             <constraint firstItem="pTe-vR-CIn" firstAttribute="leading" secondItem="KcM-oy-Y5x" secondAttribute="trailing" id="AaD-fX-FFE"/>
                             <constraint firstItem="KcM-oy-Y5x" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="EX7-I3-R3E"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="pTe-vR-CIn" secondAttribute="bottom" id="T5x-xA-fc6"/>
-                            <constraint firstAttribute="trailing" secondItem="h89-6k-lz1" secondAttribute="trailing" id="ZAM-wB-TAO"/>
-                            <constraint firstItem="h89-6k-lz1" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="n0w-yn-RAN"/>
+                            <constraint firstItem="h89-6k-lz1" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="ZIG-DU-Vrg"/>
+                            <constraint firstAttribute="trailing" secondItem="h89-6k-lz1" secondAttribute="trailing" id="c8u-oE-fD0"/>
+                            <constraint firstItem="h89-6k-lz1" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="tZx-cV-a14"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="XLo-op-i1Y">
