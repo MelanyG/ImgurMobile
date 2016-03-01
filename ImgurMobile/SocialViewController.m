@@ -9,6 +9,8 @@
 #import "SocialViewController.h"
 #import "RESTAPI.h"
 #import "ImgurAccessToken.h"
+#import "buttonsVC.h"
+
 @interface SocialViewController () <RESTAPIDelegate>
 
 @property (strong, nonatomic) RESTAPI *restApi;
@@ -47,7 +49,7 @@
     NSURL *url = [NSURL URLWithString:str];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setValue:[NSString stringWithFormat:@"Bearer %@", self.accessToken] forHTTPHeaderField:@"Authorization"];
-    [request setHTTPMethod:GET];
+    [request setHTTPMethod:@"GET"];
     self.restApi.delegate = self;
     [self.restApi httpRequest:request];
 }
@@ -59,10 +61,23 @@
     str = [str stringByAddingPercentEncodingWithAllowedCharacters:self.set];
     NSURL *url = [NSURL URLWithString:str];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    [request setHTTPMethod:POST];
+    [request setHTTPMethod:@"POST"];
     [request setHTTPBody:[postBody dataUsingEncoding:NSUTF8StringEncoding]];
     self.restApi.delegate = self;
     [self.restApi httpRequest:request];
+}
+
+-(void) favoritesRequestWithImageID:(NSString*) imageID
+{
+    NSString* urlString = [NSString stringWithFormat:@"https://api.imgur.com/3/image/%@/favorite", imageID];
+    urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:self.set];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setValue:[NSString stringWithFormat:@"Bearer %@", self.accessToken] forHTTPHeaderField:@"Authorization"];
+    [request setHTTPMethod:@"POST"];
+    self.restApi.delegate = self;
+    [self.restApi httpRequest:request];
+
 }
 
 - (void)getReceivedData:(NSMutableData *)data sender:(RESTAPI *)sender

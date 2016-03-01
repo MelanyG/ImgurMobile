@@ -8,9 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-#define POST @"POST"
-#define GET @"GET"
-
 @class RESTAPI;
 
 @protocol RESTAPIDelegate
