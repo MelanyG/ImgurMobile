@@ -63,6 +63,8 @@
     NSArray *images = [NSArray arrayWithArray:[data objectForKey:@"images"]];
     
     imgurAlbum *album = [[imgurAlbum alloc] init];
+    
+    album.albumID = [data objectForKey:@"id"];
     album.ownerID = [data objectForKey:@"account_id"];
     album.topic = [data objectForKey:@"topic"];
     if (!album.posts)

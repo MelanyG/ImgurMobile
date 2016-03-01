@@ -22,15 +22,23 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    self.token = [ImgurAccessToken sharedToken];
-    self.token.userName = [defaults objectForKey:@"userName"];
-    self.token.token = [defaults objectForKey:@"access_token"];
-    self.token.refresh_token = [defaults objectForKey:@"refresh_token"];
-    self.token.accountID = [defaults objectForKey:@"account_id"];
-    self.token.expirationDate = [defaults objectForKey:@"expires_in"];
-    
     /*NotChalengingQueue *queue = [[NotChalengingQueue alloc] init];
+    imgurServerManager *manager = [[imgurServerManager alloc] init];
+    [manager getPhotosForPage:0 Section:hot Sort:viral Window:all Completion:^(NSDictionary *resp)
+     {
+         [queue addObject:resp];
+         
+         NSLog(@"%@",[queue getObject]);
+     }];*/
+   // NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    self.token = [ImgurAccessToken sharedToken];
+//    self.token.userName = [defaults objectForKey:@"userName"];
+//    self.token.token = [defaults objectForKey:@"access_token"];
+//    self.token.refresh_token = [defaults objectForKey:@"refresh_token"];
+//    self.token.accountID = [defaults objectForKey:@"account_id"];
+//    self.token.expirationDate = [defaults objectForKey:@"expires_in"];
+    
+   /* NotChalengingQueue *queue = [[NotChalengingQueue alloc] init];
     imgurServerManager *manager = [imgurServerManager sharedManager];
     
     [manager getPhotosForPage:0 Section:hot Sort:viral Window:all Completion:^(NSDictionary *resp)

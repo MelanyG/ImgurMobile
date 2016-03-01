@@ -13,11 +13,11 @@
 
 @interface ImgurPosting : UIViewController <UIPickerViewDelegate>
 
+@property (strong, nonatomic) UIImage* image;
 
 - (IBAction)postActionSelected:(UIButton *)sender;
 
 - (IBAction)ShareWithCommunity:(UIButton *)sender;
-;
 
 - (void)postActionSelected;
 

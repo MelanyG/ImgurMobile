@@ -26,7 +26,7 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (strong, nonatomic) NSMutableArray *photos;
 @property (strong, nonatomic) NSCache* imageCache;
-
+@property (strong, nonatomic) ImgurAccessToken* token;
 @property (strong, nonatomic) NSMutableDictionary* pageInfo;
 @property (assign, nonatomic) NSUInteger pageNumber;
 
@@ -42,7 +42,9 @@
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
+    self.token = [ImgurAccessToken sharedToken];
+        [super viewDidLoad];
+     // self.navigationItem.title = self.token.userName;
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -56,7 +58,7 @@
     [info setObject:[NSNumber numberWithInt:0] forKey:@"section"];
     [info setObject:[NSNumber numberWithInt:0] forKey:@"sort"];
     [info setObject:[NSNumber numberWithInt:0] forKey:@"window"];
-    
+     self.navigationItem.title = self.token.userName;
     self.pageInfo = info;
     self.pageNumber = 1;
     

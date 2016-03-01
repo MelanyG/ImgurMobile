@@ -13,8 +13,6 @@
 
 @interface ImgurLoginViewController ()<UIWebViewDelegate>
 
-
-
 @property (copy, nonatomic) ASLoginCompletionBlock completionBlock;
 @property (weak, nonatomic) UIWebView* webView;
 @property (assign, nonatomic) BOOL firstTimeAppear;
@@ -36,24 +34,33 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.firstTimeAppear = YES;    CGRect r = self.view.bounds;
+    self.firstTimeAppear = YES;
+    CGRect r = self.view.bounds;
     r.origin = CGPointZero;
     self.token = [ImgurAccessToken sharedToken];
+    
+    
+    
     UIWebView* webView = [[UIWebView alloc] initWithFrame:r];
     
     webView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     
     [self.view addSubview:webView];
+    webView.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y+44, self.view.frame.size.width, self.view.frame.size.height-44);
     
     self.webView = webView;
+      // UINavigationBar *navbar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 60)];
+    //do something like background color, title, etc you self
+    //[self.view addSubview:navbar];
+
+      //  UIBarButtonItem* item = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
+      //                                                                        target:self
+      //                                                                        action:@selector(actionCancel:)];
+      //  [self.navigationItem setRightBarButtonItem:item animated:YES];
+
     
-    //    UIBarButtonItem* item = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
-    //                                                                          target:self
-    //                                                                          action:@selector(actionCancel:)];
-    //    [self.navigationItem setRightBarButtonItem:item animated:NO];
-    
-    self.navigationItem.title = @"Login";
-    
+    //self.navigationItem.title = @"Login";
+    self.navigationController.navigationBar.tintColor = [UIColor redColor];
     NSString* urlString =
     @"https://api.imgur.com/oauth2/authorize?"
     "client_id=b765b2f66708b7a&"
@@ -99,16 +106,16 @@
 
 #pragma mark - Actions
 
-//- (void) actionCancel:(UIBarButtonItem*) item {
-//
-//    if (self.completionBlock) {
-//        self.completionBlock(nil);
-//    }
-//
-//    [self dismissViewControllerAnimated:YES
-//                             completion:nil];
-//
-//}
+- (void) actionCancel:(UIBarButtonItem*) item {
+
+    if (self.completionBlock) {
+        self.completionBlock(nil);
+    }
+
+    [self dismissViewControllerAnimated:YES
+                             completion:nil];
+
+}
 
 #pragma mark - UIWebViewDelegete
 
@@ -198,4 +205,35 @@
     return YES;
 }
 
+- (IBAction)backBattonSelected:(UIBarButtonItem *)sender
+{
+    if (self.completionBlock) {
+        self.completionBlock(nil);
+    }
+    
+    [self dismissViewControllerAnimated:YES
+                             completion:nil];
+}
+- (IBAction)backButtonSelected:(id)sender
+{
+    
+    if (self.completionBlock) {
+        self.completionBlock(nil);
+    }
+    
+    [self dismissViewControllerAnimated:YES
+                             completion:nil];
+    
+}
+
+- (IBAction)cancelButtonSelected:(id)sender
+{
+    
+    if (self.completionBlock) {
+        self.completionBlock(nil);
+    }
+    
+    [self dismissViewControllerAnimated:YES
+                             completion:nil];
+}
 @end
