@@ -28,6 +28,23 @@
 
 @implementation FiltersMenuViewController
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    [super viewDidLoad];
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"glas_texture"]];
+    self.contentView.backgroundColor = [UIColor clearColor];
+    
+    // border radius
+    self.view.layer.cornerRadius = 5;
+    
+    // drop shadow
+    [self.view.layer setShadowColor:[UIColor blackColor].CGColor];
+    [self.view.layer setShadowOpacity:0.8];
+    [self.view.layer setShadowRadius:5.0];
+    [self.view.layer setShadowOffset:CGSizeMake(5.0, 5.0)];
+}
+
 - (void)updateYourself
 {
     self.view.tag = 3333;
@@ -45,7 +62,7 @@
 - (void)fillImagesArrayWithPlaceHolders
 {
     self.processedSampleImages = [NSMutableArray array];
-    double yCoordinate = self.scrollView.frame.size.height / 2 - self.sampleImageSize.height;
+    double yCoordinate = 10;
     
     for (int i = 0; i < FILTERS_COUNT; i++)
     {
@@ -74,7 +91,7 @@
 - (void)configureScrollView
 {
     [self prepareSampleImage];
-    double scrollViewOffset = self.scrollView.frame.size.height / 2;
+    double scrollViewOffset = 10;
     
     self.containerViewHeighConstraint.constant =  (10 + self.sampleImageSize.height) * FILTERS_COUNT + scrollViewOffset;
     self.scrollView.contentSize = CGSizeMake(self.contentView.frame.size.width,
