@@ -18,14 +18,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     self.nextPageButton.layer.cornerRadius = 4;
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-
 }
 - (IBAction)buttonPressed:(id)sender
 {

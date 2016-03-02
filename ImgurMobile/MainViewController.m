@@ -22,6 +22,7 @@
 #import "UIImage+animatedGIF.h"
 
 @interface MainViewController ()
+@property (strong, nonatomic) UIActivityIndicatorView *activityIndicator;
 
 @property (strong, nonatomic) NSMutableDictionary *photosData;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
@@ -47,6 +48,10 @@
     self.token = [ImgurAccessToken sharedToken];
         [super viewDidLoad];
      // self.navigationItem.title = self.token.userName;
+    
+
+    
+    
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -64,7 +69,7 @@
         [info setObject:[NSNumber numberWithInt:0] forKey:@"window"];
         self.navigationItem.title = self.token.userName;
         self.pageInfo = info;
-        self.pageNumber = 1;
+        self.pageNumber = 0;
         [self reloadPage];
     }
 
@@ -78,6 +83,13 @@
 
 -(void) reloadPage
 {
+    self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    [self.view addSubview:self.activityIndicator];
+    self.activityIndicator.hidesWhenStopped = YES;
+    self.activityIndicator.center = self.collectionView.center;
+    [self.activityIndicator startAnimating];
+    
+    
     NotChalengingQueue *queue = [[NotChalengingQueue alloc] init];
     
     if (!self.manager)
@@ -102,6 +114,7 @@
              
              self.photosData = [queue getObject];
              NSLog(@"%@", self.photosData);
+             [self.activityIndicator stopAnimating];
              [self.collectionView reloadData];
              if (([[self.photosData objectForKey:@"posts"] count] + [[self.photosData objectForKey:@"albums"] count]) != 0)
                  [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]
@@ -138,12 +151,7 @@
         tempCell.titleLabel.text = post.title;
     }
     
-
-
     tempCell.pointsLabel.text = @"nope";
-    
-
-
     
     if ([self.imageCache objectForKey:post.imageURL])
     {//if there is image in cache setImage
@@ -156,32 +164,20 @@
     else if ([[NSFileManager defaultManager] fileExistsAtPath:[[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:[[post.imageURL pathComponents] lastObject]]])
     {
         NSString *path = [[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:[[post.imageURL pathComponents]lastObject]];
-        
-        if ([[path pathExtension] isEqualToString:@"gif"])
-        {
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                NSData *imageData = [NSData dataWithContentsOfFile:path];
-                UIImage *image = [UIImage animatedImageWithAnimatedGIFData:imageData];
-                
-                [self.imageCache setObject:image forKey:post.imageURL];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [tempCell.imageView setImage: image];
-                });
-            });
 
-        }
-        else
-        {
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                NSData *imageData = [NSData dataWithContentsOfFile:path];
-                UIImage *image = [UIImage imageWithData:imageData];
-                
-                [self.imageCache setObject:image forKey:post.imageURL];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [tempCell.imageView setImage: image];
-                });
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSData *imageData = [NSData dataWithContentsOfFile:path];
+            UIImage *image;
+            if ([[path pathExtension] isEqualToString:@"gif"])
+                image = [UIImage animatedImageWithAnimatedGIFData:imageData];
+            else
+                image = [UIImage imageWithData:imageData];
+            [self.imageCache setObject:image forKey:post.imageURL];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [tempCell.imageView setImage: image];
             });
-        }
+        });
+
         static int a = 0;
         a++;
         NSLog(@"images loaded from disk %d", a);
@@ -263,7 +259,7 @@
     if (self.selectedCell.row < [[self.photosData objectForKey:@"albums"] count])
     {
         NSArray *albums = [self.photosData objectForKey:@"albums"]  ;
-        self.selectedPost  = [[(imgurAlbum *)[albums objectAtIndex:self.selectedCell.row] posts] firstObject];
+        self.selectedPost  = (imgurAlbum *)[albums objectAtIndex:self.selectedCell.row] ;//jedi mind trick
     }
     else
     {
