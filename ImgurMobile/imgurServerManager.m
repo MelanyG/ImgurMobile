@@ -217,18 +217,25 @@ static NSString* imageID;
 //    }];
 //    
 //}
+//+ (nullable NSData *)dataWithJSONObject:(id)obj options:(NSJSONWritingOptions)opt error:(NSError **)error
+//{
+//
+//}
 
 - (void) updateAccessToken: (NSString*) refresh_token
+              access_token: (NSString*) access_token
            completionBlock:(void(^)(NSString* result))completion
               failureBlock:(void(^)(NSURLResponse *response, NSError *error, NSInteger status))failureBlock
 {
     
     
-//    NSMutableDictionary* _params = [[NSMutableDictionary alloc] init];
-//    _params[@"refresh_token"] = @"self.token.refresh_token";
-//    _params[@"client_id"] = @"b765b2f66708b7a";
-//    _params[@"client_secret"] = @"42569080cc7a7274a15a24d9074162b399959af1";
-//    _params[@"grant_type"] = @"self.token.refresh_token";
+    NSMutableDictionary* _params = [[NSMutableDictionary alloc] init];
+    _params[@"refresh_token"] = refresh_token;
+    _params[@"client_id"] = @"b765b2f66708b7a";
+    _params[@"client_secret"] = @"42569080cc7a7274a15a24d9074162b399959af1";
+    _params[@"grant_type"] = @"refresh_token";
+    
+    
     
     NSLog(@"Refresh Token: %@", refresh_token);
     NSString *urlString = [NSString stringWithFormat:@"https://api.imgur.com/oauth2/token"];
@@ -236,7 +243,7 @@ static NSString* imageID;
     NSString* client_id = @"b765b2f66708b7a";
     NSString* client_secret = @"42569080cc7a7274a15a24d9074162b399959af1";
     NSString* grant_type = @"refresh_token";
-    [request setValue:[NSString stringWithFormat:@"Bearer %@", refresh_token] forHTTPHeaderField:@"Authorization"];
+   // [request setValue:[NSString stringWithFormat:@"Bearer %@", refresh_token] forHTTPHeaderField:@"Authorization"];
     
     [request setURL:[NSURL URLWithString:urlString]];
     
@@ -252,12 +259,12 @@ static NSString* imageID;
     NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary];
     [request addValue:contentType forHTTPHeaderField:@"Content-Type"];
     // add params (all params are strings)
-//    for (NSString *param in _params)
-//    {
-//        [body appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-//        [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", param] dataUsingEncoding:NSUTF8StringEncoding]];
-//        [body appendData:[[NSString stringWithFormat:@"%@\r\n", [_params objectForKey:param]] dataUsingEncoding:NSUTF8StringEncoding]];
-//    }
+    for (NSString *param in _params)
+    {
+        [body appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", param] dataUsingEncoding:NSUTF8StringEncoding]];
+        [body appendData:[[NSString stringWithFormat:@"%@\r\n", [_params objectForKey:param]] dataUsingEncoding:NSUTF8StringEncoding]];
+    }
            if (self.token.refresh_token)
         {
             [body appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];

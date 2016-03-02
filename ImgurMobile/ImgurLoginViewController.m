@@ -186,7 +186,7 @@
         
         [defaults setObject:self.token.userName forKey:@"userName"];
         [defaults setObject:self.token.token forKey:@"access_token"];
-        [defaults setObject:self.token.token forKey:@"refresh_token"];
+        [defaults setObject:self.token.refresh_token forKey:@"refresh_token"];
         [defaults setObject:self.token.accountID forKey:@"account_id"];
         [defaults setObject:self.token.expirationDate forKey:@"expires_in"];
         [defaults setObject:self.token.dayOfLogin forKey:@"dayOfLogin"];

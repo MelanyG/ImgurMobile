@@ -49,6 +49,7 @@
      imgurServerManager*x = [imgurServerManager sharedManager];
     
      [x updateAccessToken:self.token.refresh_token
+             access_token: self.token.token
           completionBlock:^(NSString *result)
       {
           dispatch_async(dispatch_get_main_queue(), ^{
