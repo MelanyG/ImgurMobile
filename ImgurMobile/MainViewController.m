@@ -46,8 +46,14 @@
     self.token = [ImgurAccessToken sharedToken];
      if ([[NSDate date] compare:self.token.expirationDate] == NSOrderedAscending)
  {
-     imgurServerManager*x = [imgurServerManager sharedManager];
-    
+     NSLog(@"Access token is valid!");
+     
+
+ }
+     else
+     {
+         imgurServerManager*x = [imgurServerManager sharedManager];
+
      [x updateAccessToken:self.token.refresh_token
              access_token: self.token.token
           completionBlock:^(NSString *result)
@@ -78,11 +84,7 @@
               NSLog(@"Err details: %@", [error description]);
           });
       }];
-     
- }
-     else
-     {
-        
+
      }
 
         [super viewDidLoad];
