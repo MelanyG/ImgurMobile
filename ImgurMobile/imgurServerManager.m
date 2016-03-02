@@ -131,9 +131,8 @@ static NSString* imageID;
     _params[@"client_id"] = @"b765b2f66708b7a";
     _params[@"client_secret"] = @"42569080cc7a7274a15a24d9074162b399959af1";
     _params[@"grant_type"] = @"refresh_token";
-    
-    
-    
+
+    self.token = [ImgurAccessToken sharedToken];
     NSLog(@"Refresh Token: %@", refresh_token);
     NSString *urlString = [NSString stringWithFormat:@"https://api.imgur.com/oauth2/token"];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init] ;
@@ -162,7 +161,7 @@ static NSString* imageID;
         [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", param] dataUsingEncoding:NSUTF8StringEncoding]];
         [body appendData:[[NSString stringWithFormat:@"%@\r\n", [_params objectForKey:param]] dataUsingEncoding:NSUTF8StringEncoding]];
     }
-           if (self.token.refresh_token)
+    if (self.token.refresh_token)
         {
             [body appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
             [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"refresh_token\"\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
@@ -208,8 +207,10 @@ static NSString* imageID;
             {
                 
                 completion([responseDictionary valueForKeyPath:@"data.link"]);
-                //imageID = [[responseDictionary objectForKey:@"data"]objectForKey:@"id"];
-                //NSLog(@"Id is: %@", imageID);
+                self.token.token = [[responseDictionary objectForKey:@"data"]objectForKey:@"access_token"];
+                self.token.refresh_token = [[responseDictionary objectForKey:@"data"]objectForKey:@"refresh_token"];
+                self.token.expirationDate = [[responseDictionary objectForKey:@"data"]objectForKey:@"expires_in"];
+                NSLog(@"Id is: %@", imageID);
             }
             
         }
