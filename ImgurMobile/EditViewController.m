@@ -67,6 +67,7 @@ typedef enum{
 @property (strong, nonatomic) UITapGestureRecognizer *tapGesture;
 @property (strong, nonatomic) UIPanGestureRecognizer *panGesture;
 
+@property (strong, nonatomic) UIImageView *readyToGoImageView;
 
 @end
 
@@ -75,8 +76,9 @@ typedef enum{
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor darkGrayColor];
     self.image = [UIImage imageNamed:@"sea"];
-    self.imageView.image = self.image;
+    [self updateUIWithImage:self.image];
     [self prepare];
     [self addHandlesLogic];
     
@@ -310,7 +312,7 @@ typedef enum{
 
 - (void)configureViewDesign:(UIView *)view
 {
-    view.backgroundColor = [UIColor colorWithRed:0.22 green:0.91 blue:0.87 alpha:0.5];
+    view.backgroundColor = [UIColor colorWithRed:0.22 green:0.91 blue:0.87 alpha:0.3];
     
     // border radius
     view.layer.cornerRadius = 5;
@@ -427,16 +429,22 @@ typedef enum{
     if (self.isLeftMenuOpened)
     {
         self.settingsMenuLeadingConstraint.constant = -self.settingsMenuWidthConstraint.constant;
+        [self moveHandle:settings inDirection:back];
+        self.settingsArrow.image = [UIImage imageNamed:@"arrow_right"];
         self.isLeftMenuOpened = NO;
     }
     if (self.isRightFilteringMenuOpened)
     {
         self.rightFiltersMenuTrailingConstraint.constant = -self.rightFiltersMenuWidthConstraint.constant;
+        [self moveHandle:filters inDirection:back];
+        self.filtersArrow.image = [UIImage imageNamed:@"arrow_left"];
         self.isRightFilteringMenuOpened = NO;
     }
     if (self.isRightTextMenuOpened)
     {
         self.rightFontsMenuTrailingConstraint.constant = -self.rightFontsMenuWidthConstraint.constant;
+        [self moveHandle:fonts inDirection:back];
+        self.fontsArrow.image = [UIImage imageNamed:@"arrow_left"];
         self.isRightTextMenuOpened = NO;
     }
 }
@@ -572,14 +580,11 @@ typedef enum{
 
 - (UIImage *)getImageFromCurrentContext
 {
-    [self removeAllHandes];
+    UIGraphicsBeginImageContextWithOptions(self.readyToGoImageView.frame.size, YES, 0.0);
     
-    UIGraphicsBeginImageContextWithOptions([self.imageView calculateClientRectOfImage].size, NO, 0.0);
-    [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
+    [self.readyToGoImageView.layer renderInContext:UIGraphicsGetCurrentContext()];
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
-    [self addHandlesLogic];
     
     return image;
 }
@@ -587,6 +592,11 @@ typedef enum{
 #pragma mark - filteringDelegate
 - (void)updateUIWithImage:(UIImage *)image
 {
+    self.readyToGoImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0,
+                                                                           image.size.width,
+                                                                           image.size.height)];
+    self.readyToGoImageView.image = image;
+
     self.imageView.image = image;
 }
 
@@ -618,6 +628,13 @@ typedef enum{
     label.tag = 911;
     
     CGRect imageRect = [self.imageView calculateClientRectOfImage];
+    CGRect renderingImageRect = self.readyToGoImageView.frame;
+    UILabel *renderLabel = [self deepLabelCopy:label];
+    
+    for (UIView *subview in self.readyToGoImageView.subviews)
+    {
+        [subview removeFromSuperview];
+    }
     
     switch (position)
     {
@@ -629,6 +646,13 @@ typedef enum{
                                       label.frame.size.height);
             label.frame = frame;
             [self.view insertSubview:label aboveSubview:self.imageView];
+            
+            CGRect renderFrame = CGRectMake(renderingImageRect.origin.x,
+                                      renderingImageRect.origin.y,
+                                      label.frame.size.width,
+                                      label.frame.size.height);
+            renderLabel.frame = renderFrame;
+            [self.readyToGoImageView insertSubview:renderLabel aboveSubview:self.imageView];
         }
             break;
             
@@ -640,45 +664,83 @@ typedef enum{
                                label.frame.size.height);
             label.frame = frame;
             [self.view insertSubview:label aboveSubview:self.imageView];
+            
+            CGRect renderFrame = CGRectMake(renderingImageRect.size.width - label.frame.size.width,
+                                            renderingImageRect.origin.y,
+                                            label.frame.size.width,
+                                            label.frame.size.height);
+            renderLabel.frame = renderFrame;
+            [self.readyToGoImageView insertSubview:renderLabel aboveSubview:self.imageView];
         }
             break;
             
         case LeftBottom:
         {
             CGRect frame = CGRectMake(imageRect.origin.x,
-                               imageRect.size.height - label.frame.size.height,
+                               imageRect.origin.y + imageRect.size.height - label.frame.size.height,
                                label.frame.size.width,
                                label.frame.size.height);
             label.frame = frame;
             [self.view insertSubview:label aboveSubview:self.imageView];
+            
+            CGRect renderFrame = CGRectMake(renderingImageRect.origin.x,
+                                            renderingImageRect.origin.y + renderingImageRect.size.height - label.frame.size.height,
+                                            label.frame.size.width,
+                                            label.frame.size.height);
+            renderLabel.frame = renderFrame;
+            [self.readyToGoImageView insertSubview:renderLabel aboveSubview:self.imageView];
         }
             break;
             
         case RightBottom:
         {
             CGRect frame = CGRectMake(imageRect.size.width - label.frame.size.width,
-                               imageRect.size.height - label.frame.size.height,
+                               imageRect.origin.y + imageRect.size.height - label.frame.size.height,
                                label.frame.size.width,
                                label.frame.size.height);
             label.frame = frame;
             [self.view insertSubview:label aboveSubview:self.imageView];
+            
+            CGRect renderFrame = CGRectMake(renderingImageRect.size.width - label.frame.size.width,
+                                            renderingImageRect.origin.y + renderingImageRect.size.height - label.frame.size.height,
+                                            label.frame.size.width,
+                                            label.frame.size.height);
+            renderLabel.frame = renderFrame;
+            [self.readyToGoImageView insertSubview:renderLabel aboveSubview:self.imageView];
         }
             break;
             
         case Center:
         {
             CGRect frame = CGRectMake(imageRect.size.width / 2 - label.frame.size.width / 2,
-                                      imageRect.size.height / 2 - label.frame.size.height / 2,
+                                      imageRect.origin.y + imageRect.size.height / 2 - label.frame.size.height / 2,
                                       label.frame.size.width,
                                       label.frame.size.height);
             label.frame = frame;
             [self.view insertSubview:label aboveSubview:self.imageView];
+            
+            CGRect renderFrame = CGRectMake(renderingImageRect.size.width / 2 - label.frame.size.width / 2,
+                                            renderingImageRect.origin.y + renderingImageRect.size.height / 2 - label.frame.size.height / 2,
+                                            label.frame.size.width,
+                                            label.frame.size.height);
+            renderLabel.frame = renderFrame;
+            [self.readyToGoImageView insertSubview:renderLabel aboveSubview:self.imageView];
         }
             break;
             
         default:
             break;
     }
+}
+
+- (UILabel *)deepLabelCopy:(UILabel *)label
+{
+    UILabel *duplicateLabel = [[UILabel alloc] initWithFrame:label.frame];
+    duplicateLabel.text = label.text;
+    duplicateLabel.textColor = label.textColor;
+    duplicateLabel.font = label.font;
+    
+    return duplicateLabel;
 }
 
 - (void)removeTextLabels

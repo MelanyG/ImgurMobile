@@ -15,6 +15,8 @@
 #import "imgurPost.h"
 #import "AFNetworking.h"
 #import "PageInfoViewController.h"
+#import "imgurAlbum.h"
+#import "SocialViewController.h"
 
 #import "UIImage+animatedGIF.h"
 
@@ -29,6 +31,11 @@
 @property (assign, nonatomic) NSUInteger pageNumber;
 
 @property (strong, nonatomic) imgurServerManager *manager;
+
+@property (strong, nonatomic) NSIndexPath *selectedCell;
+@property (strong, nonatomic) UIImage *selectedImage;
+@property (strong, nonatomic) imgurPost * selectedPost;
+
 
 @end
 
@@ -123,8 +130,6 @@
          NSLog(@"%@", self.photosData);
          [self.collectionView reloadData];
      }];
-    
-    [self.collectionView reloadData];
 }
 
 
@@ -162,11 +167,34 @@
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     imgurCell *tempCell = [collectionView dequeueReusableCellWithReuseIdentifier:@"imgurCell" forIndexPath:indexPath];
+    imgurPost * post;// = [[self.photosData objectForKey:@"posts"] objectAtIndex:indexPath.row];
+    if (indexPath.row < [[self.photosData objectForKey:@"albums"] count])
+    {
+        NSArray *albums = [self.photosData objectForKey:@"albums"]  ;
+        post = [[(imgurAlbum *)[albums objectAtIndex:indexPath.row] posts] firstObject];
+        tempCell.ownerLabel.text = @"album";
+        if (![post.title isKindOfClass:[NSNull class]])
+        {
+            tempCell.titleLabel.text = post.title;
+        }
+    }
+    else
+    {
+        post = [[self.photosData objectForKey:@"posts"] objectAtIndex:(indexPath.row - [[self.photosData objectForKey:@"albums"] count])];
+        if ([post.imageURL hasSuffix:@"gif"])
+            tempCell.ownerLabel.text = @"animated";
+        else
+            tempCell.ownerLabel.text = @"image";
+        
+        tempCell.titleLabel.text = post.title;
+    }
     
-    imgurPost * post = [[self.photosData objectForKey:@"posts"] objectAtIndex:indexPath.row];
-    tempCell.titleLabel.text = post.title;
-    tempCell.ownerLabel.text = [NSString stringWithFormat:@"%@", post.owner];
+
+
     tempCell.pointsLabel.text = @"nope";
+    
+
+
     
     if ([self.imageCache objectForKey:post.imageURL])
     {//if there is image in cache setImage
@@ -201,8 +229,8 @@
     {// if no such image in cache fill cell with default image and start load
         static int startedLoads = 0;
         startedLoads++;
-        [self.imageCache setObject:[UIImage imageNamed:@"placeholder.jpg"] forKey:post.imageURL];
-        [tempCell.imageView setImage:[UIImage imageNamed:@"placeholder.jpg"]];
+        [self.imageCache setObject:[UIImage imageNamed:@"placeholder"] forKey:post.imageURL];
+        [tempCell.imageView setImage:[UIImage imageNamed:@"placeholder"]];
         
         NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:post.imageURL]];
         
@@ -256,7 +284,7 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return [[self.photosData objectForKey:@"posts"] count];
+    return [[self.photosData objectForKey:@"posts"] count] + [[self.photosData objectForKey:@"albums"] count];
 }
 
 #pragma mark- UICollectionViewDelegate
@@ -265,6 +293,29 @@
 {
     return CGSizeMake(200, 200);
 }
+
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    self.selectedCell = indexPath;
+
+    
+    if (self.selectedCell.row < [[self.photosData objectForKey:@"albums"] count])
+    {
+        NSArray *albums = [self.photosData objectForKey:@"albums"]  ;
+        self.selectedPost  = [[(imgurAlbum *)[albums objectAtIndex:self.selectedCell.row] posts] firstObject];
+    }
+    else
+    {
+        self.selectedPost = [[self.photosData objectForKey:@"posts"] objectAtIndex:(self.selectedCell.row - [[self.photosData objectForKey:@"albums"] count])];
+    }
+    
+    imgurCell *selectedCell = (imgurCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
+    
+    self.selectedImage = [[selectedCell imageView] image];
+    
+    [self performSegueWithIdentifier:@"SocialVC" sender:self];
+}
+
 
 #pragma mark- PageInfoDelegate
 
@@ -286,11 +337,25 @@
          PageInfoViewController * pivc = segue.destinationViewController;
          pivc.delegate = self;
      }
-     if ([segue.identifier isEqualToString:@"SocialVCEmbed"])
+     if ([segue.identifier isEqualToString:@"SocialVC"])
      {
+         SocialViewController * svc = segue.destinationViewController;
+         //self.bvc = [[buttonsVC alloc] init];
+         svc.socialVCDelegate = svc;
+         //[svc.socialImage setImage:self.selectedImage];
          
+         svc.imageID = self.selectedPost.postID;
+         //svc.socialImageDescription.text = (![self.selectedPost.postDescription isKindOfClass:[NSNull class]])?self.selectedPost.postDescription:@"null description";
+         svc.imageTitel.title = (![self.selectedPost.title isKindOfClass:[NSNull class]])?self.selectedPost.title:@"null title";
+         
+         svc.image = self.selectedImage;
+         svc.post = self.selectedPost;
      }
 }
-
+//@property (weak, nonatomic) IBOutlet UIImageView *socialImage;
+//@property (strong, nonatomic) NSString* imageID;
+//@property (weak, nonatomic) IBOutlet UITextView *socialImageDescription;
+//@property (weak, nonatomic) IBOutlet UINavigationItem *imageTitel;
+//@property (strong, nonatomic) NSString* albumID;
 
 @end
