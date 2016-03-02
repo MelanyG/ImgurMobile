@@ -54,7 +54,7 @@
         }
         else
         {
-            return [NSDictionary dictionaryWithObjectsAndKeys:@"status",[responceDict objectForKey:@"status"], nil];
+            return [NSDictionary dictionaryWithObjectsAndKeys:@"error_status",[responceDict objectForKey:@"status"], nil];
         }
     }
     else

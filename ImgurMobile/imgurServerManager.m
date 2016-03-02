@@ -16,7 +16,7 @@
 #import "ImgurLoginViewController.h"
 #import "imgurUser.h"
 
-NSString * const IMGUR_SERVER_MANAGER_STATUS_KEY = @"status";
+NSString * const IMGUR_SERVER_MANAGER_STATUS_KEY = @"error_status";
 NSString * const IMGUR_SERVER_MANAGER_ERROR_KEY = @"error";
 
 static NSString* imageID;
