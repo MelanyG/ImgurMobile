@@ -37,6 +37,46 @@
 - (void)viewDidLoad
 {
     self.token = [ImgurAccessToken sharedToken];
+     if ([[NSDate date] compare:self.token.expirationDate] == NSOrderedAscending)
+ {
+     imgurServerManager*x = [imgurServerManager sharedManager];
+    
+     [x updateAccessToken:self.token.refresh_token
+          completionBlock:^(NSString *result)
+      {
+          dispatch_async(dispatch_get_main_queue(), ^{
+              [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+              UIAlertView *av = [[UIAlertView alloc]
+                                 initWithTitle:@"Sucessfully received access_token!"
+                                 message:@"Go ahead!!!"
+                                 delegate:nil
+                                 cancelButtonTitle:@"OK"
+                                 otherButtonTitles:nil];
+              [av show];
+              //self.sharedButton.enabled = YES;
+              NSLog(@"%@",result);                         });
+      }
+             failureBlock:^(NSURLResponse *response, NSError *error, NSInteger status)
+      {
+          dispatch_async(dispatch_get_main_queue(), ^{
+              [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+              
+              [[[UIAlertView alloc] initWithTitle:@"Upload Failed"
+                                          message:[NSString stringWithFormat:@"%@ (Status code %ld)", [error localizedDescription], (long)status]
+                                         delegate:nil
+                                cancelButtonTitle:nil
+                                otherButtonTitles:@"OK", nil] show];
+              NSLog(@"%@", [error localizedDescription]);
+              NSLog(@"Err details: %@", [error description]);
+          });
+      }];
+     
+ }
+     else
+     {
+        
+     }
+
         [super viewDidLoad];
      // self.navigationItem.title = self.token.userName;
 }
@@ -47,6 +87,7 @@
     
     self.imageCache = [[NSCache alloc] init];
     
+
     NSMutableDictionary * info = [[NSMutableDictionary alloc] init];
     
     [info setObject:[NSNumber numberWithInt:0] forKey:@"section"];
@@ -55,9 +96,8 @@
      self.navigationItem.title = self.token.userName;
     self.pageInfo = info;
     self.pageNumber = 0;
-    
-    [self reloadPage];
 }
+
 
 - (void)didReceiveMemoryWarning
 {

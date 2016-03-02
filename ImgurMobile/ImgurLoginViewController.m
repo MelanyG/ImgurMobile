@@ -100,22 +100,12 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void) dealloc {
+- (void) dealloc
+{
     self.webView.delegate = nil;
 }
 
-#pragma mark - Actions
 
-- (void) actionCancel:(UIBarButtonItem*) item {
-
-    if (self.completionBlock) {
-        self.completionBlock(nil);
-    }
-
-    [self dismissViewControllerAnimated:YES
-                             completion:nil];
-
-}
 
 #pragma mark - UIWebViewDelegete
 
@@ -166,7 +156,7 @@
                     NSTimeInterval interval = [[values lastObject] doubleValue];
                     
                     self.token.expirationDate = [NSDate dateWithTimeIntervalSinceNow:interval];
-                    
+                    NSLog(@"Exp: %@", self.token.expirationDate);
                 }
                 else if ([key isEqualToString:@"account_username"]) {
                     
@@ -179,6 +169,11 @@
                 
             }
         }
+        
+      self.token.dayOfLogin  =  [NSDate date];
+    
+     NSLog(@"day of login: %@", self.token.dayOfLogin);
+        
         
         self.webView.delegate = nil;
         
@@ -194,7 +189,7 @@
         [defaults setObject:self.token.token forKey:@"refresh_token"];
         [defaults setObject:self.token.accountID forKey:@"account_id"];
         [defaults setObject:self.token.expirationDate forKey:@"expires_in"];
-        
+        [defaults setObject:self.token.dayOfLogin forKey:@"dayOfLogin"];
         
         [self dismissViewControllerAnimated:YES
                                  completion:nil];
@@ -205,15 +200,8 @@
     return YES;
 }
 
-- (IBAction)backBattonSelected:(UIBarButtonItem *)sender
-{
-    if (self.completionBlock) {
-        self.completionBlock(nil);
-    }
-    
-    [self dismissViewControllerAnimated:YES
-                             completion:nil];
-}
+#pragma mark - Actions
+
 - (IBAction)backButtonSelected:(id)sender
 {
     
@@ -236,4 +224,5 @@
     [self dismissViewControllerAnimated:YES
                              completion:nil];
 }
+
 @end
