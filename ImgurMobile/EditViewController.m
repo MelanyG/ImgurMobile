@@ -631,106 +631,115 @@ typedef enum{
     CGRect renderingImageRect = self.readyToGoImageView.frame;
     UILabel *renderLabel = [self deepLabelCopy:label];
     
-    for (UIView *subview in self.readyToGoImageView.subviews)
-    {
-        [subview removeFromSuperview];
-    }
+    dispatch_queue_t queue;
+    if ([NSThread isMainThread])
+        queue = dispatch_get_current_queue();
+    else
+        queue = dispatch_get_main_queue();
     
-    switch (position)
+    dispatch_sync(queue, ^
     {
-        case LeftTop:
+        for (UIView *subview in self.readyToGoImageView.subviews)
         {
-            CGRect frame = CGRectMake(imageRect.origin.x,
-                                      imageRect.origin.y,
-                                      label.frame.size.width,
-                                      label.frame.size.height);
-            label.frame = frame;
-            [self.view insertSubview:label aboveSubview:self.imageView];
-            
-            CGRect renderFrame = CGRectMake(renderingImageRect.origin.x,
-                                      renderingImageRect.origin.y,
-                                      label.frame.size.width,
-                                      label.frame.size.height);
-            renderLabel.frame = renderFrame;
-            [self.readyToGoImageView insertSubview:renderLabel aboveSubview:self.imageView];
+            [subview removeFromSuperview];
         }
-            break;
-            
-        case RightTop:
+        
+        switch (position)
         {
-            CGRect frame = CGRectMake(imageRect.size.width - label.frame.size.width,
-                               imageRect.origin.y,
-                               label.frame.size.width,
-                               label.frame.size.height);
-            label.frame = frame;
-            [self.view insertSubview:label aboveSubview:self.imageView];
-            
-            CGRect renderFrame = CGRectMake(renderingImageRect.size.width - label.frame.size.width,
-                                            renderingImageRect.origin.y,
-                                            label.frame.size.width,
-                                            label.frame.size.height);
-            renderLabel.frame = renderFrame;
-            [self.readyToGoImageView insertSubview:renderLabel aboveSubview:self.imageView];
+            case LeftTop:
+            {
+                CGRect frame = CGRectMake(imageRect.origin.x,
+                                          imageRect.origin.y,
+                                          label.frame.size.width,
+                                          label.frame.size.height);
+                label.frame = frame;
+                [self.view insertSubview:label aboveSubview:self.imageView];
+                
+                CGRect renderFrame = CGRectMake(renderingImageRect.origin.x,
+                                                renderingImageRect.origin.y,
+                                                label.frame.size.width,
+                                                label.frame.size.height);
+                renderLabel.frame = renderFrame;
+                [self.readyToGoImageView insertSubview:renderLabel aboveSubview:self.imageView];
+            }
+                break;
+                
+            case RightTop:
+            {
+                CGRect frame = CGRectMake(imageRect.size.width - label.frame.size.width,
+                                          imageRect.origin.y,
+                                          label.frame.size.width,
+                                          label.frame.size.height);
+                label.frame = frame;
+                [self.view insertSubview:label aboveSubview:self.imageView];
+                
+                CGRect renderFrame = CGRectMake(renderingImageRect.size.width - label.frame.size.width,
+                                                renderingImageRect.origin.y,
+                                                label.frame.size.width,
+                                                label.frame.size.height);
+                renderLabel.frame = renderFrame;
+                [self.readyToGoImageView insertSubview:renderLabel aboveSubview:self.imageView];
+            }
+                break;
+                
+            case LeftBottom:
+            {
+                CGRect frame = CGRectMake(imageRect.origin.x,
+                                          imageRect.origin.y + imageRect.size.height - label.frame.size.height,
+                                          label.frame.size.width,
+                                          label.frame.size.height);
+                label.frame = frame;
+                [self.view insertSubview:label aboveSubview:self.imageView];
+                
+                CGRect renderFrame = CGRectMake(renderingImageRect.origin.x,
+                                                renderingImageRect.origin.y + renderingImageRect.size.height - label.frame.size.height,
+                                                label.frame.size.width,
+                                                label.frame.size.height);
+                renderLabel.frame = renderFrame;
+                [self.readyToGoImageView insertSubview:renderLabel aboveSubview:self.imageView];
+            }
+                break;
+                
+            case RightBottom:
+            {
+                CGRect frame = CGRectMake(imageRect.size.width - label.frame.size.width,
+                                          imageRect.origin.y + imageRect.size.height - label.frame.size.height,
+                                          label.frame.size.width,
+                                          label.frame.size.height);
+                label.frame = frame;
+                [self.view insertSubview:label aboveSubview:self.imageView];
+                
+                CGRect renderFrame = CGRectMake(renderingImageRect.size.width - label.frame.size.width,
+                                                renderingImageRect.origin.y + renderingImageRect.size.height - label.frame.size.height,
+                                                label.frame.size.width,
+                                                label.frame.size.height);
+                renderLabel.frame = renderFrame;
+                [self.readyToGoImageView insertSubview:renderLabel aboveSubview:self.imageView];
+            }
+                break;
+                
+            case Center:
+            {
+                CGRect frame = CGRectMake(imageRect.size.width / 2 - label.frame.size.width / 2,
+                                          imageRect.origin.y + imageRect.size.height / 2 - label.frame.size.height / 2,
+                                          label.frame.size.width,
+                                          label.frame.size.height);
+                label.frame = frame;
+                [self.view insertSubview:label aboveSubview:self.imageView];
+                
+                CGRect renderFrame = CGRectMake(renderingImageRect.size.width / 2 - label.frame.size.width / 2,
+                                                renderingImageRect.origin.y + renderingImageRect.size.height / 2 - label.frame.size.height / 2,
+                                                label.frame.size.width,
+                                                label.frame.size.height);
+                renderLabel.frame = renderFrame;
+                [self.readyToGoImageView insertSubview:renderLabel aboveSubview:self.imageView];
+            }
+                break;
+                
+            default:
+                break;
         }
-            break;
-            
-        case LeftBottom:
-        {
-            CGRect frame = CGRectMake(imageRect.origin.x,
-                               imageRect.origin.y + imageRect.size.height - label.frame.size.height,
-                               label.frame.size.width,
-                               label.frame.size.height);
-            label.frame = frame;
-            [self.view insertSubview:label aboveSubview:self.imageView];
-            
-            CGRect renderFrame = CGRectMake(renderingImageRect.origin.x,
-                                            renderingImageRect.origin.y + renderingImageRect.size.height - label.frame.size.height,
-                                            label.frame.size.width,
-                                            label.frame.size.height);
-            renderLabel.frame = renderFrame;
-            [self.readyToGoImageView insertSubview:renderLabel aboveSubview:self.imageView];
-        }
-            break;
-            
-        case RightBottom:
-        {
-            CGRect frame = CGRectMake(imageRect.size.width - label.frame.size.width,
-                               imageRect.origin.y + imageRect.size.height - label.frame.size.height,
-                               label.frame.size.width,
-                               label.frame.size.height);
-            label.frame = frame;
-            [self.view insertSubview:label aboveSubview:self.imageView];
-            
-            CGRect renderFrame = CGRectMake(renderingImageRect.size.width - label.frame.size.width,
-                                            renderingImageRect.origin.y + renderingImageRect.size.height - label.frame.size.height,
-                                            label.frame.size.width,
-                                            label.frame.size.height);
-            renderLabel.frame = renderFrame;
-            [self.readyToGoImageView insertSubview:renderLabel aboveSubview:self.imageView];
-        }
-            break;
-            
-        case Center:
-        {
-            CGRect frame = CGRectMake(imageRect.size.width / 2 - label.frame.size.width / 2,
-                                      imageRect.origin.y + imageRect.size.height / 2 - label.frame.size.height / 2,
-                                      label.frame.size.width,
-                                      label.frame.size.height);
-            label.frame = frame;
-            [self.view insertSubview:label aboveSubview:self.imageView];
-            
-            CGRect renderFrame = CGRectMake(renderingImageRect.size.width / 2 - label.frame.size.width / 2,
-                                            renderingImageRect.origin.y + renderingImageRect.size.height / 2 - label.frame.size.height / 2,
-                                            label.frame.size.width,
-                                            label.frame.size.height);
-            renderLabel.frame = renderFrame;
-            [self.readyToGoImageView insertSubview:renderLabel aboveSubview:self.imageView];
-        }
-            break;
-            
-        default:
-            break;
-    }
+    });
 }
 
 - (UILabel *)deepLabelCopy:(UILabel *)label
@@ -745,13 +754,22 @@ typedef enum{
 
 - (void)removeTextLabels
 {
-    for (UIView *subview in self.view.subviews)
+    dispatch_queue_t queue;
+    if ([NSThread isMainThread])
+        queue = dispatch_get_current_queue();
+    else
+        queue = dispatch_get_main_queue();
+    
+    dispatch_sync(queue, ^
     {
-        if (subview.tag == 911)
+        for (UIView *subview in self.view.subviews)
         {
-            [subview removeFromSuperview];
+            if (subview.tag == 911)
+            {
+                [subview removeFromSuperview];
+            }
         }
-    }
+    });
 }
 
 #pragma mark - navigation
