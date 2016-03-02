@@ -54,16 +54,19 @@
     
     self.imageCache = [[NSCache alloc] init];
     
-    NSMutableDictionary * info = [[NSMutableDictionary alloc] init];
-    
-    [info setObject:[NSNumber numberWithInt:0] forKey:@"section"];
-    [info setObject:[NSNumber numberWithInt:0] forKey:@"sort"];
-    [info setObject:[NSNumber numberWithInt:0] forKey:@"window"];
-     self.navigationItem.title = self.token.userName;
-    self.pageInfo = info;
-    self.pageNumber = 0;
-    
-    [self reloadPage];
+    if (!self.pageInfo)
+    {
+        NSMutableDictionary * info = [[NSMutableDictionary alloc] init];
+        
+        [info setObject:[NSNumber numberWithInt:0] forKey:@"section"];
+        [info setObject:[NSNumber numberWithInt:0] forKey:@"sort"];
+        [info setObject:[NSNumber numberWithInt:0] forKey:@"window"];
+        self.navigationItem.title = self.token.userName;
+        self.pageInfo = info;
+        self.pageNumber = 1;
+        [self reloadPage];
+    }
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -120,7 +123,7 @@
         tempCell.ownerLabel.text = @"album";
         if (![post.title isKindOfClass:[NSNull class]])
         {
-            tempCell.titleLabel.text = post.title;
+            tempCell.titleLabel.text = [[albums objectAtIndex:indexPath.row] albumTitle];
         }
     }
     else
