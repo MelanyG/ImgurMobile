@@ -16,7 +16,7 @@
 @property (strong, nonatomic) RESTAPI *restApi;
 @property (strong, nonatomic) NSCharacterSet* set;
 @property (strong, nonatomic) NSString* accessToken;
-
+@property (strong, nonatomic) buttonsVC* bvc;
 
 
 
@@ -24,6 +24,15 @@
 
 @implementation SocialViewController
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"buttonsSegue"])
+    {
+        self.bvc = (buttonsVC*)segue.destinationViewController;
+        self.bvc.socialVC = self.socialVCDelegate;
+    }
+    
+}
 
 -(RESTAPI *)restApi
 {
@@ -37,6 +46,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     self.set = [NSCharacterSet URLQueryAllowedCharacterSet];
     self.accessToken = [ImgurAccessToken sharedToken].token;
     self.socialImage.image = self.image;
@@ -47,7 +57,7 @@
         self.socialImageDescription.text = @"NO DESCRIPTION";
     }
     
-    [self httpGetRequest];
+    //[self httpGetRequest];
 }
 
 - (void)httpGetRequest
@@ -75,9 +85,9 @@
     [self.restApi httpRequest:request];
 }
 
--(void) favoritesRequestWithImageID:(NSString*) imageID
+-(void) favoritesRequest
 {
-    NSString* urlString = [NSString stringWithFormat:@"https://api.imgur.com/3/image/%@/favorite", imageID];
+    NSString* urlString = [NSString stringWithFormat:@"https://api.imgur.com/3/image/%@/favorite", self.imageID];
     urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:self.set];
     NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
@@ -86,6 +96,32 @@
     self.restApi.delegate = self;
     [self.restApi httpRequest:request];
 
+}
+
+-(void) likeRequest
+{
+    NSString* urlString = [NSString stringWithFormat:@"https://api.imgur.com/3/gallery/image/%@/vote/up", self.imageID];
+    urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:self.set];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setValue:[NSString stringWithFormat:@"Bearer %@", self.accessToken] forHTTPHeaderField:@"Authorization"];
+    [request setHTTPMethod:@"POST"];
+    self.restApi.delegate = self;
+    [self.restApi httpRequest:request];
+    
+}
+
+-(void) dislikeRequest
+{
+    NSString* urlString = [NSString stringWithFormat:@"https://api.imgur.com/3/gallery/image/%@/vote/down", self.imageID];
+    urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:self.set];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setValue:[NSString stringWithFormat:@"Bearer %@", self.accessToken] forHTTPHeaderField:@"Authorization"];
+    [request setHTTPMethod:@"POST"];
+    self.restApi.delegate = self;
+    [self.restApi httpRequest:request];
+    
 }
 
 - (void)getReceivedData:(NSMutableData *)data sender:(RESTAPI *)sender
