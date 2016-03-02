@@ -23,6 +23,10 @@
     else
     {
         post.postID = [dictionary objectForKey:@"id"];
+        post.points = [dictionary objectForKey:@"points"];
+        post.downs = [dictionary objectForKey:@"downs"];
+        post.score = [dictionary objectForKey:@"score"];
+        post.favorite = [[dictionary objectForKey:@"favorite"] boolValue];
         post.owner = [dictionary objectForKey:@"account_id"];
         post.imageURL = [dictionary objectForKey:@"link"];
         post.title = [dictionary objectForKey:@"title"];
