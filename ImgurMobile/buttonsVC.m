@@ -10,32 +10,30 @@
 #import "SocialViewController.h"
 @interface buttonsVC ()
 
-@property (strong, nonatomic) SocialViewController* socialVC;
-
 @end
 
 @implementation buttonsVC
 
-- (void)viewDidLoad
-{
+
+-(void) viewDidLoad{
     [super viewDidLoad];
-    self.socialVC = [[SocialViewController alloc] init];
 }
-
-
-
 - (IBAction)favoritesAction
 {
-    
+    [self.socialVC favoritesRequest];
 }
 
 - (IBAction)commentsAction {
 }
 
-- (IBAction)likeAction {
+- (IBAction)likeAction
+{
+    [self.socialVC likeRequest];
 }
 
-- (IBAction)dislikeAction {
+- (IBAction)dislikeAction
+{
+    [self.socialVC dislikeRequest];
 }
 
 - (IBAction)shareAction {
