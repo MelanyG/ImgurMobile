@@ -13,8 +13,8 @@
 
 @property (nonatomic, strong) UIImage *image;
 
-@property (assign, nonatomic) BOOL isLeftMenuOpened;
-@property (assign, nonatomic) BOOL isRightFilteringMenuOpened;
-@property (assign, nonatomic) BOOL isRightTextMenuOpened;
+
+
+
 
 @end
