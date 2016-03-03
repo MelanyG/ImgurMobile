@@ -29,7 +29,7 @@
     [super viewDidLoad];
     self.token = [ImgurAccessToken sharedToken];
     self.navigationItem.title = @"Post";
-   // self.currentImage.image = self.image;
+   self.currentImage.image = self.image;
  //    UIBarButtonItem* plus =
 //    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
 //                                                  target:self
@@ -165,5 +165,15 @@ self.topic = [self.array objectAtIndex:row];
             
         });
 }
+
+-(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"ItemsPosted"])
+    {
+        ImgurPosting * ipvc = (ImgurPosting *)segue.destinationViewController;
+        ipvc.image = self.image;
+    }
+}
+
 
 @end

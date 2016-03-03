@@ -23,7 +23,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.postViewController = [[ImgurPosting alloc]init];
+    
     self.picker = [[UIImagePickerController alloc]init];
     self.picker.delegate = self;
     
