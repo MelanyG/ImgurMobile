@@ -154,11 +154,13 @@
          }
          else
          {
+             [self.activityIndicator stopAnimating];
+             self.activityIndicator = nil;
              [queue addObject:resp];
              
              self.photosData = [queue getObject];
              NSLog(@"%@", self.photosData);
-             [self.activityIndicator stopAnimating];
+             
              [self.collectionView reloadData];
              if (([[self.photosData objectForKey:@"posts"] count] + [[self.photosData objectForKey:@"albums"] count]) != 0)
                  [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]
@@ -179,10 +181,8 @@
         NSArray *albums = [self.photosData objectForKey:@"albums"]  ;
         post = [[(imgurAlbum *)[albums objectAtIndex:indexPath.row] posts] firstObject];
         tempCell.ownerLabel.text = @"album";
-        if (![post.title isKindOfClass:[NSNull class]])
-        {
-            tempCell.titleLabel.text = [[albums objectAtIndex:indexPath.row] albumTitle];
-        }
+        tempCell.titleLabel.text = [[albums objectAtIndex:indexPath.row] albumTitle];
+        tempCell.pointsLabel.text = [[[albums objectAtIndex:indexPath.row] points] stringValue];
     }
     else
     {
@@ -193,9 +193,10 @@
             tempCell.ownerLabel.text = @"image";
         
         tempCell.titleLabel.text = post.title;
+        tempCell.pointsLabel.text = [post.points stringValue];
     }
     
-    tempCell.pointsLabel.text = @"nope";
+
     
     if ([self.imageCache objectForKey:post.imageURL])
     {//if there is image in cache setImage
@@ -322,15 +323,21 @@
 
 -(void)pageInfoDidChange:(NSMutableDictionary *) info
 {
-    if ([info isKindOfClass:[NSDictionary class]])
-        self.pageInfo = info;
-    [self reloadPage];
+    if (!self.activityIndicator)
+    {
+        if ([info isKindOfClass:[NSDictionary class]])
+            self.pageInfo = info;
+        [self reloadPage];
+    }
 }
 
 -(void) pageNumDidChange: (NSInteger) param
 {
-    self.pageNumber = ((param + self.pageNumber) < 0)?0:(self.pageNumber + param);
-    [self reloadPage];
+    if (!self.activityIndicator)
+    {
+        self.pageNumber = ((param + self.pageNumber) < 0)?0:(self.pageNumber + param);
+        [self reloadPage];
+    }
 }
 
 
