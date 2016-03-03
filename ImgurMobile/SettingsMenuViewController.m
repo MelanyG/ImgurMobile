@@ -9,7 +9,23 @@
 #import "SettingsMenuViewController.h"
 #import "EditViewController.h"
 
+@interface SettingsMenuViewController ()
+
+@property (weak, nonatomic) IBOutlet UIButton *fontMenuButton;
+
+@end
+
 @implementation SettingsMenuViewController
+
+- (void)disableButton
+{
+    self.fontMenuButton.enabled = NO;
+}
+
+- (void)enableButton
+{
+    self.fontMenuButton.enabled = YES;
+}
 
 - (void)viewDidLoad
 {

@@ -69,16 +69,29 @@ typedef enum{
 
 @property (strong, nonatomic) UIImageView *readyToGoImageView;
 
+@property (assign, nonatomic) NSString *shouldShowAlert;
+
 @end
 
 @implementation EditViewController
+
+@synthesize isLeftMenuOpened;
+@synthesize isRightFilteringMenuOpened;
+@synthesize isRightTextMenuOpened;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor darkGrayColor];
-    self.image = [UIImage imageNamed:@"sea"];
     [self updateUIWithImage:self.image];
+    
+    if ([self.image.description hasPrefix:@"<_UIAnimatedImage"])
+    {
+        [self checkShouldShowAlert];
+        [self showAlertView];
+        [self.settingsMenuVC disableButton];
+    }
+    
     [self prepare];
     [self addHandlesLogic];
     
@@ -86,6 +99,32 @@ typedef enum{
     [self.FiltersMenuVC updateYourself];
     [self.FontsMenuVC updateYourself];
     [self.settingsMenuVC updateYourself];
+}
+
+- (void)checkShouldShowAlert
+{
+    self.shouldShowAlert = @"YES";
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    if([[defaults objectForKey:@"shouldShowAlert"] isEqualToString:@"NO"])
+        self.shouldShowAlert = @"NO";
+}
+
+- (void)showAlertView
+{
+    if ([self.shouldShowAlert isEqualToString:@"YES"])
+    {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"This image cuold be animated" message:@"Editing of GIF images will cause it to become not animated" preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){}]];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"Don't show this again" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
+                                {
+                                    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                                    [defaults setObject:@"NO" forKey:@"shouldShowAlert"];
+                                }]];
+    [self presentViewController:alertController animated:YES completion:nil];
+    }
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
