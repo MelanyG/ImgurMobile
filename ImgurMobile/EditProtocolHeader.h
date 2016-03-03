@@ -36,6 +36,10 @@ typedef enum{
 - (void)giveImageToShareVC;
 - (void)saveImageToGallery;
 
+@property (assign, nonatomic) BOOL isLeftMenuOpened;
+@property (assign, nonatomic) BOOL isRightFilteringMenuOpened;
+@property (assign, nonatomic) BOOL isRightTextMenuOpened;
+
 @end
 
 @protocol rightMenuDelegate <NSObject>

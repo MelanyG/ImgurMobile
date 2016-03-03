@@ -16,5 +16,7 @@
 @property (assign, nonatomic) BOOL shouldRespondToTouchEvents;
 
 - (void)updateYourself;
+- (void)disableButton;
+- (void)enableButton;
 
 @end
