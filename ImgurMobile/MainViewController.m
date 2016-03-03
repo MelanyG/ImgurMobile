@@ -48,7 +48,7 @@
  {
      NSLog(@"Access token is valid!");
      
-
+     
  }
      else
      {
@@ -89,6 +89,7 @@
 
         [super viewDidLoad];
      // self.navigationItem.title = self.token.userName;
+    [self reloadPage];
 }
 
 -(void)viewDidAppear:(BOOL)animated
