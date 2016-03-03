@@ -379,7 +379,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="GAs-0r-6Ob"/>
                                 </constraints>
-                                <color key="barTintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="barTintColor" red="0.066666666669999999" green="0.058823529409999999" blue="0.058823529409999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <items>
                                     <navigationItem title="Login" id="5g0-3S-bix">
                                         <barButtonItem key="backBarButtonItem" title="Back" id="Djr-Op-ck6"/>
@@ -524,13 +524,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dcx-xG-0D0">
-                                <rect key="frame" x="10" y="91" width="75" height="30"/>
+                                <rect key="frame" x="10" y="64" width="75" height="75"/>
                                 <animations/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="75" id="Qb8-UB-Uzd"/>
-                                    <constraint firstAttribute="height" constant="30" id="YXO-gr-hUk"/>
+                                    <constraint firstAttribute="height" constant="75" id="YXO-gr-hUk"/>
                                 </constraints>
-                                <state key="normal" title="Edit">
+                                <state key="normal" backgroundImage="pen">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
@@ -538,14 +538,14 @@
                                     <segue destination="zNk-VS-dcy" kind="show" identifier="editLocalImage" id="shd-U7-xlL"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BDR-Td-Pai">
-                                <rect key="frame" x="515" y="91" width="75" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BDR-Td-Pai">
+                                <rect key="frame" x="515" y="64" width="75" height="75"/>
                                 <animations/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="5ST-sf-s9z"/>
+                                    <constraint firstAttribute="height" constant="75" id="5ST-sf-s9z"/>
                                     <constraint firstAttribute="width" constant="75" id="BL0-9t-Kvk"/>
                                 </constraints>
-                                <state key="normal" title="Post ">
+                                <state key="normal" image="people">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
@@ -555,12 +555,12 @@
                             </button>
                         </subviews>
                         <animations/>
-                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.066666666666666666" green="0.058823529411764705" blue="0.058823529411764705" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="8tn-Cu-7k3" secondAttribute="trailing" constant="10" id="4EG-If-yfC"/>
                             <constraint firstItem="8tn-Cu-7k3" firstAttribute="top" secondItem="KLK-Kq-lz0" secondAttribute="bottom" constant="20" id="6Yg-xy-VDr"/>
-                            <constraint firstItem="BDR-Td-Pai" firstAttribute="top" secondItem="jOH-hZ-SAV" secondAttribute="bottom" constant="27" id="8UJ-Ue-0L7"/>
-                            <constraint firstItem="Dcx-xG-0D0" firstAttribute="top" secondItem="jOH-hZ-SAV" secondAttribute="bottom" constant="27" id="D54-EY-HuW"/>
+                            <constraint firstItem="BDR-Td-Pai" firstAttribute="top" secondItem="jOH-hZ-SAV" secondAttribute="bottom" id="8UJ-Ue-0L7"/>
+                            <constraint firstItem="Dcx-xG-0D0" firstAttribute="top" secondItem="jOH-hZ-SAV" secondAttribute="bottom" id="D54-EY-HuW"/>
                             <constraint firstItem="KLK-Kq-lz0" firstAttribute="top" secondItem="jOH-hZ-SAV" secondAttribute="bottom" constant="31" id="K37-gQ-a0P"/>
                             <constraint firstItem="8tn-Cu-7k3" firstAttribute="leading" secondItem="Rai-6o-zpb" secondAttribute="leading" constant="10" id="aK3-8A-uY7"/>
                             <constraint firstAttribute="trailing" secondItem="BDR-Td-Pai" secondAttribute="trailing" constant="10" id="arS-7i-xUP"/>
@@ -1555,30 +1555,29 @@
                                             </mask>
                                         </variation>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f1j-7h-YSN">
-                                        <rect key="frame" x="500" y="0.0" width="100" height="40"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f1j-7h-YSN">
+                                        <rect key="frame" x="525" y="0.0" width="75" height="75"/>
                                         <animations/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="BxO-hX-eDH"/>
-                                            <constraint firstAttribute="width" constant="100" id="XsU-PG-2Nk"/>
+                                            <constraint firstAttribute="height" constant="75" id="BxO-hX-eDH"/>
+                                            <constraint firstAttribute="width" constant="75" id="XsU-PG-2Nk"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                                        <state key="normal" title="Add To Gallery">
+                                        <state key="normal" title="Add To Gallery" image="plus">
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="postActionSelected:" destination="fYT-Mq-EMk" eventType="touchUpInside" id="aR2-Di-bqi"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XcK-03-Zv6">
-                                        <rect key="frame" x="0.0" y="0.0" width="73" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XcK-03-Zv6">
+                                        <rect key="frame" x="0.0" y="0.0" width="75" height="75"/>
                                         <animations/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="HnO-rW-KhA"/>
-                                            <constraint firstAttribute="width" constant="73" id="dUG-BT-WF9"/>
+                                            <constraint firstAttribute="height" constant="75" id="HnO-rW-KhA"/>
+                                            <constraint firstAttribute="width" constant="75" id="dUG-BT-WF9"/>
                                         </constraints>
-                                        <state key="normal" title="SHARE">
+                                        <state key="normal" title="SHARE" image="people">
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
@@ -1604,7 +1603,7 @@
                                     </imageView>
                                 </subviews>
                                 <animations/>
-                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.066666666669999999" green="0.058823529409999999" blue="0.058823529409999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="LGZ-Yr-JAL" secondAttribute="bottom" constant="14" id="3CO-TC-5Kf"/>
@@ -1721,6 +1720,9 @@
         <image name="filter_icon" width="512" height="487"/>
         <image name="font_icon" width="256" height="256"/>
         <image name="moveIcon" width="256" height="256"/>
+        <image name="pen" width="75" height="74"/>
+        <image name="people" width="75" height="74"/>
+        <image name="plus" width="75" height="74"/>
         <image name="save_icon" width="512" height="512"/>
         <image name="share_icon" width="512" height="512"/>
         <image name="socialControllerIcon.png" width="48" height="48"/>
