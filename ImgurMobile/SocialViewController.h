@@ -17,6 +17,8 @@
 @property (weak, nonatomic) IBOutlet UITextView *socialImageDescription;
 @property (weak, nonatomic) IBOutlet UINavigationItem *imageTitel;
 @property (strong, nonatomic) NSString* albumID;
+@property (assign, nonatomic) NSInteger commentsCount;
+@property (strong, nonatomic) NSArray* commentsIDS;
 
 @property (strong, nonatomic) buttonsVC* buttonsVC;
 
