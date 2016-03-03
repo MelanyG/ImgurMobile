@@ -95,7 +95,8 @@ static NSString* imageID;
          
          self.accessToken = token;
          
-         if (token) {
+         if (token)
+         {
              
              [self getUser:self.accessToken.accountID
                  onSuccess:^(imgurUser *user) {
