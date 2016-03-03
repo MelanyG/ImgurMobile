@@ -71,6 +71,8 @@ typedef enum{
 
 @property (assign, nonatomic) NSString *shouldShowAlert;
 
+@property (assign, nonatomic) BOOL isLoadIndicating;
+
 @end
 
 @implementation EditViewController
@@ -130,6 +132,14 @@ typedef enum{
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     [self addHandlesLogic];
+    if (self.isLoadIndicating)
+    {
+        @synchronized(self)
+        {
+            [self stopLoadIndicating];
+            [self startLoadIndicating];
+        }
+    }
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
@@ -641,6 +651,7 @@ typedef enum{
 
 - (void)startLoadIndicating
 {
+    self.isLoadIndicating = YES;
     UIView *background = [[UIView alloc] initWithFrame:self.view.frame];
     background.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.75];
     background.tag = 1001;
@@ -650,6 +661,7 @@ typedef enum{
 
 - (void)stopLoadIndicating
 {
+    self.isLoadIndicating = NO;
     for (UIView *subview in self.view.subviews)
     {
         if (subview.tag == 1001)

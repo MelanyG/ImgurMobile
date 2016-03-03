@@ -493,7 +493,10 @@ static NSString* imageID;
 
 
 
-- (void)getPhotosForPage:(NSInteger)page Section:(section)section Sort:(sort)sort Window:(window)window
+- (void)getPhotosForPage:(NSInteger)page
+                 Section:(section)section
+                    Sort:(sort)sort
+                  Window:(window)window
               Completion:(void(^)(NSDictionary *resp))completion
 {
     __weak typeof(self) weakSelf = self;
@@ -537,6 +540,23 @@ static NSString* imageID;
                                               completion(albumsAndPosts);
                                           });
                        }
+                   });
+}
+
+- (void)getAllNotificationsForCurrentUserCompletion:(void(^)(NSDictionary *resp))completion
+{
+    __weak typeof(self) weakSelf = self;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
+                   {
+                       
+                       NSString *url = [weakSelf.URLgenerator GetAllNotificationsURL];
+                       
+                       NSDictionary *loadedDict = [weakSelf.synchLoader loadJSONFromURL:url];
+                       
+                       dispatch_async(dispatch_get_main_queue(), ^
+                                      {
+                                          completion(nil);
+                                      });
                    });
 }
 
