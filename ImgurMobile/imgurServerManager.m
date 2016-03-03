@@ -16,7 +16,7 @@
 #import "ImgurLoginViewController.h"
 #import "imgurUser.h"
 
-NSString * const IMGUR_SERVER_MANAGER_STATUS_KEY = @"status";
+NSString * const IMGUR_SERVER_MANAGER_STATUS_KEY = @"error_status";
 NSString * const IMGUR_SERVER_MANAGER_ERROR_KEY = @"error";
 
 static NSString* imageID;
@@ -503,67 +503,42 @@ static NSString* imageID;
                        NSString *url = [weakSelf.URLgenerator GetGalleryURLForPage:page Section:section Sort:sort Window:window];
                        
                        NSDictionary *loadedDict = [weakSelf.synchLoader loadJSONFromURL:url];
-                       
-                       NSDictionary *parcedDict = [weakSelf.parcer getPostsFromresponceDictionary:loadedDict];
-                       
-                       NSArray *posts = [parcedDict objectForKey:@"posts"];
-                       NSMutableArray *albums = [NSMutableArray array];
-                       
-                       NSArray *albumIds = [parcedDict objectForKey:@"albumIds"];
-                       for (NSString *albumID in albumIds)
+                       if ([loadedDict objectForKey:IMGUR_SERVER_MANAGER_ERROR_KEY])
+                           completion(loadedDict);
+                       else if ([loadedDict objectForKey:IMGUR_SERVER_MANAGER_STATUS_KEY])
+                           completion(loadedDict);
+                       else
                        {
-                           NSString *albumUrl = [weakSelf.URLgenerator GetAlbumURLForAlbumWithID:albumID];
+                           NSDictionary *parcedDict = [weakSelf.parcer getPostsFromresponceDictionary:loadedDict];
                            
-                           NSDictionary *loadedAlbumDict = [weakSelf.synchLoader loadJSONFromURL:albumUrl];
+                           NSArray *posts = [parcedDict objectForKey:@"posts"];
+                           NSMutableArray *albums = [NSMutableArray array];
                            
-                           ImgurAlbum *album = [weakSelf.parcer getAlbumFromResponceDict:loadedAlbumDict];
-                           [albums addObject:album];
+                           NSArray *albumIds = [parcedDict objectForKey:@"albumIds"];
+                           for (NSString *albumID in albumIds)
+                           {
+                               NSString *albumUrl = [weakSelf.URLgenerator GetAlbumURLForAlbumWithID:albumID];
+                               
+                               NSDictionary *loadedAlbumDict = [weakSelf.synchLoader loadJSONFromURL:albumUrl];
+                               
+                               ImgurAlbum *album = [weakSelf.parcer getAlbumFromResponceDict:loadedAlbumDict];
+                               [albums addObject:album];
+                           }
+                           
+                           NSMutableDictionary *albumsAndPosts = [[NSMutableDictionary alloc] init];
+                           
+                           if (posts)
+                               [albumsAndPosts setObject:posts forKey:@"posts"];
+                           if (albums)
+                               [albumsAndPosts setObject:albums forKey:@"albums"];
+                           
+                           dispatch_async(dispatch_get_main_queue(), ^
+                                          {
+                                              completion(albumsAndPosts);
+                                          });
                        }
-                       
-                       NSMutableDictionary *albumsAndPosts = [[NSMutableDictionary alloc] init];
-                       
-                       if (posts)
-                           [albumsAndPosts setObject:posts forKey:@"posts"];
-                       if (albums)
-                           [albumsAndPosts setObject:albums forKey:@"albums"];
-                       
-                       dispatch_async(dispatch_get_main_queue(), ^
-                                      {
-                                          completion(albumsAndPosts);
-                                      });
                    });
 }
-
-
-
-
-
-
-
-
-
-
-/*
- - (void)getPhotosFromAlbumWithID:(NSString *)albumID Completion:(void(^)(NSDictionary *resp, NSError *error))completion
- {
- NSString *url = [self.URLgenerator GetAlbumURLForAlbumWithID:albumID];
- 
- [self.requestOperationManager
- GET:url
- parameters:nil
- success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject)
- {
- dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
- completion(responseObject, nil);
- });
- }
- failure:^(AFHTTPRequestOperation *operation, NSError *error)
- {
- dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
- completion(nil, error);
- });
- }];
- }*/
 
 @end
 

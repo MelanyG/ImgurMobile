@@ -54,12 +54,15 @@
         }
         else
         {
-            return [NSDictionary dictionaryWithObjectsAndKeys:@"status",[responceDict objectForKey:@"status"], nil];
+            NSDictionary *data = [responceDict objectForKey:@"data"];
+            
+            
+            return [NSDictionary dictionaryWithObjectsAndKeys:[data objectForKey:@"error"],@"error_status", nil];
         }
     }
     else
     {
-        return [NSDictionary dictionaryWithObjectsAndKeys:@"error",error.localizedDescription, nil];
+        return [NSDictionary dictionaryWithObjectsAndKeys:error.localizedDescription,@"error", nil];
     }
 }
 
