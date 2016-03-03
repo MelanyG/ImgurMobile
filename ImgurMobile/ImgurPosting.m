@@ -13,7 +13,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *titleTextField;
 
 @property (weak, nonatomic) IBOutlet UITextField *commentTextField;
-@property (weak, nonatomic) IBOutlet UIImageView *currentImage;
+
 @property (strong, nonatomic) ImgurAccessToken* token;
 @property (weak, nonatomic) IBOutlet UIPickerView *selectedTopic;
 @property (strong, nonatomic) NSArray* array;
