@@ -89,7 +89,7 @@ typedef enum{
     {
         [self checkShouldShowAlert];
         [self showAlertView];
-        
+        [self.settingsMenuVC disableButton];
     }
     
     [self prepare];
