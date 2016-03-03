@@ -506,6 +506,7 @@
                                 </state>
                                 <connections>
                                     <action selector="editSelected:" destination="swd-eM-4DO" eventType="touchUpInside" id="oSZ-Xh-u2n"/>
+                                    <segue destination="zNk-VS-dcy" kind="show" identifier="editLocalImage" id="shd-U7-xlL"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BDR-Td-Pai">
@@ -519,6 +520,7 @@
                                 </state>
                                 <connections>
                                     <action selector="postSelected:" destination="swd-eM-4DO" eventType="touchUpInside" id="IeA-n9-wb5"/>
+                                    <segue destination="hLo-eg-a4X" kind="show" identifier="postSegue" id="zjk-Q0-bHt"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -542,7 +544,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Jv-6M-eVr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-339" y="-371"/>
+            <point key="canvasLocation" x="1293" y="-1047"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="MP6-CL-zWE">
@@ -1491,7 +1493,7 @@
                                             <action selector="ShareWithCommunity:" destination="fYT-Mq-EMk" eventType="touchUpInside" id="RzE-ID-TmK"/>
                                         </connections>
                                     </button>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="maxresdefault" translatesAutoresizingMaskIntoConstraints="NO" id="LGZ-Yr-JAL">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LGZ-Yr-JAL">
                                         <rect key="frame" x="0.0" y="367" width="600" height="408"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="408" id="2yk-aA-ioC"/>
@@ -1617,10 +1619,12 @@
         <image name="deleteIcon" width="128" height="128"/>
         <image name="filter_icon" width="512" height="487"/>
         <image name="font_icon" width="256" height="256"/>
-        <image name="maxresdefault" width="1280" height="854"/>
         <image name="moveIcon" width="256" height="256"/>
         <image name="save_icon" width="512" height="512"/>
         <image name="share_icon" width="512" height="512"/>
         <image name="socialControllerIcon.png" width="48" height="48"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="shd-U7-xlL"/>
+    </inferredMetricsTieBreakers>
 </document>

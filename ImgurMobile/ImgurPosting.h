@@ -14,7 +14,7 @@
 @interface ImgurPosting : UIViewController <UIPickerViewDelegate>
 
 @property (strong, nonatomic) UIImage* image;
-
+@property (weak, nonatomic) IBOutlet UIImageView *currentImage;
 - (IBAction)postActionSelected:(UIButton *)sender;
 
 - (IBAction)ShareWithCommunity:(UIButton *)sender;
