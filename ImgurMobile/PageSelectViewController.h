@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PageInfoDelegate.h"
 
 @interface PageSelectViewController : UIViewController
 
-@property (weak,nonatomic) id delegate;
+@property (weak,nonatomic) id<PageInfoDelegate> delegate;
 
 @end
