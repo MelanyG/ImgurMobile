@@ -43,4 +43,11 @@ extern NSString * const IMGUR_SERVER_MANAGER_ERROR_KEY;
                       completionBlock:(void(^)(NSString* result))completion
                          failureBlock:(void(^)(NSURLResponse *response, NSError *error, NSInteger status))failureBlock;
 
+
+- (void) updateAccessToken: (NSString*) refresh_token
+              access_token: (NSString*) access_token
+           completionBlock:(void(^)(NSString* result))completion
+              failureBlock:(void(^)(NSURLResponse *response, NSError *error, NSInteger status))failureBlock;
+
+
 @end

@@ -66,6 +66,10 @@
     
     album.albumTitle = [data objectForKey:@"title"];
     album.albumDescription = [data objectForKey:@"description"];
+    album.points = [data objectForKey:@"points"];
+    album.downs = [data objectForKey:@"downs"];
+    album.score = [data objectForKey:@"score"];
+    album.favorite = [[data objectForKey:@"favorite"] boolValue];
     album.albumID = [data objectForKey:@"id"];
     album.ownerID = [data objectForKey:@"account_id"];
     album.topic = [data objectForKey:@"topic"];

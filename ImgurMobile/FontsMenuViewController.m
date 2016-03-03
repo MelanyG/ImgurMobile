@@ -58,10 +58,9 @@ UIColor * RGBA(CGFloat red, CGFloat green, CGFloat blue, CGFloat alpha)
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [super viewDidLoad];
     self.view.backgroundColor = [UIColor clearColor];
     self.contentView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"glas_texture"]];
-    
+   
     // border radius
     self.contentView.layer.cornerRadius = 5;
     
@@ -70,6 +69,37 @@ UIColor * RGBA(CGFloat red, CGFloat green, CGFloat blue, CGFloat alpha)
     [self.view.layer setShadowOpacity:0.8];
     [self.view.layer setShadowRadius:5.0];
     [self.view.layer setShadowOffset:CGSizeMake(5.0, 5.0)];
+}
+
+- (void)performSliderActionLogic
+{
+    [self.redSlider addTarget:self action:@selector(disableMenuPanning) forControlEvents:UIControlEventTouchDown];
+    [self.greenSlider addTarget:self action:@selector(disableMenuPanning) forControlEvents:UIControlEventTouchDown];
+    [self.blueSlider addTarget:self action:@selector(disableMenuPanning) forControlEvents:UIControlEventTouchDown];
+    [self.alphaSlider addTarget:self action:@selector(disableMenuPanning) forControlEvents:UIControlEventTouchDown];
+    [self.fontSizeSlider addTarget:self action:@selector(disableMenuPanning) forControlEvents:UIControlEventTouchDown];
+    
+    [self.redSlider addTarget:self action:@selector(disableMenuPanning) forControlEvents:UIControlEventTouchUpInside];
+    [self.greenSlider addTarget:self action:@selector(disableMenuPanning) forControlEvents:UIControlEventTouchUpInside];
+    [self.blueSlider addTarget:self action:@selector(disableMenuPanning) forControlEvents:UIControlEventTouchUpInside];
+    [self.alphaSlider addTarget:self action:@selector(disableMenuPanning) forControlEvents:UIControlEventTouchUpInside];
+    [self.fontSizeSlider addTarget:self action:@selector(disableMenuPanning) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.redSlider addTarget:self action:@selector(disableMenuPanning) forControlEvents:UIControlEventTouchUpOutside];
+    [self.greenSlider addTarget:self action:@selector(disableMenuPanning) forControlEvents:UIControlEventTouchUpOutside];
+    [self.blueSlider addTarget:self action:@selector(disableMenuPanning) forControlEvents:UIControlEventTouchUpOutside];
+    [self.alphaSlider addTarget:self action:@selector(disableMenuPanning) forControlEvents:UIControlEventTouchUpOutside];
+    [self.fontSizeSlider addTarget:self action:@selector(disableMenuPanning) forControlEvents:UIControlEventTouchUpOutside];
+}
+
+- (void)disableMenuPanning
+{
+    self.shouldRespondOnSlideEvents = NO;
+}
+
+- (void)enableMenuPanning
+{
+    self.shouldRespondOnSlideEvents = YES;
 }
 
 - (UILabel *)outLabel
@@ -146,7 +176,6 @@ UIColor * RGBA(CGFloat red, CGFloat green, CGFloat blue, CGFloat alpha)
 
 - (IBAction)colorDidChanged:(UISlider *)sender
 {
-    self.shouldRespondOnSlideEvents = NO;
     switch (sender.tag)
     {
         case 1:
@@ -174,7 +203,6 @@ UIColor * RGBA(CGFloat red, CGFloat green, CGFloat blue, CGFloat alpha)
 
 - (IBAction)fontSizeDidChanged:(UISlider *)sender
 {
-    self.shouldRespondOnSlideEvents = NO;
     self.fontSize = sender.value;
     self.currentFont = [self.currentFont fontWithSize:self.fontSize];
     [self updateLabel];
@@ -186,25 +214,29 @@ UIColor * RGBA(CGFloat red, CGFloat green, CGFloat blue, CGFloat alpha)
 
 - (void)updateLabel
 {
-    CGSize size = [self.inputTextField.text sizeWithAttributes:
-                   @{NSFontAttributeName: [self.currentFont fontWithSize:self.fontSize + 1]}];
-    
-    CGRect frame = CGRectMake(0,
-                              0,
-                              size.width,
-                              size.height);
-    self.outLabel.frame = frame;
-    
-    self.outLabel.font = self.currentFont;
-    
-    self.outLabel.text = self.inputTextField.text;
-    
-    self.outLabel.textColor = self.currentColor;
-    
-    if (self.shouldPosition)
-        [self.delegate setLabel:self.outLabel withPosition:self.currentPosition];
-    else
-        [self.delegate removeTextLabels];
+    __weak typeof(self) weakSelf = self;
+    dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
+    {
+        CGSize size = [weakSelf.inputTextField.text sizeWithAttributes:
+                       @{NSFontAttributeName: [weakSelf.currentFont fontWithSize:weakSelf.fontSize + 1]}];
+        
+        CGRect frame = CGRectMake(0,
+                                  0,
+                                  size.width,
+                                  size.height);
+        weakSelf.outLabel.frame = frame;
+        
+        weakSelf.outLabel.font = weakSelf.currentFont;
+        
+        weakSelf.outLabel.text = weakSelf.inputTextField.text;
+        
+        weakSelf.outLabel.textColor = weakSelf.currentColor;
+        
+        if (weakSelf.shouldPosition)
+            [weakSelf.delegate setLabel:weakSelf.outLabel withPosition:weakSelf.currentPosition];
+        else
+            [weakSelf.delegate removeTextLabels];
+    });
 }
 
 - (void)getArrayOfFontNames

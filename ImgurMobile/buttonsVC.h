@@ -18,6 +18,6 @@
 - (IBAction)likeAction;
 - (IBAction)dislikeAction;
 - (IBAction)shareAction;
-- (IBAction)saveAction;
+
 
 @end

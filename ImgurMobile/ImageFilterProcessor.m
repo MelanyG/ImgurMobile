@@ -124,7 +124,7 @@ NSString * NSStringFromFilterName(FilterName name)
     CIFilter *filter = [CIFilter filterWithName:NSStringFromFilterName(CIBoxBlur)
                                   keysAndValues:
                         kCIInputImageKey, self.beginImage,
-                        kCIInputRadiusKey, [NSNumber numberWithFloat:50], nil];
+                        kCIInputRadiusKey, [NSNumber numberWithFloat:5], nil];
     
     return [self getFilteredImageWithFilter:filter];
 }
@@ -134,7 +134,7 @@ NSString * NSStringFromFilterName(FilterName name)
     CIFilter *filter = [CIFilter filterWithName:NSStringFromFilterName(CIGammaAdjust)
                                   keysAndValues:
                         kCIInputImageKey, self.beginImage,
-                        @"inputPower", [NSNumber numberWithFloat:0.7], nil];
+                        @"inputPower", [NSNumber numberWithFloat:10], nil];
     
     return [self getFilteredImageWithFilter:filter];
 }
@@ -151,11 +151,22 @@ NSString * NSStringFromFilterName(FilterName name)
 
 - (UIImage *)CIColorCubeFromCurrentImage
 {
-#warning non
-    CIFilter *filter = [CIFilter filterWithName:NSStringFromFilterName(CIVibrance)
-                                  keysAndValues:
-                        kCIInputImageKey, self.beginImage,
-                        @"inputAmount", [NSNumber numberWithFloat:0.3], nil];
+    uint8_t color_cube_data[8*4] =
+    {
+        0, 0, 0, 1,
+        1, 0, 0, 1,
+        0, 1, 0, 1,
+        1, 1, 0, 1,
+        0, 0, 1, 1,
+        1, 0, 1, 1,
+        0, 1, 1, 1,
+        1, 1, 1, 1
+    };
+    NSData * cube_data =[NSData dataWithBytes:color_cube_data length:8*4*sizeof(uint8_t)];
+    CIFilter *filter = [CIFilter filterWithName:NSStringFromFilterName(CIColorCube)];
+    [filter setValue:self.beginImage forKey:kCIInputImageKey];
+    [filter setValue:@2 forKey:@"inputCubeDimension"];
+    [filter setValue:cube_data forKey:@"inputCubeData"];
     
     return [self getFilteredImageWithFilter:filter];
 }
@@ -165,18 +176,35 @@ NSString * NSStringFromFilterName(FilterName name)
     CIFilter *filter = [CIFilter filterWithName:NSStringFromFilterName(CIColorMonochrome)
                                   keysAndValues:
                         kCIInputImageKey, self.beginImage,
-                        kCIInputColorKey, [CIColor colorWithRed:0.67 green:0.13 blue:0.83 alpha:0.74],
-                        @"inputIntensity", [NSNumber numberWithFloat:1.0], nil];
+                        kCIInputColorKey, [CIColor colorWithRed:0.15 green:0.61 blue:0.81 alpha:0.5],
+                        @"inputIntensity", [NSNumber numberWithFloat:0.8], nil];
     
     return [self getFilteredImageWithFilter:filter];
 }
 
 - (UIImage *)CIDepthOfFieldFromCurrentImage
 {
-    CIFilter *filter = [CIFilter filterWithName:NSStringFromFilterName(CIDepthOfField)
+   /* CIFilter *filter = [CIFilter filterWithName:NSStringFromFilterName(CIDepthOfField)
                                   keysAndValues:
                         kCIInputImageKey, self.beginImage,
-                        kCIInputRadiusKey, [NSNumber numberWithFloat:25], nil];
+                        kCIInputRadiusKey, [NSNumber numberWithFloat:10], nil];*/
+    
+    CIFilter *filter = [CIFilter filterWithName:@"CIDepthOfField"];
+    [filter setDefaults];
+    
+    [filter setValue:self.beginImage forKey:@"inputImage"];
+    
+    [filter setValue:[CIVector vectorWithCGPoint:CGPointMake(50, 50)]
+              forKey:@"inputPoint0"];
+    
+    [filter setValue:[CIVector vectorWithCGPoint:CGPointMake(100, 100)]
+              forKey:@"inputPoint1"];
+    
+    [filter setValue:[NSNumber numberWithFloat:15.00]
+              forKey:@"inputUnsharpMaskRadius"];
+    
+    [filter setValue:[NSNumber numberWithFloat:15.70]
+              forKey:@"inputRadius"];
     
     return [self getFilteredImageWithFilter:filter];
 }

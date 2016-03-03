@@ -30,6 +30,7 @@
         self.refresh_token = [defaults objectForKey:@"refresh_token"];
         self.accountID = [defaults objectForKey:@"account_id"];
         self.expirationDate = [defaults objectForKey:@"expires_in"];
+        self.dayOfLogin = [defaults objectForKey:@"dayOgLogin"];
     return self;
 }
 

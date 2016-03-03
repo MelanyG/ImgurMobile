@@ -8,13 +8,25 @@
 
 #import "buttonsVC.h"
 #import "SocialViewController.h"
+#import "EditViewController.h"
+
 @interface buttonsVC ()
+
+@property (strong, nonatomic) EditViewController* editVC;
 
 @end
 
 @implementation buttonsVC
 
-
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"editSegue"])
+    {
+        self.editVC = (EditViewController*)segue.destinationViewController;
+        self.editVC.image = self.socialVC.image;
+    }
+    
+}
 -(void) viewDidLoad{
     [super viewDidLoad];
 }
@@ -23,7 +35,9 @@
     [self.socialVC favoritesRequest];
 }
 
-- (IBAction)commentsAction {
+- (IBAction)commentsAction
+{
+    
 }
 
 - (IBAction)likeAction
@@ -36,9 +50,10 @@
     [self.socialVC dislikeRequest];
 }
 
-- (IBAction)shareAction {
+- (IBAction)shareAction
+{
+    
 }
 
-- (IBAction)saveAction {
-}
+
 @end
