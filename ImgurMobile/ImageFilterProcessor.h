@@ -15,9 +15,9 @@ typedef enum{
     CIBoxBlur,
     CIGammaAdjust,
     CIVibrance,
-    CIColorCube,
+    CICMYKHalftone,
     CIColorMonochrome,
-    CIDepthOfField
+    CIColorMatrix
 }FilterName;
 
 extern NSInteger const FILTERS_COUNT;
