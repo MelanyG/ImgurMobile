@@ -119,7 +119,12 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
     //ImgurAccessToken* token = [[ImgurAccessToken alloc] init];
     
     //#access_token=83cbcfabbe307897a21d062df1515fcad3d66765&expires_in=2419200&token_type=bearer&refresh_token=621ec2e692b00b4d8336aa21c06ae1ceca308a31&account_username=MostPerfectUser&account_id=31463385
-      if(!firstTimeAppear)
+  if(firstTimeAppear)
+  {
+          [self dismissViewControllerAnimated:YES
+                             completion:nil];
+  }
+    else if(!firstTimeAppear)
     {
     if ([[[request URL] description] rangeOfString:@"#access_token="].location != NSNotFound)
     {
@@ -190,8 +195,7 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
             return NO;
         }
     }
-//    [self dismissViewControllerAnimated:YES
-//                             completion:nil];
+
     return YES;
 }
 
