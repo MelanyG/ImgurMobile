@@ -1791,6 +1791,32 @@
                                             </mask>
                                         </variation>
                                     </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cMQ-EH-9Cb">
+                                        <rect key="frame" x="8" y="102" width="75" height="75"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="75" id="BXm-4L-Q2k"/>
+                                            <constraint firstAttribute="height" constant="75" id="Vod-pK-fct"/>
+                                        </constraints>
+                                        <state key="normal" title="Delete">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="deleteImage:" destination="fYT-Mq-EMk" eventType="touchUpInside" id="2HB-nP-4zA"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iMT-1w-sNX">
+                                        <rect key="frame" x="10" y="187" width="75" height="75"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="75" id="Hfv-mH-O3e"/>
+                                            <constraint firstAttribute="height" constant="75" id="Pg1-Bu-vXI"/>
+                                        </constraints>
+                                        <state key="normal" title="Load">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="loadImages:" destination="fYT-Mq-EMk" eventType="touchUpInside" id="Vdm-5r-uwS"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.066666666669999999" green="0.058823529409999999" blue="0.058823529409999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -1799,19 +1825,23 @@
                                     <constraint firstAttribute="bottom" secondItem="LGZ-Yr-JAL" secondAttribute="bottom" constant="14" id="3CO-TC-5Kf"/>
                                     <constraint firstItem="qMf-Nr-ELw" firstAttribute="centerX" secondItem="kgJ-hv-2Ag" secondAttribute="centerX" id="3jG-AH-lpH"/>
                                     <constraint firstItem="Ovy-Vu-2Ah" firstAttribute="centerX" secondItem="kgJ-hv-2Ag" secondAttribute="centerX" id="CZc-SA-Xoe"/>
+                                    <constraint firstItem="iMT-1w-sNX" firstAttribute="leading" secondItem="kgJ-hv-2Ag" secondAttribute="leading" constant="10" id="D35-Sb-1Mj"/>
                                     <constraint firstItem="Wrj-KW-FCF" firstAttribute="top" secondItem="fzj-BJ-7fV" secondAttribute="bottom" id="GUf-3D-3Mx"/>
+                                    <constraint firstItem="cMQ-EH-9Cb" firstAttribute="top" secondItem="XcK-03-Zv6" secondAttribute="bottom" constant="27" id="HMh-p0-Son"/>
                                     <constraint firstItem="Wrj-KW-FCF" firstAttribute="centerX" secondItem="kgJ-hv-2Ag" secondAttribute="centerX" id="HOI-oj-lDA"/>
                                     <constraint firstAttribute="trailing" secondItem="f1j-7h-YSN" secondAttribute="trailing" id="K4b-Dv-Hch"/>
                                     <constraint firstItem="fzj-BJ-7fV" firstAttribute="top" secondItem="Mbi-CK-8A1" secondAttribute="bottom" constant="20" id="Kfe-Ly-lid"/>
                                     <constraint firstItem="wb6-aF-JPT" firstAttribute="top" secondItem="Ovy-Vu-2Ah" secondAttribute="bottom" constant="20" id="M8V-2f-c4t"/>
                                     <constraint firstItem="LGZ-Yr-JAL" firstAttribute="leading" secondItem="XcK-03-Zv6" secondAttribute="leading" id="NcU-Gx-YvM"/>
                                     <constraint firstItem="f1j-7h-YSN" firstAttribute="top" secondItem="kgJ-hv-2Ag" secondAttribute="top" id="Nkk-0I-lRE"/>
+                                    <constraint firstItem="cMQ-EH-9Cb" firstAttribute="leading" secondItem="kgJ-hv-2Ag" secondAttribute="leading" constant="8" id="O2t-pG-YX7"/>
                                     <constraint firstItem="Mbi-CK-8A1" firstAttribute="centerX" secondItem="kgJ-hv-2Ag" secondAttribute="centerX" id="PwK-x0-sjo"/>
                                     <constraint firstAttribute="bottom" secondItem="LGZ-Yr-JAL" secondAttribute="bottom" constant="225" id="T1L-UT-2NR"/>
                                     <constraint firstItem="Mbi-CK-8A1" firstAttribute="top" secondItem="wb6-aF-JPT" secondAttribute="bottom" constant="8" id="X9h-m6-RUr"/>
                                     <constraint firstItem="qMf-Nr-ELw" firstAttribute="top" secondItem="kgJ-hv-2Ag" secondAttribute="top" constant="20" id="YWG-et-xNJ"/>
                                     <constraint firstItem="fzj-BJ-7fV" firstAttribute="centerX" secondItem="kgJ-hv-2Ag" secondAttribute="centerX" id="ZvR-Un-8aK"/>
                                     <constraint firstItem="LGZ-Yr-JAL" firstAttribute="top" secondItem="Wrj-KW-FCF" secondAttribute="bottom" id="ZvY-Cd-nne"/>
+                                    <constraint firstItem="iMT-1w-sNX" firstAttribute="top" secondItem="cMQ-EH-9Cb" secondAttribute="bottom" constant="10" id="iVp-S8-gz6"/>
                                     <constraint firstItem="XcK-03-Zv6" firstAttribute="leading" secondItem="kgJ-hv-2Ag" secondAttribute="leadingMargin" constant="20" id="l1c-bE-uRN"/>
                                     <constraint firstItem="LGZ-Yr-JAL" firstAttribute="trailing" secondItem="f1j-7h-YSN" secondAttribute="trailing" id="o4t-XC-6rJ"/>
                                     <constraint firstItem="Ovy-Vu-2Ah" firstAttribute="top" secondItem="qMf-Nr-ELw" secondAttribute="bottom" constant="14" id="qF7-r0-Z6o"/>
@@ -1840,8 +1870,10 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="600" height="1000"/>
                     <connections>
+                        <outlet property="LoadImagesFromUsersGallery" destination="iMT-1w-sNX" id="xvf-54-cAJ"/>
                         <outlet property="commentTextField" destination="Mbi-CK-8A1" id="erv-KK-ipu"/>
                         <outlet property="currentImage" destination="LGZ-Yr-JAL" id="8O2-1R-96q"/>
+                        <outlet property="deleteImageSelected" destination="cMQ-EH-9Cb" id="S9p-JW-hEF"/>
                         <outlet property="postButton" destination="f1j-7h-YSN" id="g9b-F0-2Pw"/>
                         <outlet property="selectedTopic" destination="Wrj-KW-FCF" id="i4D-6f-pzc"/>
                         <outlet property="sharedButton" destination="XcK-03-Zv6" id="7iP-K6-aMj"/>

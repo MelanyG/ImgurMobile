@@ -124,6 +124,12 @@ self.topic = [self.array objectAtIndex:row];
 
 }
 
+- (IBAction)deleteImage:(id)sender {
+}
+
+- (IBAction)loadImages:(id)sender {
+}
+
 - (IBAction)postActionSelected:(UIButton *)sender
 {
   NSString *title = [[self titleTextField] text];

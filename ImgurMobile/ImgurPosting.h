@@ -18,7 +18,11 @@
 - (IBAction)postActionSelected:(UIButton *)sender;
 
 - (IBAction)ShareWithCommunity:(UIButton *)sender;
+- (IBAction)deleteImage:(id)sender;
 
+- (IBAction)loadImages:(id)sender;
+
+@property (weak, nonatomic) IBOutlet UIButton *deleteImageSelected;
 
 
 @end
