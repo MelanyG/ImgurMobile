@@ -13,6 +13,8 @@
 
 static BOOL firstTimeAppear;
 
+NSString* const LoginNotification = @"LoginUpdated";
+
 @interface ImgurLoginViewController ()<UIWebViewDelegate>
 
 @property (copy, nonatomic) ASLoginCompletionBlock completionBlock;
@@ -44,7 +46,7 @@ static BOOL firstTimeAppear;
     r.origin = CGPointZero;
     self.token = [ImgurAccessToken sharedToken];
     
-    
+
     
     self.webView = [[UIWebView alloc] initWithFrame:r];
     
@@ -189,8 +191,10 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
             [defaults setObject:self.token.dayOfLogin forKey:@"dayOfLogin"];
             
             NSLog(@"Updated User is:%@", self.token.userName);
-            
-            [self dismissViewControllerAnimated:YES
+        [[NSNotificationCenter defaultCenter] postNotificationName:LoginNotification
+                                                            object:nil
+                                                          userInfo:nil];
+        [self dismissViewControllerAnimated:YES
                                      completion:nil];
             return NO;
         }
@@ -198,6 +202,8 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
 
     return YES;
 }
+
+
 
 #pragma mark - Actions
 

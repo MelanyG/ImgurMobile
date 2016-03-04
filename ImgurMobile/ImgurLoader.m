@@ -33,10 +33,12 @@
 
 - (NSDictionary *)loadJSONFromURL:(NSString *)urlString
 {
+    self.token = [ImgurAccessToken sharedToken].token;
 
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]];
     
     [request setValue:[NSString stringWithFormat:@"Bearer %@", self.token] forHTTPHeaderField:@"Authorization"];
+    NSLog(@"Loader Token :%@",self.token);
     
     [request setHTTPMethod:@"GET"];
 

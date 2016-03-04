@@ -407,7 +407,7 @@ static NSString* imageID;
 - (void) shareImageWithImgurCommunity:(NSString*)title
                            description:(NSString*)description
             access_token: (NSString*)token
-                                topic:(NSString*) topic
+                                topic:(NSString*) section
                       completionBlock:(void(^)(NSString* result))completion
                          failureBlock:(void(^)(NSURLResponse *response, NSError *error, NSInteger status))failureBlock
 {
@@ -453,13 +453,13 @@ static NSString* imageID;
         [body appendData:[description dataUsingEncoding:NSUTF8StringEncoding]];
         [body appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
     }
-//    if (topic)
-//    {
-//        [body appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-//        [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"topic\"\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
-//        [body appendData:[title dataUsingEncoding:NSUTF8StringEncoding]];
-//        [body appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-//    }
+    if (section)
+    {
+        [body appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"section\"\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+        [body appendData:[title dataUsingEncoding:NSUTF8StringEncoding]];
+        [body appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    }
     [body appendData:[[NSString stringWithFormat:@"--%@--\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
     
     [request setHTTPBody:body];

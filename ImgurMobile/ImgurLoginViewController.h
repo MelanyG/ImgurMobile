@@ -11,6 +11,7 @@
 @class ImgurAccessToken;
 
 typedef void(^ASLoginCompletionBlock)(ImgurAccessToken* token);
+extern NSString* const LoginNotification;
 
 
 @interface ImgurLoginViewController : UIViewController

@@ -31,7 +31,7 @@
 @property (strong, nonatomic) ImgurAccessToken* token;
 @property (strong, nonatomic) NSMutableDictionary* pageInfo;
 @property (assign, nonatomic) NSInteger pageNumber;
-
+@property (strong, nonatomic) ImgurLoginViewController* loginVC;
 @property (strong, nonatomic) imgurServerManager *manager;
 
 @property (strong, nonatomic) NSIndexPath *selectedCell;
@@ -46,6 +46,15 @@
 - (void)viewDidLoad
 {
     self.token = [ImgurAccessToken sharedToken];
+    
+    NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
+    
+    [nc addObserver:self
+           selector:@selector(reloadPage)
+               name:LoginNotification
+             object:nil];
+    
+    
      if ([[NSDate date] compare:self.token.expirationDate] == NSOrderedAscending)
  {
      NSLog(@"Access token is valid!");
@@ -97,6 +106,14 @@
     
 }
 
+- (void) dealloc
+{
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+}
+
+
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -125,6 +142,13 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)callingLoginVC
+{
+    self.loginVC = [[ImgurLoginViewController alloc]init];
+    [self.navigationController pushViewController:self.loginVC animated:YES];
+    //[self reloadPage];
+}
+
 -(void) reloadPage
 {
     self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
@@ -140,9 +164,9 @@
         self.manager = [[imgurServerManager alloc] init];
     
     [self.manager getPhotosForPage:self.pageNumber
-                      Section:[[self.pageInfo objectForKey:@"section"] intValue]
-                         Sort:[[self.pageInfo objectForKey:@"sort"] intValue]
-                       Window:[[self.pageInfo objectForKey:@"window"] intValue] Completion:^(NSDictionary *resp)
+                           Section:[[self.pageInfo objectForKey:@"section"] intValue]
+                              Sort:[[self.pageInfo objectForKey:@"sort"] intValue]
+                            Window:[[self.pageInfo objectForKey:@"window"] intValue] Completion:^(NSDictionary *resp)
      {
          if ([resp objectForKey:IMGUR_SERVER_MANAGER_ERROR_KEY])
          {
@@ -150,7 +174,18 @@
          }
          else if ([resp objectForKey:IMGUR_SERVER_MANAGER_STATUS_KEY])
          {
+             // self.loginVC = [[ImgurLoginViewController alloc]init];
+             //[self.navigationController pushViewController:self.loginVC animated:YES];
+            
+             
+//             [[[UIAlertView alloc] initWithTitle:@"Failed to enter into account"
+//                                         message:@"PLEASE LOG IN"
+//                                        delegate:nil
+//                               cancelButtonTitle:nil
+//                               otherButtonTitles:@"OK", nil] show];
              NSLog(@"%@", [resp objectForKey:IMGUR_SERVER_MANAGER_STATUS_KEY]);
+             [self performSelectorOnMainThread:@selector(callingLoginVC) withObject:nil waitUntilDone:YES];
+             
          }
          else
          {
@@ -160,6 +195,7 @@
              
              self.photosData = [queue getObject];
              NSLog(@"%@", self.photosData);
+             
              
              [self.collectionView reloadData];
              if (([[self.photosData objectForKey:@"posts"] count] + [[self.photosData objectForKey:@"albums"] count]) != 0)
