@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "PageInfoDelegate.h"
+#import "ImgurLoginViewController.h"
+
+
 @interface MainViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, PageInfoDelegate>
 
 @end

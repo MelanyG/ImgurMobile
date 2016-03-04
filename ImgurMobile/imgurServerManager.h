@@ -39,7 +39,7 @@ extern NSString * const IMGUR_SERVER_MANAGER_ERROR_KEY;
 - (void) shareImageWithImgurCommunity:(NSString*)title
                           description:(NSString*)description
                          access_token:(NSString*)token
-                                topic:(NSString*) topic
+                                topic:(NSString*) section
                       completionBlock:(void(^)(NSString* result))completion
                          failureBlock:(void(^)(NSURLResponse *response, NSError *error, NSInteger status))failureBlock;
 
