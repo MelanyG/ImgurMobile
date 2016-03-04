@@ -116,16 +116,16 @@ typedef enum{
 {
     if ([self.shouldShowAlert isEqualToString:@"YES"])
     {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"This image cuold be animated" message:@"Editing of GIF images will cause it to become not animated" preferredStyle:UIAlertControllerStyleAlert];
-    
-    [alertController addAction:[UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){}]];
-    
-    [alertController addAction:[UIAlertAction actionWithTitle:@"Don't show this again" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
-                                {
-                                    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                                    [defaults setObject:@"NO" forKey:@"shouldShowAlert"];
-                                }]];
-    [self presentViewController:alertController animated:YES completion:nil];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"This image cuold be animated" message:@"Editing of GIF images will cause it to become not animated" preferredStyle:UIAlertControllerStyleAlert];
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){}]];
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:@"Don't show this again" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
+                                    {
+                                        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                                        [defaults setObject:@"NO" forKey:@"shouldShowAlert"];
+                                    }]];
+        [self presentViewController:alertController animated:YES completion:nil];
     }
 }
 
@@ -134,16 +134,16 @@ typedef enum{
     [self addHandlesLogic];
     if (self.isLoadIndicating)
     {
-        @synchronized(self)
-        {
-            [self stopLoadIndicating];
-            [self startLoadIndicating];
-        }
+        
+        [self stopLoadIndicating];
+        [self startLoadIndicating];
+        
     }
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
+    [self closeAllMenus];
     [self removeAllHandes];
 }
 
@@ -615,7 +615,9 @@ typedef enum{
 
 - (void)saveImageToGallery
 {
+    [self startLoadIndicating];
     UIImageWriteToSavedPhotosAlbum([self getImageFromCurrentContext], nil, nil, nil);
+    [self stopLoadIndicating];
 }
 
 - (void)giveImageToShareVC
@@ -651,25 +653,31 @@ typedef enum{
 
 - (void)startLoadIndicating
 {
-    self.isLoadIndicating = YES;
-    UIView *background = [[UIView alloc] initWithFrame:self.view.frame];
-    background.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.75];
-    background.tag = 1001;
-    [self.view addSubview:background];
-    [UIActivityIndicatorView addActivityIndicatorToView:self.view];
+    @synchronized(self)
+    {
+        self.isLoadIndicating = YES;
+        UIView *background = [[UIView alloc] initWithFrame:self.view.frame];
+        background.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.75];
+        background.tag = 1001;
+        [self.view addSubview:background];
+        [UIActivityIndicatorView addActivityIndicatorToView:self.view];
+    }
 }
 
 - (void)stopLoadIndicating
 {
-    self.isLoadIndicating = NO;
-    for (UIView *subview in self.view.subviews)
+    @synchronized(self)
     {
-        if (subview.tag == 1001)
+        self.isLoadIndicating = NO;
+        for (UIView *subview in self.view.subviews)
         {
-            [subview removeFromSuperview];
+            if (subview.tag == 1001)
+            {
+                [subview removeFromSuperview];
+            }
         }
+        [UIActivityIndicatorView removeActivityIndicatorFromView:self.view];
     }
-    [UIActivityIndicatorView removeActivityIndicatorFromView:self.view];
 }
 
 #pragma mark - fontDelegate

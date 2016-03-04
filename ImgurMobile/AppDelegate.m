@@ -59,6 +59,12 @@
          }
      }];*/
 
+    /*imgurServerManager *manager = [imgurServerManager sharedManager];
+    
+    [manager getAllNotificationsForCurrentUserCompletion:^(NSDictionary *resp)
+    {
+        NSLog(@"%@",resp);
+    }];*/
     
     return YES;
 }

@@ -551,7 +551,7 @@ static NSString* imageID;
                        
                        NSString *url = [weakSelf.URLgenerator GetAllNotificationsURL];
                        
-                       NSDictionary *loadedDict = [weakSelf.synchLoader loadJSONFromURL:url];
+                       NSDictionary *loadedDict = [weakSelf.synchLoader loadAllNotificationsWithURLString:url];
                        
                        dispatch_async(dispatch_get_main_queue(), ^
                                       {
