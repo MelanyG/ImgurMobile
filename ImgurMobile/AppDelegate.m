@@ -12,6 +12,7 @@
 #import "NotChalengingQueue.h"
 #import "ImgurConversationPreview.h"
 #import "ImgurPagedConversation.h"
+#import "ConversationAndMessagingTVC.h"
 
 @interface AppDelegate ()
 
