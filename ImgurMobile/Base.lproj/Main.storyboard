@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="DTt-cb-4HE">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="DTt-cb-4HE">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
@@ -634,7 +634,7 @@
                                     <segue destination="zNk-VS-dcy" kind="show" identifier="editSegue" id="m0J-pd-7oB"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9gP-2a-RW6">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9gP-2a-RW6">
                                 <rect key="frame" x="499" y="1" width="99" height="71"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="99" id="EMm-cu-bd6"/>
@@ -657,7 +657,7 @@
                                     <action selector="shareAction" destination="vtK-aE-O7K" eventType="touchUpInside" id="2kD-WH-5fc"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vOa-C8-Fks">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vOa-C8-Fks">
                                 <rect key="frame" x="300" y="1" width="99" height="71"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="99" id="VHZ-tC-O2X"/>
@@ -703,7 +703,7 @@
                                     <action selector="likeAction" destination="vtK-aE-O7K" eventType="touchUpInside" id="1nZ-69-ai5"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vt7-tl-ij4">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vt7-tl-ij4">
                                 <rect key="frame" x="100" y="1" width="99" height="71"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="99" id="M5n-sB-a58"/>
@@ -835,12 +835,6 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="3g9-SG-YUT"/>
-                                <exclude reference="N5I-Lj-tpx"/>
-                                <exclude reference="NT5-mv-faw"/>
-                                <exclude reference="WMf-Ft-wpt"/>
-                                <exclude reference="bOL-pU-t0D"/>
-                                <exclude reference="wyf-Fp-efC"/>
                                 <exclude reference="4pl-9C-ati"/>
                                 <exclude reference="Mqu-3m-SFD"/>
                                 <exclude reference="UdP-VX-dtE"/>
@@ -848,6 +842,12 @@
                                 <exclude reference="nwZ-2I-LIY"/>
                                 <exclude reference="q4V-o9-ULE"/>
                                 <exclude reference="xD6-gH-WCS"/>
+                                <exclude reference="3g9-SG-YUT"/>
+                                <exclude reference="N5I-Lj-tpx"/>
+                                <exclude reference="NT5-mv-faw"/>
+                                <exclude reference="WMf-Ft-wpt"/>
+                                <exclude reference="bOL-pU-t0D"/>
+                                <exclude reference="wyf-Fp-efC"/>
                                 <exclude reference="Dyd-xF-eeS"/>
                                 <exclude reference="GkR-bo-HuZ"/>
                                 <exclude reference="JAp-Ep-gmx"/>
@@ -884,6 +884,15 @@
                         </variation>
                         <variation key="heightClass=regular-widthClass=regular">
                             <mask key="constraints">
+                                <exclude reference="4pl-9C-ati"/>
+                                <exclude reference="6ag-XN-d98"/>
+                                <include reference="Mqu-3m-SFD"/>
+                                <exclude reference="UdP-VX-dtE"/>
+                                <exclude reference="Yw7-XQ-JJz"/>
+                                <exclude reference="aXN-CG-rfA"/>
+                                <exclude reference="nwZ-2I-LIY"/>
+                                <include reference="q4V-o9-ULE"/>
+                                <exclude reference="xD6-gH-WCS"/>
                                 <include reference="3g9-SG-YUT"/>
                                 <exclude reference="8BD-mA-QPV"/>
                                 <include reference="N5I-Lj-tpx"/>
@@ -896,15 +905,6 @@
                                 <exclude reference="h4a-9e-ztU"/>
                                 <exclude reference="ukh-Sa-Zcx"/>
                                 <include reference="wyf-Fp-efC"/>
-                                <exclude reference="4pl-9C-ati"/>
-                                <exclude reference="6ag-XN-d98"/>
-                                <include reference="Mqu-3m-SFD"/>
-                                <exclude reference="UdP-VX-dtE"/>
-                                <exclude reference="Yw7-XQ-JJz"/>
-                                <exclude reference="aXN-CG-rfA"/>
-                                <exclude reference="nwZ-2I-LIY"/>
-                                <include reference="q4V-o9-ULE"/>
-                                <exclude reference="xD6-gH-WCS"/>
                                 <exclude reference="1Li-sr-pXy"/>
                                 <exclude reference="7RM-GW-8zV"/>
                                 <include reference="Dyd-xF-eeS"/>
@@ -988,7 +988,7 @@
                                         <rect key="frame" x="0.0" y="28" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="y9f-mS-hLH" id="lMd-uN-mJz">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -1770,7 +1770,7 @@
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
-                                            <action selector="ShareWithCommunity:" destination="fYT-Mq-EMk" eventType="touchUpInside" id="8EA-xn-f9r"/>
+                                            <action selector="ShareWithCommunity:" destination="fYT-Mq-EMk" eventType="touchUpInside" id="RzE-ID-TmK"/>
                                         </connections>
                                     </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LGZ-Yr-JAL">
@@ -1840,7 +1840,7 @@
                     <connections>
                         <outlet property="commentTextField" destination="Mbi-CK-8A1" id="erv-KK-ipu"/>
                         <outlet property="currentImage" destination="LGZ-Yr-JAL" id="8O2-1R-96q"/>
-                        <outlet property="postButton" destination="f1j-7h-YSN" id="D58-wa-dnH"/>
+                        <outlet property="postButton" destination="f1j-7h-YSN" id="g9b-F0-2Pw"/>
                         <outlet property="selectedTopic" destination="Wrj-KW-FCF" id="i4D-6f-pzc"/>
                         <outlet property="sharedButton" destination="XcK-03-Zv6" id="7iP-K6-aMj"/>
                         <outlet property="titleTextField" destination="Ovy-Vu-2Ah" id="7ka-v2-pqA"/>
@@ -1912,6 +1912,6 @@
         <image name="socialControllerIcon.png" width="48" height="48"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="m0J-pd-7oB"/>
+        <segue reference="shd-U7-xlL"/>
     </inferredMetricsTieBreakers>
 </document>
