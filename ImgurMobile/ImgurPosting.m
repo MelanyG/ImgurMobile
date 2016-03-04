@@ -20,6 +20,7 @@
 @property (strong, nonatomic) NSString* topic;
 @property (weak, nonatomic) IBOutlet UIButton *sharedButton;
 @property (weak, nonatomic) NSString* imageID;
+@property (weak, nonatomic) IBOutlet UIButton *postButton;
 
 @end
 
@@ -40,7 +41,7 @@
 //    self.navigationItem.rightBarButtonItems = @[addAttachButton,sendButton];
     
     
-    self.sharedButton.enabled = YES;
+    self.sharedButton.enabled = NO;
     
     //self.navigationItem.rightBarButtonItem = plus;
     self.selectedTopic.delegate = self;
@@ -85,6 +86,7 @@ self.topic = [self.array objectAtIndex:row];
     imgurServerManager*x = [[imgurServerManager alloc]init];
     NSString *title = [[self titleTextField] text];
     NSString *description = [[self commentTextField] text];
+    self.sharedButton.enabled = NO;
 
          [x shareImageWithImgurCommunity:title
                              description:description
@@ -100,7 +102,9 @@ self.topic = [self.array objectAtIndex:row];
                                cancelButtonTitle:@"OK"
                                otherButtonTitles:nil];
             [av show];
-             NSLog(@"%@",result);                         });
+                        NSLog(@"%@",result);
+            self.sharedButton.enabled = YES;
+});
     } failureBlock:^(NSURLResponse *response, NSError *error, NSInteger status) {
         dispatch_async(dispatch_get_main_queue(), ^{
            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
@@ -112,6 +116,8 @@ self.topic = [self.array objectAtIndex:row];
                              otherButtonTitles:@"OK", nil] show];
            NSLog(@"%@", [error localizedDescription]);
            NSLog(@"Err details: %@", [error description]);
+            self.sharedButton.enabled = YES;
+
        });
    }];
     
@@ -122,7 +128,7 @@ self.topic = [self.array objectAtIndex:row];
 {
   NSString *title = [[self titleTextField] text];
   NSString *description = [[self commentTextField] text];
-    
+    self.postButton.enabled = NO;
     NSData *imageData = UIImageJPEGRepresentation(self.currentImage.image, 0.5);
        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     
@@ -146,6 +152,7 @@ self.topic = [self.array objectAtIndex:row];
                                        otherButtonTitles:nil];
                    [av show];
                   self.sharedButton.enabled = YES;
+                    self.postButton.enabled = YES;
                   NSLog(@"%@",result);                         });
            }
                failureBlock:^(NSURLResponse *response, NSError *error, NSInteger status)
@@ -160,6 +167,7 @@ self.topic = [self.array objectAtIndex:row];
                                      otherButtonTitles:@"OK", nil] show];
                    NSLog(@"%@", [error localizedDescription]);
                    NSLog(@"Err details: %@", [error description]);
+                   self.postButton.enabled = YES;
                });
            }];
             
