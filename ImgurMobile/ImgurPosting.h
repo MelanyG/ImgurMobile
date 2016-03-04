@@ -19,6 +19,6 @@
 
 - (IBAction)ShareWithCommunity:(UIButton *)sender;
 
-- (void)postActionSelected;
+
 
 @end
