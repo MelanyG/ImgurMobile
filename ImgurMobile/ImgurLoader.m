@@ -81,13 +81,13 @@
     
     //[request setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
     
-    
+    /*
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
                           [NSNumber numberWithBool:NO],@"new", nil];
 
     NSData* jsonData = [NSJSONSerialization dataWithJSONObject:dict options:0 error:nil];
     
-    request.HTTPBody = jsonData;
+    request.HTTPBody = jsonData;*/
     
     
     

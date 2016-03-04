@@ -7,6 +7,7 @@
 //
 
 #import "URLGen.h"
+#import "ImgurAccessToken.h"
 
 @implementation URLGen
 
@@ -20,7 +21,7 @@
     return instance;
 }
 
-- (NSString *)GetGalleryURLForPage:(NSInteger)page Section:(section)section Sort:(sort)sort Window:(window)window
+- (NSString *)getGalleryURLForPage:(NSInteger)page Section:(section)section Sort:(sort)sort Window:(window)window
 {
     NSString *sectionStr;
     switch (section)
@@ -104,15 +105,37 @@
     return url;
 }
 
-- (NSString *)GetAlbumURLForAlbumWithID:(NSString *)albumID
+- (NSString *)getAlbumURLForAlbumWithID:(NSString *)albumID
 {
     NSString *url = [NSString stringWithFormat:@"%@gallery/album/%@",self.baseURL,albumID];
     return url;
 }
 
-- (NSString *)GetAllNotificationsURL
+- (NSString *)getComentsIdsForID:(NSString *)identifier URLIsAlbum:(BOOL)isAlbum
 {
-    NSString *url = [NSString stringWithFormat:@"%@notification",self.baseURL];
+    NSString *url;
+    
+    if (isAlbum)
+    {
+        url = [NSString stringWithFormat:@"%@gallery/album/%@/comments/ids",self.baseURL, identifier];
+    }
+    else
+    {
+        url = [NSString stringWithFormat:@"%@gallery/image/%@/comments/ids",self.baseURL, identifier];
+    }
+    
+    return url;
+}
+
+- (NSString *)getConversationsListURL
+{
+    NSString *url = [NSString stringWithFormat:@"%@conversations", self.baseURL];
+    return url;
+}
+
+- (NSString *)getURLForConversationWithID:(NSInteger)identifier Page:(NSInteger)page
+{
+    NSString *url = [NSString stringWithFormat:@"%@conversations/%@/%@/0", self.baseURL, [NSString stringWithFormat:@"%d",identifier], [NSString stringWithFormat:@"%d",page]];
     return url;
 }
 

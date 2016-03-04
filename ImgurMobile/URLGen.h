@@ -35,8 +35,10 @@ typedef enum{
 
 + (URLGen *)sharedInstance;
 
-- (NSString *)GetGalleryURLForPage:(NSInteger)page Section:(section)section Sort:(sort)sort Window:(window)window;
-- (NSString *)GetAlbumURLForAlbumWithID:(NSString *)identifier;
-- (NSString *)GetAllNotificationsURL;
+- (NSString *)getGalleryURLForPage:(NSInteger)page Section:(section)section Sort:(sort)sort Window:(window)window;
+- (NSString *)getAlbumURLForAlbumWithID:(NSString *)identifier;
+- (NSString *)getComentsIdsForID:(NSString *)identifier URLIsAlbum:(BOOL)isAlbum;
+- (NSString *)getConversationsListURL;
+- (NSString *)getURLForConversationWithID:(NSInteger)identifier Page:(NSInteger)page;
 
 @end

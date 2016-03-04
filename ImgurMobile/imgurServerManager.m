@@ -11,7 +11,9 @@
 #import "AFNetworking.h"
 #import "ImgurJSONParser.h"
 #import "ImgurLoader.h"
-#import "ImgurAlbum.h"
+#import "imgurAlbum.h"
+#import "imgurPost.h"
+#import "ImgurPagedConversation.h"
 #import "imgurServerManager.h"
 #import "ImgurLoginViewController.h"
 #import "imgurUser.h"
@@ -503,7 +505,7 @@ static NSString* imageID;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
                    {
                        
-                       NSString *url = [weakSelf.URLgenerator GetGalleryURLForPage:page Section:section Sort:sort Window:window];
+                       NSString *url = [weakSelf.URLgenerator getGalleryURLForPage:page Section:section Sort:sort Window:window];
                        
                        NSDictionary *loadedDict = [weakSelf.synchLoader loadJSONFromURL:url];
                        if ([loadedDict objectForKey:IMGUR_SERVER_MANAGER_ERROR_KEY])
@@ -520,7 +522,7 @@ static NSString* imageID;
                            NSArray *albumIds = [parcedDict objectForKey:@"albumIds"];
                            for (NSString *albumID in albumIds)
                            {
-                               NSString *albumUrl = [weakSelf.URLgenerator GetAlbumURLForAlbumWithID:albumID];
+                               NSString *albumUrl = [weakSelf.URLgenerator getAlbumURLForAlbumWithID:albumID];
                                
                                NSDictionary *loadedAlbumDict = [weakSelf.synchLoader loadJSONFromURL:albumUrl];
                                
@@ -531,9 +533,27 @@ static NSString* imageID;
                            NSMutableDictionary *albumsAndPosts = [[NSMutableDictionary alloc] init];
                            
                            if (posts)
+                           {
                                [albumsAndPosts setObject:posts forKey:@"posts"];
+                               /*for (imgurPost *post in posts)
+                               {
+                                   NSString *urlComentString = [self.URLgenerator getComentsIdsForID:post.postID URLIsAlbum:NO];
+                                   NSDictionary *loadedComentDict = [self.synchLoader loadJSONFromURL:urlComentString];
+                                   NSArray *comentsIDs = [self.parcer getCommetsArrayFromRsponceDict:loadedComentDict];
+                                   post.commentsIds = comentsIDs;
+                               }*/
+                           }
                            if (albums)
+                           {
                                [albumsAndPosts setObject:albums forKey:@"albums"];
+                               /*for (imgurAlbum *album in albums)
+                               {
+                                   NSString *urlComentString = [self.URLgenerator getComentsIdsForID:album.albumID URLIsAlbum:YES];
+                                   NSDictionary *loadedComentDict = [self.synchLoader loadJSONFromURL:urlComentString];
+                                   NSArray *comentsIDs = [self.parcer getCommetsArrayFromRsponceDict:loadedComentDict];
+                                   album.commentsIds = comentsIDs;
+                               }*/
+                           }
                            
                            dispatch_async(dispatch_get_main_queue(), ^
                                           {
@@ -543,19 +563,70 @@ static NSString* imageID;
                    });
 }
 
-- (void)getAllNotificationsForCurrentUserCompletion:(void(^)(NSDictionary *resp))completion
+- (void)getComentsForId:(NSString *)identifier IsAlbum:(BOOL) isAlbum
+              Completion:(void(^)(NSArray *resp))completion
+{
+    __weak typeof(self) weakSelf = self;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
+                   {
+                       NSArray *comentsIDs;
+                       if (isAlbum)
+                       {
+                           NSString *urlComentString = [weakSelf.URLgenerator getComentsIdsForID:identifier URLIsAlbum:YES];
+                           NSDictionary *loadedComentDict = [weakSelf.synchLoader loadJSONFromURL:urlComentString];
+                           comentsIDs = [weakSelf.parcer getCommetsArrayFromResponceDict:loadedComentDict];
+                       }
+                       else
+                       {
+                           NSString *urlComentString = [weakSelf.URLgenerator getComentsIdsForID:identifier URLIsAlbum:NO];
+                           NSDictionary *loadedComentDict = [weakSelf.synchLoader loadJSONFromURL:urlComentString];
+                           comentsIDs = [weakSelf.parcer getCommetsArrayFromResponceDict:loadedComentDict];
+                       }
+                           
+                           dispatch_async(dispatch_get_main_queue(), ^
+                                          {
+                                              completion(comentsIDs);
+                                          });
+                   });
+}
+
+
+- (void)getAllConversationsPreviewForCurrentUserCompletion:(void(^)(NSArray *resp))completion
 {
     __weak typeof(self) weakSelf = self;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
                    {
                        
-                       NSString *url = [weakSelf.URLgenerator GetAllNotificationsURL];
+                       NSString *url = [weakSelf.URLgenerator getConversationsListURL];
                        
-                       NSDictionary *loadedDict = [weakSelf.synchLoader loadAllNotificationsWithURLString:url];
+                       NSDictionary *loadedDict = [weakSelf.synchLoader loadJSONFromURL:url];
+                       
+                       NSArray *parcedConversations = [weakSelf.parcer getConversationPreviewsArrayFromResponceDict:loadedDict];
                        
                        dispatch_async(dispatch_get_main_queue(), ^
                                       {
-                                          completion(nil);
+                                          completion(parcedConversations);
+                                      });
+                   });
+}
+
+- (void)getConversationWithID:(NSInteger)identifier
+                          ForPage:(NSInteger)page
+                       Completion:(void(^)(ImgurPagedConversation *resp))completion
+{
+    __weak typeof(self) weakSelf = self;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
+                   {
+                       
+                       NSString *url = [weakSelf.URLgenerator getURLForConversationWithID:identifier Page:page];
+                       
+                       NSDictionary *loadedDict = [weakSelf.synchLoader loadJSONFromURL:url];
+                       
+                       ImgurPagedConversation *conversation = [weakSelf.parcer getConversationFromResponceDict:loadedDict];
+                       
+                       dispatch_async(dispatch_get_main_queue(), ^
+                                      {
+                                          completion(conversation);
                                       });
                    });
 }

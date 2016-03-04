@@ -14,6 +14,7 @@ extern NSString * const IMGUR_SERVER_MANAGER_STATUS_KEY;
 extern NSString * const IMGUR_SERVER_MANAGER_ERROR_KEY;
 
 @class imgurUser;
+@class ImgurPagedConversation;
 
 @interface imgurServerManager : NSObject
 
@@ -23,10 +24,21 @@ extern NSString * const IMGUR_SERVER_MANAGER_ERROR_KEY;
 @property (nonatomic, strong) imgurUser *currentUser;
 @property (strong, nonatomic) ImgurAccessToken* accessToken;
 
-- (void)getPhotosForPage:(NSInteger)page Section:(section)section Sort:(sort)sort Window:(window)window
+- (void)getPhotosForPage:(NSInteger)page
+                 Section:(section)section
+                    Sort:(sort)sort
+                  Window:(window)window
               Completion:(void(^)(NSDictionary *resp))completion;
 
-- (void)getAllNotificationsForCurrentUserCompletion:(void(^)(NSDictionary *resp))completion;
+- (void)getComentsForId:(NSString *)identifier
+                IsAlbum:(BOOL) isAlbum
+             Completion:(void(^)(NSArray *resp))completion;
+
+- (void)getAllConversationsPreviewForCurrentUserCompletion:(void(^)(NSArray *resp))completion;
+
+- (void)getConversationWithID:(NSInteger)identifier
+                      ForPage:(NSInteger)page
+                   Completion:(void(^)(ImgurPagedConversation *resp))completion;
 
 - (void)uploadPhoto:(NSData*)imageData
               title:(NSString*)title

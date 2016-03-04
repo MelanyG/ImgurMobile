@@ -10,6 +10,8 @@
 #import "imgurServerManager.h"
 #import "imgurJSONParser.h"
 #import "NotChalengingQueue.h"
+#import "ImgurConversationPreview.h"
+#import "ImgurPagedConversation.h"
 
 @interface AppDelegate ()
 
@@ -59,12 +61,24 @@
          }
      }];*/
 
-    /*imgurServerManager *manager = [imgurServerManager sharedManager];
+   
     
-    [manager getAllNotificationsForCurrentUserCompletion:^(NSDictionary *resp)
+   /* imgurServerManager *manager = [imgurServerManager sharedManager];
+    
+    [manager getComentsForId:@"CUs0622" IsAlbum:NO Completion:^(NSDictionary *resp)
     {
-        NSLog(@"%@",resp);
+        
     }];*/
+    
+    /*imgurServerManager *manager = [imgurServerManager sharedManager];
+     
+     [manager getAllConversationsPreviewForCurrentUserCompletion:^(NSArray *resp)
+     {
+     ImgurConversationPreview *prev = [resp firstObject];
+     [manager getConversationWithID:prev.conversationId ForPage:1 Completion:^(ImgurPagedConversation *resp) {
+     NSLog(@"%@",resp);
+     }];
+     }];*/
     
     return YES;
 }
