@@ -20,9 +20,9 @@ NSString * NSStringFromFilterName(FilterName name)
             
         case CIColorMonochrome: return @"CIColorMonochrome";
             
-        case CIColorCube: return @"CIColorCube";
+        case CICMYKHalftone: return @"CICMYKHalftone";
             
-        case CIDepthOfField: return @"CIDepthOfField";
+        case CIColorMatrix: return @"CIColorMatrix";
             
         case CIGammaAdjust: return @"CIGammaAdjust";
             
@@ -43,6 +43,8 @@ NSString * NSStringFromFilterName(FilterName name)
 @property (strong, nonatomic) CIImage *beginImage;
 @property (strong, nonatomic) CIFilter *filter;
 
+@property (assign, nonatomic) CGSize imageSize;
+
 @end
 
 @implementation ImageFilterProcessor
@@ -59,6 +61,8 @@ NSString * NSStringFromFilterName(FilterName name)
 
 - (void)getFilteredImage:(UIImage *)image WithFilter:(FilterName) filterName Completion:(void(^)(NSDictionary * imageAndTag)) completion
 {
+    self.imageSize = image.size;
+    
     self.ctx = [CIContext contextWithOptions:nil];
     
     self.beginImage = [CIImage imageWithCGImage:image.CGImage];
@@ -77,13 +81,13 @@ NSString * NSStringFromFilterName(FilterName name)
             [responce setValue:[NSNumber numberWithInteger:(NSInteger)filterName] forKey:KEY_FOR_TAG];
             break;
             
-        case CIColorCube:
-            [responce setValue:[self CIColorCubeFromCurrentImage] forKey:KEY_FOR_IMAGE];
+        case CICMYKHalftone:
+            [responce setValue:[self CICMYKHalftoneFromCurrentImage] forKey:KEY_FOR_IMAGE];
             [responce setValue:[NSNumber numberWithInteger:(NSInteger)filterName] forKey:KEY_FOR_TAG];
             break;
             
-        case CIDepthOfField:
-            [responce setValue:[self CIDepthOfFieldFromCurrentImage] forKey:KEY_FOR_IMAGE];
+        case CIColorMatrix:
+            [responce setValue:[self CIColorMatrixFromCurrentImage] forKey:KEY_FOR_IMAGE];
             [responce setValue:[NSNumber numberWithInteger:(NSInteger)filterName] forKey:KEY_FOR_TAG];
             break;
             
@@ -124,7 +128,7 @@ NSString * NSStringFromFilterName(FilterName name)
     CIFilter *filter = [CIFilter filterWithName:NSStringFromFilterName(CIBoxBlur)
                                   keysAndValues:
                         kCIInputImageKey, self.beginImage,
-                        kCIInputRadiusKey, [NSNumber numberWithFloat:5], nil];
+                        kCIInputRadiusKey, [NSNumber numberWithFloat:self.imageSize.width / 70], nil];
     
     return [self getFilteredImageWithFilter:filter];
 }
@@ -134,7 +138,7 @@ NSString * NSStringFromFilterName(FilterName name)
     CIFilter *filter = [CIFilter filterWithName:NSStringFromFilterName(CIGammaAdjust)
                                   keysAndValues:
                         kCIInputImageKey, self.beginImage,
-                        @"inputPower", [NSNumber numberWithFloat:10], nil];
+                        @"inputPower", [NSNumber numberWithFloat:1.3], nil];
     
     return [self getFilteredImageWithFilter:filter];
 }
@@ -149,24 +153,15 @@ NSString * NSStringFromFilterName(FilterName name)
     return [self getFilteredImageWithFilter:filter];
 }
 
-- (UIImage *)CIColorCubeFromCurrentImage
+- (UIImage *)CICMYKHalftoneFromCurrentImage
 {
-    uint8_t color_cube_data[8*4] =
-    {
-        0, 0, 0, 1,
-        1, 0, 0, 1,
-        0, 1, 0, 1,
-        1, 1, 0, 1,
-        0, 0, 1, 1,
-        1, 0, 1, 1,
-        0, 1, 1, 1,
-        1, 1, 1, 1
-    };
-    NSData * cube_data =[NSData dataWithBytes:color_cube_data length:8*4*sizeof(uint8_t)];
-    CIFilter *filter = [CIFilter filterWithName:NSStringFromFilterName(CIColorCube)];
-    [filter setValue:self.beginImage forKey:kCIInputImageKey];
-    [filter setValue:@2 forKey:@"inputCubeDimension"];
-    [filter setValue:cube_data forKey:@"inputCubeData"];
+    CIVector *vector = [CIVector vectorWithCGPoint:CGPointMake(self.imageSize.width, self.imageSize.height)];
+    
+    CIFilter *filter = [CIFilter filterWithName:NSStringFromFilterName(CICMYKHalftone)
+                                  keysAndValues:
+                        kCIInputImageKey, self.beginImage,
+                        kCIInputWidthKey, @2,
+                        kCIInputCenterKey, vector, nil];
     
     return [self getFilteredImageWithFilter:filter];
 }
@@ -182,29 +177,16 @@ NSString * NSStringFromFilterName(FilterName name)
     return [self getFilteredImageWithFilter:filter];
 }
 
-- (UIImage *)CIDepthOfFieldFromCurrentImage
+- (UIImage *)CIColorMatrixFromCurrentImage
 {
-   /* CIFilter *filter = [CIFilter filterWithName:NSStringFromFilterName(CIDepthOfField)
+    CIFilter *filter = [CIFilter filterWithName:@"CIColorMatrix"
                                   keysAndValues:
                         kCIInputImageKey, self.beginImage,
-                        kCIInputRadiusKey, [NSNumber numberWithFloat:10], nil];*/
-    
-    CIFilter *filter = [CIFilter filterWithName:@"CIDepthOfField"];
-    [filter setDefaults];
-    
-    [filter setValue:self.beginImage forKey:@"inputImage"];
-    
-    [filter setValue:[CIVector vectorWithCGPoint:CGPointMake(50, 50)]
-              forKey:@"inputPoint0"];
-    
-    [filter setValue:[CIVector vectorWithCGPoint:CGPointMake(100, 100)]
-              forKey:@"inputPoint1"];
-    
-    [filter setValue:[NSNumber numberWithFloat:15.00]
-              forKey:@"inputUnsharpMaskRadius"];
-    
-    [filter setValue:[NSNumber numberWithFloat:15.70]
-              forKey:@"inputRadius"];
+                        @"inputRVector", [CIVector vectorWithX:1 Y:0 Z:0 W:0],
+                        @"inputGVector", [CIVector vectorWithX:0 Y:0.9 Z:0 W:0],
+                        @"inputBVector", [CIVector vectorWithX:0 Y:0 Z:1.2 W:0],
+                        @"inputAVector", [CIVector vectorWithX:0 Y:0 Z:0 W:1],
+                        @"inputBiasVector", [CIVector vectorWithX:0.1 Y:0 Z:0.5 W:0], nil];
     
     return [self getFilteredImageWithFilter:filter];
 }

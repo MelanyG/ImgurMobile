@@ -37,5 +37,6 @@ typedef enum{
 
 - (NSString *)GetGalleryURLForPage:(NSInteger)page Section:(section)section Sort:(sort)sort Window:(window)window;
 - (NSString *)GetAlbumURLForAlbumWithID:(NSString *)identifier;
+- (NSString *)GetAllNotificationsURL;
 
 @end

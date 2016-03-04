@@ -17,7 +17,6 @@ extern NSString * const IMGUR_SERVER_MANAGER_ERROR_KEY;
 
 @interface imgurServerManager : NSObject
 
-
 - (void) authorizeUser:(void(^)(imgurUser* user)) completion ;
 + (instancetype)sharedManager;
 
@@ -26,6 +25,8 @@ extern NSString * const IMGUR_SERVER_MANAGER_ERROR_KEY;
 
 - (void)getPhotosForPage:(NSInteger)page Section:(section)section Sort:(sort)sort Window:(window)window
               Completion:(void(^)(NSDictionary *resp))completion;
+
+- (void)getAllNotificationsForCurrentUserCompletion:(void(^)(NSDictionary *resp))completion;
 
 - (void)uploadPhoto:(NSData*)imageData
               title:(NSString*)title

@@ -14,4 +14,6 @@
 
 - (NSDictionary *)loadJSONFromURL:(NSString *)urlString;
 
+- (NSDictionary *)loadAllNotificationsWithURLString:(NSString *)urlString;
+
 @end

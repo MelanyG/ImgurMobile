@@ -94,11 +94,11 @@
     NSString *url;
     if (section == top)
     {
-        url = [NSString stringWithFormat:@"%@gallery/%@/%@/%@/%ld.json",self.baseURL,sectionStr,sortStr,windowStr,page];
+        url = [NSString stringWithFormat:@"%@gallery/%@/%@/%@/%d.json",self.baseURL,sectionStr,sortStr,windowStr,page];
     }
     else
     {
-        url = [NSString stringWithFormat:@"%@gallery/%@/%@/%ld.json",self.baseURL,sectionStr,sortStr,page];
+        url = [NSString stringWithFormat:@"%@gallery/%@/%@/%d.json",self.baseURL,sectionStr,sortStr,page];
     }
     
     return url;
@@ -107,6 +107,12 @@
 - (NSString *)GetAlbumURLForAlbumWithID:(NSString *)albumID
 {
     NSString *url = [NSString stringWithFormat:@"%@gallery/album/%@",self.baseURL,albumID];
+    return url;
+}
+
+- (NSString *)GetAllNotificationsURL
+{
+    NSString *url = [NSString stringWithFormat:@"%@notification",self.baseURL];
     return url;
 }
 

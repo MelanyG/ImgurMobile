@@ -84,7 +84,7 @@
     double coef = self.currentImage.size.width / self.contentView.frame.size.width;
     self.sampleImageSize = CGSizeMake((NSInteger)self.currentImage.size.width / coef,
                                       (NSInteger)self.currentImage.size.height / coef);
-    self.sampleImage = [UIImage imageWithImage:self.currentImage scaledToSize:CGSizeMake(self.sampleImageSize.width / 2, self.sampleImageSize.height / 2)];
+    self.sampleImage = [UIImage imageWithImage:self.currentImage scaledToSize:CGSizeMake(self.sampleImageSize.width, self.sampleImageSize.height)];
 }
 
 - (void)configureScrollView
