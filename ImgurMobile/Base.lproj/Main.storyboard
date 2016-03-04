@@ -1870,7 +1870,6 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="600" height="1000"/>
                     <connections>
-                        <outlet property="LoadImagesFromUsersGallery" destination="iMT-1w-sNX" id="xvf-54-cAJ"/>
                         <outlet property="commentTextField" destination="Mbi-CK-8A1" id="erv-KK-ipu"/>
                         <outlet property="currentImage" destination="LGZ-Yr-JAL" id="8O2-1R-96q"/>
                         <outlet property="deleteImageSelected" destination="cMQ-EH-9Cb" id="S9p-JW-hEF"/>
