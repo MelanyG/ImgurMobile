@@ -42,7 +42,7 @@
     
     
     self.sharedButton.enabled = NO;
-    
+    self.deleteImageSelected.enabled = NO;
     //self.navigationItem.rightBarButtonItem = plus;
     self.selectedTopic.delegate = self;
     self.array = [[NSArray alloc]initWithObjects:@"Funny", @"Aww", @"Storytime", @"Design & Art", @"No topic", @"Awesome", @"The More You Know", @"Current Events", @"Reaction", @"Inspiring", nil];
@@ -124,11 +124,76 @@ self.topic = [self.array objectAtIndex:row];
 
 }
 
-- (IBAction)deleteImage:(id)sender {
+- (IBAction)deleteImage:(id)sender
+{
+    self.sharedButton.enabled = NO;
+    imgurServerManager*x = [[imgurServerManager alloc]init];
+    [x deleteImage:self.token.token
+            completionBlock:^(NSString *result) {
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+                            UIAlertView *av = [[UIAlertView alloc]
+                                               initWithTitle:@"Sucessfully deleted!"
+                                               message:@""
+                                               delegate:nil
+                                               cancelButtonTitle:@"OK"
+                                               otherButtonTitles:nil];
+                            [av show];
+                            NSLog(@"%@",result);
+                            self.sharedButton.enabled = YES;
+                        });
+                    }
+      failureBlock:^(NSURLResponse *response, NSError *error, NSInteger status) {
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+                            
+                            [[[UIAlertView alloc] initWithTitle:@"Deletion Failed"
+                                                        message:[NSString stringWithFormat:@"%@ (Status code %ld)", [error localizedDescription], (long)status]
+                                                       delegate:nil
+                                              cancelButtonTitle:nil
+                                              otherButtonTitles:@"OK", nil] show];
+                            NSLog(@"%@", [error localizedDescription]);
+                            NSLog(@"Err details: %@", [error description]);
+                            self.sharedButton.enabled = YES;
+                            
+                        });
+                    }];
+
 }
 
-- (IBAction)loadImages:(id)sender {
+- (IBAction)loadImagesFromGallery:(id)sender
+{
+    
+    NSDictionary* temp;
+    imgurServerManager*x = [[imgurServerManager alloc]init];
+    
+    temp = [[NSDictionary alloc]initWithDictionary:[x loadImagesFromUserGallery:self.token.token
+                                                                       username:self.token.userName
+                                                                completionBlock:^(NSString *result)
+                                                    {
+                                                        dispatch_async(dispatch_get_main_queue(),
+                                                                       ^{
+                                                                           [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+                                                                       });
+                                                    }
+                                                                   failureBlock:^(NSURLResponse *response, NSError *error, NSInteger status)
+                                                    {
+                                                        dispatch_async(dispatch_get_main_queue(),
+                                                                       ^{
+                                                                           [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+                                                                           
+                                                                           [[[UIAlertView alloc] initWithTitle:@"Load Failed"
+                                                                                                       message:[NSString stringWithFormat:@"%@ (Status code %ld)", [error localizedDescription], (long)status]
+                                                                                                      delegate:nil
+                                                                                             cancelButtonTitle:nil
+                                                                                             otherButtonTitles:@"OK", nil] show];
+                                                                       });
+                                                    }]];
+    
+    
 }
+
+
 
 - (IBAction)postActionSelected:(UIButton *)sender
 {
@@ -159,6 +224,7 @@ self.topic = [self.array objectAtIndex:row];
                    [av show];
                   self.sharedButton.enabled = YES;
                     self.postButton.enabled = YES;
+                   self.deleteImageSelected.enabled = YES;
                   NSLog(@"%@",result);                         });
            }
                failureBlock:^(NSURLResponse *response, NSError *error, NSInteger status)
