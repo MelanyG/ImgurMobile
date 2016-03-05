@@ -1,8 +1,8 @@
 //
-//  commentsVC.h
+//  GeneralCommentsTableViewController.h
 //  ImgurMobile
 //
-//  Created by Vitaliy Yarkun on 29.02.16.
+//  Created by Vitaliy Yarkun on 05.03.16.
 //  Copyright © 2016 Melany. All rights reserved.
 //
 
@@ -10,7 +10,7 @@
 
 @class SocialViewController;
 
-@interface commentsVC : UIViewController
+@interface GeneralCommentsTableViewController : UITableViewController
 
 @property (strong, nonatomic) SocialViewController* socialVC;
 

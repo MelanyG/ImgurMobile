@@ -9,12 +9,12 @@
 #import "buttonsVC.h"
 #import "SocialViewController.h"
 #import "EditViewController.h"
-#import "commentsVC.h"
+#import "GeneralCommentsTableViewController.h"
 
 @interface buttonsVC ()
 
 @property (strong, nonatomic) EditViewController* editVC;
-@property (strong, nonatomic) commentsVC* commentsVC;
+@property (strong, nonatomic) GeneralCommentsTableViewController* commentsVC;
 
 @end
 
@@ -29,7 +29,7 @@
     }
     else if ([segue.identifier isEqualToString:@"commentsSegue"])
     {
-        self.commentsVC = (commentsVC*)segue.destinationViewController;
+        self.commentsVC = (GeneralCommentsTableViewController*)segue.destinationViewController;
         self.commentsVC.socialVC = self.socialVC;
     }
     
