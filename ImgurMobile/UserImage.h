@@ -13,5 +13,6 @@
 @property (strong, nonatomic) NSString* title;
 @property (strong, nonatomic) NSString* descriptionImage;
 @property (strong, nonatomic) NSString* link;
+@property (strong, nonatomic) NSString* albumName;
 
 @end

@@ -185,7 +185,8 @@ self.topic = [self.array objectAtIndex:row];
                                                                    idOfAlbun:us.idOfAlbum]];
         [array addObject:tmp];
     }
-    self.allUserImages = [NSArray arrayWithArray:[self parsingImageData:array]];
+    self.allUserImages = [NSArray arrayWithArray:[self parsingImageData:array
+                                                  albumData:self.albumObjects]];
 
     
 }
@@ -225,12 +226,16 @@ imgurServerManager*x = [[imgurServerManager alloc]init];
 }
 
 - (NSArray*) parsingImageData:(NSArray*)arrayWithDic
+                    albumData:(NSArray*) albums
 {
     NSMutableArray* tmp = [[NSMutableArray alloc]init];
     
     NSInteger qtyOfDicInArray = [arrayWithDic count];
     for(int i=0; i<qtyOfDicInArray; i++)
     {
+        UserAlbum* us = [[UserAlbum alloc]init];
+        
+        us.albumName = [albums[i] albumName];
         NSInteger qtyOfImages = [[arrayWithDic[i]objectForKey:@"data"] count];
         for (int j=0; j< qtyOfImages; j++)
         {
@@ -238,6 +243,7 @@ imgurServerManager*x = [[imgurServerManager alloc]init];
             image.title = [[arrayWithDic[i]objectForKey:@"data"][j]objectForKey:@"title"];
             image.descriptionImage = [[arrayWithDic[i]objectForKey:@"data"][j]objectForKey:@"description"];
             image.link = [[arrayWithDic[i]objectForKey:@"data"][j]objectForKey:@"link"];
+            image.albumName = us.albumName;
             //[self saveImagesToDisc:image.link];
             [tmp addObject:image];
         }
@@ -246,75 +252,75 @@ imgurServerManager*x = [[imgurServerManager alloc]init];
     return tmp;
 }
 
--(UIImage *) getImageFromURL:(NSString *)fileURL {
-    UIImage * result;
-    
-    NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:fileURL]];
-    result = [UIImage imageWithData:data];
-    
-    return result;
-}
-
--(void) saveImage:(UIImage *)image withFileName:(NSString *)imageName ofType:(NSString *)extension inDirectory:(NSString *)directoryPath {
-    if ([[extension lowercaseString] isEqualToString:@"png"])
-    {
-        [UIImagePNGRepresentation(image) writeToFile:[directoryPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@", imageName, @"png"]] options:NSAtomicWrite error:nil];
-    }
-    else if ([[extension lowercaseString] isEqualToString:@"jpg"] || [[extension lowercaseString] isEqualToString:@"jpeg"])
-    {
-        [UIImageJPEGRepresentation(image, 1.0) writeToFile:[directoryPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@", imageName, @"jpg"]] options:NSAtomicWrite error:nil];
-        NSLog(@"Written to %@",directoryPath);
-    }
-    else
-    {
-        NSLog(@"Image Save Failed\nExtension: (%@) is not recognized, use (PNG/JPG)", extension);
-    }
-}
-
-
--(void) saveImagesToDisc:(NSString*)url
-{
-    
-    NSString * documentsDirectoryPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    
-    //Get Image From URL
-    UIImage * imageFromURL = [self getImageFromURL:url];
-    
-    //Save Image to Directory
-    [self saveImage:imageFromURL withFileName:url ofType:@"jpg" inDirectory:documentsDirectoryPath];
-    
-//    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
-//    NSURL *urlLink = [NSURL URLWithString:url];
-//    NSURLSessionTask *task = [[NSURLSession sharedSession] dataTaskWithURL:urlLink
-//                                                         completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
-//                              {
-//                                  if (!error)
-//                                  {
-//                                      static int finishedLoads = 0;
-//                                      finishedLoads ++;
-//                                      UIImage *image;
-//                                      if ([urlRequest.URL.pathExtension isEqualToString:@"jpg"] )
-//                                      {
-//                                          NSString *libraryPath = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-//                                          image = [UIImage imageWithData:data];
-//                                          [UIImageJPEGRepresentation(image, 0)  writeToFile:[libraryPath stringByAppendingPathComponent:[[url pathComponents] lastObject]]
-//                                                                                 atomically:YES];
-//                                      }
-//                                  }
-//                                  else
-//                                  {
-//                                      //[self.imageCache removeObjectForKey:[urlRequest.URL absoluteString]];
-//                                      //startedLoads--;
-//                                      
-//                                      NSLog(@"Image error:");
-//                                  }
-//                                  
-//                              }];
-    
-    
-    
-    
-}
+//-(UIImage *) getImageFromURL:(NSString *)fileURL {
+//    UIImage * result;
+//    
+//    NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:fileURL]];
+//    result = [UIImage imageWithData:data];
+//    
+//    return result;
+//}
+//
+//-(void) saveImage:(UIImage *)image withFileName:(NSString *)imageName ofType:(NSString *)extension inDirectory:(NSString *)directoryPath {
+//    if ([[extension lowercaseString] isEqualToString:@"png"])
+//    {
+//        [UIImagePNGRepresentation(image) writeToFile:[directoryPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@", imageName, @"png"]] options:NSAtomicWrite error:nil];
+//    }
+//    else if ([[extension lowercaseString] isEqualToString:@"jpg"] || [[extension lowercaseString] isEqualToString:@"jpeg"])
+//    {
+//        [UIImageJPEGRepresentation(image, 1.0) writeToFile:[directoryPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@", imageName, @"jpg"]] options:NSAtomicWrite error:nil];
+//        NSLog(@"Written to %@",directoryPath);
+//    }
+//    else
+//    {
+//        NSLog(@"Image Save Failed\nExtension: (%@) is not recognized, use (PNG/JPG)", extension);
+//    }
+//}
+//
+//
+//-(void) saveImagesToDisc:(NSString*)url
+//{
+//    
+//    NSString * documentsDirectoryPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+//    
+//    //Get Image From URL
+//    UIImage * imageFromURL = [self getImageFromURL:url];
+//    
+//    //Save Image to Directory
+//    [self saveImage:imageFromURL withFileName:url ofType:@"jpg" inDirectory:documentsDirectoryPath];
+//    
+////    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
+////    NSURL *urlLink = [NSURL URLWithString:url];
+////    NSURLSessionTask *task = [[NSURLSession sharedSession] dataTaskWithURL:urlLink
+////                                                         completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
+////                              {
+////                                  if (!error)
+////                                  {
+////                                      static int finishedLoads = 0;
+////                                      finishedLoads ++;
+////                                      UIImage *image;
+////                                      if ([urlRequest.URL.pathExtension isEqualToString:@"jpg"] )
+////                                      {
+////                                          NSString *libraryPath = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+////                                          image = [UIImage imageWithData:data];
+////                                          [UIImageJPEGRepresentation(image, 0)  writeToFile:[libraryPath stringByAppendingPathComponent:[[url pathComponents] lastObject]]
+////                                                                                 atomically:YES];
+////                                      }
+////                                  }
+////                                  else
+////                                  {
+////                                      //[self.imageCache removeObjectForKey:[urlRequest.URL absoluteString]];
+////                                      //startedLoads--;
+////                                      
+////                                      NSLog(@"Image error:");
+////                                  }
+////                                  
+////                              }];
+//    
+//    
+//    
+//    
+//}
 
 
 - (NSArray*) parsingOfReceivedDataFromAlbums:(NSDictionary*)dict
