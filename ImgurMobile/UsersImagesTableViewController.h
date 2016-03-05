@@ -15,5 +15,7 @@
 
 @property (strong, nonatomic) NSArray* imagesList;
 
+- (IBAction)backToPreviousPage:(id)sender;
+
 
 @end

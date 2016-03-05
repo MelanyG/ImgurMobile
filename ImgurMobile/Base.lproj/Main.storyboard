@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="DTt-cb-4HE">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="DTt-cb-4HE">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
@@ -2150,34 +2150,66 @@
         <scene sceneID="q4I-l9-m6y">
             <objects>
                 <tableViewController id="xz8-WN-cTC" customClass="UsersImagesTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="130" sectionHeaderHeight="100" sectionFooterHeight="28" id="xGJ-dh-bvy">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="140" sectionHeaderHeight="100" sectionFooterHeight="28" id="xGJ-dh-bvy">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <navigationBar key="tableHeaderView" contentMode="scaleToFill" barStyle="black" id="XWQ-dk-ClO">
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <color key="barTintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <items>
+                                <navigationItem title="Images from Gallery" id="gD9-9h-UQB">
+                                    <barButtonItem key="leftBarButtonItem" title="&lt;&lt;Back" id="TbV-wx-G9K">
+                                        <connections>
+                                            <action selector="backToPreviousPage:" destination="xz8-WN-cTC" id="fvk-n1-bRU"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </navigationItem>
+                            </items>
+                        </navigationBar>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="Cell" id="dPq-FF-MHh" customClass="CustomCellTableViewCell">
-                                <rect key="frame" x="0.0" y="100" width="600" height="130"/>
+                                <rect key="frame" x="0.0" y="144" width="600" height="140"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dPq-FF-MHh" id="j5x-Su-4lB">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="129"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="139"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="713-rG-UIJ">
-                                            <rect key="frame" x="24" y="8" width="410" height="50"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="713-rG-UIJ">
+                                            <rect key="frame" x="24" y="8" width="412" height="50"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="23"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bPJ-1Q-nJN">
-                                            <rect key="frame" x="460" y="0.0" width="125" height="125"/>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bPJ-1Q-nJN">
+                                            <rect key="frame" x="462" y="10" width="125" height="125"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="125" id="3HG-wO-srl"/>
+                                                <constraint firstAttribute="width" constant="125" id="pyK-M1-hDE"/>
+                                            </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xdi-kp-6wQ">
-                                            <rect key="frame" x="24" y="59" width="410" height="50"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xdi-kp-6wQ">
+                                            <rect key="frame" x="24" y="61" width="412" height="50"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="50" id="nID-Vp-ala"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="23"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="xdi-kp-6wQ" firstAttribute="height" secondItem="713-rG-UIJ" secondAttribute="height" id="0Rr-p5-iyN"/>
+                                        <constraint firstItem="713-rG-UIJ" firstAttribute="top" secondItem="j5x-Su-4lB" secondAttribute="top" constant="8" id="1RU-Il-jtD"/>
+                                        <constraint firstItem="bPJ-1Q-nJN" firstAttribute="top" secondItem="j5x-Su-4lB" secondAttribute="top" id="4er-X7-5GQ"/>
+                                        <constraint firstItem="713-rG-UIJ" firstAttribute="leading" secondItem="j5x-Su-4lB" secondAttribute="leading" constant="24" id="Gra-en-l2i"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="xdi-kp-6wQ" secondAttribute="bottom" constant="10" id="rfE-tw-TyS"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="bPJ-1Q-nJN" secondAttribute="trailing" constant="5" id="roc-KT-br8"/>
+                                        <constraint firstItem="bPJ-1Q-nJN" firstAttribute="leading" secondItem="xdi-kp-6wQ" secondAttribute="trailing" constant="26" id="tGA-0X-rlx"/>
+                                        <constraint firstItem="xdi-kp-6wQ" firstAttribute="width" secondItem="713-rG-UIJ" secondAttribute="width" id="ucw-Yz-orP"/>
+                                        <constraint firstItem="xdi-kp-6wQ" firstAttribute="leading" secondItem="j5x-Su-4lB" secondAttribute="leading" constant="24" id="uma-Dx-0VP"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="customDescription" destination="xdi-kp-6wQ" id="cys-DZ-EAD"/>

@@ -23,7 +23,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
- //self.navigationItem.rightBarButtonItem = self.editButtonItem;
+ self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -125,4 +125,8 @@
 }
 */
 
+- (IBAction)backToPreviousPage:(id)sender
+{
+     [self.navigationController popViewControllerAnimated:YES];
+}
 @end
