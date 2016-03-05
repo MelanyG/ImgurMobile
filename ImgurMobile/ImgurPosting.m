@@ -9,6 +9,7 @@
 #import "ImgurPosting.h"
 #import "UserAlbum.h"
 #import "UserImage.h"
+#import "UsersImagesTableViewController.h"
 
 @interface ImgurPosting ()
 
@@ -311,6 +312,10 @@ imgurServerManager*x = [[imgurServerManager alloc]init];
         });
 }
 
+
+
+
+
 -(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"ItemsPosted"])
@@ -318,6 +323,12 @@ imgurServerManager*x = [[imgurServerManager alloc]init];
         ImgurPosting * ipvc = (ImgurPosting *)segue.destinationViewController;
         ipvc.image = self.image;
     }
+    else if ([segue.identifier isEqualToString:@"UsersImagesSegue"])
+    {
+        UsersImagesTableViewController * ipvc = (UsersImagesTableViewController *)segue.destinationViewController;
+        ipvc.imagesList =  self.allUserImages;
+    }
+
 }
 
 

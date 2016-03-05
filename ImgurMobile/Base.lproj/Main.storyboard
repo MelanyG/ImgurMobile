@@ -2048,6 +2048,7 @@
                                         </state>
                                         <connections>
                                             <action selector="loadImagesFromGallery:" destination="fYT-Mq-EMk" eventType="touchUpInside" id="Wmx-3I-EaQ"/>
+                                            <segue destination="xz8-WN-cTC" kind="presentation" identifier="UsersImagesSegue" id="fF0-HJ-arG"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -2115,6 +2116,57 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rrb-Or-YB1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2389" y="-534"/>
+        </scene>
+        <!--Images in Albums-->
+        <scene sceneID="q4I-l9-m6y">
+            <objects>
+                <tableViewController id="xz8-WN-cTC" customClass="UsersImagesTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="130" sectionHeaderHeight="100" sectionFooterHeight="28" id="xGJ-dh-bvy">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="Cell" id="dPq-FF-MHh" customClass="CustomCellTableViewCell">
+                                <rect key="frame" x="0.0" y="100" width="600" height="130"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dPq-FF-MHh" id="j5x-Su-4lB">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="129"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="713-rG-UIJ">
+                                            <rect key="frame" x="24" y="8" width="410" height="50"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bPJ-1Q-nJN">
+                                            <rect key="frame" x="460" y="0.0" width="125" height="125"/>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xdi-kp-6wQ">
+                                            <rect key="frame" x="24" y="59" width="410" height="50"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="customDescription" destination="xdi-kp-6wQ" id="cys-DZ-EAD"/>
+                                    <outlet property="customImage" destination="bPJ-1Q-nJN" id="jzS-xe-NYM"/>
+                                    <outlet property="customTitle" destination="713-rG-UIJ" id="Zhb-pA-cQh"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="xz8-WN-cTC" id="c9e-QT-atA"/>
+                            <outlet property="delegate" destination="xz8-WN-cTC" id="ctT-2f-NtE"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Images in Albums" id="65c-Os-Qq5"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hnJ-D3-dc4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3057" y="-720"/>
         </scene>
         <!--Page Select View Controller-->
         <scene sceneID="ExJ-6C-JPY">
