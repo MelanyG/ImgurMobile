@@ -18,7 +18,7 @@
 @property (weak, nonatomic) IBOutlet UINavigationItem *imageTitel;
 @property (strong, nonatomic) NSString* albumID;
 @property (assign, nonatomic) NSInteger commentsCount;
-@property (strong, nonatomic) NSArray* commentsIDS;
+@property (strong, nonatomic) NSMutableArray* commentsArray;
 
 @property (strong, nonatomic) buttonsVC* buttonsVC;
 
@@ -27,7 +27,7 @@
 
 @property (strong, nonatomic) SocialViewController * socialVCDelegate;
 
-
+- (void)commentsRequest;
 -(void) favoritesRequest;
 -(void) likeRequest;
 -(void) dislikeRequest;

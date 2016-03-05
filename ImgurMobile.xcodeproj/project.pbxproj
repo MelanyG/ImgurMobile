@@ -74,6 +74,9 @@
 		EF1F25101C7C583C0061DD53 /* Like Filled-48.png in Resources */ = {isa = PBXBuildFile; fileRef = EF1F250F1C7C583C0061DD53 /* Like Filled-48.png */; };
 		EF307FDA1C84BD9900F9B006 /* buttonsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EF307FD91C84BD9900F9B006 /* buttonsVC.m */; };
 		EF9C68AE1C8B5F6A00D4DC47 /* GeneralCommentsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9C68AD1C8B5F6A00D4DC47 /* GeneralCommentsTableViewController.m */; };
+		EF9C68B21C8B9AB200D4DC47 /* CommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9C68B01C8B9AB200D4DC47 /* CommentTableViewCell.m */; };
+		EF9C68B31C8B9AB200D4DC47 /* CommentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF9C68B11C8B9AB200D4DC47 /* CommentTableViewCell.xib */; };
+		EF9C68B61C8B9ADC00D4DC47 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9C68B51C8B9ADC00D4DC47 /* Comment.m */; };
 		EFA6C7241C77474E00EA73D5 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFA6C7231C77474E00EA73D5 /* MainViewController.m */; };
 		EFA6C7291C7747A400EA73D5 /* SocialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFA6C7281C7747A400EA73D5 /* SocialViewController.m */; };
 		EFA6C72C1C77485700EA73D5 /* LibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFA6C72B1C77485700EA73D5 /* LibraryViewController.m */; };
@@ -222,6 +225,11 @@
 		EF307FD91C84BD9900F9B006 /* buttonsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = buttonsVC.m; sourceTree = "<group>"; };
 		EF9C68AC1C8B5F6A00D4DC47 /* GeneralCommentsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeneralCommentsTableViewController.h; sourceTree = "<group>"; };
 		EF9C68AD1C8B5F6A00D4DC47 /* GeneralCommentsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneralCommentsTableViewController.m; sourceTree = "<group>"; };
+		EF9C68AF1C8B9AB200D4DC47 /* CommentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentTableViewCell.h; sourceTree = "<group>"; };
+		EF9C68B01C8B9AB200D4DC47 /* CommentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentTableViewCell.m; sourceTree = "<group>"; };
+		EF9C68B11C8B9AB200D4DC47 /* CommentTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentTableViewCell.xib; sourceTree = "<group>"; };
+		EF9C68B41C8B9ADC00D4DC47 /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
+		EF9C68B51C8B9ADC00D4DC47 /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
 		EFA6C7221C77474E00EA73D5 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		EFA6C7231C77474E00EA73D5 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		EFA6C7271C7747A400EA73D5 /* SocialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocialViewController.h; sourceTree = "<group>"; };
@@ -507,8 +515,13 @@
 				EFA6C7281C7747A400EA73D5 /* SocialViewController.m */,
 				EF307FD81C84BD9900F9B006 /* buttonsVC.h */,
 				EF307FD91C84BD9900F9B006 /* buttonsVC.m */,
+				EF9C68B41C8B9ADC00D4DC47 /* Comment.h */,
+				EF9C68B51C8B9ADC00D4DC47 /* Comment.m */,
 				EF9C68AC1C8B5F6A00D4DC47 /* GeneralCommentsTableViewController.h */,
 				EF9C68AD1C8B5F6A00D4DC47 /* GeneralCommentsTableViewController.m */,
+				EF9C68AF1C8B9AB200D4DC47 /* CommentTableViewCell.h */,
+				EF9C68B01C8B9AB200D4DC47 /* CommentTableViewCell.m */,
+				EF9C68B11C8B9AB200D4DC47 /* CommentTableViewCell.xib */,
 			);
 			name = Social;
 			sourceTree = "<group>";
@@ -605,6 +618,7 @@
 				40C4FA721C773BD3003CDB34 /* LaunchScreen.storyboard in Resources */,
 				EFEE040E1C7B43EF0054EEF2 /* Share-48.png in Resources */,
 				40C4FA6F1C773BD3003CDB34 /* Assets.xcassets in Resources */,
+				EF9C68B31C8B9AB200D4DC47 /* CommentTableViewCell.xib in Resources */,
 				40C4FA6D1C773BD3003CDB34 /* Main.storyboard in Resources */,
 				EFEE04151C7B43F90054EEF2 /* Thumbs Down-48.png in Resources */,
 				EF09022C1C77500000D9CF5E /* socialControllerIcon.png in Resources */,
@@ -640,6 +654,7 @@
 				976949B91C848C8D00DE5162 /* imgurAlbum + Description.m in Sources */,
 				6AC562FD1C776C5B006C03C0 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				97305C051C80764200663B6C /* UIImage+animatedGIF.m in Sources */,
+				EF9C68B61C8B9ADC00D4DC47 /* Comment.m in Sources */,
 				404587141C8B2E4C00D5C13D /* UsersImagesTableViewController.m in Sources */,
 				6ACB13E31C7C6CF9004237DD /* FiltersMenuViewController.m in Sources */,
 				6ACB13E61C7C6D0A004237DD /* FontsMenuViewController.m in Sources */,
@@ -680,6 +695,7 @@
 				973F0AE71C7DDF3200C67BCD /* ImgurPost+Description.m in Sources */,
 				6AC562F61C776C5B006C03C0 /* AFNetworkReachabilityManager.m in Sources */,
 				6AC563001C776C5B006C03C0 /* UIImageView+AFNetworking.m in Sources */,
+				EF9C68B21C8B9AB200D4DC47 /* CommentTableViewCell.m in Sources */,
 				404587041C8B259E00D5C13D /* UserImage.m in Sources */,
 				40C4FA891C78BA00003CDB34 /* ImgurAccessToken.m in Sources */,
 				6AC562F41C776C5B006C03C0 /* AFHTTPRequestOperationManager.m in Sources */,

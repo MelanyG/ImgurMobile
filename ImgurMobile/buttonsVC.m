@@ -44,7 +44,7 @@
 
 - (IBAction)commentsAction
 {
-    
+    [self.socialVC commentsRequest];
 }
 
 - (IBAction)likeAction

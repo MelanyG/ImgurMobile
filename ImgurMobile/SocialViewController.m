@@ -10,6 +10,7 @@
 #import "RESTAPI.h"
 #import "ImgurAccessToken.h"
 #import "buttonsVC.h"
+#import "Comment.h"
 
 @interface SocialViewController () <RESTAPIDelegate>
 
@@ -17,7 +18,7 @@
 @property (strong, nonatomic) NSCharacterSet* set;
 @property (strong, nonatomic) NSString* accessToken;
 @property (strong, nonatomic) buttonsVC* bvc;
-
+@property (strong, nonatomic) NSDictionary *receivedData;
 
 
 @end
@@ -56,34 +57,47 @@
     else{
         self.socialImageDescription.text = @"NO DESCRIPTION";
     }
+    self.commentsArray = [[NSMutableArray alloc] init];
     
     //[self httpGetRequest];
 }
 
-- (void)httpGetRequest
+- (void)commentsRequest
 {
-    NSString *str = @"https://api.imgur.com/3/image.json";
-    str = [str stringByAddingPercentEncodingWithAllowedCharacters:self.set];
-    NSURL *url = [NSURL URLWithString:str];
+    
+    NSString* urlString = [NSString stringWithFormat:@"https://api.imgur.com/3/gallery/image/%@/comments", self.imageID];
+    urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:self.set];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setValue:[NSString stringWithFormat:@"Bearer %@", self.accessToken] forHTTPHeaderField:@"Authorization"];
+    [request setHTTPMethod:@"GET"];
+    NSError *error;
+    NSURLResponse *response;
+    NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+    
+    if(returnData)
+    {
+        self.receivedData =[NSJSONSerialization JSONObjectWithData:returnData options:NSJSONReadingAllowFragments error:&error];
+        [self createCommentsArray];
+        
+    }
+
+}
+
+/*- (void)commentsRequest
+{
+    NSString* urlString = [NSString stringWithFormat:@"https://api.imgur.com/3/gallery/image/%@/comments", self.imageID];
+    urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:self.set];
+    NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setValue:[NSString stringWithFormat:@"Bearer %@", self.accessToken] forHTTPHeaderField:@"Authorization"];
     [request setHTTPMethod:@"GET"];
     self.restApi.delegate = self;
     [self.restApi httpRequest:request];
-}
+    [self createCommentsArray];
+}*/
 
-- (void)httpPostRequest
-{
-    NSString *postBody = @"";
-    NSString *str = @"";
-    str = [str stringByAddingPercentEncodingWithAllowedCharacters:self.set];
-    NSURL *url = [NSURL URLWithString:str];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    [request setHTTPMethod:@"POST"];
-    [request setHTTPBody:[postBody dataUsingEncoding:NSUTF8StringEncoding]];
-    self.restApi.delegate = self;
-    [self.restApi httpRequest:request];
-}
+
 
 -(void) favoritesRequest
 {
@@ -127,10 +141,26 @@
 - (void)getReceivedData:(NSMutableData *)data sender:(RESTAPI *)sender
 {
     NSError *error = nil;
-    NSDictionary *receivedData =[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+    self.receivedData =[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
     
 }
-
+- (void)createCommentsArray
+{
+    NSArray* parsedData = [self.receivedData objectForKey:@"data"];
+    self.commentsCount = [parsedData count];
+    
+    for (int i = 0; i < self.commentsCount; i++)
+    {
+        Comment* comment = [[Comment alloc] initWithAuthorID:[[parsedData objectAtIndex:i] objectForKey:@"author_id"]
+                                              withAuthorName:[[parsedData objectAtIndex:i] objectForKey:@"author"]
+                                                 withComment:[[parsedData objectAtIndex:i] objectForKey:@"comment"]
+                                            withAuthorAvatarID:[[parsedData objectAtIndex:i] objectForKey:@"image_id"]
+                                           withCommentPoints:[[parsedData objectAtIndex:i] objectForKey:@"points"]];
+        [self.commentsArray addObject:comment];
+        
+    }
+    
+}
 
 
 
