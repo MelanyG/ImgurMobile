@@ -850,5 +850,26 @@ static NSString* imageID;
                    });
 }
 
+- (void)createMessageWithUser:(NSString *)userName
+                      Message:(NSString *)message
+                   Completion:(void(^)(BOOL success))completion
+{
+    __weak typeof(self) weakSelf = self;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
+                   {
+                       
+                       NSString *url = [weakSelf.URLgenerator getURLForMessageCreationWithUser:userName];
+                       
+                       NSDictionary *loadedDict = [weakSelf.synchLoader createMessageWithURL:url Message:message];
+                       
+                       BOOL success = [weakSelf.parcer getMessageSendingResult:loadedDict];
+                       
+                       dispatch_async(dispatch_get_main_queue(), ^
+                                      {
+                                          completion(success);
+                                      });
+                   });
+}
+
 @end
 

@@ -40,5 +40,6 @@ typedef enum{
 - (NSString *)getComentsIdsForID:(NSString *)identifier URLIsAlbum:(BOOL)isAlbum;
 - (NSString *)getConversationsListURL;
 - (NSString *)getURLForConversationWithID:(NSInteger)identifier Page:(NSInteger)page;
+- (NSString *)getURLForMessageCreationWithUser:(NSString *)userName;
 
 @end

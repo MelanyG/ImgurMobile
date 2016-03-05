@@ -40,6 +40,10 @@ extern NSString * const IMGUR_SERVER_MANAGER_ERROR_KEY;
                       ForPage:(NSInteger)page
                    Completion:(void(^)(ImgurPagedConversation *resp))completion;
 
+- (void)createMessageWithUser:(NSString *)userName
+                      Message:(NSString *)message
+                   Completion:(void(^)(BOOL success))completion;
+
 - (void)uploadPhoto:(NSData*)imageData
               title:(NSString*)title
         description:(NSString*)description
