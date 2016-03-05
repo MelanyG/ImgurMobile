@@ -62,5 +62,16 @@ extern NSString * const IMGUR_SERVER_MANAGER_ERROR_KEY;
            completionBlock:(void(^)(NSString* result))completion
               failureBlock:(void(^)(NSURLResponse *response, NSError *error, NSInteger status))failureBlock;
 
+- (void) deleteImage:(NSString*) access_token
+     completionBlock:(void(^)(NSString* result))completion
+        failureBlock:(void(^)(NSURLResponse *response, NSError *error, NSInteger status))failureBlock;
+
+-(NSDictionary*) loadImagesFromUserGallery:(NSString*) access_token
+                                  username: (NSString*) name
+                           completionBlock:(void(^)(NSString* result))completion
+                              failureBlock:(void(^)(NSURLResponse *response, NSError *error, NSInteger status))failureBlock;
+
+-(NSDictionary*) loadExistingImages:(NSString*) access_token
+                          idOfAlbun:(NSString*) albumId;
 
 @end
