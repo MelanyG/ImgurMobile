@@ -425,38 +425,32 @@ static NSString* imageID;
     
     [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
     
-    [request setTimeoutInterval:30];
+    //[request setTimeoutInterval:30];
     [request setHTTPMethod:@"GET"];
+          NSURLResponse *res = nil;
+      NSError *error = nil;
 
-    [NSURLConnection sendAsynchronousRequest:request
-                                       queue:[NSOperationQueue mainQueue]
-                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
-     {
-         NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-         if ([responseDictionary valueForKeyPath:@"data.error"])
-         {
-             if (failureBlock)
-             {
-                 if (error)
-                 {
-                     
-                   error = [NSError errorWithDomain:@"imguruploader" code:10000 userInfo:@{NSLocalizedFailureReasonErrorKey : [responseDictionary valueForKeyPath:@"data.error"]}];
-                 }
-                 failureBlock(response, error, [[responseDictionary valueForKey:@"status"] intValue]);
-             }
-         }
-         else
-         {
-             if (completion)
-             {
-                 
-                 return completion([responseDictionary valueForKeyPath:@"data"]);
-               
-             }
-             
-         }
-         
-     }];
+    NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:
+                                        [NSURLConnection sendSynchronousRequest:request returningResponse:&res error:&error]
+                                                                       options:NSJSONReadingMutableContainers error:nil];
+    if (!error)
+    {
+        if ([[responseDictionary objectForKey:@"success"] boolValue])
+        {
+            return responseDictionary;
+        }
+        else
+        {
+            NSDictionary *data = [responseDictionary objectForKey:@"data"];
+            
+            
+            return [NSDictionary dictionaryWithObjectsAndKeys:[data objectForKey:@"error"],@"error_status", nil];
+        }
+    }
+    else
+    {
+        return [NSDictionary dictionaryWithObjectsAndKeys:error.localizedDescription,@"error", nil];
+    }
     
 //    NSString *urlString = [NSString stringWithFormat:@"https://api.imgur.com/3/account/%@/albums/",name];
 //    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]];
@@ -512,7 +506,48 @@ static NSString* imageID;
 //    //    {
 //  //return [NSDictionary dictionaryWithObjectsAndKeys:error.localizedDescription,@"error", nil];
 //    //    }
-return nil;
+//return nil;
+}
+
+-(NSDictionary*) loadExistingImages:(NSString*) access_token
+                          idOfAlbun:(NSString*) albumId
+{
+    NSString *urlString = [NSString stringWithFormat:@"https://api.imgur.com/3/album/%@/images",albumId];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init] ;
+    
+    [request setValue:[NSString stringWithFormat:@"Bearer %@", access_token] forHTTPHeaderField:@"Authorization"];
+    
+    [request setURL:[NSURL URLWithString:urlString]];
+    
+    [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
+    
+    [request setTimeoutInterval:30];
+    [request setHTTPMethod:@"GET"];
+    NSURLResponse *res = nil;
+    NSError *error = nil;
+    
+    NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:
+                                        [NSURLConnection sendSynchronousRequest:request returningResponse:&res error:&error]
+                                                                       options:NSJSONReadingMutableContainers error:nil];
+    if (!error)
+    {
+        if ([[responseDictionary objectForKey:@"success"] boolValue])
+        {
+            return responseDictionary;
+        }
+        else
+        {
+            NSDictionary *data = [responseDictionary objectForKey:@"data"];
+            
+            
+            return [NSDictionary dictionaryWithObjectsAndKeys:[data objectForKey:@"error"],@"error_status", nil];
+        }
+    }
+    else
+    {
+        return [NSDictionary dictionaryWithObjectsAndKeys:error.localizedDescription,@"error", nil];
+    }
+  
 }
 
 

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		400E64E01C8215F600B85330 /* ProcessingRequestsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 400E64DF1C8215F600B85330 /* ProcessingRequestsViewController.m */; };
 		404586FB1C89F5D600D5C13D /* UserAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 404586FA1C89F5D600D5C13D /* UserAlbum.m */; };
+		404586FE1C8B03FC00D5C13D /* UserImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 404586FD1C8B03FC00D5C13D /* UserImage.m */; };
 		404D9C441C7A141E0063B912 /* ImgurPosting.m in Sources */ = {isa = PBXBuildFile; fileRef = 404D9C431C7A141E0063B912 /* ImgurPosting.m */; };
 		40B42AFF1C8858E200B76F8F /* LocalGalleryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 40B42AFE1C8858E200B76F8F /* LocalGalleryViewController.m */; };
 		40C4FA641C773BD3003CDB34 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 40C4FA631C773BD3003CDB34 /* main.m */; };
@@ -81,6 +82,8 @@
 		400E64DF1C8215F600B85330 /* ProcessingRequestsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProcessingRequestsViewController.m; path = ../ProcessingRequestsViewController.m; sourceTree = "<group>"; };
 		404586F91C89F5D600D5C13D /* UserAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserAlbum.h; sourceTree = "<group>"; };
 		404586FA1C89F5D600D5C13D /* UserAlbum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserAlbum.m; sourceTree = "<group>"; };
+		404586FC1C8B03FC00D5C13D /* UserImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserImage.h; sourceTree = "<group>"; };
+		404586FD1C8B03FC00D5C13D /* UserImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserImage.m; sourceTree = "<group>"; };
 		404D9C421C7A141E0063B912 /* ImgurPosting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImgurPosting.h; sourceTree = "<group>"; };
 		404D9C431C7A141E0063B912 /* ImgurPosting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImgurPosting.m; sourceTree = "<group>"; };
 		40B42AFD1C8858E200B76F8F /* LocalGalleryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalGalleryViewController.h; sourceTree = "<group>"; };
@@ -358,6 +361,8 @@
 				404586FA1C89F5D600D5C13D /* UserAlbum.m */,
 				6AC5630D1C778AF9006C03C0 /* imgurPost.h */,
 				6AC5630E1C778AF9006C03C0 /* imgurPost.m */,
+				404586FC1C8B03FC00D5C13D /* UserImage.h */,
+				404586FD1C8B03FC00D5C13D /* UserImage.m */,
 				40C4FA8D1C78CB80003CDB34 /* imgurUser.h */,
 				40C4FA8E1C78CB80003CDB34 /* ImgurUser.m */,
 			);
@@ -577,6 +582,7 @@
 				6ACB13E61C7C6D0A004237DD /* FontsMenuViewController.m in Sources */,
 				6AC563061C77893A006C03C0 /* imgurJSONParser.m in Sources */,
 				40C4FA8F1C78CB80003CDB34 /* ImgurUser.m in Sources */,
+				404586FE1C8B03FC00D5C13D /* UserImage.m in Sources */,
 				6AC562F91C776C5B006C03C0 /* AFURLRequestSerialization.m in Sources */,
 				6AC562FC1C776C5B006C03C0 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				6AEFD2D41C7BABAA00ADF2FC /* URLGen.m in Sources */,
