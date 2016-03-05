@@ -14,14 +14,16 @@
 @interface UsersImagesTableViewController ()
 
 @property (strong, nonatomic) UserImage* currentImage;
+@property (strong, nonatomic) NSString* documentsDirectoryPath;
 
 @end
 
 @implementation UsersImagesTableViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
-    
+ //self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -43,25 +45,42 @@
     return [self.imagesList count];
 }
 
+-(UIImage *) getImageFromURL:(NSString *)fileURL
+{
+    UIImage * result;
+    
+    NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:fileURL]];
+    result = [UIImage imageWithData:data];
+    
+    return result;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    self.documentsDirectoryPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     CustomCellTableViewCell *customCell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
     self.currentImage = self.imagesList[indexPath.row];
     NSString* title = self.currentImage.title;
     NSString* description = self.currentImage.descriptionImage;
     NSString* imageName = self.currentImage.link;
+    UIImage * imageFromURL = [self getImageFromURL:imageName];
+    //UIImage * imageFromWeb = [self loadImage:imageName ofType:@"jpg" inDirectory:self.documentsDirectoryPath];
+    
     
    // UIImage* image = [UIImage imageNamed:imageName];
     customCell.customTitle.text = title;
     customCell.customDescription.text = description;
-  //customCell.customImage.image = image;
-    
+  customCell.customImage.image = imageFromURL;
+   // [customCell.customImage.image setObject:image forKey:[imageName absoluteString]];
     return customCell;
 }
 
-
+-(UIImage *) loadImage:(NSString *)fileName ofType:(NSString *)extension inDirectory:(NSString *)directoryPath {
+    UIImage * result = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@.%@", directoryPath, fileName, extension]];
+    
+    return result;
+}
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {

@@ -238,7 +238,7 @@
     {//if there is image in cache setImage
         static int i = 0;
         i++;
-        NSLog(@"images cache used %d", i);
+        //NSLog(@"images cache used %d", i);
         [tempCell.imageView setImage: [self.imageCache objectForKey:post.imageURL]];
 
     }
@@ -281,7 +281,7 @@
                                       {
                                           static int finishedLoads = 0;
                                           finishedLoads ++;
-                                          NSLog(@"loads started: %d ------- loads finished: %d", startedLoads, finishedLoads);
+                                          //NSLog(@"loads started: %d ------- loads finished: %d", startedLoads, finishedLoads);
                                           UIImage *image;
                                           if ([urlRequest.URL.pathExtension isEqualToString:@"gif"] )
                                           {
