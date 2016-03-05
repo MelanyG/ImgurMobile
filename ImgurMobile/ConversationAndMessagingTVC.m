@@ -25,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *messageInputField;
 
 @property (weak, nonatomic) IBOutlet UITextField *receiverInputField;
+@property (weak, nonatomic) IBOutlet UILabel *currentPageLabel;
 
 @property (strong, nonatomic) imgurServerManager *manager;
 
@@ -72,6 +73,12 @@
          self.conversation = resp;
          [self.tableView reloadData];
      }];
+}
+
+- (IBAction)previousPage:(UIButton *)sender {
+}
+
+- (IBAction)nextPage:(UIButton *)sender {
 }
 
 - (IBAction)sendMessage:(UIButton *)sender
