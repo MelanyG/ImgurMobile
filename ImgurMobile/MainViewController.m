@@ -19,7 +19,7 @@
 #import "SocialViewController.h"
 #import "PageSelectViewController.h"
 
-#import "UIImage+animatedGIF.h"
+#import "UIImage+Animation.h"
 
 @interface MainViewController ()
 @property (strong, nonatomic) UIActivityIndicatorView *activityIndicator;
@@ -49,8 +49,6 @@
      if ([[NSDate date] compare:self.token.expirationDate] == NSOrderedAscending)
  {
      NSLog(@"Access token is valid!");
-     
-     
  }
      else
      {
@@ -86,15 +84,9 @@
               NSLog(@"Err details: %@", [error description]);
           });
       }];
-
      }
-
         [super viewDidLoad];
      // self.navigationItem.title = self.token.userName;
-    
-
-    
-    
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -115,7 +107,6 @@
         self.pageNumber = 0;
         [self reloadPage];
     }
-
 }
 
 
@@ -170,6 +161,32 @@
      }];
 }
 
+-(UIImage *) imageThumbnailWithImage:(UIImage *) image
+{
+    CGSize newSize = [self aspectFillSizeFromSize:image.size];
+    
+    UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
+    [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+}
+
+-(CGSize) aspectFillSizeFromSize:(CGSize) size
+{
+    CGSize newSize;
+    if (size.height > size.width)
+    {
+        newSize = CGSizeMake(100, size.height/(size.width/100));
+    }
+    else
+    {
+        newSize = CGSizeMake(size.width/(size.height/100), 100);
+    }
+    return newSize;
+}
+
+
 #pragma mark- UICollectionViewDataSource
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -196,8 +213,6 @@
         tempCell.pointsLabel.text = [post.points stringValue];
     }
     
-
-    
     if ([self.imageCache objectForKey:post.imageURL])
     {//if there is image in cache setImage
         static int i = 0;
@@ -207,16 +222,31 @@
 
     }
     else if ([[NSFileManager defaultManager] fileExistsAtPath:[[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:[[post.imageURL pathComponents] lastObject]]])
-    {
+    {//if there is no thumbnail in cache mb there is one on disk ?
         NSString *path = [[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:[[post.imageURL pathComponents]lastObject]];
+        
+        NSString *libraryThumbPath = [[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbnails"];
+        if ([[NSFileManager defaultManager] fileExistsAtPath:[libraryThumbPath stringByAppendingPathComponent:[[post.imageURL pathComponents] lastObject]]])
+        {
+            path = [libraryThumbPath stringByAppendingPathComponent:[[post.imageURL pathComponents] lastObject]];
+        }
+
         [tempCell.imageView setImage:[UIImage imageNamed:@"placeholder"]];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             NSData *imageData = [NSData dataWithContentsOfFile:path];
             UIImage *image;
             if ([[path pathExtension] isEqualToString:@"gif"])
-                image = [UIImage animatedImageWithAnimatedGIFData:imageData];
+                image = [UIImage animatedImageWithAnimatedGIFData:imageData toSize:CGSizeMake(100, 100)]; 
             else
+            {
                 image = [UIImage imageWithData:imageData];
+                if (![[NSFileManager defaultManager] fileExistsAtPath:[libraryThumbPath stringByAppendingPathComponent:[[post.imageURL pathComponents] lastObject]]] )
+                {
+                    image = [self imageThumbnailWithImage:image];
+                    [UIImageJPEGRepresentation(image, 0) writeToFile:[libraryThumbPath stringByAppendingPathComponent:[[post.imageURL pathComponents] lastObject]] atomically:YES];
+                }
+                
+            }
             [self.imageCache setObject:image forKey:post.imageURL];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [tempCell.imageView setImage: image];
@@ -252,7 +282,7 @@
                                               NSString *libraryPath = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0];
                                               [data writeToFile:[libraryPath stringByAppendingPathComponent:[[post.imageURL pathComponents] lastObject]]
                                                      atomically:YES];
-                                              image = [UIImage animatedImageWithAnimatedGIFData:data];
+                                              image = [UIImage animatedImageWithAnimatedGIFData:data toSize:CGSizeMake(100, 100)];
                                               
                                           }
                                           else
@@ -261,6 +291,10 @@
                                               image = [UIImage imageWithData:data];
                                               [UIImageJPEGRepresentation(image, 0)  writeToFile:[libraryPath stringByAppendingPathComponent:[[post.imageURL pathComponents] lastObject]]
                                                                                      atomically:YES];
+                                              libraryPath = [libraryPath stringByAppendingPathComponent:@"thumbnails"];
+                                              [UIImageJPEGRepresentation([self imageThumbnailWithImage:image], 0)  writeToFile:[libraryPath stringByAppendingPathComponent:[[post.imageURL pathComponents] lastObject]]
+                                                                                      atomically:YES];
+                                              
                                           }
                                           [self.imageCache setObject:image forKey:[urlRequest.URL absoluteString]];
                                           dispatch_async(dispatch_get_main_queue(),
