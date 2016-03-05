@@ -139,4 +139,10 @@
     return url;
 }
 
+- (NSString *)getURLForMessageCreationWithUser:(NSString *)userName
+{
+    NSString *url = [NSString stringWithFormat:@"%@conversations/%@", self.baseURL, userName];
+    return url;
+}
+
 @end

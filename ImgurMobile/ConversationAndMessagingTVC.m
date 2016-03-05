@@ -15,6 +15,9 @@
 
 @interface ConversationAndMessagingTVC ()
 
+@property (assign, nonatomic) double FONT_SIZE;
+@property (assign, nonatomic) double MESSAGE_WIDTH;
+
 @property (strong, nonatomic) ImgurAccessToken *accessToken;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -52,20 +55,44 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.FONT_SIZE = 14;
+    self.MESSAGE_WIDTH = self.view.frame.size.width - 110;
+    
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    [self reloadData];
+}
+
+- (void)reloadData
+{
     [self.manager getConversationWithID:self.currentConversationID
                                 ForPage:1
                              Completion:^(ImgurPagedConversation *resp)
-    {
-        self.conversation = resp;
-        [self.tableView reloadData];
-    }];
+     {
+         self.conversation = resp;
+         [self.tableView reloadData];
+     }];
 }
 
 - (IBAction)sendMessage:(UIButton *)sender
 {
-    
+    if ([self.messageInputField.text length] != 0)
+    [self.manager createMessageWithUser:self.currentConversationUserName
+                                Message:self.messageInputField.text
+                             Completion:^(BOOL success)
+    {
+        [self reloadData];
+    }];
+    else
+    {
+        CAKeyframeAnimation* colorAnim = [CAKeyframeAnimation animationWithKeyPath:@"borderColor"];
+        NSArray* colorValues = [NSArray arrayWithObjects:(id)[UIColor greenColor].CGColor,
+                                (id)[UIColor redColor].CGColor, (id)[UIColor blueColor].CGColor,  nil];
+        colorAnim.values = colorValues;
+        colorAnim.calculationMode = kCAAnimationPaced;
+        
+        [self.messageInputField.layer addAnimation:colorAnim forKey:@"colorAnim"];
+    }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -115,5 +142,19 @@
     }
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
+{
+    NSInteger index = indexPath.row;
+    
+    NSDictionary *messageDict = [self.conversation.messages objectAtIndex:index];
+    
+    NSString *message = [messageDict objectForKey:@"message"];
+    
+    CGSize size = [message sizeWithFont:[UIFont systemFontOfSize:self.FONT_SIZE] constrainedToSize:CGSizeMake(self.MESSAGE_WIDTH, 20000000000)];
+    
+    CGFloat height = MAX(size.height, 50);
+    
+    return height;
+}
 
 @end

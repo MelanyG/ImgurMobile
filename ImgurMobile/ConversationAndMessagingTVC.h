@@ -12,4 +12,6 @@
 
 @property (assign, nonatomic) NSInteger currentConversationID;
 
+@property (strong, nonatomic) NSString *currentConversationUserName;
+
 @end

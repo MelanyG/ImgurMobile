@@ -114,6 +114,11 @@
     return pagedConversation;
 }
 
+- (BOOL)getMessageSendingResult:(NSDictionary *)dict
+{
+    BOOL success = [[dict objectForKey:@"success"] boolValue];
+    return success;
+}
 
 
 /*
