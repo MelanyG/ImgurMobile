@@ -84,6 +84,7 @@
     ConversationAndMessagingTVC * ConversationAMTVC = (ConversationAndMessagingTVC *)[sb instantiateViewControllerWithIdentifier:@"ConversationAndMessagingTVC"];
     
     ConversationAMTVC.currentConversationID = previewConversation.conversationId;
+    ConversationAMTVC.currentConversationUserName = previewConversation.receiverName;
     
     [self.navigationController pushViewController:ConversationAMTVC animated:YES];
 }

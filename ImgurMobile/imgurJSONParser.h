@@ -25,4 +25,6 @@
 
 - (ImgurPagedConversation *)getConversationFromResponceDict:(NSDictionary *)dict;
 
+- (BOOL)getMessageSendingResult:(NSDictionary *)dict;
+
 @end
