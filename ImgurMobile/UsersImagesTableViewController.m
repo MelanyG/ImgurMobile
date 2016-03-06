@@ -24,6 +24,8 @@
 {
     [super viewDidLoad];
  self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -59,6 +61,11 @@
 {
     self.documentsDirectoryPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     CustomCellTableViewCell *customCell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    
+    if ( indexPath.row % 2 == 0 )
+        customCell.backgroundColor = [UIColor grayColor];
+    else
+        customCell.backgroundColor = [UIColor darkGrayColor];
     
     self.currentImage = self.imagesList[indexPath.row];
     NSString* title = self.currentImage.title;
@@ -127,6 +134,6 @@
 
 - (IBAction)backToPreviousPage:(id)sender
 {
-     [self.navigationController popViewControllerAnimated:YES];
+    [[self presentingViewController] dismissViewControllerAnimated:NO completion:nil];
 }
 @end
