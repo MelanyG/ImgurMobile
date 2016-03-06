@@ -12,6 +12,7 @@
 @class buttonsVC;
 
 @interface SocialViewController : UIViewController
+
 @property (weak, nonatomic) IBOutlet UIImageView *socialImage;
 @property (strong, nonatomic) NSString* imageID;
 @property (weak, nonatomic) IBOutlet UITextView *socialImageDescription;
@@ -31,5 +32,6 @@
 -(void) favoritesRequest;
 -(void) likeRequest;
 -(void) dislikeRequest;
+- (NSString*)getAutherAvatarIDWithID:(NSString*) avatarID;
 
 @end

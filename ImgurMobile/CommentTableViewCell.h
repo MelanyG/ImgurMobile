@@ -10,4 +10,11 @@
 
 @interface CommentTableViewCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UILabel *autherName;
+@property (weak, nonatomic) IBOutlet UITextView *autherComment;
+
+- (IBAction)likeCommentAction;
+
+- (IBAction)dislikeCommentAction;
+
 @end

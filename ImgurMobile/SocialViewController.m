@@ -59,7 +59,8 @@
     }
     self.commentsArray = [[NSMutableArray alloc] init];
     
-    //[self httpGetRequest];
+
+    
 }
 
 - (void)commentsRequest
@@ -82,6 +83,27 @@
         
     }
 
+}
+
+- (NSString*)getAutherAvatarIDWithID:(NSString*) avatarID
+{
+    
+    NSString* urlString = [NSString stringWithFormat:@"https://api.imgur.com/3/image/%@", avatarID];
+    urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:self.set];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setValue:[NSString stringWithFormat:@"Bearer %@", self.accessToken] forHTTPHeaderField:@"Authorization"];
+    [request setHTTPMethod:@"GET"];
+    NSError *error;
+    NSURLResponse *response;
+    NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+    NSString* data;
+    if(returnData)
+    {
+        self.receivedData =[NSJSONSerialization JSONObjectWithData:returnData options:NSJSONReadingAllowFragments error:&error];
+        data = [[self.receivedData objectForKey:@"data"] objectForKey:@"link"];
+    }
+    return data;
 }
 
 /*- (void)commentsRequest

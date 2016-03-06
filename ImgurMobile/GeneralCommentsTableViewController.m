@@ -7,6 +7,9 @@
 //
 
 #import "GeneralCommentsTableViewController.h"
+#import "CommentTableViewCell.h"
+#import "SocialViewController.h"
+#import "Comment.h"
 
 @interface GeneralCommentsTableViewController ()
 
@@ -17,39 +20,61 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    [self.tableView registerNib:[ UINib nibWithNibName:NSStringFromClass([CommentTableViewCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([CommentTableViewCell class ])];
+    [self.tableView reloadData];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
-    return 0;
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
-    return 0;
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [self.socialVC.commentsArray count];
 }
 
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     
-    // Configure the cell...
+    /*static NSString* identifier = @"Cell";
+    CommentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     
+    if (!cell)
+    {
+        cell = [[CommentTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
+    }*/
+    CommentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([CommentTableViewCell class]) forIndexPath:indexPath];
+    
+    Comment* comment = [self.socialVC.commentsArray objectAtIndex:indexPath.row];
+    
+    cell.autherComment.text = comment.comment;
+    cell.autherName.text = comment.authorName;
+    /*dispatch_async(dispatch_get_global_queue(0,0), ^{
+        NSData * data = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: [self.socialVC getAutherAvatarIDWithID:comment.authorAvatarID]]];
+        if ( data == nil )
+            return;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            cell.autherAvatar = (UIImageView*)[UIImage imageWithData: data];
+            [tableView reloadData];
+        });
+    });*/
+    
+    
+   
     return cell;
+    
 }
-*/
+
+-(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 130.5;
+}
 
 /*
 // Override to support conditional editing of the table view.
