@@ -106,9 +106,9 @@
 
 - (void)showNewMessageVC
 {
-    NewMessageViewController *newMessageVC = [[NewMessageViewController alloc] init];
-    newMessageVC.delegate = self;
-    [self.navigationController pushViewController:newMessageVC animated:YES];
+    NewConversationVC *conversationVC = [[NewConversationVC alloc] init];
+    conversationVC.delegate = self;
+    [self.navigationController pushViewController:conversationVC animated:YES];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView

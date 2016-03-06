@@ -29,7 +29,6 @@
 		6A6E1AD81C89DF9F00C9E666 /* ImgurPagedConversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A6E1AD71C89DF9F00C9E666 /* ImgurPagedConversation.m */; };
 		6A8EE19C1C834AD7002DF4B6 /* UIImageView+imageRectGetter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A8EE19B1C834AD6002DF4B6 /* UIImageView+imageRectGetter.m */; };
 		6AA3C7DE1C78A513001091F0 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AA3C7DD1C78A513001091F0 /* CoreImage.framework */; };
-		6AA41EE21C8C57EF00DC54A3 /* NewMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AA41EE01C8C57EF00DC54A3 /* NewMessageViewController.m */; };
 		6AC562F31C776C5B006C03C0 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AC562CF1C776C5B006C03C0 /* AFHTTPRequestOperation.m */; };
 		6AC562F41C776C5B006C03C0 /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AC562D11C776C5B006C03C0 /* AFHTTPRequestOperationManager.m */; };
 		6AC562F51C776C5B006C03C0 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AC562D31C776C5B006C03C0 /* AFHTTPSessionManager.m */; };
@@ -50,6 +49,8 @@
 		6AC563061C77893A006C03C0 /* imgurJSONParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AC563051C77893A006C03C0 /* imgurJSONParser.m */; };
 		6AC5630C1C778A64006C03C0 /* imgurAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AC5630B1C778A64006C03C0 /* imgurAlbum.m */; };
 		6AC5630F1C778AF9006C03C0 /* imgurPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AC5630E1C778AF9006C03C0 /* imgurPost.m */; };
+		6AC6C30E1C8CD93C005ACC15 /* NewConversationVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AC6C30C1C8CD93C005ACC15 /* NewConversationVC.m */; };
+		6AC6C30F1C8CD93C005ACC15 /* NewConversationVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6AC6C30D1C8CD93C005ACC15 /* NewConversationVC.xib */; };
 		6ACB13E01C7C6CDD004237DD /* SettingsMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6ACB13DF1C7C6CDD004237DD /* SettingsMenuViewController.m */; };
 		6ACB13E31C7C6CF9004237DD /* FiltersMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6ACB13E21C7C6CF9004237DD /* FiltersMenuViewController.m */; };
 		6ACB13E61C7C6D0A004237DD /* FontsMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6ACB13E51C7C6D0A004237DD /* FontsMenuViewController.m */; };
@@ -139,9 +140,6 @@
 		6A8EE19A1C834AD6002DF4B6 /* UIImageView+imageRectGetter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+imageRectGetter.h"; sourceTree = "<group>"; };
 		6A8EE19B1C834AD6002DF4B6 /* UIImageView+imageRectGetter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+imageRectGetter.m"; sourceTree = "<group>"; };
 		6AA3C7DD1C78A513001091F0 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
-		6AA41EDF1C8C57EF00DC54A3 /* NewMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewMessageViewController.h; sourceTree = "<group>"; };
-		6AA41EE01C8C57EF00DC54A3 /* NewMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewMessageViewController.m; sourceTree = "<group>"; };
-		6AA41EE11C8C57EF00DC54A3 /* NewMessageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewMessageViewController.xib; sourceTree = "<group>"; };
 		6AC562CE1C776C5B006C03C0 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
 		6AC562CF1C776C5B006C03C0 /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
 		6AC562D01C776C5B006C03C0 /* AFHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperationManager.h; sourceTree = "<group>"; };
@@ -184,6 +182,9 @@
 		6AC5630B1C778A64006C03C0 /* imgurAlbum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = imgurAlbum.m; sourceTree = "<group>"; };
 		6AC5630D1C778AF9006C03C0 /* imgurPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = imgurPost.h; sourceTree = "<group>"; };
 		6AC5630E1C778AF9006C03C0 /* imgurPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = imgurPost.m; sourceTree = "<group>"; };
+		6AC6C30B1C8CD93C005ACC15 /* NewConversationVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewConversationVC.h; sourceTree = "<group>"; };
+		6AC6C30C1C8CD93C005ACC15 /* NewConversationVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewConversationVC.m; sourceTree = "<group>"; };
+		6AC6C30D1C8CD93C005ACC15 /* NewConversationVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewConversationVC.xib; sourceTree = "<group>"; };
 		6ACB13DE1C7C6CDD004237DD /* SettingsMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsMenuViewController.h; sourceTree = "<group>"; };
 		6ACB13DF1C7C6CDD004237DD /* SettingsMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsMenuViewController.m; sourceTree = "<group>"; };
 		6ACB13E11C7C6CF9004237DD /* FiltersMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FiltersMenuViewController.h; sourceTree = "<group>"; };
@@ -478,9 +479,9 @@
 				6ADA0C5E1C89FF75008F2F62 /* MessageFromTableViewCell.m */,
 				6ADA0C601C89FFA7008F2F62 /* MessageInTableViewCell.h */,
 				6ADA0C611C89FFA7008F2F62 /* MessageInTableViewCell.m */,
-				6AA41EDF1C8C57EF00DC54A3 /* NewMessageViewController.h */,
-				6AA41EE01C8C57EF00DC54A3 /* NewMessageViewController.m */,
-				6AA41EE11C8C57EF00DC54A3 /* NewMessageViewController.xib */,
+				6AC6C30B1C8CD93C005ACC15 /* NewConversationVC.h */,
+				6AC6C30C1C8CD93C005ACC15 /* NewConversationVC.m */,
+				6AC6C30D1C8CD93C005ACC15 /* NewConversationVC.xib */,
 			);
 			name = Conversation;
 			sourceTree = "<group>";
@@ -653,6 +654,7 @@
 				40C4FA6D1C773BD3003CDB34 /* Main.storyboard in Resources */,
 				EFEE04151C7B43F90054EEF2 /* Thumbs Down-48.png in Resources */,
 				EF09022C1C77500000D9CF5E /* socialControllerIcon.png in Resources */,
+				6AC6C30F1C8CD93C005ACC15 /* NewConversationVC.xib in Resources */,
 				EFEE040D1C7B43EF0054EEF2 /* Settings Filled-50.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -708,6 +710,7 @@
 				97AEA2361C7B20DA0010CD99 /* NotChalengingQueue.m in Sources */,
 				EF01F69F1C8CCF100088CA3A /* ImageTableViewController.m in Sources */,
 				6ADA0C591C89FEE3008F2F62 /* ConversationAndMessagingTVC.m in Sources */,
+				6AC6C30E1C8CD93C005ACC15 /* NewConversationVC.m in Sources */,
 				976842251C7C8D6700F613B5 /* imgurCell.m in Sources */,
 				40B42AFF1C8858E200B76F8F /* LocalGalleryViewController.m in Sources */,
 				970416231C85D57100B5C4F6 /* PageSelectViewController.m in Sources */,
@@ -722,7 +725,6 @@
 				6AC562F51C776C5B006C03C0 /* AFHTTPSessionManager.m in Sources */,
 				EFA6C7291C7747A400EA73D5 /* SocialViewController.m in Sources */,
 				6ADA0C5C1C89FF3F008F2F62 /* PreviewTableViewCell.m in Sources */,
-				6AA41EE21C8C57EF00DC54A3 /* NewMessageViewController.m in Sources */,
 				6AEFD2D11C7BAB2700ADF2FC /* ImgurLoader.m in Sources */,
 				6AC563031C776C5B006C03C0 /* UIWebView+AFNetworking.m in Sources */,
 				4045870D1C8B27B800D5C13D /* ImgurPosting.m in Sources */,
