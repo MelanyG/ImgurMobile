@@ -6,6 +6,11 @@
 //  Copyright © 2016 Melany. All rights reserved.
 //
 
+#define IDIOM    UI_USER_INTERFACE_IDIOM()
+#define IPAD     UIUserInterfaceIdiomPad
+#define IPHONE   UIUserInterfaceIdiomPhone
+
+
 #import "NewMessageViewController.h"
 #import "imgurServerManager.h"
 
@@ -13,13 +18,115 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *receiverNameField;
 
-@property (weak, nonatomic) IBOutlet UITextField *messageField;
+@property (weak, nonatomic) IBOutlet UITextView *messageField;
+//@property (assign, nonatomic) double messageHeight;
+@property (assign, nonatomic) double OFFSET_FOR_KEYBOARD;
 
 @property (strong, nonatomic) imgurServerManager *manager;
 
 @end
 
 @implementation NewMessageViewController
+
+-(void)keyboardWillShow
+{
+    if (self.view.frame.origin.y >= 0)
+    {
+        [self setViewMovedUp:YES];
+    }
+    else if (self.view.frame.origin.y < 0)
+    {
+        [self setViewMovedUp:NO];
+    }
+}
+
+-(void)keyboardWillHide
+{
+    if (self.view.frame.origin.y >= 0)
+    {
+        [self setViewMovedUp:YES];
+    }
+    else if (self.view.frame.origin.y < 0)
+    {
+        [self setViewMovedUp:NO];
+    }
+}
+
+-(void)textFieldDidBeginEditing:(UITextField *)sender
+{
+    if ([sender isEqual:self.messageField])
+    {
+        if  (self.view.frame.origin.y >= 0)
+        {
+            [self setViewMovedUp:YES];
+        }
+    }
+}
+
+-(void)setViewMovedUp:(BOOL)movedUp
+{
+    if (self.messageField.isFirstResponder)
+    {
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationDuration:0.3];
+        
+        CGRect rect = self.view.frame;
+        if (movedUp)
+        {
+            rect.origin.y -= self.OFFSET_FOR_KEYBOARD;
+            rect.size.height += self.OFFSET_FOR_KEYBOARD;
+        }
+        else
+        {
+            rect.origin.y += self.OFFSET_FOR_KEYBOARD;
+            rect.size.height -= self.OFFSET_FOR_KEYBOARD;
+        }
+        self.view.frame = rect;
+        /*
+        double messageHeight;
+        if (movedUp)
+        {
+            messageHeight = self.view.frame.size.height * 2 / 3;
+        }
+        else
+        {
+            messageHeight = self.messageHeight;
+        }
+        self.messageField.frame = CGRectMake(self.messageField.frame.origin.x,
+                                             self.messageField.frame.origin.y,
+                                             self.messageField.frame.size.width,
+                                             messageHeight);*/
+        
+        [UIView commitAnimations];
+    }
+}
+
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIKeyboardWillShowNotification
+                                                  object:nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIKeyboardWillHideNotification
+                                                  object:nil];
+}
 
 - (void)viewDidLoad
 {
@@ -28,7 +135,29 @@
     if ([self respondsToSelector:@selector(edgesForExtendedLayout)])
         self.edgesForExtendedLayout = UIRectEdgeNone;
     
+    //self.messageHeight = self.messageField.frame.size.height;
+    
+    if (IDIOM == IPAD)
+    {
+        self.OFFSET_FOR_KEYBOARD = 150;
+    }
+    else if (IDIOM == IPHONE)
+    {
+        self.OFFSET_FOR_KEYBOARD = 500;
+    }
+    
+    
     self.navigationItem.title = @"New mesage";
+}
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    [self.view endEditing:YES];
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [self.view endEditing:YES];
 }
 
 - (imgurServerManager *)manager
