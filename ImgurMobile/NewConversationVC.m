@@ -28,6 +28,38 @@
 
 @implementation NewConversationVC
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    if ([self respondsToSelector:@selector(edgesForExtendedLayout)])
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+    
+    if (IDIOM == IPAD)
+    {
+#warning wrong
+        self.OFFSET_FOR_KEYBOARD = 150;
+    }
+    else if (IDIOM == IPHONE)
+    {
+        self.OFFSET_FOR_KEYBOARD = 500;
+    }
+    
+    
+    self.navigationItem.title = @"New mesage";
+}
+
+
 -(void)keyboardWillShow
 {
     if (self.view.frame.origin.y >= 0)
@@ -101,54 +133,6 @@
     }
 }
 
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillShow)
-                                                 name:UIKeyboardWillShowNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillHide)
-                                                 name:UIKeyboardWillHideNotification
-                                               object:nil];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UIKeyboardWillShowNotification
-                                                  object:nil];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UIKeyboardWillHideNotification
-                                                  object:nil];
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    if ([self respondsToSelector:@selector(edgesForExtendedLayout)])
-        self.edgesForExtendedLayout = UIRectEdgeNone;
-    
-    //self.messageHeight = self.messageField.frame.size.height;
-    
-    if (IDIOM == IPAD)
-    {
-        self.OFFSET_FOR_KEYBOARD = 150;
-    }
-    else if (IDIOM == IPHONE)
-    {
-        self.OFFSET_FOR_KEYBOARD = 500;
-    }
-    
-    
-    self.navigationItem.title = @"New mesage";
-}
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {

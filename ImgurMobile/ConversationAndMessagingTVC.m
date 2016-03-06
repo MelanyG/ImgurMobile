@@ -22,13 +22,17 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-@property (weak, nonatomic) IBOutlet UITextField *messageInputField;
+@property (weak, nonatomic) IBOutlet UITextView *messageInputField;
 
 @property (weak, nonatomic) IBOutlet UILabel *currentPageLabel;
 
 @property (strong, nonatomic) imgurServerManager *manager;
 
 @property (strong, nonatomic) ImgurPagedConversation *conversation;
+
+@property (assign, nonatomic) double OFFSET_FOR_KEYBOARD;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *inputViewBottomConstraint;
 
 @end
 
@@ -58,10 +62,24 @@
     self.FONT_SIZE = 14;
     self.MESSAGE_WIDTH = self.view.frame.size.width - 110;
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillChange:)
+                                                 name:UIKeyboardDidShowNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+    
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self reloadData];
     self.navigationItem.title = self.conversation.receiverName;
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)reloadData
@@ -73,15 +91,40 @@
      {
          weakSelf.conversation = resp;
          weakSelf.messageInputField.text = nil;
-         weakSelf.currentPageLabel.text = [NSString stringWithFormat:@"%d page",self.conversation.page - 1];
+         weakSelf.currentPageLabel.text = [NSString stringWithFormat:@"%ld page",self.conversation.page - 1];
          [weakSelf.tableView reloadData];
      }];
 }
 
 - (void)updateData
 {
-    self.currentPageLabel.text = [NSString stringWithFormat:@"%d page",self.conversation.page - 1];
+    self.currentPageLabel.text = [NSString stringWithFormat:@"%ld page",self.conversation.page - 1];
     [self.tableView reloadData];
+}
+
+- (void)keyboardWillChange:(NSNotification *)notification
+{
+    NSDictionary* keyboardInfo = [notification userInfo];
+    NSValue* keyboardFrameBegin = [keyboardInfo valueForKey:UIKeyboardFrameBeginUserInfoKey];
+    CGRect keyboardFrameBeginRect = [keyboardFrameBegin CGRectValue];
+    self.OFFSET_FOR_KEYBOARD = keyboardFrameBeginRect.size.height;
+    [self animateChangingOfConstraint:self.inputViewBottomConstraint ToValue:self.OFFSET_FOR_KEYBOARD WithDuration:0];
+}
+
+-(void)keyboardWillHide
+{
+    [self animateChangingOfConstraint:self.inputViewBottomConstraint ToValue:0 WithDuration:0.8];
+}
+
+- (void)animateChangingOfConstraint:(NSLayoutConstraint *)constraint ToValue:(CGFloat)value WithDuration:(double)duration
+{
+    constraint.constant = value;
+    [self.view setNeedsUpdateConstraints];
+    
+    [UIView animateWithDuration:duration animations:^
+     {
+         [self.view layoutIfNeeded];
+     }];
 }
 
 - (IBAction)previousPage:(UIButton *)sender
@@ -152,7 +195,7 @@
     NSDictionary *message = [self.conversation.messages objectAtIndex:index];
     NSInteger messageOwnerId = [[message objectForKey:@"FromUserID"] integerValue];
     
-    if ([self.accessToken.accountID isEqualToString:[NSString stringWithFormat:@"%d", messageOwnerId]])//current user's message
+    if ([self.accessToken.accountID isEqualToString:[NSString stringWithFormat:@"%ld", (long)messageOwnerId]])//current user's message
     {
         MessageFromTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:fromIdentifier];
         [self configureCell:cell WithDictionary:message atIndexPath:indexPath];
@@ -172,10 +215,12 @@
     if ([cell isKindOfClass:[MessageFromTableViewCell class]])
     {
         ((MessageFromTableViewCell *)cell).messageLabel.text = [message objectForKey:@"message"];
+        ((MessageFromTableViewCell *)cell).fromLabel.text = [message objectForKey:@"FromUserName"];
     }
     else if ([cell isKindOfClass:[MessageInTableViewCell class]])
     {
         ((MessageInTableViewCell *)cell).messageLabel.text = [message objectForKey:@"message"];
+        ((MessageInTableViewCell *)cell).fromLabel.text = [message objectForKey:@"FromUserName"];
     }
 }
 
@@ -189,7 +234,7 @@
     
     CGSize size = [message sizeWithFont:[UIFont systemFontOfSize:self.FONT_SIZE] constrainedToSize:CGSizeMake(self.MESSAGE_WIDTH, 20000000000)];
     
-    CGFloat height = MAX(size.height, 50);
+    CGFloat height = MAX(size.height + 45, 100);
     
     return height;
 }
