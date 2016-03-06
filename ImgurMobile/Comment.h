@@ -15,11 +15,14 @@
 @property (strong, nonatomic) NSString* comment;
 @property (strong, nonatomic) NSString* authorAvatarID;
 @property (strong, nonatomic) NSString* commentPoints;
+@property (strong, nonatomic) NSString* commentID;
+
 
 -(instancetype) initWithAuthorID:(NSString*) authorID
                   withAuthorName:(NSString*) authorName
                      withComment:(NSString*) comment
                 withAuthorAvatarID:(NSString*) avatar
-               withCommentPoints:(NSString*) commentPoints;
+               withCommentPoints:(NSString*) commentPoints
+                   withCommentID:(NSString*) commentID;
 
 @end

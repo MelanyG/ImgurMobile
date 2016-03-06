@@ -119,7 +119,30 @@
     [self createCommentsArray];
 }*/
 
-
+-(void) likeCommentRequestByID:(NSString*) commentID
+{
+    NSString* urlString = [NSString stringWithFormat:@"https://api.imgur.com/3/comment/%@/vote/up", commentID];
+    urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:self.set];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setValue:[NSString stringWithFormat:@"Bearer %@", self.accessToken] forHTTPHeaderField:@"Authorization"];
+    [request setHTTPMethod:@"POST"];
+    self.restApi.delegate = self;
+    [self.restApi httpRequest:request];
+    
+}
+-(void) dislikeCommentRequestByID:(NSString*) commentID
+{
+    NSString* urlString = [NSString stringWithFormat:@"https://api.imgur.com/3/comment/%@/vote/down", commentID];
+    urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:self.set];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setValue:[NSString stringWithFormat:@"Bearer %@", self.accessToken] forHTTPHeaderField:@"Authorization"];
+    [request setHTTPMethod:@"POST"];
+    self.restApi.delegate = self;
+    [self.restApi httpRequest:request];
+    
+}
 
 -(void) favoritesRequest
 {
@@ -177,7 +200,8 @@
                                               withAuthorName:[[parsedData objectAtIndex:i] objectForKey:@"author"]
                                                  withComment:[[parsedData objectAtIndex:i] objectForKey:@"comment"]
                                             withAuthorAvatarID:[[parsedData objectAtIndex:i] objectForKey:@"image_id"]
-                                           withCommentPoints:[[parsedData objectAtIndex:i] objectForKey:@"points"]];
+                                           withCommentPoints:[[parsedData objectAtIndex:i] objectForKey:@"points"]
+                                               withCommentID:[[parsedData objectAtIndex:i] objectForKey:@"id"]];
         [self.commentsArray addObject:comment];
         
     }
