@@ -20,7 +20,7 @@
 @property (strong, nonatomic) NSString* albumID;
 @property (assign, nonatomic) NSInteger commentsCount;
 @property (strong, nonatomic) NSMutableArray* commentsArray;
-
+@property (strong, nonatomic) NSString* commentToPost;
 @property (strong, nonatomic) buttonsVC* buttonsVC;
 
 @property (strong, nonatomic) imgurPost * post;
@@ -35,5 +35,6 @@
 - (NSString*)getAutherAvatarIDWithID:(NSString*) avatarID;
 -(void) likeCommentRequestByID:(NSString*) commentID;
 -(void) dislikeCommentRequestByID:(NSString*) commentID;
+-(void) postComment;
 
 @end

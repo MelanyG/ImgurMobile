@@ -30,7 +30,8 @@
     }
     else if ([segue.identifier isEqualToString:@"commentsSegue"])
     {
-        self.commentsVC = (GeneralCommentsTableViewController*)segue.destinationViewController;
+        UINavigationController* navVC = (UINavigationController*)segue.destinationViewController;
+        self.commentsVC = (GeneralCommentsTableViewController*)[navVC topViewController];
         self.commentsVC.socialVC = self.socialVC;
     }
     
