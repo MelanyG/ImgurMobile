@@ -22,9 +22,6 @@
                         </constraints>
                         <color key="tintColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
                         <state key="normal" title="commnentLikeButton" backgroundImage="Thumb Up-48.png"/>
-                        <connections>
-                            <action selector="likeCommentAction" destination="KGk-i7-Jjw" eventType="touchUpInside" id="yww-5n-mes"/>
-                        </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Km-QZ-pBd">
                         <rect key="frame" x="282" y="85" width="30" height="30.5"/>
@@ -34,9 +31,6 @@
                         </constraints>
                         <color key="tintColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
                         <state key="normal" title="commentDislikeButton" backgroundImage="Thumbs Down-48.png"/>
-                        <connections>
-                            <action selector="dislikeCommentAction" destination="KGk-i7-Jjw" eventType="touchUpInside" id="et8-7m-5jj"/>
-                        </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Auther:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N8O-Zf-7PN">
                         <rect key="frame" x="8" y="17" width="64" height="21"/>
@@ -83,6 +77,8 @@
             <connections>
                 <outlet property="autherComment" destination="RV8-xL-nvr" id="xqe-eC-M4H"/>
                 <outlet property="autherName" destination="rvb-KE-YJi" id="jDI-Gy-wfi"/>
+                <outlet property="dislikeOutlet" destination="3Km-QZ-pBd" id="vPy-CU-bUZ"/>
+                <outlet property="likeOutlet" destination="XqS-qh-YBd" id="9jW-Mn-rwi"/>
             </connections>
             <point key="canvasLocation" x="495" y="364.5"/>
         </tableViewCell>

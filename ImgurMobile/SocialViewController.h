@@ -33,5 +33,7 @@
 -(void) likeRequest;
 -(void) dislikeRequest;
 - (NSString*)getAutherAvatarIDWithID:(NSString*) avatarID;
+-(void) likeCommentRequestByID:(NSString*) commentID;
+-(void) dislikeCommentRequestByID:(NSString*) commentID;
 
 @end

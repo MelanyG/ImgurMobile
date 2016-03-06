@@ -17,6 +17,7 @@
                     withComment:(NSString*) comment
                withAuthorAvatarID:(NSString*) avatar
               withCommentPoints:(NSString*) commentPoints
+                   withCommentID:(NSString *)commentID
 {
     self = [super init];
     if (self) {
@@ -25,6 +26,7 @@
         self.comment = comment;
         self.authorAvatarID = avatar;
         self.commentPoints = commentPoints;
+        self.commentID = commentID;
     }
     return self;
 }
