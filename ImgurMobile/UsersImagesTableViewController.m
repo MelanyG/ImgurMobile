@@ -23,9 +23,22 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
- self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    NSShadow *shadow = [[NSShadow alloc] init];
+    shadow.shadowColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.8];
+    shadow.shadowOffset = CGSizeMake(0, 1);
+    [[UINavigationBar appearance] setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys:
+                                                           [UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0], NSForegroundColorAttributeName,
+                                                           shadow, NSShadowAttributeName,
+                                                           [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:21.0], NSFontAttributeName, nil]];
     
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
     
+   
 }
 
 - (void)didReceiveMemoryWarning {
@@ -72,6 +85,7 @@
     NSString* description = self.currentImage.descriptionImage;
     NSString* imageName = self.currentImage.link;
     UIImage * imageFromURL = [self getImageFromURL:imageName];
+    NSString* albumName = self.currentImage.albumName;
     //UIImage * imageFromWeb = [self loadImage:imageName ofType:@"jpg" inDirectory:self.documentsDirectoryPath];
     
     
@@ -79,6 +93,7 @@
     customCell.customTitle.text = title;
     customCell.customDescription.text = description;
   customCell.customImage.image = imageFromURL;
+    customCell.customAlbumName.text = albumName;
    // [customCell.customImage.image setObject:image forKey:[imageName absoluteString]];
     return customCell;
 }
