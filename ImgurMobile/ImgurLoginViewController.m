@@ -203,6 +203,11 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
     return YES;
 }
 
+-(void)webViewDidFinishLoad:(UIWebView *)webView {
+    
+    //[self.webView removeFromSuperview];
+    NSLog(@"finish");
+}
 
 
 #pragma mark - Actions
