@@ -13,7 +13,7 @@
 
 @interface SocialViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet UIImageView *socialImage;
+
 @property (strong, nonatomic) NSString* imageID;
 @property (weak, nonatomic) IBOutlet UITextView *socialImageDescription;
 @property (weak, nonatomic) IBOutlet UINavigationItem *imageTitel;

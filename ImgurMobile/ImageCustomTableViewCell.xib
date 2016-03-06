@@ -1,18 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="ImageCustomTableViewCell">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="322" id="KGk-i7-Jjw" customClass="ImageCustomTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="322"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="321.5"/>
                 <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="M30-Bb-xmT">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="321.5"/>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="M30-Bb-xmT" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="4L0-uQ-coT"/>
+                    <constraint firstAttribute="trailing" secondItem="M30-Bb-xmT" secondAttribute="trailing" id="QdJ-vW-f8y"/>
+                    <constraint firstAttribute="bottom" secondItem="M30-Bb-xmT" secondAttribute="bottom" id="TgD-yD-zYy"/>
+                    <constraint firstItem="M30-Bb-xmT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="f4u-qz-XVU"/>
+                </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="cellSocialImage" destination="M30-Bb-xmT" id="rvB-Va-EmB"/>
+            </connections>
+            <point key="canvasLocation" x="308" y="264"/>
         </tableViewCell>
     </objects>
 </document>

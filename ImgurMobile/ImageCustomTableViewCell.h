@@ -10,4 +10,6 @@
 
 @interface ImageCustomTableViewCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UIImageView *cellSocialImage;
+
 @end
