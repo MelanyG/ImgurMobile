@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class SocialViewController;
+
 @interface ImageTableViewController : UITableViewController
+
+@property (strong, nonatomic) SocialViewController* socialVC;
 
 @end

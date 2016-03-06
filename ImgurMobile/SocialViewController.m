@@ -11,6 +11,7 @@
 #import "ImgurAccessToken.h"
 #import "buttonsVC.h"
 #import "Comment.h"
+#import "ImageTableViewController.h"
 
 @interface SocialViewController () <RESTAPIDelegate>
 
@@ -19,7 +20,7 @@
 @property (strong, nonatomic) NSString* accessToken;
 @property (strong, nonatomic) buttonsVC* bvc;
 @property (strong, nonatomic) NSDictionary *receivedData;
-
+@property (strong, nonatomic) ImageTableViewController* imageTableVC;
 
 @end
 
@@ -31,6 +32,11 @@
     {
         self.bvc = (buttonsVC*)segue.destinationViewController;
         self.bvc.socialVC = self.socialVCDelegate;
+    }
+    else if ([segue.identifier isEqualToString:@"socialContainerViewSegue"])
+    {
+        self.imageTableVC = (ImageTableViewController*)segue.destinationViewController;
+        self.imageTableVC.socialVC = self.socialVCDelegate;
     }
     
 }
