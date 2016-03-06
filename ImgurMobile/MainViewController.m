@@ -407,7 +407,7 @@
      if ([segue.identifier isEqualToString:@"SocialVC"])
      {
          SocialViewController * svc = segue.destinationViewController;
-         //self.bvc = [[buttonsVC alloc] init];
+         
          svc.socialVCDelegate = svc;
          //[svc.socialImage setImage:self.selectedImage];
          
