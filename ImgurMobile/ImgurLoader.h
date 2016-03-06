@@ -16,4 +16,6 @@
 
 - (NSDictionary *)createMessageWithURL:(NSString *)urlString Message:(NSString *)message;
 
+- (NSDictionary *)deleteConversationWithURL:(NSString *)urlString;
+
 @end

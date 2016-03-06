@@ -82,19 +82,6 @@
     
     [request setHTTPMethod:@"POST"];
     
-    /*[request setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-     
-     
-     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
-     message,@"message", nil];
-     
-     NSData* jsonData = [NSJSONSerialization dataWithJSONObject:dict options:0 error:nil];
-     
-     request.HTTPBody = jsonData;*/
-    
-    //[request setHTTPBody:[message dataUsingEncoding:NSUTF8StringEncoding]];
-
-    
     NSMutableData *body = [[NSMutableData alloc] init];
     
     NSString *boundary = @"---------------------------0983745982375409872438752038475287";
@@ -112,15 +99,46 @@
     [body appendData:[[NSString stringWithFormat:@"--%@--\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
     
     [request setHTTPBody:body];
+
+    NSURLResponse *res = nil;
+    NSError *error = nil;
     
+    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&res error:&error];
     
+    NSDictionary *responceDict;
     
+    if (data)
+        responceDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
     
+    if (!error)
+    {
+        if ([[responceDict objectForKey:@"success"] boolValue])
+        {
+            return responceDict;
+        }
+        else
+        {
+            NSDictionary *data = [responceDict objectForKey:@"data"];
+            
+            
+            return [NSDictionary dictionaryWithObjectsAndKeys:[data objectForKey:@"error"],@"error_status", nil];
+        }
+    }
+    else
+    {
+        return [NSDictionary dictionaryWithObjectsAndKeys:error.localizedDescription,@"error", nil];
+    }
+}
+
+- (NSDictionary *)deleteConversationWithURL:(NSString *)urlString
+{
+    self.token = [ImgurAccessToken sharedToken].token;
     
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]];
     
+    [request setValue:[NSString stringWithFormat:@"Bearer %@", self.token] forHTTPHeaderField:@"Authorization"];
     
-    
-    //[request setHTTPBody:[NSData dataWithBytes:[message UTF8String] length:strlen([message UTF8String])]];
+    [request setHTTPMethod:@"DELETE"];
     
     NSURLResponse *res = nil;
     NSError *error = nil;

@@ -42,7 +42,10 @@ extern NSString * const IMGUR_SERVER_MANAGER_ERROR_KEY;
 
 - (void)createMessageWithUser:(NSString *)userName
                       Message:(NSString *)message
-                   Completion:(void(^)(BOOL success))completion;
+                   Completion:(void(^)(NSDictionary *dict))completion;
+
+- (void)deleteConversationWithID:(NSInteger)identifier
+                      Completion:(void(^)(NSDictionary *dict))completion;
 
 - (void)uploadPhoto:(NSData*)imageData
               title:(NSString*)title

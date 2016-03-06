@@ -728,9 +728,15 @@ static NSString* imageID;
                        
                        NSDictionary *loadedDict = [weakSelf.synchLoader loadJSONFromURL:url];
                        if ([loadedDict objectForKey:IMGUR_SERVER_MANAGER_ERROR_KEY])
-                           completion(loadedDict);
+                           dispatch_async(dispatch_get_main_queue(), ^
+                                          {
+                                              completion(loadedDict);
+                                          });
                        else if ([loadedDict objectForKey:IMGUR_SERVER_MANAGER_STATUS_KEY])
-                           completion(loadedDict);
+                           dispatch_async(dispatch_get_main_queue(), ^
+                                          {
+                                              completion(loadedDict);
+                                          });
                        else
                        {
                            NSDictionary *parcedDict = [weakSelf.parcer getPostsFromresponceDictionary:loadedDict];
@@ -852,7 +858,7 @@ static NSString* imageID;
 
 - (void)createMessageWithUser:(NSString *)userName
                       Message:(NSString *)message
-                   Completion:(void(^)(BOOL success))completion
+                   Completion:(void(^)(NSDictionary *dict))completion
 {
     __weak typeof(self) weakSelf = self;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
@@ -862,11 +868,55 @@ static NSString* imageID;
                        
                        NSDictionary *loadedDict = [weakSelf.synchLoader createMessageWithURL:url Message:message];
                        
+                       if ([loadedDict objectForKey:IMGUR_SERVER_MANAGER_ERROR_KEY])
+                           dispatch_async(dispatch_get_main_queue(), ^
+                                          {
+                                              completion(loadedDict);
+                                          });
+                       else if ([loadedDict objectForKey:IMGUR_SERVER_MANAGER_STATUS_KEY])
+                           dispatch_async(dispatch_get_main_queue(), ^
+                                          {
+                                              completion(loadedDict);
+                                          });
+                       
                        BOOL success = [weakSelf.parcer getMessageSendingResult:loadedDict];
                        
                        dispatch_async(dispatch_get_main_queue(), ^
                                       {
-                                          completion(success);
+                                          completion([NSDictionary dictionaryWithObjectsAndKeys:
+                                                      [NSNumber numberWithBool:success], @"success", nil]);
+                                      });
+                   });
+}
+
+- (void)deleteConversationWithID:(NSInteger)identifier
+                      Completion:(void(^)(NSDictionary *dict))completion
+{
+    __weak typeof(self) weakSelf = self;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
+                   {
+                       
+                       NSString *url = [weakSelf.URLgenerator getURLDeletionOfConversationWithID:identifier];
+                       
+                       NSDictionary *loadedDict = [weakSelf.synchLoader deleteConversationWithURL:url];
+                       
+                       if ([loadedDict objectForKey:IMGUR_SERVER_MANAGER_ERROR_KEY])
+                           dispatch_async(dispatch_get_main_queue(), ^
+                                          {
+                                              completion(loadedDict);
+                                          });
+                       else if ([loadedDict objectForKey:IMGUR_SERVER_MANAGER_STATUS_KEY])
+                           dispatch_async(dispatch_get_main_queue(), ^
+                                          {
+                                              completion(loadedDict);
+                                          });
+                       
+                       BOOL success = [weakSelf.parcer getMessageSendingResult:loadedDict];
+                       
+                       dispatch_async(dispatch_get_main_queue(), ^
+                                      {
+                                          completion([NSDictionary dictionaryWithObjectsAndKeys:
+                                                      [NSNumber numberWithBool:success], @"success", nil]);
                                       });
                    });
 }

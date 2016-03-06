@@ -29,6 +29,8 @@
 		6A6E1AD81C89DF9F00C9E666 /* ImgurPagedConversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A6E1AD71C89DF9F00C9E666 /* ImgurPagedConversation.m */; };
 		6A8EE19C1C834AD7002DF4B6 /* UIImageView+imageRectGetter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A8EE19B1C834AD6002DF4B6 /* UIImageView+imageRectGetter.m */; };
 		6AA3C7DE1C78A513001091F0 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AA3C7DD1C78A513001091F0 /* CoreImage.framework */; };
+		6AA41EE21C8C57EF00DC54A3 /* NewMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AA41EE01C8C57EF00DC54A3 /* NewMessageViewController.m */; };
+		6AA41EE31C8C57EF00DC54A3 /* NewMessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6AA41EE11C8C57EF00DC54A3 /* NewMessageViewController.xib */; };
 		6AC562F31C776C5B006C03C0 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AC562CF1C776C5B006C03C0 /* AFHTTPRequestOperation.m */; };
 		6AC562F41C776C5B006C03C0 /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AC562D11C776C5B006C03C0 /* AFHTTPRequestOperationManager.m */; };
 		6AC562F51C776C5B006C03C0 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AC562D31C776C5B006C03C0 /* AFHTTPSessionManager.m */; };
@@ -135,6 +137,9 @@
 		6A8EE19A1C834AD6002DF4B6 /* UIImageView+imageRectGetter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+imageRectGetter.h"; sourceTree = "<group>"; };
 		6A8EE19B1C834AD6002DF4B6 /* UIImageView+imageRectGetter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+imageRectGetter.m"; sourceTree = "<group>"; };
 		6AA3C7DD1C78A513001091F0 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+		6AA41EDF1C8C57EF00DC54A3 /* NewMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewMessageViewController.h; sourceTree = "<group>"; };
+		6AA41EE01C8C57EF00DC54A3 /* NewMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewMessageViewController.m; sourceTree = "<group>"; };
+		6AA41EE11C8C57EF00DC54A3 /* NewMessageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewMessageViewController.xib; sourceTree = "<group>"; };
 		6AC562CE1C776C5B006C03C0 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
 		6AC562CF1C776C5B006C03C0 /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
 		6AC562D01C776C5B006C03C0 /* AFHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperationManager.h; sourceTree = "<group>"; };
@@ -466,6 +471,9 @@
 				6ADA0C5E1C89FF75008F2F62 /* MessageFromTableViewCell.m */,
 				6ADA0C601C89FFA7008F2F62 /* MessageInTableViewCell.h */,
 				6ADA0C611C89FFA7008F2F62 /* MessageInTableViewCell.m */,
+				6AA41EDF1C8C57EF00DC54A3 /* NewMessageViewController.h */,
+				6AA41EE01C8C57EF00DC54A3 /* NewMessageViewController.m */,
+				6AA41EE11C8C57EF00DC54A3 /* NewMessageViewController.xib */,
 			);
 			name = Conversation;
 			sourceTree = "<group>";
@@ -699,6 +707,7 @@
 				6AC562F51C776C5B006C03C0 /* AFHTTPSessionManager.m in Sources */,
 				EFA6C7291C7747A400EA73D5 /* SocialViewController.m in Sources */,
 				6ADA0C5C1C89FF3F008F2F62 /* PreviewTableViewCell.m in Sources */,
+				6AA41EE21C8C57EF00DC54A3 /* NewMessageViewController.m in Sources */,
 				6AEFD2D11C7BAB2700ADF2FC /* ImgurLoader.m in Sources */,
 				6AC563031C776C5B006C03C0 /* UIWebView+AFNetworking.m in Sources */,
 				4045870D1C8B27B800D5C13D /* ImgurPosting.m in Sources */,

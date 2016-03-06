@@ -41,5 +41,6 @@ typedef enum{
 - (NSString *)getConversationsListURL;
 - (NSString *)getURLForConversationWithID:(NSInteger)identifier Page:(NSInteger)page;
 - (NSString *)getURLForMessageCreationWithUser:(NSString *)userName;
+- (NSString *)getURLDeletionOfConversationWithID:(NSInteger)identifier;
 
 @end
