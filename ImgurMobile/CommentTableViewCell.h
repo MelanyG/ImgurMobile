@@ -12,9 +12,11 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *autherName;
 @property (weak, nonatomic) IBOutlet UITextView *autherComment;
+@property (weak, nonatomic) IBOutlet UIButton *likeOutlet;
+@property (weak, nonatomic) IBOutlet UIButton *dislikeOutlet;
 
-- (IBAction)likeCommentAction;
 
-- (IBAction)dislikeCommentAction;
+
+
 
 @end
