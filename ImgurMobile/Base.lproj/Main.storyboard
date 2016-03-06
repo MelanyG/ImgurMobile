@@ -288,6 +288,7 @@
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="LogInButton" destination="qUn-1i-mrO" id="0VL-qT-OG1"/>
                         <outlet property="LogOutButton" destination="ahR-jK-SMv" id="k9k-yi-0ig"/>
                         <outlet property="collectionView" destination="h89-6k-lz1" id="vIF-SI-cbQ"/>
                     </connections>
