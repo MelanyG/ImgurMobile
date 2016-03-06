@@ -36,9 +36,38 @@
     [super viewDidLoad];
     [self.manager getAllConversationsPreviewForCurrentUserCompletion:^(NSArray *resp)
     {
-        self.conversationPreviewsArray = resp;
-        [self.tableView reloadData];
+        if ([resp count] == 0)
+            self.navigationItem.title = @"No Conversations";
+        else
+        {
+            self.conversationPreviewsArray = resp;
+            [self.tableView reloadData];
+            self.navigationItem.title = @"Conversations";
+        }
     }];
+    [self addNavButton];
+}
+
+- (void)addNavButton
+{
+    CGRect ImageRect = CGRectMake(0, 0, 30, 30);
+    
+    UIImage *messageImage = [UIImage imageNamed:@"new_message"];
+    UIButton *messageButton = [[UIButton alloc] initWithFrame:ImageRect];
+    [messageButton setBackgroundImage:messageImage forState:UIControlStateNormal];
+    [messageButton addTarget:self
+                    action:@selector(showNewMessageVC)
+          forControlEvents:UIControlEventTouchUpInside];
+    [messageButton setShowsTouchWhenHighlighted:YES];
+    
+    UIBarButtonItem *messageBarButton = [[UIBarButtonItem alloc] initWithCustomView:messageButton];
+    
+    self.navigationItem.rightBarButtonItems = @[messageBarButton];
+}
+
+- (void)showNewMessageVC
+{
+    
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -71,8 +100,6 @@
     cell.withWhomYouComunicate.text = previewConversation.receiverName;
     cell.messageLabel.text = previewConversation.lastMessage;
 }
-
-
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {

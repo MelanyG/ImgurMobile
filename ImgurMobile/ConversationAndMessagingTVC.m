@@ -24,7 +24,6 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *messageInputField;
 
-@property (weak, nonatomic) IBOutlet UITextField *receiverInputField;
 @property (weak, nonatomic) IBOutlet UILabel *currentPageLabel;
 
 @property (strong, nonatomic) imgurServerManager *manager;
@@ -62,23 +61,54 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self reloadData];
+    self.navigationItem.title = self.conversation.receiverName;
 }
 
 - (void)reloadData
 {
+    __weak typeof(self) weakSelf = self;
     [self.manager getConversationWithID:self.currentConversationID
                                 ForPage:1
                              Completion:^(ImgurPagedConversation *resp)
      {
-         self.conversation = resp;
-         [self.tableView reloadData];
+         weakSelf.conversation = resp;
+         weakSelf.messageInputField.text = nil;
+         weakSelf.currentPageLabel.text = [NSString stringWithFormat:@"Page:%d",self.conversation.page - 1];
+         [weakSelf.tableView reloadData];
      }];
 }
 
-- (IBAction)previousPage:(UIButton *)sender {
+- (void)updateData
+{
+    self.currentPageLabel.text = [NSString stringWithFormat:@"Page:%d",self.conversation.page - 1];
+    [self.tableView reloadData];
 }
 
-- (IBAction)nextPage:(UIButton *)sender {
+- (IBAction)previousPage:(UIButton *)sender
+{
+    __weak typeof(self) weakSelf = self;
+    [self.manager getConversationWithID:self.currentConversationID
+                                ForPage:self.conversation.page
+                             Completion:^(ImgurPagedConversation *resp)
+     {
+         if ([resp.messages count] == 0)
+             return;
+         
+         weakSelf.conversation = resp;
+         [weakSelf updateData];
+     }];
+}
+
+- (IBAction)nextPage:(UIButton *)sender
+{
+    __weak typeof(self) weakSelf = self;
+    [self.manager getConversationWithID:self.currentConversationID
+                                ForPage:self.conversation.page - 2
+                             Completion:^(ImgurPagedConversation *resp)
+     {
+         weakSelf.conversation = resp;
+         [weakSelf updateData];
+     }];
 }
 
 - (IBAction)sendMessage:(UIButton *)sender
