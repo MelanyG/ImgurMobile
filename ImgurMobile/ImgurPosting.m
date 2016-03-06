@@ -17,6 +17,7 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *commentTextField;
 
+@property (strong, nonatomic) UIActivityIndicatorView *spinner;
 @property (strong, nonatomic) ImgurAccessToken* token;
 @property (weak, nonatomic) IBOutlet UIPickerView *selectedTopic;
 @property (strong, nonatomic) NSArray* array;
@@ -36,14 +37,18 @@
     self.token = [ImgurAccessToken sharedToken];
     self.navigationItem.title = @"Post";
    self.currentImage.image = self.image;
- //    UIBarButtonItem* plus =
-//    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
-//                                                  target:self
-//                                                  action:@selector(postActionSelected)];
-    // Two buttons at the right side of nav bar
-//    UIBarButtonItem *addAttachButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(postActionSelected)];
-//    UIBarButtonItem *sendButton = [[UIBarButtonItem alloc] initWithTitle:@"Share" style:UIBarButtonItemStylePlain target:self action:@selector(ShareWithCommunity:)];
-//    self.navigationItem.rightBarButtonItems = @[addAttachButton,sendButton];
+    self.spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    [self.spinner setCenter:CGPointMake(self.view.frame.size.width/2.0, self.view.frame.size.height/2.0)]; // I do this because I'm in landscape mode
+    [self.view addSubview:self.spinner]; // spinner is not visible until started
+    NSShadow *shadow = [[NSShadow alloc] init];
+    shadow.shadowColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.8];
+    shadow.shadowOffset = CGSizeMake(0, 1);
+    [[UINavigationBar appearance] setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys:
+                                                           [UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0], NSForegroundColorAttributeName,
+                                                           shadow, NSShadowAttributeName,
+                                                           [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:21.0], NSFontAttributeName, nil]];
+    
+    //[self.navigationItem.title setTintColor:[UIColor whiteColor]];
     
     
     self.sharedButton.enabled = NO;
@@ -92,6 +97,7 @@ self.topic = [self.array objectAtIndex:row];
     NSString *title = [[self titleTextField] text];
     NSString *description = [[self commentTextField] text];
     self.sharedButton.enabled = NO;
+    [self.spinner startAnimating];
 
          [x shareImageWithImgurCommunity:title
                              description:description
@@ -109,6 +115,7 @@ self.topic = [self.array objectAtIndex:row];
             [av show];
                         NSLog(@"%@",result);
             self.sharedButton.enabled = YES;
+            [self.spinner stopAnimating];
 });
     } failureBlock:^(NSURLResponse *response, NSError *error, NSInteger status) {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -122,7 +129,7 @@ self.topic = [self.array objectAtIndex:row];
            NSLog(@"%@", [error localizedDescription]);
            NSLog(@"Err details: %@", [error description]);
             self.sharedButton.enabled = YES;
-
+[self.spinner stopAnimating];
        });
    }];
     
@@ -171,7 +178,7 @@ self.topic = [self.array objectAtIndex:row];
     
     NSDictionary* temp;
     temp = [[NSDictionary alloc]initWithDictionary:[self receiveDataOfAlbums]];
-    
+       [self.spinner startAnimating];
     
     self.albumObjects = [NSArray arrayWithArray:[self parsingOfReceivedDataFromAlbums:temp]];
     NSInteger qtyOfAlbums = [self.albumObjects count];
@@ -188,7 +195,7 @@ self.topic = [self.array objectAtIndex:row];
     self.allUserImages = [NSArray arrayWithArray:[self parsingImageData:array
                                                   albumData:self.albumObjects]];
 
-    
+ 
 }
 
 
@@ -341,6 +348,7 @@ imgurServerManager*x = [[imgurServerManager alloc]init];
 
 - (IBAction)postActionSelected:(UIButton *)sender
 {
+    [self.spinner startAnimating];
   NSString *title = [[self titleTextField] text];
   NSString *description = [[self commentTextField] text];
     self.postButton.enabled = NO;
@@ -369,7 +377,9 @@ imgurServerManager*x = [[imgurServerManager alloc]init];
                   self.sharedButton.enabled = YES;
                     self.postButton.enabled = YES;
                    self.deleteImageSelected.enabled = YES;
-                  NSLog(@"%@",result);                         });
+                  NSLog(@"%@",result);
+                   [self.spinner stopAnimating];
+               });
            }
                failureBlock:^(NSURLResponse *response, NSError *error, NSInteger status)
             {
@@ -384,10 +394,12 @@ imgurServerManager*x = [[imgurServerManager alloc]init];
                    NSLog(@"%@", [error localizedDescription]);
                    NSLog(@"Err details: %@", [error description]);
                    self.postButton.enabled = YES;
+                   [self.spinner stopAnimating];
                });
            }];
             
         });
+    
 }
 
 

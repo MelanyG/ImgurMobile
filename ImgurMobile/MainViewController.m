@@ -23,6 +23,7 @@
 
 @interface MainViewController ()
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *LogInButton;
 @property (strong, nonatomic) UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *LogOutButton;
 @property (retain, nonatomic ) NSTimer* m_Timer;
@@ -56,54 +57,64 @@
                name:LoginNotification
              object:nil];
     
+    if(self.token.refresh_token)
+    {
+        if ([[NSDate date] compare:self.token.expirationDate] == NSOrderedAscending)
+        {
+            NSLog(@"Access token is valid!");
+            self.LogInButton.enabled = NO;
+            
+        }
+        else
+        {
+            imgurServerManager*x = [imgurServerManager sharedManager];
+            
+            [x updateAccessToken:self.token.refresh_token
+                    access_token: self.token.token
+                 completionBlock:^(NSString *result)
+             {
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+                     UIAlertView *av = [[UIAlertView alloc]
+                                        initWithTitle:@"Sucessfully received access_token!"
+                                        message:@"Go ahead!!!"
+                                        delegate:nil
+                                        cancelButtonTitle:@"OK"
+                                        otherButtonTitles:nil];
+                     [av show];
+                     //self.sharedButton.enabled = YES;
+                     NSLog(@"%@",result);
+                 self.LogInButton.enabled = NO;
+                 });
+             }
+                    failureBlock:^(NSURLResponse *response, NSError *error, NSInteger status)
+             {
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+                     
+                     [[[UIAlertView alloc] initWithTitle:@"Upload Failed"
+                                                 message:[NSString stringWithFormat:@"%@ (Status code %ld)", [error localizedDescription], (long)status]
+                                                delegate:nil
+                                       cancelButtonTitle:nil
+                                       otherButtonTitles:@"OK", nil] show];
+                     NSLog(@"%@", [error localizedDescription]);
+                     NSLog(@"Err details: %@", [error description]);
+                     
+                 });
+             }];
+            
+        }
+    }
+    else
+    {
+        self.loginVC = [[ImgurLoginViewController alloc]init];
+        [self.navigationController pushViewController:self.loginVC animated:YES];
+        self.LogInButton.enabled = NO;
+    }
+    [super viewDidLoad];
+    // self.navigationItem.title = self.token.userName;
     
-     if ([[NSDate date] compare:self.token.expirationDate] == NSOrderedAscending)
- {
-     NSLog(@"Access token is valid!");
-     
-     
- }
-     else
-     {
-         imgurServerManager*x = [imgurServerManager sharedManager];
-
-     [x updateAccessToken:self.token.refresh_token
-             access_token: self.token.token
-          completionBlock:^(NSString *result)
-      {
-          dispatch_async(dispatch_get_main_queue(), ^{
-              [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-              UIAlertView *av = [[UIAlertView alloc]
-                                 initWithTitle:@"Sucessfully received access_token!"
-                                 message:@"Go ahead!!!"
-                                 delegate:nil
-                                 cancelButtonTitle:@"OK"
-                                 otherButtonTitles:nil];
-              [av show];
-              //self.sharedButton.enabled = YES;
-              NSLog(@"%@",result);                         });
-      }
-             failureBlock:^(NSURLResponse *response, NSError *error, NSInteger status)
-      {
-          dispatch_async(dispatch_get_main_queue(), ^{
-              [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-              
-              [[[UIAlertView alloc] initWithTitle:@"Upload Failed"
-                                          message:[NSString stringWithFormat:@"%@ (Status code %ld)", [error localizedDescription], (long)status]
-                                         delegate:nil
-                                cancelButtonTitle:nil
-                                otherButtonTitles:@"OK", nil] show];
-              NSLog(@"%@", [error localizedDescription]);
-              NSLog(@"Err details: %@", [error description]);
-          });
-      }];
-
-     }
-
-        [super viewDidLoad];
-     // self.navigationItem.title = self.token.userName;
     
-
     
     
 }
@@ -155,6 +166,7 @@
 
 -(void) reloadPage
 {
+     self.LogInButton.enabled = NO;
     self.navigationItem.title = self.token.userName;
     self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     [self.view addSubview:self.activityIndicator];
@@ -439,5 +451,7 @@
     self.token.expirationDate = [defaults objectForKey:@"expires_in"];
     self.token.dayOfLogin = [defaults objectForKey:@"dayOgLogin"];
     self.navigationItem.title = self.token.userName;
+    
+    self.LogInButton.enabled = YES;
 }
 @end
