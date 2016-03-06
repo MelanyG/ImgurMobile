@@ -10,10 +10,12 @@
 #import "CommentTableViewCell.h"
 #import "SocialViewController.h"
 #import "Comment.h"
+#import "AddCommentViewController.h"
 
 @interface GeneralCommentsTableViewController ()
 
 @property (assign, nonatomic) NSInteger commentsIndex;
+@property (strong, nonatomic) AddCommentViewController* addCommentVC;
 
 @end
 
@@ -28,6 +30,20 @@
 
 }
 
+- (IBAction)doneAction:(UIBarButtonItem *)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"addCommentSegue"])
+    {
+        self.addCommentVC = (AddCommentViewController*)segue.destinationViewController;
+        self.addCommentVC.socialVC = self.socialVC;
+    }
+    
+    
+}
 
 
 #pragma mark - Table view data source

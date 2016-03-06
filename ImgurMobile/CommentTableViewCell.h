@@ -16,7 +16,4 @@
 @property (weak, nonatomic) IBOutlet UIButton *dislikeOutlet;
 
 
-
-
-
 @end

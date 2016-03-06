@@ -71,6 +71,8 @@
 		976949B91C848C8D00DE5162 /* imgurAlbum + Description.m in Sources */ = {isa = PBXBuildFile; fileRef = 976949B81C848C8D00DE5162 /* imgurAlbum + Description.m */; };
 		97AEA2331C7B1B520010CD99 /* Node.m in Sources */ = {isa = PBXBuildFile; fileRef = 97AEA2321C7B1B520010CD99 /* Node.m */; };
 		97AEA2361C7B20DA0010CD99 /* NotChalengingQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 97AEA2351C7B20DA0010CD99 /* NotChalengingQueue.m */; };
+		EF01F6991C8C90440088CA3A /* Sent Filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = EF01F6981C8C90440088CA3A /* Sent Filled-50.png */; };
+		EF01F69C1C8C910D0088CA3A /* AddCommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF01F69B1C8C910D0088CA3A /* AddCommentViewController.m */; };
 		EF09022C1C77500000D9CF5E /* socialControllerIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = EF09022B1C77500000D9CF5E /* socialControllerIcon.png */; };
 		EF11841F1C8335F8000FB6A1 /* RESTAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = EF11841E1C8335F8000FB6A1 /* RESTAPI.m */; };
 		EF1F25101C7C583C0061DD53 /* Like Filled-48.png in Resources */ = {isa = PBXBuildFile; fileRef = EF1F250F1C7C583C0061DD53 /* Like Filled-48.png */; };
@@ -222,6 +224,9 @@
 		97AEA2321C7B1B520010CD99 /* Node.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Node.m; sourceTree = "<group>"; };
 		97AEA2341C7B20DA0010CD99 /* NotChalengingQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotChalengingQueue.h; sourceTree = "<group>"; };
 		97AEA2351C7B20DA0010CD99 /* NotChalengingQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotChalengingQueue.m; sourceTree = "<group>"; };
+		EF01F6981C8C90440088CA3A /* Sent Filled-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Sent Filled-50.png"; sourceTree = "<group>"; };
+		EF01F69A1C8C910D0088CA3A /* AddCommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddCommentViewController.h; sourceTree = "<group>"; };
+		EF01F69B1C8C910D0088CA3A /* AddCommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddCommentViewController.m; sourceTree = "<group>"; };
 		EF09022B1C77500000D9CF5E /* socialControllerIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = socialControllerIcon.png; sourceTree = "<group>"; };
 		EF11841D1C8335F8000FB6A1 /* RESTAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RESTAPI.h; sourceTree = "<group>"; };
 		EF11841E1C8335F8000FB6A1 /* RESTAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RESTAPI.m; sourceTree = "<group>"; };
@@ -529,6 +534,8 @@
 				EF9C68AD1C8B5F6A00D4DC47 /* GeneralCommentsTableViewController.m */,
 				EF9C68AF1C8B9AB200D4DC47 /* CommentTableViewCell.h */,
 				EF9C68B01C8B9AB200D4DC47 /* CommentTableViewCell.m */,
+				EF01F69A1C8C910D0088CA3A /* AddCommentViewController.h */,
+				EF01F69B1C8C910D0088CA3A /* AddCommentViewController.m */,
 				EF9C68B11C8B9AB200D4DC47 /* CommentTableViewCell.xib */,
 			);
 			name = Social;
@@ -550,6 +557,7 @@
 		EFEE04161C7B441F0054EEF2 /* icons */ = {
 			isa = PBXGroup;
 			children = (
+				EF01F6981C8C90440088CA3A /* Sent Filled-50.png */,
 				EF1F250F1C7C583C0061DD53 /* Like Filled-48.png */,
 				EFEE04121C7B43F90054EEF2 /* Thumbs Down-48.png */,
 				EFEE04081C7B43EF0054EEF2 /* Save Filled-50.png */,
@@ -628,7 +636,7 @@
 				EFEE040E1C7B43EF0054EEF2 /* Share-48.png in Resources */,
 				40C4FA6F1C773BD3003CDB34 /* Assets.xcassets in Resources */,
 				EF9C68B31C8B9AB200D4DC47 /* CommentTableViewCell.xib in Resources */,
-				6AA41EE31C8C57EF00DC54A3 /* NewMessageViewController.xib in Resources */,
+				EF01F6991C8C90440088CA3A /* Sent Filled-50.png in Resources */,
 				40C4FA6D1C773BD3003CDB34 /* Main.storyboard in Resources */,
 				EFEE04151C7B43F90054EEF2 /* Thumbs Down-48.png in Resources */,
 				EF09022C1C77500000D9CF5E /* socialControllerIcon.png in Resources */,
@@ -659,6 +667,7 @@
 				97AEA2331C7B1B520010CD99 /* Node.m in Sources */,
 				40C4FA641C773BD3003CDB34 /* main.m in Sources */,
 				6A6A6B0A1C7E166000DE946E /* UIImage+Resize.m in Sources */,
+				EF01F69C1C8C910D0088CA3A /* AddCommentViewController.m in Sources */,
 				6AC562FA1C776C5B006C03C0 /* AFURLResponseSerialization.m in Sources */,
 				6AC562FF1C776C5B006C03C0 /* UIButton+AFNetworking.m in Sources */,
 				976949B91C848C8D00DE5162 /* imgurAlbum + Description.m in Sources */,

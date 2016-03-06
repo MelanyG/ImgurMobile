@@ -119,6 +119,18 @@
     [self createCommentsArray];
 }*/
 
+-(void) postComment
+{
+    NSString* urlString = [NSString stringWithFormat:@"https://api.imgur.com/3/gallery/image/%@/%@", self.imageID, self.commentToPost];
+    urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:self.set];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setValue:[NSString stringWithFormat:@"Bearer %@", self.accessToken] forHTTPHeaderField:@"Authorization"];
+    [request setHTTPMethod:@"POST"];
+    self.restApi.delegate = self;
+    [self.restApi httpRequest:request];
+    
+}
 -(void) likeCommentRequestByID:(NSString*) commentID
 {
     NSString* urlString = [NSString stringWithFormat:@"https://api.imgur.com/3/comment/%@/vote/up", commentID];
