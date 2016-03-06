@@ -50,7 +50,7 @@
     
     self.set = [NSCharacterSet URLQueryAllowedCharacterSet];
     self.accessToken = [ImgurAccessToken sharedToken].token;
-    self.socialImage.image = self.image;
+    //self.socialImage.image = self.image;
     if ([self.post.postDescription isKindOfClass:[NSString class]]) {
         self.socialImageDescription.text = self.post.postDescription;
     }
