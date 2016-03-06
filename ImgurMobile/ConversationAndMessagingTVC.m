@@ -73,14 +73,14 @@
      {
          weakSelf.conversation = resp;
          weakSelf.messageInputField.text = nil;
-         weakSelf.currentPageLabel.text = [NSString stringWithFormat:@"Page:%d",self.conversation.page - 1];
+         weakSelf.currentPageLabel.text = [NSString stringWithFormat:@"%d page",self.conversation.page - 1];
          [weakSelf.tableView reloadData];
      }];
 }
 
 - (void)updateData
 {
-    self.currentPageLabel.text = [NSString stringWithFormat:@"Page:%d",self.conversation.page - 1];
+    self.currentPageLabel.text = [NSString stringWithFormat:@"%d page",self.conversation.page - 1];
     [self.tableView reloadData];
 }
 
@@ -192,6 +192,12 @@
     CGFloat height = MAX(size.height, 50);
     
     return height;
+}
+
+- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(nonnull NSIndexPath *)indexPath
+{
+    [self.view endEditing:YES];
+    return NO;
 }
 
 @end
