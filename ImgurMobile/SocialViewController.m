@@ -106,18 +106,6 @@
     return data;
 }
 
-/*- (void)commentsRequest
-{
-    NSString* urlString = [NSString stringWithFormat:@"https://api.imgur.com/3/gallery/image/%@/comments", self.imageID];
-    urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:self.set];
-    NSURL *url = [NSURL URLWithString:urlString];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    [request setValue:[NSString stringWithFormat:@"Bearer %@", self.accessToken] forHTTPHeaderField:@"Authorization"];
-    [request setHTTPMethod:@"GET"];
-    self.restApi.delegate = self;
-    [self.restApi httpRequest:request];
-    [self createCommentsArray];
-}*/
 
 -(void) postComment
 {
