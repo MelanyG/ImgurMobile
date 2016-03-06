@@ -34,21 +34,28 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.manager getAllConversationsPreviewForCurrentUserCompletion:^(NSArray *resp)
-    {
-        if ([resp count] == 0)
-            self.navigationItem.title = @"No Conversations";
-        else
-        {
-            self.conversationPreviewsArray = resp;
-            [self.tableView reloadData];
-            self.navigationItem.title = @"Conversations";
-        }
-    }];
-    [self addNavButton];
+    
+    [self reloadData];
+    
+    [self addNavButtonDeletionProcess:NO];
 }
 
-- (void)addNavButton
+- (void)reloadData
+{
+    [self.manager getAllConversationsPreviewForCurrentUserCompletion:^(NSArray *resp)
+     {
+         if ([resp count] == 0)
+             self.navigationItem.title = @"No Conversations";
+         else
+         {
+             self.conversationPreviewsArray = resp;
+             [self.tableView reloadData];
+             self.navigationItem.title = @"Conversations";
+         }
+     }];
+}
+
+- (void)addNavButtonDeletionProcess:(BOOL)deletionProcess
 {
     CGRect ImageRect = CGRectMake(0, 0, 30, 30);
     
@@ -62,12 +69,46 @@
     
     UIBarButtonItem *messageBarButton = [[UIBarButtonItem alloc] initWithCustomView:messageButton];
     
-    self.navigationItem.rightBarButtonItems = @[messageBarButton];
+    UIImage *deleteImage;
+    if (deletionProcess)
+        deleteImage = [UIImage imageNamed:@"ok_icon"];
+    else
+        deleteImage = [UIImage imageNamed:@"delete_icon"];
+    
+    UIButton *deleteButton = [[UIButton alloc] initWithFrame:ImageRect];
+    [deleteButton setBackgroundImage:deleteImage forState:UIControlStateNormal];
+    [deleteButton addTarget:self
+                      action:@selector(actionEdit:)
+            forControlEvents:UIControlEventTouchUpInside];
+    [deleteButton setShowsTouchWhenHighlighted:YES];
+    
+    UIBarButtonItem *deleteBarButton = [[UIBarButtonItem alloc] initWithCustomView:deleteButton];
+    
+    self.navigationItem.rightBarButtonItems = @[deleteBarButton, messageBarButton];
 }
+
+- (void) actionEdit:(UIBarButtonItem*) sender
+{
+    BOOL isEditing = self.tableView.editing;
+    
+    [self.tableView setEditing:!isEditing animated:YES];
+    
+    if (self.tableView.editing)
+    {
+        [self addNavButtonDeletionProcess:YES];
+    }
+    else
+    {
+        [self addNavButtonDeletionProcess:NO];
+    }
+}
+
 
 - (void)showNewMessageVC
 {
-    
+    NewMessageViewController *newMessageVC = [[NewMessageViewController alloc] init];
+    newMessageVC.delegate = self;
+    [self.navigationController pushViewController:newMessageVC animated:YES];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -114,6 +155,45 @@
     ConversationAMTVC.currentConversationUserName = previewConversation.receiverName;
     
     [self.navigationController pushViewController:ConversationAMTVC animated:YES];
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (editingStyle == UITableViewCellEditingStyleDelete)
+    {
+        NSInteger index = indexPath.row;
+        
+        ImgurConversationPreview *preview = [self.conversationPreviewsArray objectAtIndex:index];
+        
+        NSInteger previewID = preview.conversationId;
+        
+        __weak typeof(self) weakSelf = self;
+        [self.manager deleteConversationWithID:previewID Completion:^(NSDictionary *dict) 
+        {
+            if ([dict objectForKey:IMGUR_SERVER_MANAGER_ERROR_KEY])
+            {
+                
+            }
+            else if ([dict objectForKey:IMGUR_SERVER_MANAGER_STATUS_KEY])
+            {
+                
+            }
+            else
+            {
+                [weakSelf.tableView beginUpdates];
+                [weakSelf.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationLeft];
+                NSMutableArray *temp = [self.conversationPreviewsArray mutableCopy];
+                [temp removeObjectAtIndex:index];
+                weakSelf.conversationPreviewsArray = temp;
+                [weakSelf.tableView endUpdates];
+            
+                BOOL isEditing = self.tableView.editing;
+                [self.tableView setEditing:!isEditing animated:YES];
+                
+                [self addNavButtonDeletionProcess:NO];
+            }
+        }];
+    }
 }
 
 @end

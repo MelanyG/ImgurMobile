@@ -145,4 +145,10 @@
     return url;
 }
 
+- (NSString *)getURLDeletionOfConversationWithID:(NSInteger)identifier
+{
+    NSString *url = [NSString stringWithFormat:@"%@conversations/%d", self.baseURL, identifier];
+    return url;
+}
+
 @end

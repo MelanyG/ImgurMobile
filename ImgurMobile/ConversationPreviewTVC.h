@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NewMessageViewController.h"
 
-@interface ConversationPreviewTVC : UITableViewController
+@interface ConversationPreviewTVC : UITableViewController<NewConversationDelegate>
 
 @end

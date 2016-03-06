@@ -116,7 +116,7 @@
     if ([self.messageInputField.text length] != 0)
     [self.manager createMessageWithUser:self.currentConversationUserName
                                 Message:self.messageInputField.text
-                             Completion:^(BOOL success)
+                             Completion:^(NSDictionary *dict) 
     {
         [self reloadData];
     }];
