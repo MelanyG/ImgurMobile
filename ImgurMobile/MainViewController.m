@@ -22,8 +22,10 @@
 #import "UIImage+animatedGIF.h"
 
 @interface MainViewController ()
-@property (strong, nonatomic) UIActivityIndicatorView *activityIndicator;
 
+@property (strong, nonatomic) UIActivityIndicatorView *activityIndicator;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *LogOutButton;
+@property (retain, nonatomic ) NSTimer* m_Timer;
 @property (strong, nonatomic) NSMutableDictionary *photosData;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (strong, nonatomic) NSMutableArray *photos;
@@ -106,6 +108,8 @@
     
 }
 
+
+
 - (void) dealloc
 {
     
@@ -151,6 +155,7 @@
 
 -(void) reloadPage
 {
+    self.navigationItem.title = self.token.userName;
     self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     [self.view addSubview:self.activityIndicator];
     self.activityIndicator.hidesWhenStopped = YES;
@@ -170,7 +175,7 @@
      {
          if ([resp objectForKey:IMGUR_SERVER_MANAGER_ERROR_KEY])
          {
-             NSLog(@"%@", [resp objectForKey:IMGUR_SERVER_MANAGER_ERROR_KEY]);
+             //NSLog(@"%@", [resp objectForKey:IMGUR_SERVER_MANAGER_ERROR_KEY]);
          }
          else if ([resp objectForKey:IMGUR_SERVER_MANAGER_STATUS_KEY])
          {
@@ -183,7 +188,7 @@
 //                                        delegate:nil
 //                               cancelButtonTitle:nil
 //                               otherButtonTitles:@"OK", nil] show];
-             NSLog(@"%@", [resp objectForKey:IMGUR_SERVER_MANAGER_STATUS_KEY]);
+            // NSLog(@"%@", [resp objectForKey:IMGUR_SERVER_MANAGER_STATUS_KEY]);
              [self performSelectorOnMainThread:@selector(callingLoginVC) withObject:nil waitUntilDone:YES];
              
          }
@@ -194,7 +199,7 @@
              [queue addObject:resp];
              
              self.photosData = [queue getObject];
-             NSLog(@"%@", self.photosData);
+             //NSLog(@"%@", self.photosData);
              
              
              [self.collectionView reloadData];
@@ -261,7 +266,7 @@
 
         static int a = 0;
         a++;
-        NSLog(@"images loaded from disk %d", a);
+       // NSLog(@"images loaded from disk %d", a);
     }
     else
     {// if no such image in cache fill cell with default image and start load
@@ -413,4 +418,26 @@
 //@property (weak, nonatomic) IBOutlet UINavigationItem *imageTitel;
 //@property (strong, nonatomic) NSString* albumID;
 
+- (IBAction)logOutAction:(id)sender
+{
+    NSHTTPCookieStorage* cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    for (NSHTTPCookie* cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies])
+    {
+        [cookies deleteCookie:cookie];
+    }
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults removeObjectForKey:@"userName"];
+    [defaults removeObjectForKey:@"access_token"];
+    [defaults removeObjectForKey:@"refresh_token"];
+    [defaults removeObjectForKey:@"account_id"];
+    [defaults removeObjectForKey:@"expires_in"];
+    [defaults removeObjectForKey:@"dayOfLogin"];
+    self.token.userName = [defaults objectForKey:@"userName"];
+    self.token.token = [defaults objectForKey:@"access_token"];
+    self.token.refresh_token = [defaults objectForKey:@"refresh_token"];
+    self.token.accountID = [defaults objectForKey:@"account_id"];
+    self.token.expirationDate = [defaults objectForKey:@"expires_in"];
+    self.token.dayOfLogin = [defaults objectForKey:@"dayOgLogin"];
+    self.navigationItem.title = self.token.userName;
+}
 @end

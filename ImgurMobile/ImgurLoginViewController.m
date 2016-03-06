@@ -126,12 +126,12 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
           [self dismissViewControllerAnimated:YES
                              completion:nil];
   }
-    else if(!firstTimeAppear)
+    else if(!self.token.token)
     {
     if ([[[request URL] description] rangeOfString:@"#access_token="].location != NSNotFound)
     {
       
-        firstTimeAppear = YES;
+        //firstTimeAppear = YES;
             
             NSLog(@"%@", [request URL]);
             NSString* query = [[request URL] description];
@@ -158,11 +158,14 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
                     }
                     else if ([key isEqualToString:@"expires_in"])
                     {
-                        NSTimeInterval interval = [[values lastObject] doubleValue];
-                        self.token.expirationDate = [NSDate dateWithTimeIntervalSinceNow:interval];
+                        NSDate *mydate = [NSDate date];
+                        //NSTimeInterval interval = [[values lastObject] doubleValue];
+                        NSTimeInterval secondsInEightHours = 12 * 60 * 60;
+                        self.token.expirationDate  = [mydate dateByAddingTimeInterval:secondsInEightHours];
                         NSLog(@"Exp: %@", self.token.expirationDate);
                     }
-                    else if ([key isEqualToString:@"account_username"]) {
+                    else if ([key isEqualToString:@"account_username"])
+                    {
                         
                         self.token.userName = [values lastObject];
                     }

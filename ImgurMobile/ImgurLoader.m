@@ -38,7 +38,7 @@
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]];
     
     [request setValue:[NSString stringWithFormat:@"Bearer %@", self.token] forHTTPHeaderField:@"Authorization"];
-    NSLog(@"Loader Token :%@",self.token);
+    //NSLog(@"Loader Token :%@",self.token);
     
     [request setHTTPMethod:@"GET"];
 

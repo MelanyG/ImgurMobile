@@ -13,4 +13,6 @@
 
 @interface MainViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, PageInfoDelegate>
 
+- (IBAction)logOutAction:(id)sender;
+
 @end

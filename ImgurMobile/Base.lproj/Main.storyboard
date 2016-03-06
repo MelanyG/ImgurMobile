@@ -259,13 +259,14 @@
                     </view>
                     <navigationItem key="navigationItem" id="XLo-op-i1Y">
                         <rightBarButtonItems>
-                            <barButtonItem image="socialControllerIcon.png" id="ahR-jK-SMv">
-                                <color key="tintColor" red="0.60000002379999995" green="0.60000002379999995" blue="0.60000002379999995" alpha="1" colorSpace="calibratedRGB"/>
+                            <barButtonItem title="LogOut" id="ahR-jK-SMv">
+                                <color key="tintColor" red="0.066666666669999999" green="0.058823529409999999" blue="0.058823529409999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
-                                    <segue destination="rMi-99-oAL" kind="show" identifier="SocialVC" id="wl2-Bz-cWx"/>
+                                    <action selector="logOutAction:" destination="BYZ-38-t0r" id="QGu-cp-Dai"/>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem title="Login" id="qUn-1i-mrO">
+                                <color key="tintColor" red="0.066666666669999999" green="0.058823529409999999" blue="0.058823529409999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <segue destination="sAE-mJ-C4u" kind="popoverPresentation" popoverAnchorBarButtonItem="qUn-1i-mrO" id="3x4-kP-w1A">
                                         <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
@@ -273,11 +274,13 @@
                                 </connections>
                             </barButtonItem>
                             <barButtonItem title="Gallery" id="htf-u4-oYX">
+                                <color key="tintColor" red="0.066666666669999999" green="0.058823529409999999" blue="0.058823529409999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <segue destination="swd-eM-4DO" kind="show" id="Zlz-Au-Ida"/>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem title="Message" id="l2X-1t-LFK">
+                                <color key="tintColor" red="0.066666666669999999" green="0.058823529409999999" blue="0.058823529409999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <segue destination="8tI-2x-yqL" kind="show" id="IPZ-bM-9zI"/>
                                 </connections>
@@ -285,6 +288,7 @@
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="LogOutButton" destination="ahR-jK-SMv" id="k9k-yi-0ig"/>
                         <outlet property="collectionView" destination="h89-6k-lz1" id="vIF-SI-cbQ"/>
                     </connections>
                 </viewController>
@@ -491,7 +495,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="A1b-Jt-6Hx">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A1b-Jt-6Hx">
                                 <rect key="frame" x="1" y="65" width="598" height="385"/>
                                 <variation key="heightClass=compact" misplaced="YES">
                                     <rect key="frame" x="2" y="64" width="598" height="182"/>
@@ -2428,7 +2432,6 @@
         <image name="plus" width="75" height="74"/>
         <image name="save_icon" width="512" height="512"/>
         <image name="share_icon" width="512" height="512"/>
-        <image name="socialControllerIcon.png" width="48" height="48"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="m0J-pd-7oB"/>
