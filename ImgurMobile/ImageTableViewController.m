@@ -59,7 +59,7 @@
         [cell.cellSocialImage setImage:self.image];
         
     }
-    else {
+    else if (self.socialVC.post){
         cell.cellSocialImage.frame = CGRectMake(0, 0, self.socialVC.image.size.width, self.socialVC.image.size.height);
         [cell.cellSocialImage setImage:self.socialVC.image];
     }
