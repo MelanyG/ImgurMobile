@@ -62,29 +62,12 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    /*static NSString* identifier = @"Cell";
-    CommentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    
-    if (!cell)
-    {
-        cell = [[CommentTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
-    }*/
     CommentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([CommentTableViewCell class]) forIndexPath:indexPath];
     
     Comment* comment = [self.socialVC.commentsArray objectAtIndex:indexPath.row];
     
     cell.autherComment.text = comment.comment;
     cell.autherName.text = comment.authorName;
-    
-    /*dispatch_async(dispatch_get_global_queue(0,0), ^{
-        NSData * data = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: [self.socialVC getAutherAvatarIDWithID:comment.authorAvatarID]]];
-        if ( data == nil )
-            return;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            cell.autherAvatar = (UIImageView*)[UIImage imageWithData: data];
-            [tableView reloadData];
-        });
-    });*/
     
     cell.likeOutlet.tag = indexPath.row;
     cell.dislikeOutlet.tag = indexPath.row * 100;

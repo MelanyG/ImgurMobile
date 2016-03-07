@@ -9,8 +9,12 @@
 #import "ImageTableViewController.h"
 #import "ImageCustomTableViewCell.h"
 #import "SocialViewController.h"
+#import "imgurAlbum.h"
+#import "imgurPost.h"
 
 @interface ImageTableViewController ()
+
+@property (strong, nonatomic) UIImage* image;
 
 @end
 
@@ -35,21 +39,44 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
+    if (self.socialVC.album) {
+        return [self.socialVC.album.posts count];
+    }
+    else {
+        return 1;
+    }
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ImageCustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([ImageCustomTableViewCell class]) forIndexPath:indexPath];
     
-    cell.cellSocialImage.frame = CGRectMake(0, 0, self.socialVC.image.size.width, self.socialVC.image.size.height);
-    [cell.cellSocialImage setImage:self.socialVC.image];
+    if (self.socialVC.album) {
+        imgurPost* post = [self.socialVC.album.posts objectAtIndex:indexPath.row];
+        NSData * imageData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString:post.imageURL]];
+        self.image = [UIImage imageWithData: imageData];
+        cell.cellSocialImage.frame = CGRectMake(0, 0, self.image.size.width, self.image.size.height);
+        [cell.cellSocialImage setImage:self.image];
+        
+    }
+    else {
+        cell.cellSocialImage.frame = CGRectMake(0, 0, self.socialVC.image.size.width, self.socialVC.image.size.height);
+        [cell.cellSocialImage setImage:self.socialVC.image];
+    }
+    
     return cell;
 }
 
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return self.socialVC.image.size.height;
+    if (self.socialVC.album) {
+        return self.image.size.height;
+    }
+    else {
+        return self.socialVC.image.size.height;;
+    }
+    
+    
 }
 
 @end
