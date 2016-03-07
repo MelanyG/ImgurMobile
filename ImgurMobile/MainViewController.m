@@ -481,13 +481,13 @@
          NSData *imageData = [NSData dataWithContentsOfFile:path];
          UIImage *image;
          if ([[path pathExtension] isEqualToString:@"gif"])
-             image = [UIImage animatedImageWithAnimatedGIFData:imageData toSize:CGSizeMake(100, 100)];
+             image = [UIImage animatedImageWithAnimatedGIFData:imageData];
          else
          {
              image = [UIImage imageWithData:imageData];
          }
          svc.image = image;
-
+         NSLog(@"lalala");
      }
      if ([segue.identifier isEqualToString:@"pageSelectVC"])
      {

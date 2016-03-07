@@ -84,11 +84,12 @@
     self.accessToken = [ImgurAccessToken sharedToken].token;
    
     self.commentsArray = [[NSMutableArray alloc] init];
-    
 
+}
+-(void)viewWillAppear:(BOOL)animated
+{
     
 }
-
 - (void)commentsRequest
 {
     NSString* urlString;
