@@ -47,7 +47,7 @@
 @implementation MainViewController
 
 - (void)viewDidLoad
-{
+{   [super viewDidLoad];
     self.token = [ImgurAccessToken sharedToken];
     
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
@@ -107,11 +107,25 @@
     }
     else
     {
-        self.loginVC = [[ImgurLoginViewController alloc]init];
-        [self.navigationController pushViewController:self.loginVC animated:YES];
+        
+        //self.loginVC = [[ImgurLoginViewController alloc]init];
+        //[self.navigationController pushViewController:self.loginVC animated:YES];
         self.LogInButton.enabled = NO;
+        
+        
+        
+        
+       // self.loginVC  = (ImgurLoginViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"Pop"];
+        //self.loginVC.modalPresentationStyle = UIModalPresentationPopover;
+        //self.loginVC.popoverPresentationController.sourceView = self;
+        
+        // Set the correct sourceRect given the sender's bounds
+        //self.loginVC.popoverPresentationController.sourceRect = ((UIView *)sender).bounds;
+        //[self presentViewController:self.loginVC animated:YES completion:nil];
+        [self performSegueWithIdentifier:@"Pop" sender:self];
+        //[self.LogInButton sendActionsForControlEvents:self];
     }
-    [super viewDidLoad];
+ 
     // self.navigationItem.title = self.token.userName;
     
     
@@ -159,9 +173,12 @@
 
 -(void)callingLoginVC
 {
-    self.loginVC = [[ImgurLoginViewController alloc]init];
-    [self.navigationController pushViewController:self.loginVC animated:YES];
-    //[self reloadPage];
+    //self.loginVC = [[ImgurLoginViewController alloc]init];
+    //[self.navigationController pushViewController:self.loginVC animated:YES];
+ 
+     [self performSegueWithIdentifier:@"Pop" sender:self];
+    self.LogInButton.enabled = NO;
+   //[self reloadPage];
 }
 
 -(void) reloadPage
@@ -200,7 +217,7 @@
 //                                        delegate:nil
 //                               cancelButtonTitle:nil
 //                               otherButtonTitles:@"OK", nil] show];
-            // NSLog(@"%@", [resp objectForKey:IMGUR_SERVER_MANAGER_STATUS_KEY]);
+             NSLog(@"%@", [resp objectForKey:IMGUR_SERVER_MANAGER_STATUS_KEY]);
              [self performSelectorOnMainThread:@selector(callingLoginVC) withObject:nil waitUntilDone:YES];
              
          }
