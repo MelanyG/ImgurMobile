@@ -166,7 +166,11 @@ typedef enum{
 
 - (void)handlePinch:(UIPinchGestureRecognizer *)pinch
 {
-    if (pinch.state == UIGestureRecognizerStateChanged)
+    if (pinch.state == UIGestureRecognizerStateBegan)
+    {
+        [self closeAllMenus];
+    }
+    else if (pinch.state == UIGestureRecognizerStateChanged)
     {
         if (self.imageViewWidthConstraint.constant < self.view.frame.size.width * 10 || pinch.scale < 1)//max scale
         {
@@ -187,7 +191,13 @@ typedef enum{
         }
         pinch.scale = 1.0;
     }
-    [self closeAllMenus];
+    else
+    {
+        CGFloat offsetX = (self.imageView.frame.size.width - self.view.frame.size.width) / 2;
+        CGFloat offsetY = (self.imageView.frame.size.height - self.view.frame.size.height) / 2;
+        CGRect rect = CGRectMake(offsetX, offsetY, self.view.frame.size.width, self.view.frame.size.height);
+        [self.scrollView scrollRectToVisible:rect animated:NO];
+    }
 }
 
 - (void)prepare
