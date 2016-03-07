@@ -465,8 +465,29 @@
          //svc.socialImageDescription.text = (![self.selectedPost.postDescription isKindOfClass:[NSNull class]])?self.selectedPost.postDescription:@"null description";
          svc.imageTitel.title = (![self.selectedPost.title isKindOfClass:[NSNull class]])?self.selectedPost.title:@"null title";
          
-         svc.image = self.selectedImage;
-         svc.post = self.selectedPost;
+         svc.postObject = self.selectedPost;
+         
+         NSString *path; //= [[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:[[self.selectedPost.imageURL pathComponents]lastObject]];
+         
+         if ([self.selectedPost isKindOfClass:[imgurPost class]])
+         {
+             path = [[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:[[self.selectedPost.imageURL pathComponents]lastObject]];
+         }
+         else
+         {
+             path = [[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:[[[[[(imgurAlbum *)self.selectedPost posts] firstObject] imageURL] pathComponents]lastObject]];
+         }
+         
+         NSData *imageData = [NSData dataWithContentsOfFile:path];
+         UIImage *image;
+         if ([[path pathExtension] isEqualToString:@"gif"])
+             image = [UIImage animatedImageWithAnimatedGIFData:imageData toSize:CGSizeMake(100, 100)];
+         else
+         {
+             image = [UIImage imageWithData:imageData];
+         }
+         svc.image = image;
+
      }
      if ([segue.identifier isEqualToString:@"pageSelectVC"])
      {
