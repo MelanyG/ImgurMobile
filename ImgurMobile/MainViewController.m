@@ -19,6 +19,7 @@
 #import "SocialViewController.h"
 #import "PageSelectViewController.h"
 
+
 #import "UIImage+Animation.h"
 
 @interface MainViewController ()
@@ -141,7 +142,28 @@
          }
          else if ([resp objectForKey:IMGUR_SERVER_MANAGER_STATUS_KEY])
          {
+             
              NSLog(@"%@", [resp objectForKey:IMGUR_SERVER_MANAGER_STATUS_KEY]);
+             if ([[resp objectForKey:IMGUR_SERVER_MANAGER_STATUS_KEY] isEqualToString:@"The access token provided is invalid."])
+             {
+                 [self.manager updateAccessToken:[ImgurAccessToken sharedToken].refresh_token
+                                    access_token:[ImgurAccessToken sharedToken].token
+                                 completionBlock:^(NSString *result)
+                  {
+                      dispatch_async(dispatch_get_main_queue(),
+                                     ^{
+                                         [self.activityIndicator stopAnimating];
+                                         self.activityIndicator = nil;
+                                         [self reloadPage];
+                                     });
+                  }
+                                    failureBlock:^(NSURLResponse *response, NSError *error, NSInteger status)
+                  {
+                      
+                  }];
+
+                 ;
+             }
          }
          else
          {
@@ -236,7 +258,7 @@
             NSData *imageData = [NSData dataWithContentsOfFile:path];
             UIImage *image;
             if ([[path pathExtension] isEqualToString:@"gif"])
-                image = [UIImage animatedImageWithAnimatedGIFData:imageData toSize:CGSizeMake(100, 100)]; 
+                image = [UIImage animatedImageWithAnimatedGIFData:imageData toSize:CGSizeMake(100, 100)];
             else
             {
                 image = [UIImage imageWithData:imageData];
@@ -392,7 +414,6 @@
          svc.socialVCDelegate = svc;
          //[svc.socialImage setImage:self.selectedImage];
          
-         svc.imageID = self.selectedPost.postID;
          //svc.socialImageDescription.text = (![self.selectedPost.postDescription isKindOfClass:[NSNull class]])?self.selectedPost.postDescription:@"null description";
          svc.imageTitel.title = (![self.selectedPost.title isKindOfClass:[NSNull class]])?self.selectedPost.title:@"null title";
          
