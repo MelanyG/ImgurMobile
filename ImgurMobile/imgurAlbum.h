@@ -20,5 +20,6 @@
 @property (strong, nonatomic) NSMutableArray *posts;
 @property (strong, nonatomic) NSString *ownerID;
 @property (strong, nonatomic) NSString *topic;
+@property (strong, nonatomic) NSArray *commentsIds;
 
 @end

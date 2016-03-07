@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @class ImgurAlbum;
+@class ImgurPagedConversation;
 
 @interface ImgurJSONParser : NSObject
 
@@ -17,5 +18,13 @@
 - (NSDictionary *)getPostsFromresponceDictionary:(NSDictionary *)dict;
 
 - (ImgurAlbum *)getAlbumFromResponceDict:(NSDictionary *)responce;
+
+- (NSArray *)getCommetsArrayFromResponceDict:(NSDictionary *)dict;
+
+- (NSArray *)getConversationPreviewsArrayFromResponceDict:(NSDictionary *)dict;
+
+- (ImgurPagedConversation *)getConversationFromResponceDict:(NSDictionary *)dict;
+
+- (BOOL)getMessageSendingResult:(NSDictionary *)dict;
 
 @end

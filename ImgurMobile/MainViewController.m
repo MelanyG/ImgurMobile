@@ -23,8 +23,11 @@
 #import "UIImage+Animation.h"
 
 @interface MainViewController ()
-@property (strong, nonatomic) UIActivityIndicatorView *activityIndicator;
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *LogInButton;
+@property (strong, nonatomic) UIActivityIndicatorView *activityIndicator;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *LogOutButton;
+@property (retain, nonatomic ) NSTimer* m_Timer;
 @property (strong, nonatomic) NSMutableDictionary *photosData;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (strong, nonatomic) NSMutableArray *photos;
@@ -32,7 +35,7 @@
 @property (strong, nonatomic) ImgurAccessToken* token;
 @property (strong, nonatomic) NSMutableDictionary* pageInfo;
 @property (assign, nonatomic) NSInteger pageNumber;
-
+@property (strong, nonatomic) ImgurLoginViewController* loginVC;
 @property (strong, nonatomic) imgurServerManager *manager;
 
 @property (strong, nonatomic) NSIndexPath *selectedCell;
@@ -90,6 +93,7 @@
      // self.navigationItem.title = self.token.userName;
 }
 
+
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -117,8 +121,17 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)callingLoginVC
+{
+    self.loginVC = [[ImgurLoginViewController alloc]init];
+    [self.navigationController pushViewController:self.loginVC animated:YES];
+    //[self reloadPage];
+}
+
 -(void) reloadPage
 {
+     self.LogInButton.enabled = NO;
+    self.navigationItem.title = self.token.userName;
     self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     [self.view addSubview:self.activityIndicator];
     self.activityIndicator.hidesWhenStopped = YES;
@@ -132,13 +145,13 @@
         self.manager = [[imgurServerManager alloc] init];
     
     [self.manager getPhotosForPage:self.pageNumber
-                      Section:[[self.pageInfo objectForKey:@"section"] intValue]
-                         Sort:[[self.pageInfo objectForKey:@"sort"] intValue]
-                       Window:[[self.pageInfo objectForKey:@"window"] intValue] Completion:^(NSDictionary *resp)
+                           Section:[[self.pageInfo objectForKey:@"section"] intValue]
+                              Sort:[[self.pageInfo objectForKey:@"sort"] intValue]
+                            Window:[[self.pageInfo objectForKey:@"window"] intValue] Completion:^(NSDictionary *resp)
      {
          if ([resp objectForKey:IMGUR_SERVER_MANAGER_ERROR_KEY])
          {
-             NSLog(@"%@", [resp objectForKey:IMGUR_SERVER_MANAGER_ERROR_KEY]);
+             //NSLog(@"%@", [resp objectForKey:IMGUR_SERVER_MANAGER_ERROR_KEY]);
          }
          else if ([resp objectForKey:IMGUR_SERVER_MANAGER_STATUS_KEY])
          {
@@ -172,7 +185,8 @@
              [queue addObject:resp];
              
              self.photosData = [queue getObject];
-             NSLog(@"%@", self.photosData);
+             //NSLog(@"%@", self.photosData);
+             
              
              [self.collectionView reloadData];
              if (([[self.photosData objectForKey:@"posts"] count] + [[self.photosData objectForKey:@"albums"] count]) != 0)
@@ -239,7 +253,7 @@
     {//if there is image in cache setImage
         static int i = 0;
         i++;
-        NSLog(@"images cache used %d", i);
+        //NSLog(@"images cache used %d", i);
         [tempCell.imageView setImage: [self.imageCache objectForKey:post.imageURL]];
 
     }
@@ -277,7 +291,7 @@
 
         static int a = 0;
         a++;
-        NSLog(@"images loaded from disk %d", a);
+       // NSLog(@"images loaded from disk %d", a);
     }
     else
     {// if no such image in cache fill cell with default image and start load
@@ -297,7 +311,7 @@
                                       {
                                           static int finishedLoads = 0;
                                           finishedLoads ++;
-                                          NSLog(@"loads started: %d ------- loads finished: %d", startedLoads, finishedLoads);
+                                          //NSLog(@"loads started: %d ------- loads finished: %d", startedLoads, finishedLoads);
                                           UIImage *image;
                                           if ([urlRequest.URL.pathExtension isEqualToString:@"gif"] )
                                           {
@@ -410,7 +424,7 @@
      if ([segue.identifier isEqualToString:@"SocialVC"])
      {
          SocialViewController * svc = segue.destinationViewController;
-         //self.bvc = [[buttonsVC alloc] init];
+         
          svc.socialVCDelegate = svc;
          //[svc.socialImage setImage:self.selectedImage];
          
@@ -432,4 +446,28 @@
 //@property (weak, nonatomic) IBOutlet UINavigationItem *imageTitel;
 //@property (strong, nonatomic) NSString* albumID;
 
+- (IBAction)logOutAction:(id)sender
+{
+    NSHTTPCookieStorage* cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    for (NSHTTPCookie* cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies])
+    {
+        [cookies deleteCookie:cookie];
+    }
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults removeObjectForKey:@"userName"];
+    [defaults removeObjectForKey:@"access_token"];
+    [defaults removeObjectForKey:@"refresh_token"];
+    [defaults removeObjectForKey:@"account_id"];
+    [defaults removeObjectForKey:@"expires_in"];
+    [defaults removeObjectForKey:@"dayOfLogin"];
+    self.token.userName = [defaults objectForKey:@"userName"];
+    self.token.token = [defaults objectForKey:@"access_token"];
+    self.token.refresh_token = [defaults objectForKey:@"refresh_token"];
+    self.token.accountID = [defaults objectForKey:@"account_id"];
+    self.token.expirationDate = [defaults objectForKey:@"expires_in"];
+    self.token.dayOfLogin = [defaults objectForKey:@"dayOgLogin"];
+    self.navigationItem.title = self.token.userName;
+    
+    self.LogInButton.enabled = YES;
+}
 @end

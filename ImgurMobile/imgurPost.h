@@ -21,7 +21,7 @@
 @property (strong, nonatomic) NSString *title;
 @property (strong, nonatomic) NSString *postDescription;
 @property (strong, nonatomic) NSString *topic;
-@property (strong, nonatomic) NSArray *comments;
+@property (strong, nonatomic) NSArray *commentsIds;
 
 + (imgurPost *)initWithDictionaryResponce:(NSDictionary *)dictionary IsAlbum:(BOOL)flag;
 

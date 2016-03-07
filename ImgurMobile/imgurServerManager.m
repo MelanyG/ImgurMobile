@@ -11,10 +11,13 @@
 #import "AFNetworking.h"
 #import "ImgurJSONParser.h"
 #import "ImgurLoader.h"
-#import "ImgurAlbum.h"
+#import "imgurAlbum.h"
+#import "imgurPost.h"
+#import "ImgurPagedConversation.h"
 #import "imgurServerManager.h"
 #import "ImgurLoginViewController.h"
 #import "imgurUser.h"
+#import "UserAlbum.h"
 
 NSString * const IMGUR_SERVER_MANAGER_STATUS_KEY = @"error_status";
 NSString * const IMGUR_SERVER_MANAGER_ERROR_KEY = @"error";
@@ -378,17 +381,24 @@ static NSString* imageID;
 //    
 //    [request setHTTPBody:requestBody];
     
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+    [NSURLConnection sendAsynchronousRequest:request
+                                       queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
+    {
         NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
         if ([responseDictionary valueForKeyPath:@"data.error"]) {
-            if (failureBlock) {
-                if (!error) {
+            if (failureBlock)
+            {
+                if (!error)
+                {
                    
                     error = [NSError errorWithDomain:@"imguruploader" code:10000 userInfo:@{NSLocalizedFailureReasonErrorKey : [responseDictionary valueForKeyPath:@"data.error"]}];
                 }
                 failureBlock(response, error, [[responseDictionary valueForKey:@"status"] intValue]);
             }
-        } else {
+        }
+        else
+        {
             if (completion)
             {
                 
@@ -402,10 +412,151 @@ static NSString* imageID;
     }];
 }
 
+-(NSDictionary*) loadImagesFromUserGallery:(NSString*) access_token
+                                  username: (NSString*) name
+                           completionBlock:(void(^)(NSString* result))completion
+                              failureBlock:(void(^)(NSURLResponse *response, NSError *error, NSInteger status))failureBlock
+
+{
+    NSString *urlString = [NSString stringWithFormat:@"https://api.imgur.com/3/account/%@/albums/",name];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init] ;
+    
+    [request setValue:[NSString stringWithFormat:@"Bearer %@", access_token] forHTTPHeaderField:@"Authorization"];
+    
+    [request setURL:[NSURL URLWithString:urlString]];
+    
+    [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
+    
+    //[request setTimeoutInterval:30];
+    [request setHTTPMethod:@"GET"];
+          NSURLResponse *res = nil;
+      NSError *error = nil;
+
+    NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:
+                                        [NSURLConnection sendSynchronousRequest:request returningResponse:&res error:&error]
+                                                                       options:NSJSONReadingMutableContainers error:nil];
+    if (!error)
+    {
+        if ([[responseDictionary objectForKey:@"success"] boolValue])
+        {
+            return responseDictionary;
+        }
+        else
+        {
+            NSDictionary *data = [responseDictionary objectForKey:@"data"];
+            
+            
+            return [NSDictionary dictionaryWithObjectsAndKeys:[data objectForKey:@"error"],@"error_status", nil];
+        }
+    }
+    else
+    {
+        return [NSDictionary dictionaryWithObjectsAndKeys:error.localizedDescription,@"error", nil];
+    }
+    
+//    NSString *urlString = [NSString stringWithFormat:@"https://api.imgur.com/3/account/%@/albums/",name];
+//    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]];
+//    
+//    [request setValue:[NSString stringWithFormat:@"Bearer %@", access_token] forHTTPHeaderField:@"Authorization"];
+//    [request setHTTPMethod:@"GET"];
+//    NSMutableArray* currentAlbums = [[NSMutableArray alloc]init];
+//        NSURLResponse *res = nil;
+//    NSError *error = nil;
+//    
+//    NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:
+//                                        [NSURLConnection sendSynchronousRequest:request returningResponse:&res error:&error]
+//                                                                       options:NSJSONReadingMutableContainers error:nil];
+//    
+//    if ([responseDictionary valueForKeyPath:@"data.error"])
+//    {
+//        if (!error)
+//        {
+////            for(int i=0; i<[[responseDictionary objectForKey:@"data"]count]; i++)
+////            {
+////                UserAlbum* us = [[UserAlbum alloc]init];
+////
+////            us.idOfAlbum = [[responseDictionary objectForKey:@"data"][i]objectForKey:@"id"];
+////            us.albumName = [[responseDictionary objectForKey:@"data"][i]objectForKey:@"title"];
+////                [currentAlbums addObject:us];
+////            }
+//            return [responseDictionary objectForKey:@"data"];
+//         }
+//    }
+//    else
+//    {
+//        error = [NSError errorWithDomain:@"imguruploader" code:10000 userInfo:@{NSLocalizedFailureReasonErrorKey : [responseDictionary valueForKeyPath:@"data.error"]}];
+//
+//        
+//    }
+//    
+//    
+//    //    if (!error)
+//    //    {
+//    //        if ([[responceDict objectForKey:@"success"] boolValue])
+//    //        {
+//    //            return responceDict;
+//    //        }
+//    //        else
+//    //        {
+//    //            NSDictionary *data = [responceDict objectForKey:@"data"];
+//    //
+//    //
+//    //            return [NSDictionary dictionaryWithObjectsAndKeys:[data objectForKey:@"error"],@"error_status", nil];
+//    //        }
+//    //    }
+//    //    else
+//    //    {
+//  //return [NSDictionary dictionaryWithObjectsAndKeys:error.localizedDescription,@"error", nil];
+//    //    }
+//return nil;
+}
+
+-(NSDictionary*) loadExistingImages:(NSString*) access_token
+                          idOfAlbun:(NSString*) albumId
+{
+    NSString *urlString = [NSString stringWithFormat:@"https://api.imgur.com/3/album/%@/images",albumId];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init] ;
+    
+    [request setValue:[NSString stringWithFormat:@"Bearer %@", access_token] forHTTPHeaderField:@"Authorization"];
+    
+    [request setURL:[NSURL URLWithString:urlString]];
+    
+    [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
+    
+    [request setTimeoutInterval:30];
+    [request setHTTPMethod:@"GET"];
+    NSURLResponse *res = nil;
+    NSError *error = nil;
+    
+    NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:
+                                        [NSURLConnection sendSynchronousRequest:request returningResponse:&res error:&error]
+                                                                       options:NSJSONReadingMutableContainers error:nil];
+    if (!error)
+    {
+        if ([[responseDictionary objectForKey:@"success"] boolValue])
+        {
+            return responseDictionary;
+        }
+        else
+        {
+            NSDictionary *data = [responseDictionary objectForKey:@"data"];
+            
+            
+            return [NSDictionary dictionaryWithObjectsAndKeys:[data objectForKey:@"error"],@"error_status", nil];
+        }
+    }
+    else
+    {
+        return [NSDictionary dictionaryWithObjectsAndKeys:error.localizedDescription,@"error", nil];
+    }
+  
+}
+
+
 - (void) shareImageWithImgurCommunity:(NSString*)title
                            description:(NSString*)description
             access_token: (NSString*)token
-                                topic:(NSString*) topic
+                                topic:(NSString*) section
                       completionBlock:(void(^)(NSString* result))completion
                          failureBlock:(void(^)(NSURLResponse *response, NSError *error, NSInteger status))failureBlock
 {
@@ -451,10 +602,10 @@ static NSString* imageID;
         [body appendData:[description dataUsingEncoding:NSUTF8StringEncoding]];
         [body appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
     }
-//    if (topic)
+//    if (section)
 //    {
 //        [body appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-//        [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"topic\"\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+//        [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"section\"\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
 //        [body appendData:[title dataUsingEncoding:NSUTF8StringEncoding]];
 //        [body appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
 //    }
@@ -491,22 +642,101 @@ static NSString* imageID;
 }
 
 
+- (void) deleteImage:(NSString*) access_token
+     completionBlock:(void(^)(NSString* result))completion
+        failureBlock:(void(^)(NSURLResponse *response, NSError *error, NSInteger status))failureBlock
+{
+// https://api.imgur.com/3/image/{id}
+    
+    NSMutableDictionary* _params = [[NSMutableDictionary alloc] init];
+    _params[@"id"] = @"imageID";
+    NSLog(@"Token: %@", access_token);
+    NSString *urlString = [NSString stringWithFormat:@"https://api.imgur.com/3/image/%@", imageID];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init] ;
+    
+    [request setValue:[NSString stringWithFormat:@"Bearer %@", access_token] forHTTPHeaderField:@"Authorization"];
+    
+    [request setURL:[NSURL URLWithString:urlString]];
+    
+    [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
+    
+    [request setTimeoutInterval:30];
+    [request setHTTPMethod:@"DELETE"];
+    
+    NSMutableData *body = [[NSMutableData alloc] init];
+    
+    NSString *boundary = @"---------------------------0983745982375409872438752038475287";
+    
+    NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary];
+    [request addValue:contentType forHTTPHeaderField:@"Content-Type"];
+    // add params (all params are strings)
+    for (NSString *param in _params)
+    {
+        [body appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", param] dataUsingEncoding:NSUTF8StringEncoding]];
+        [body appendData:[[NSString stringWithFormat:@"%@\r\n", [_params objectForKey:param]] dataUsingEncoding:NSUTF8StringEncoding]];
+    }
+    if (imageID)
+    {
+        [body appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"id\"\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+        [body appendData:[imageID dataUsingEncoding:NSUTF8StringEncoding]];
+        [body appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    }
+    [body appendData:[[NSString stringWithFormat:@"--%@--\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    [request setHTTPBody:body];
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+        NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+        if (![responseDictionary valueForKeyPath:@"success"] )
+        {
+            if (failureBlock)
+            {
+                if (!error)
+                {
+                    
+                    error = [NSError errorWithDomain:@"imguruploader" code:10000 userInfo:@{NSLocalizedFailureReasonErrorKey : [responseDictionary valueForKeyPath:@"data.error"]}];
+                }
+                failureBlock(response, error, [[responseDictionary valueForKey:@"status"] intValue]);
+            }
+        } else
+        {
+            if (completion)
+            {
+                completion([responseDictionary valueForKeyPath:@"data"]);
+                //self.imageID = [[responseDictionary objectForKey:@"data"]objectForKey:@"id"];
+                //NSLog(@"Id is: %@", self.imageID);
+            }
+            
+        }
+        
+    }];
+    
+}
 
-
-- (void)getPhotosForPage:(NSInteger)page Section:(section)section Sort:(sort)sort Window:(window)window
+- (void)getPhotosForPage:(NSInteger)page
+                 Section:(section)section
+                    Sort:(sort)sort
+                  Window:(window)window
               Completion:(void(^)(NSDictionary *resp))completion
 {
     __weak typeof(self) weakSelf = self;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
                    {
                        
-                       NSString *url = [weakSelf.URLgenerator GetGalleryURLForPage:page Section:section Sort:sort Window:window];
+                       NSString *url = [weakSelf.URLgenerator getGalleryURLForPage:page Section:section Sort:sort Window:window];
                        
                        NSDictionary *loadedDict = [weakSelf.synchLoader loadJSONFromURL:url];
                        if ([loadedDict objectForKey:IMGUR_SERVER_MANAGER_ERROR_KEY])
-                           completion(loadedDict);
+                           dispatch_async(dispatch_get_main_queue(), ^
+                                          {
+                                              completion(loadedDict);
+                                          });
                        else if ([loadedDict objectForKey:IMGUR_SERVER_MANAGER_STATUS_KEY])
-                           completion(loadedDict);
+                           dispatch_async(dispatch_get_main_queue(), ^
+                                          {
+                                              completion(loadedDict);
+                                          });
                        else
                        {
                            NSDictionary *parcedDict = [weakSelf.parcer getPostsFromresponceDictionary:loadedDict];
@@ -517,7 +747,7 @@ static NSString* imageID;
                            NSArray *albumIds = [parcedDict objectForKey:@"albumIds"];
                            for (NSString *albumID in albumIds)
                            {
-                               NSString *albumUrl = [weakSelf.URLgenerator GetAlbumURLForAlbumWithID:albumID];
+                               NSString *albumUrl = [weakSelf.URLgenerator getAlbumURLForAlbumWithID:albumID];
                                
                                NSDictionary *loadedAlbumDict = [weakSelf.synchLoader loadJSONFromURL:albumUrl];
                                
@@ -528,9 +758,27 @@ static NSString* imageID;
                            NSMutableDictionary *albumsAndPosts = [[NSMutableDictionary alloc] init];
                            
                            if (posts)
+                           {
                                [albumsAndPosts setObject:posts forKey:@"posts"];
+                               /*for (imgurPost *post in posts)
+                               {
+                                   NSString *urlComentString = [self.URLgenerator getComentsIdsForID:post.postID URLIsAlbum:NO];
+                                   NSDictionary *loadedComentDict = [self.synchLoader loadJSONFromURL:urlComentString];
+                                   NSArray *comentsIDs = [self.parcer getCommetsArrayFromRsponceDict:loadedComentDict];
+                                   post.commentsIds = comentsIDs;
+                               }*/
+                           }
                            if (albums)
+                           {
                                [albumsAndPosts setObject:albums forKey:@"albums"];
+                               /*for (imgurAlbum *album in albums)
+                               {
+                                   NSString *urlComentString = [self.URLgenerator getComentsIdsForID:album.albumID URLIsAlbum:YES];
+                                   NSDictionary *loadedComentDict = [self.synchLoader loadJSONFromURL:urlComentString];
+                                   NSArray *comentsIDs = [self.parcer getCommetsArrayFromRsponceDict:loadedComentDict];
+                                   album.commentsIds = comentsIDs;
+                               }*/
+                           }
                            
                            dispatch_async(dispatch_get_main_queue(), ^
                                           {
@@ -539,6 +787,141 @@ static NSString* imageID;
                        }
                    });
 }
+
+- (void)getComentsForId:(NSString *)identifier IsAlbum:(BOOL) isAlbum
+              Completion:(void(^)(NSArray *resp))completion
+{
+    __weak typeof(self) weakSelf = self;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
+                   {
+                       NSArray *comentsIDs;
+                       if (isAlbum)
+                       {
+                           NSString *urlComentString = [weakSelf.URLgenerator getComentsIdsForID:identifier URLIsAlbum:YES];
+                           NSDictionary *loadedComentDict = [weakSelf.synchLoader loadJSONFromURL:urlComentString];
+                           comentsIDs = [weakSelf.parcer getCommetsArrayFromResponceDict:loadedComentDict];
+                       }
+                       else
+                       {
+                           NSString *urlComentString = [weakSelf.URLgenerator getComentsIdsForID:identifier URLIsAlbum:NO];
+                           NSDictionary *loadedComentDict = [weakSelf.synchLoader loadJSONFromURL:urlComentString];
+                           comentsIDs = [weakSelf.parcer getCommetsArrayFromResponceDict:loadedComentDict];
+                       }
+                           
+                           dispatch_async(dispatch_get_main_queue(), ^
+                                          {
+                                              completion(comentsIDs);
+                                          });
+                   });
+}
+
+
+- (void)getAllConversationsPreviewForCurrentUserCompletion:(void(^)(NSArray *resp))completion
+{
+    __weak typeof(self) weakSelf = self;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
+                   {
+                       
+                       NSString *url = [weakSelf.URLgenerator getConversationsListURL];
+                       
+                       NSDictionary *loadedDict = [weakSelf.synchLoader loadJSONFromURL:url];
+                       
+                       NSArray *parcedConversations = [weakSelf.parcer getConversationPreviewsArrayFromResponceDict:loadedDict];
+                       
+                       dispatch_async(dispatch_get_main_queue(), ^
+                                      {
+                                          completion(parcedConversations);
+                                      });
+                   });
+}
+
+- (void)getConversationWithID:(NSInteger)identifier
+                          ForPage:(NSInteger)page
+                       Completion:(void(^)(ImgurPagedConversation *resp))completion
+{
+    __weak typeof(self) weakSelf = self;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
+                   {
+                       
+                       NSString *url = [weakSelf.URLgenerator getURLForConversationWithID:identifier Page:page];
+                       
+                       NSDictionary *loadedDict = [weakSelf.synchLoader loadJSONFromURL:url];
+                       
+                       ImgurPagedConversation *conversation = [weakSelf.parcer getConversationFromResponceDict:loadedDict];
+                       
+                       dispatch_async(dispatch_get_main_queue(), ^
+                                      {
+                                          completion(conversation);
+                                      });
+                   });
+}
+
+- (void)createMessageWithUser:(NSString *)userName
+                      Message:(NSString *)message
+                   Completion:(void(^)(NSDictionary *dict))completion
+{
+    __weak typeof(self) weakSelf = self;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
+                   {
+                       
+                       NSString *url = [weakSelf.URLgenerator getURLForMessageCreationWithUser:userName];
+                       
+                       NSDictionary *loadedDict = [weakSelf.synchLoader createMessageWithURL:url Message:message];
+                       
+                       if ([loadedDict objectForKey:IMGUR_SERVER_MANAGER_ERROR_KEY])
+                           dispatch_async(dispatch_get_main_queue(), ^
+                                          {
+                                              completion(loadedDict);
+                                          });
+                       else if ([loadedDict objectForKey:IMGUR_SERVER_MANAGER_STATUS_KEY])
+                           dispatch_async(dispatch_get_main_queue(), ^
+                                          {
+                                              completion(loadedDict);
+                                          });
+                       
+                       BOOL success = [weakSelf.parcer getMessageSendingResult:loadedDict];
+                       
+                       dispatch_async(dispatch_get_main_queue(), ^
+                                      {
+                                          completion([NSDictionary dictionaryWithObjectsAndKeys:
+                                                      [NSNumber numberWithBool:success], @"success", nil]);
+                                      });
+                   });
+}
+
+- (void)deleteConversationWithID:(NSInteger)identifier
+                      Completion:(void(^)(NSDictionary *dict))completion
+{
+    __weak typeof(self) weakSelf = self;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
+                   {
+                       
+                       NSString *url = [weakSelf.URLgenerator getURLDeletionOfConversationWithID:identifier];
+                       
+                       NSDictionary *loadedDict = [weakSelf.synchLoader deleteConversationWithURL:url];
+                       
+                       if ([loadedDict objectForKey:IMGUR_SERVER_MANAGER_ERROR_KEY])
+                           dispatch_async(dispatch_get_main_queue(), ^
+                                          {
+                                              completion(loadedDict);
+                                          });
+                       else if ([loadedDict objectForKey:IMGUR_SERVER_MANAGER_STATUS_KEY])
+                           dispatch_async(dispatch_get_main_queue(), ^
+                                          {
+                                              completion(loadedDict);
+                                          });
+                       
+                       BOOL success = [weakSelf.parcer getMessageSendingResult:loadedDict];
+                       
+                       dispatch_async(dispatch_get_main_queue(), ^
+                                      {
+                                          completion([NSDictionary dictionaryWithObjectsAndKeys:
+                                                      [NSNumber numberWithBool:success], @"success", nil]);
+                                      });
+                   });
+}
+
+
 
 @end
 

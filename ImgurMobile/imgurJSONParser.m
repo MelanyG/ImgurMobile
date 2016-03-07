@@ -9,6 +9,8 @@
 #import "ImgurJSONParser.h"
 #import "imgurPost.h"
 #import "imgurAlbum.h"
+#import "ImgurPagedConversation.h"
+#import "ImgurConversationPreview.h"
 
 @implementation ImgurJSONParser
 
@@ -85,12 +87,38 @@
     return album;
 }
 
+- (NSArray *)getCommetsArrayFromResponceDict:(NSDictionary *)dict
+{
+    NSArray *array = [dict objectForKey:@"data"];
+    return array;
+}
 
+- (NSArray *)getConversationPreviewsArrayFromResponceDict:(NSDictionary *)dict
+{
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    
+    NSArray *data = [dict objectForKey:@"data"];
+    
+    for (NSDictionary *dict in data)
+    {
+        ImgurConversationPreview *conversation = [ImgurConversationPreview initWithDictionaryResponce:dict];
+        [array addObject:conversation];
+    }
+    
+    return array;
+}
 
+- (ImgurPagedConversation *)getConversationFromResponceDict:(NSDictionary *)dict
+{
+    ImgurPagedConversation *pagedConversation = [ImgurPagedConversation initWithResponceDictionary:dict];
+    return pagedConversation;
+}
 
-
-
-
+- (BOOL)getMessageSendingResult:(NSDictionary *)dict
+{
+    BOOL success = [[dict objectForKey:@"success"] boolValue];
+    return success;
+}
 
 
 /*

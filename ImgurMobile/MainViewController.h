@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "PageInfoDelegate.h"
+#import "ImgurLoginViewController.h"
+
+
 @interface MainViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, PageInfoDelegate>
+
+- (IBAction)logOutAction:(id)sender;
 
 @end

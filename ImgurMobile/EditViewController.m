@@ -31,6 +31,9 @@ typedef enum{
 @property (assign, nonatomic) WorkingMode mode;
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageViewWidthConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageViewHeightConstraint;
+
 @property (strong, nonatomic) UIScrollView *scrollView;
 
 @property (strong, nonatomic) CIContext *ctx;
@@ -71,6 +74,10 @@ typedef enum{
 
 @property (assign, nonatomic) NSString *shouldShowAlert;
 
+@property (assign, nonatomic) BOOL isLoadIndicating;
+
+@property (strong, nonatomic) UIPinchGestureRecognizer *pinch;
+
 @end
 
 @implementation EditViewController
@@ -83,6 +90,10 @@ typedef enum{
 {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor darkGrayColor];
+    
+    self.imageViewWidthConstraint.constant = self.view.frame.size.width;
+    self.imageViewHeightConstraint.constant = self.view.frame.size.height;
+    
     [self updateUIWithImage:self.image];
     
     if ([self.image.description hasPrefix:@"<_UIAnimatedImage"])
@@ -114,27 +125,62 @@ typedef enum{
 {
     if ([self.shouldShowAlert isEqualToString:@"YES"])
     {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"This image cuold be animated" message:@"Editing of GIF images will cause it to become not animated" preferredStyle:UIAlertControllerStyleAlert];
-    
-    [alertController addAction:[UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){}]];
-    
-    [alertController addAction:[UIAlertAction actionWithTitle:@"Don't show this again" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
-                                {
-                                    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                                    [defaults setObject:@"NO" forKey:@"shouldShowAlert"];
-                                }]];
-    [self presentViewController:alertController animated:YES completion:nil];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"This image cuold be animated" message:@"Editing of GIF images will cause it to become not animated" preferredStyle:UIAlertControllerStyleAlert];
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){}]];
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:@"Don't show this again" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
+                                    {
+                                        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                                        [defaults setObject:@"NO" forKey:@"shouldShowAlert"];
+                                    }]];
+        [self presentViewController:alertController animated:YES completion:nil];
     }
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     [self addHandlesLogic];
+    if (self.isLoadIndicating)
+    {
+        
+        [self stopLoadIndicating];
+        [self startLoadIndicating];
+        
+    }
+    self.imageViewWidthConstraint.constant = self.view.frame.size.width;
+    self.imageViewHeightConstraint.constant = self.view.frame.size.height;
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
+    [self closeAllMenus];
     [self removeAllHandes];
+}
+
+- (void)handlePinch:(UIPinchGestureRecognizer *)pinch
+{
+    if (pinch.state == UIGestureRecognizerStateChanged)
+    {
+        if (self.imageViewWidthConstraint.constant < self.view.frame.size.width * 10 || pinch.scale < 1)//max scale
+        {
+            CGFloat xDiferance = self.imageView.frame.size.width * pinch.scale - self.imageView.frame.size.width;
+            CGFloat yDiferance = self.imageView.frame.size.height * pinch.scale - self.imageView.frame.size.height;
+            
+            if (pinch.scale < 1 && (self.imageViewWidthConstraint.constant <= self.view.frame.size.width
+                                    || self.imageViewHeightConstraint.constant <= self.view.frame.size.height))//min scale
+            {
+                self.imageViewWidthConstraint.constant = self.view.frame.size.width;
+                self.imageViewHeightConstraint.constant = self.view.frame.size.height;
+            }
+            else
+            {
+                self.imageViewWidthConstraint.constant += xDiferance;
+                self.imageViewHeightConstraint.constant += yDiferance;
+            }
+        }
+        pinch.scale = 1.0;
+    }
 }
 
 - (void)prepare
@@ -145,6 +191,10 @@ typedef enum{
     self.isRightTextMenuOpened = NO;
     self.handleViewHeigh = 100;
     self.handleViewWidth = 100;
+    
+    self.pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self
+                                                           action:@selector(handlePinch:)];
+    [self.view addGestureRecognizer:self.pinch];
 }
 
 - (void)removeAllHandes
@@ -605,7 +655,9 @@ typedef enum{
 
 - (void)saveImageToGallery
 {
+    [self startLoadIndicating];
     UIImageWriteToSavedPhotosAlbum([self getImageFromCurrentContext], nil, nil, nil);
+    [self stopLoadIndicating];
 }
 
 - (void)giveImageToShareVC
@@ -641,23 +693,31 @@ typedef enum{
 
 - (void)startLoadIndicating
 {
-    UIView *background = [[UIView alloc] initWithFrame:self.view.frame];
-    background.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.75];
-    background.tag = 1001;
-    [self.view addSubview:background];
-    [UIActivityIndicatorView addActivityIndicatorToView:self.view];
+    @synchronized(self)
+    {
+        self.isLoadIndicating = YES;
+        UIView *background = [[UIView alloc] initWithFrame:self.view.frame];
+        background.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.75];
+        background.tag = 1001;
+        [self.view addSubview:background];
+        [UIActivityIndicatorView addActivityIndicatorToView:self.view];
+    }
 }
 
 - (void)stopLoadIndicating
 {
-    for (UIView *subview in self.view.subviews)
+    @synchronized(self)
     {
-        if (subview.tag == 1001)
+        self.isLoadIndicating = NO;
+        for (UIView *subview in self.view.subviews)
         {
-            [subview removeFromSuperview];
+            if (subview.tag == 1001)
+            {
+                [subview removeFromSuperview];
+            }
         }
+        [UIActivityIndicatorView removeActivityIndicatorFromView:self.view];
     }
-    [UIActivityIndicatorView removeActivityIndicatorFromView:self.view];
 }
 
 #pragma mark - fontDelegate

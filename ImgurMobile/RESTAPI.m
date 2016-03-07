@@ -52,6 +52,7 @@
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
     [self.delegate getReceivedData:self.receivedData sender:self];
+    
     self.delegate = nil;
     self.requestConnection = nil;
     self.receivedData = nil;

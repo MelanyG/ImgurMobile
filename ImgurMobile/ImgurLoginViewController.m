@@ -13,6 +13,8 @@
 
 static BOOL firstTimeAppear;
 
+NSString* const LoginNotification = @"LoginUpdated";
+
 @interface ImgurLoginViewController ()<UIWebViewDelegate>
 
 @property (copy, nonatomic) ASLoginCompletionBlock completionBlock;
@@ -44,7 +46,7 @@ static BOOL firstTimeAppear;
     r.origin = CGPointZero;
     self.token = [ImgurAccessToken sharedToken];
     
-    
+
     
     self.webView = [[UIWebView alloc] initWithFrame:r];
     
@@ -124,12 +126,12 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
           [self dismissViewControllerAnimated:YES
                              completion:nil];
   }
-    else if(!firstTimeAppear)
+    else if(!self.token.token)
     {
     if ([[[request URL] description] rangeOfString:@"#access_token="].location != NSNotFound)
     {
       
-        firstTimeAppear = YES;
+        //firstTimeAppear = YES;
             
             NSLog(@"%@", [request URL]);
             NSString* query = [[request URL] description];
@@ -156,11 +158,14 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
                     }
                     else if ([key isEqualToString:@"expires_in"])
                     {
-                        NSTimeInterval interval = [[values lastObject] doubleValue];
-                        self.token.expirationDate = [NSDate dateWithTimeIntervalSinceNow:interval];
+                        NSDate *mydate = [NSDate date];
+                        //NSTimeInterval interval = [[values lastObject] doubleValue];
+                        NSTimeInterval secondsInEightHours = 12 * 60 * 60;
+                        self.token.expirationDate  = [mydate dateByAddingTimeInterval:secondsInEightHours];
                         NSLog(@"Exp: %@", self.token.expirationDate);
                     }
-                    else if ([key isEqualToString:@"account_username"]) {
+                    else if ([key isEqualToString:@"account_username"])
+                    {
                         
                         self.token.userName = [values lastObject];
                     }
@@ -189,15 +194,26 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
             [defaults setObject:self.token.dayOfLogin forKey:@"dayOfLogin"];
             
             NSLog(@"Updated User is:%@", self.token.userName);
-            
-            [self dismissViewControllerAnimated:YES
-                                     completion:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:LoginNotification
+                                                            object:nil
+                                                          userInfo:nil];
+        [[self presentingViewController] dismissViewControllerAnimated:NO
+                                                            completion:nil];
+        
+  
             return NO;
         }
     }
 
     return YES;
 }
+
+-(void)webViewDidFinishLoad:(UIWebView *)webView {
+    
+    //[self.webView removeFromSuperview];
+    NSLog(@"finish");
+}
+
 
 #pragma mark - Actions
 

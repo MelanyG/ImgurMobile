@@ -7,6 +7,7 @@
 //
 
 #import "URLGen.h"
+#import "ImgurAccessToken.h"
 
 @implementation URLGen
 
@@ -20,7 +21,7 @@
     return instance;
 }
 
-- (NSString *)GetGalleryURLForPage:(NSInteger)page Section:(section)section Sort:(sort)sort Window:(window)window
+- (NSString *)getGalleryURLForPage:(NSInteger)page Section:(section)section Sort:(sort)sort Window:(window)window
 {
     NSString *sectionStr;
     switch (section)
@@ -94,19 +95,59 @@
     NSString *url;
     if (section == top)
     {
-        url = [NSString stringWithFormat:@"%@gallery/%@/%@/%@/%ld.json",self.baseURL,sectionStr,sortStr,windowStr,page];
+        url = [NSString stringWithFormat:@"%@gallery/%@/%@/%@/%d.json",self.baseURL,sectionStr,sortStr,windowStr,page];
     }
     else
     {
-        url = [NSString stringWithFormat:@"%@gallery/%@/%@/%ld.json",self.baseURL,sectionStr,sortStr,page];
+        url = [NSString stringWithFormat:@"%@gallery/%@/%@/%d.json",self.baseURL,sectionStr,sortStr,page];
     }
     
     return url;
 }
 
-- (NSString *)GetAlbumURLForAlbumWithID:(NSString *)albumID
+- (NSString *)getAlbumURLForAlbumWithID:(NSString *)albumID
 {
     NSString *url = [NSString stringWithFormat:@"%@gallery/album/%@",self.baseURL,albumID];
+    return url;
+}
+
+- (NSString *)getComentsIdsForID:(NSString *)identifier URLIsAlbum:(BOOL)isAlbum
+{
+    NSString *url;
+    
+    if (isAlbum)
+    {
+        url = [NSString stringWithFormat:@"%@gallery/album/%@/comments/ids",self.baseURL, identifier];
+    }
+    else
+    {
+        url = [NSString stringWithFormat:@"%@gallery/image/%@/comments/ids",self.baseURL, identifier];
+    }
+    
+    return url;
+}
+
+- (NSString *)getConversationsListURL
+{
+    NSString *url = [NSString stringWithFormat:@"%@conversations", self.baseURL];
+    return url;
+}
+
+- (NSString *)getURLForConversationWithID:(NSInteger)identifier Page:(NSInteger)page
+{
+    NSString *url = [NSString stringWithFormat:@"%@conversations/%@/%@/0", self.baseURL, [NSString stringWithFormat:@"%d",identifier], [NSString stringWithFormat:@"%d",page]];
+    return url;
+}
+
+- (NSString *)getURLForMessageCreationWithUser:(NSString *)userName
+{
+    NSString *url = [NSString stringWithFormat:@"%@conversations/%@", self.baseURL, userName];
+    return url;
+}
+
+- (NSString *)getURLDeletionOfConversationWithID:(NSInteger)identifier
+{
+    NSString *url = [NSString stringWithFormat:@"%@conversations/%d", self.baseURL, identifier];
     return url;
 }
 
