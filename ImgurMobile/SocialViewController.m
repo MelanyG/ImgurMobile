@@ -56,6 +56,15 @@
 {
     [super viewDidLoad];
     
+    if ([self.postObject isKindOfClass:[imgurAlbum class]])
+    {
+        self.album = self.postObject;
+    }
+    else if ([self.postObject isKindOfClass:[imgurPost class]])
+    {
+        self.postObject = self.postObject;
+    }
+    
     self.set = [NSCharacterSet URLQueryAllowedCharacterSet];
     self.accessToken = [ImgurAccessToken sharedToken].token;
     if ([self.post.postDescription isKindOfClass:[NSString class]]) {
