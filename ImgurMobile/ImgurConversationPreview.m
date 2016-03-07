@@ -21,6 +21,13 @@
         conversation.receiverId = [[dictionary objectForKey:@"with_account_id"] integerValue];
         conversation.receiverName = [dictionary objectForKey:@"with_account"];
         conversation.lastMessage = [dictionary objectForKey:@"last_message_preview"];
+        
+        double getDate = [[dictionary objectForKey:@"datetime"] doubleValue];
+        NSTimeInterval seconds = getDate / 1000;
+        NSDate *date = [NSDate dateWithTimeIntervalSince1970:seconds];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init] ;
+        [dateFormatter setDateFormat:@"dd-MM HH:mm"];
+        conversation.date = [dateFormatter stringFromDate:date];
     }
     
     return conversation;
