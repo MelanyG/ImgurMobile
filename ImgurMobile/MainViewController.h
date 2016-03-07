@@ -11,7 +11,7 @@
 #import "ImgurLoginViewController.h"
 
 
-@interface MainViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, PageInfoDelegate>
+@interface MainViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, PageInfoDelegate, UIPopoverPresentationControllerDelegate>
 
 - (IBAction)logOutAction:(id)sender;
 
