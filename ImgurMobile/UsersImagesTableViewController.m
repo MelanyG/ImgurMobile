@@ -32,6 +32,8 @@
                                                            [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:21.0], NSFontAttributeName, nil]];
     
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    
+    
 }
 
 -(void)viewDidAppear:(BOOL)animated
