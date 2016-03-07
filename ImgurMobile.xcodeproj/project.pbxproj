@@ -71,6 +71,11 @@
 		97AEA2331C7B1B520010CD99 /* Node.m in Sources */ = {isa = PBXBuildFile; fileRef = 97AEA2321C7B1B520010CD99 /* Node.m */; };
 		97AEA2361C7B20DA0010CD99 /* NotChalengingQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 97AEA2351C7B20DA0010CD99 /* NotChalengingQueue.m */; };
 		97FBDDA01C8AF77200326E03 /* UIImage+Animation.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FBDD9F1C8AF77200326E03 /* UIImage+Animation.m */; };
+		EF01F6991C8C90440088CA3A /* Sent Filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = EF01F6981C8C90440088CA3A /* Sent Filled-50.png */; };
+		EF01F69C1C8C910D0088CA3A /* AddCommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF01F69B1C8C910D0088CA3A /* AddCommentViewController.m */; };
+		EF01F69F1C8CCF100088CA3A /* ImageTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF01F69E1C8CCF100088CA3A /* ImageTableViewController.m */; };
+		EF01F6A31C8CCF850088CA3A /* ImageCustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EF01F6A11C8CCF850088CA3A /* ImageCustomTableViewCell.m */; };
+		EF01F6A41C8CCF850088CA3A /* ImageCustomTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF01F6A21C8CCF850088CA3A /* ImageCustomTableViewCell.xib */; };
 		EF09022C1C77500000D9CF5E /* socialControllerIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = EF09022B1C77500000D9CF5E /* socialControllerIcon.png */; };
 		EF11841F1C8335F8000FB6A1 /* RESTAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = EF11841E1C8335F8000FB6A1 /* RESTAPI.m */; };
 		EF1F25101C7C583C0061DD53 /* Like Filled-48.png in Resources */ = {isa = PBXBuildFile; fileRef = EF1F250F1C7C583C0061DD53 /* Like Filled-48.png */; };
@@ -222,6 +227,14 @@
 		97AEA2351C7B20DA0010CD99 /* NotChalengingQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotChalengingQueue.m; sourceTree = "<group>"; };
 		97FBDD9E1C8AF75000326E03 /* UIImage+Animation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+Animation.h"; sourceTree = "<group>"; };
 		97FBDD9F1C8AF77200326E03 /* UIImage+Animation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Animation.m"; sourceTree = "<group>"; };
+		EF01F6981C8C90440088CA3A /* Sent Filled-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Sent Filled-50.png"; sourceTree = "<group>"; };
+		EF01F69A1C8C910D0088CA3A /* AddCommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddCommentViewController.h; sourceTree = "<group>"; };
+		EF01F69B1C8C910D0088CA3A /* AddCommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddCommentViewController.m; sourceTree = "<group>"; };
+		EF01F69D1C8CCF100088CA3A /* ImageTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageTableViewController.h; sourceTree = "<group>"; };
+		EF01F69E1C8CCF100088CA3A /* ImageTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageTableViewController.m; sourceTree = "<group>"; };
+		EF01F6A01C8CCF850088CA3A /* ImageCustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageCustomTableViewCell.h; sourceTree = "<group>"; };
+		EF01F6A11C8CCF850088CA3A /* ImageCustomTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageCustomTableViewCell.m; sourceTree = "<group>"; };
+		EF01F6A21C8CCF850088CA3A /* ImageCustomTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageCustomTableViewCell.xib; sourceTree = "<group>"; };
 		EF09022B1C77500000D9CF5E /* socialControllerIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = socialControllerIcon.png; sourceTree = "<group>"; };
 		EF11841D1C8335F8000FB6A1 /* RESTAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RESTAPI.h; sourceTree = "<group>"; };
 		EF11841E1C8335F8000FB6A1 /* RESTAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RESTAPI.m; sourceTree = "<group>"; };
@@ -453,6 +466,35 @@
 			name = Edit;
 			sourceTree = "<group>";
 		};
+		6ADA0C531C89FE0E008F2F62 /* Conversation */ = {
+			isa = PBXGroup;
+			children = (
+				6ADA0C541C89FE80008F2F62 /* ConversationPreviewTVC.h */,
+				6ADA0C551C89FE80008F2F62 /* ConversationPreviewTVC.m */,
+				6ADA0C571C89FEE3008F2F62 /* ConversationAndMessagingTVC.h */,
+				6ADA0C581C89FEE3008F2F62 /* ConversationAndMessagingTVC.m */,
+				6ADA0C5A1C89FF3F008F2F62 /* PreviewTableViewCell.h */,
+				6ADA0C5B1C89FF3F008F2F62 /* PreviewTableViewCell.m */,
+				6ADA0C5D1C89FF75008F2F62 /* MessageFromTableViewCell.h */,
+				6ADA0C5E1C89FF75008F2F62 /* MessageFromTableViewCell.m */,
+				6ADA0C601C89FFA7008F2F62 /* MessageInTableViewCell.h */,
+				6ADA0C611C89FFA7008F2F62 /* MessageInTableViewCell.m */,
+				6AC6C30B1C8CD93C005ACC15 /* NewConversationVC.h */,
+				6AC6C30C1C8CD93C005ACC15 /* NewConversationVC.m */,
+				6AC6C30D1C8CD93C005ACC15 /* NewConversationVC.xib */,
+			);
+			name = Conversation;
+			sourceTree = "<group>";
+		};
+		97305C061C80764800663B6C /* TPLib */ = {
+			isa = PBXGroup;
+			children = (
+				97305C031C80764200663B6C /* UIImage+animatedGIF.h */,
+				97305C041C80764200663B6C /* UIImage+animatedGIF.m */,
+			);
+			name = TPLib;
+			sourceTree = "<group>";
+		};
 		975D23021C7F357E00D3A4B7 /* mainScreen */ = {
 			isa = PBXGroup;
 			children = (
@@ -647,6 +689,10 @@
 				6AC562FF1C776C5B006C03C0 /* UIButton+AFNetworking.m in Sources */,
 				976949B91C848C8D00DE5162 /* imgurAlbum + Description.m in Sources */,
 				6AC562FD1C776C5B006C03C0 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
+				EF01F6A31C8CCF850088CA3A /* ImageCustomTableViewCell.m in Sources */,
+				97305C051C80764200663B6C /* UIImage+animatedGIF.m in Sources */,
+				EF9C68B61C8B9ADC00D4DC47 /* Comment.m in Sources */,
+				404587141C8B2E4C00D5C13D /* UsersImagesTableViewController.m in Sources */,
 				6ACB13E31C7C6CF9004237DD /* FiltersMenuViewController.m in Sources */,
 				6ACB13E61C7C6D0A004237DD /* FontsMenuViewController.m in Sources */,
 				6AC563061C77893A006C03C0 /* imgurJSONParser.m in Sources */,
