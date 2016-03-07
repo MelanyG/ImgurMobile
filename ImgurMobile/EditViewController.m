@@ -31,6 +31,9 @@ typedef enum{
 @property (assign, nonatomic) WorkingMode mode;
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageViewWidthConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageViewHeightConstraint;
+
 @property (strong, nonatomic) UIScrollView *scrollView;
 
 @property (strong, nonatomic) CIContext *ctx;
@@ -73,6 +76,8 @@ typedef enum{
 
 @property (assign, nonatomic) BOOL isLoadIndicating;
 
+@property (strong, nonatomic) UIPinchGestureRecognizer *pinch;
+
 @end
 
 @implementation EditViewController
@@ -85,6 +90,10 @@ typedef enum{
 {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor darkGrayColor];
+    
+    self.imageViewWidthConstraint.constant = self.view.frame.size.width;
+    self.imageViewHeightConstraint.constant = self.view.frame.size.height;
+    
     [self updateUIWithImage:self.image];
     
     if ([self.image.description hasPrefix:@"<_UIAnimatedImage"])
@@ -139,12 +148,39 @@ typedef enum{
         [self startLoadIndicating];
         
     }
+    self.imageViewWidthConstraint.constant = self.view.frame.size.width;
+    self.imageViewHeightConstraint.constant = self.view.frame.size.height;
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     [self closeAllMenus];
     [self removeAllHandes];
+}
+
+- (void)handlePinch:(UIPinchGestureRecognizer *)pinch
+{
+    if (pinch.state == UIGestureRecognizerStateChanged)
+    {
+        if (self.imageViewWidthConstraint.constant < self.view.frame.size.width * 10 || pinch.scale < 1)//max scale
+        {
+            CGFloat xDiferance = self.imageView.frame.size.width * pinch.scale - self.imageView.frame.size.width;
+            CGFloat yDiferance = self.imageView.frame.size.height * pinch.scale - self.imageView.frame.size.height;
+            
+            if (pinch.scale < 1 && (self.imageViewWidthConstraint.constant <= self.view.frame.size.width
+                                    || self.imageViewHeightConstraint.constant <= self.view.frame.size.height))//min scale
+            {
+                self.imageViewWidthConstraint.constant = self.view.frame.size.width;
+                self.imageViewHeightConstraint.constant = self.view.frame.size.height;
+            }
+            else
+            {
+                self.imageViewWidthConstraint.constant += xDiferance;
+                self.imageViewHeightConstraint.constant += yDiferance;
+            }
+        }
+        pinch.scale = 1.0;
+    }
 }
 
 - (void)prepare
@@ -155,6 +191,10 @@ typedef enum{
     self.isRightTextMenuOpened = NO;
     self.handleViewHeigh = 100;
     self.handleViewWidth = 100;
+    
+    self.pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self
+                                                           action:@selector(handlePinch:)];
+    [self.view addGestureRecognizer:self.pinch];
 }
 
 - (void)removeAllHandes
