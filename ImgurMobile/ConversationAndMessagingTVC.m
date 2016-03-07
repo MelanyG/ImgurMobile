@@ -237,7 +237,7 @@
     
     CGSize size = [message sizeWithFont:[UIFont systemFontOfSize:self.FONT_SIZE] constrainedToSize:CGSizeMake(self.MESSAGE_WIDTH, 20000000000)];
     
-    CGFloat height = MAX(size.height + 45, 100);
+    CGFloat height = MAX(size.height + 55, 100);
     
     return height;
 }
