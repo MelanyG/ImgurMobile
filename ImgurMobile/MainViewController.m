@@ -48,7 +48,7 @@
 @implementation MainViewController
 
 - (void)viewDidLoad
-{
+{   [super viewDidLoad];
     self.token = [ImgurAccessToken sharedToken];
     
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
@@ -108,11 +108,25 @@
     }
     else
     {
-        self.loginVC = [[ImgurLoginViewController alloc]init];
-        [self.navigationController pushViewController:self.loginVC animated:YES];
+        
+        //self.loginVC = [[ImgurLoginViewController alloc]init];
+        //[self.navigationController pushViewController:self.loginVC animated:YES];
         self.LogInButton.enabled = NO;
+        
+        
+        
+        
+       // self.loginVC  = (ImgurLoginViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"Pop"];
+        //self.loginVC.modalPresentationStyle = UIModalPresentationPopover;
+        //self.loginVC.popoverPresentationController.sourceView = self;
+        
+        // Set the correct sourceRect given the sender's bounds
+        //self.loginVC.popoverPresentationController.sourceRect = ((UIView *)sender).bounds;
+        //[self presentViewController:self.loginVC animated:YES completion:nil];
+        [self performSegueWithIdentifier:@"Pop" sender:self];
+        //[self.LogInButton sendActionsForControlEvents:self];
     }
-    [super viewDidLoad];
+ 
     // self.navigationItem.title = self.token.userName;
     
     
@@ -154,9 +168,12 @@
 
 -(void)callingLoginVC
 {
-    self.loginVC = [[ImgurLoginViewController alloc]init];
-    [self.navigationController pushViewController:self.loginVC animated:YES];
-    //[self reloadPage];
+    //self.loginVC = [[ImgurLoginViewController alloc]init];
+    //[self.navigationController pushViewController:self.loginVC animated:YES];
+ 
+     [self performSegueWithIdentifier:@"Pop" sender:self];
+    self.LogInButton.enabled = NO;
+   //[self reloadPage];
 }
 
 -(void) reloadPage
@@ -190,27 +207,14 @@
              //[self.navigationController pushViewController:self.loginVC animated:YES];
             
              
+//             [[[UIAlertView alloc] initWithTitle:@"Failed to enter into account"
+//                                         message:@"PLEASE LOG IN"
+//                                        delegate:nil
+//                               cancelButtonTitle:nil
+//                               otherButtonTitles:@"OK", nil] show];
              NSLog(@"%@", [resp objectForKey:IMGUR_SERVER_MANAGER_STATUS_KEY]);
-             if ([[resp objectForKey:IMGUR_SERVER_MANAGER_STATUS_KEY] isEqualToString:@"The access token provided is invalid."])
-             {
-//                 [self.manager updateAccessToken:[ImgurAccessToken sharedToken].refresh_token
-//                                    access_token:[ImgurAccessToken sharedToken].token
-//                                 completionBlock:^(NSString *result)
-//                  {
-//                      dispatch_async(dispatch_get_main_queue(),
-//                                     ^{
-//                                         [self.activityIndicator stopAnimating];
-//                                         self.activityIndicator = nil;
-//                                         [self reloadPage];
-//                                     });
-//                  }
-//                                    failureBlock:^(NSURLResponse *response, NSError *error, NSInteger status)
-//                  {
-//                      
-//                  }];
-
-                 ;
-             }
+             [self performSelectorOnMainThread:@selector(callingLoginVC) withObject:nil waitUntilDone:YES];
+             
          }
          else
          {

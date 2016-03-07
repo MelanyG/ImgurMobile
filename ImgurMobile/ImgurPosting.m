@@ -37,6 +37,8 @@
     self.token = [ImgurAccessToken sharedToken];
     self.navigationItem.title = @"Post";
    self.currentImage.image = self.image;
+    
+    self.allSavedImages = [[NSMutableDictionary alloc]init];
     self.spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     [self.spinner setCenter:CGPointMake(self.view.frame.size.width/2.0, self.view.frame.size.height/2.0)]; // I do this because I'm in landscape mode
     [self.view addSubview:self.spinner]; // spinner is not visible until started
@@ -176,10 +178,10 @@ self.topic = [self.array objectAtIndex:row];
 - (IBAction)loadImagesFromGallery:(id)sender
 {
     
+
     NSDictionary* temp;
     temp = [[NSDictionary alloc]initWithDictionary:[self receiveDataOfAlbums]];
-       [self.spinner startAnimating];
-    
+    [self.spinner startAnimating];
     self.albumObjects = [NSArray arrayWithArray:[self parsingOfReceivedDataFromAlbums:temp]];
     NSInteger qtyOfAlbums = [self.albumObjects count];
     imgurServerManager*x = [[imgurServerManager alloc]init];
@@ -251,6 +253,8 @@ imgurServerManager*x = [[imgurServerManager alloc]init];
             image.descriptionImage = [[arrayWithDic[i]objectForKey:@"data"][j]objectForKey:@"description"];
             image.link = [[arrayWithDic[i]objectForKey:@"data"][j]objectForKey:@"link"];
             image.albumName = us.albumName;
+            UIImage * imageFromURL = [self getImageFromURL:image.link];
+            [self.allSavedImages setObject:imageFromURL forKey:image.link];
             //[self saveImagesToDisc:image.link];
             [tmp addObject:image];
         }
@@ -259,75 +263,88 @@ imgurServerManager*x = [[imgurServerManager alloc]init];
     return tmp;
 }
 
-//-(UIImage *) getImageFromURL:(NSString *)fileURL {
-//    UIImage * result;
-//    
-//    NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:fileURL]];
-//    result = [UIImage imageWithData:data];
-//    
-//    return result;
+-(UIImage *) getImageFromURL:(NSString *)fileURL {
+    UIImage * result;
+    
+    NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:fileURL]];
+    result = [UIImage imageWithData:data];
+    
+    return result;
+}
+
+//- (void)saveImageWithData:(NSData *)imageData withName:(NSString *)name {
+//    NSData *data = imageData;
+//    //DLog(@"*** SIZE *** : Saving file of size %lu", (unsigned long)[data length]);
+//    NSFileManager *fileManager = [NSFileManager defaultManager];
+//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//    NSString *documentsDirectory = [paths objectAtIndex:0];
+//    NSString *fullPath = [documentsDirectory stringByAppendingPathComponent:name];
+//    [fileManager createFileAtPath:fullPath contents:data attributes:nil];
 //}
-//
-//-(void) saveImage:(UIImage *)image withFileName:(NSString *)imageName ofType:(NSString *)extension inDirectory:(NSString *)directoryPath {
-//    if ([[extension lowercaseString] isEqualToString:@"png"])
-//    {
-//        [UIImagePNGRepresentation(image) writeToFile:[directoryPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@", imageName, @"png"]] options:NSAtomicWrite error:nil];
-//    }
-//    else if ([[extension lowercaseString] isEqualToString:@"jpg"] || [[extension lowercaseString] isEqualToString:@"jpeg"])
-//    {
-//        [UIImageJPEGRepresentation(image, 1.0) writeToFile:[directoryPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@", imageName, @"jpg"]] options:NSAtomicWrite error:nil];
-//        NSLog(@"Written to %@",directoryPath);
-//    }
-//    else
-//    {
-//        NSLog(@"Image Save Failed\nExtension: (%@) is not recognized, use (PNG/JPG)", extension);
-//    }
-//}
-//
-//
-//-(void) saveImagesToDisc:(NSString*)url
-//{
-//    
-//    NSString * documentsDirectoryPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-//    
-//    //Get Image From URL
-//    UIImage * imageFromURL = [self getImageFromURL:url];
-//    
-//    //Save Image to Directory
-//    [self saveImage:imageFromURL withFileName:url ofType:@"jpg" inDirectory:documentsDirectoryPath];
-//    
-////    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
-////    NSURL *urlLink = [NSURL URLWithString:url];
-////    NSURLSessionTask *task = [[NSURLSession sharedSession] dataTaskWithURL:urlLink
-////                                                         completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
-////                              {
-////                                  if (!error)
-////                                  {
-////                                      static int finishedLoads = 0;
-////                                      finishedLoads ++;
-////                                      UIImage *image;
-////                                      if ([urlRequest.URL.pathExtension isEqualToString:@"jpg"] )
-////                                      {
-////                                          NSString *libraryPath = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-////                                          image = [UIImage imageWithData:data];
-////                                          [UIImageJPEGRepresentation(image, 0)  writeToFile:[libraryPath stringByAppendingPathComponent:[[url pathComponents] lastObject]]
-////                                                                                 atomically:YES];
-////                                      }
-////                                  }
-////                                  else
-////                                  {
-////                                      //[self.imageCache removeObjectForKey:[urlRequest.URL absoluteString]];
-////                                      //startedLoads--;
-////                                      
-////                                      NSLog(@"Image error:");
-////                                  }
-////                                  
-////                              }];
-//    
-//    
-//    
-//    
-//}
+
+-(void) saveImage:(UIImage *)image withFileName:(NSString *)imageName ofType:(NSString *)extension inDirectory:(NSString *)directoryPath {
+    if ([[extension lowercaseString] isEqualToString:@"png"])
+    {
+        [UIImagePNGRepresentation(image) writeToFile:[directoryPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@", imageName, @"png"]] options:NSAtomicWrite error:nil];
+    }
+    else if ([[extension lowercaseString] isEqualToString:@"jpg"] || [[extension lowercaseString] isEqualToString:@"jpeg"])
+    {
+        [UIImageJPEGRepresentation(image, 1.0) writeToFile:[directoryPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@", imageName, @"jpg"]] options:NSAtomicWrite error:nil];
+        NSLog(@"Written to %@",directoryPath);
+    }
+    else
+    {
+        NSLog(@"Image Save Failed\nExtension: (%@) is not recognized, use (PNG/JPG)", extension);
+    }
+}
+
+
+-(void) saveImagesToDisc:(NSString*)url
+{
+    
+    NSString * documentsDirectoryPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    
+    //Get Image From URL
+    UIImage * imageFromURL = [self getImageFromURL:url];
+    //NSData *data = UIImagePNGRepresentation(myImageView.image);
+    //or
+    NSData *data = UIImageJPEGRepresentation(imageFromURL, 0.8);    //Save Image to Directory
+   //[self saveImage:imageFromURL withFileName:url ofType:@"jpg" inDirectory:documentsDirectoryPath];
+    //[self saveImageWithData:data
+    //               withName:url];
+    
+    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
+    NSURL *urlLink = [NSURL URLWithString:url];
+    //NSURLSessionTask *task = [[NSURLSession sharedSession] dataTaskWithURL:urlLink
+    //                                                     completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
+    //                          {
+    //                              if (!error)
+    //                              {
+                                      static int finishedLoads = 0;
+                                      finishedLoads ++;
+                                      UIImage *image;
+                                      if ([urlRequest.URL.pathExtension isEqualToString:@"jpg"] )
+                                      {
+                                          NSString *libraryPath = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+                                          image = [UIImage imageWithData:data];
+                                          [UIImageJPEGRepresentation(image, 0) writeToFile:[libraryPath stringByAppendingPathComponent:[[url pathComponents] lastObject]]
+                                                                                 atomically:YES];
+                                      }
+    //                              }
+    //                              else
+    //                              {
+                                      //[self.imageCache removeObjectForKey:[urlRequest.URL absoluteString]];
+                                      //startedLoads--;
+                                      
+     //                                 NSLog(@"Image error:");
+    //                              }
+                                  
+    //                          }];
+    
+    
+    
+    
+}
 
 
 - (NSArray*) parsingOfReceivedDataFromAlbums:(NSDictionary*)dict
@@ -416,10 +433,15 @@ imgurServerManager*x = [[imgurServerManager alloc]init];
     else if ([segue.identifier isEqualToString:@"UsersImagesSegue"])
     {
         UsersImagesTableViewController * ipvc = (UsersImagesTableViewController *)segue.destinationViewController;
+        ipvc.allImagesInDictionary = self.allSavedImages;
         ipvc.imagesList =  self.allUserImages;
     }
 
 }
 
-
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:YES];
+[self.spinner stopAnimating];
+}
 @end

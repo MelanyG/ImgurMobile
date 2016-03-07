@@ -197,6 +197,10 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
         [[NSNotificationCenter defaultCenter] postNotificationName:LoginNotification
                                                             object:nil
                                                           userInfo:nil];
+        //[self dismissPopoverAnimated:YES];
+
+                                            //                                                  completion:nil];
+
         [[self presentingViewController] dismissViewControllerAnimated:NO
                                                             completion:nil];
         

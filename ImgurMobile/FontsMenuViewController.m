@@ -127,7 +127,9 @@ UIColor * RGBA(CGFloat red, CGFloat green, CGFloat blue, CGFloat alpha)
 
 - (void)setInitialFontSize
 {
-    self.fontSize = 10;
+    self.fontSizeSlider.minimumValue = self.imageWidth / 100;
+    self.fontSizeSlider.maximumValue = self.imageWidth / 20;
+    self.fontSize = self.fontSizeSlider.value;
     self.currentFont = [UIFont systemFontOfSize:self.fontSize];
     [self updateLabel];
 }

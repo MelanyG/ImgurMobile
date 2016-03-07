@@ -15,6 +15,7 @@
 @property (assign, nonatomic) NSInteger receiverId;
 @property (strong, nonatomic) NSString *receiverName;
 @property (strong, nonatomic) NSString *lastMessage;
+@property (strong, nonatomic) NSString *date;
 
 + (ImgurConversationPreview *)initWithDictionaryResponce:(NSDictionary *)dictionary;
 

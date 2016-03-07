@@ -216,11 +216,13 @@
     {
         ((MessageFromTableViewCell *)cell).messageLabel.text = [message objectForKey:@"message"];
         ((MessageFromTableViewCell *)cell).fromLabel.text = [message objectForKey:@"FromUserName"];
+        ((MessageFromTableViewCell *)cell).timeLabel.text = [message objectForKey:@"date"];
     }
     else if ([cell isKindOfClass:[MessageInTableViewCell class]])
     {
         ((MessageInTableViewCell *)cell).messageLabel.text = [message objectForKey:@"message"];
         ((MessageInTableViewCell *)cell).fromLabel.text = [message objectForKey:@"FromUserName"];
+        ((MessageInTableViewCell *)cell).timeLabel.text = [message objectForKey:@"date"];
     }
 }
 
