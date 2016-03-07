@@ -35,9 +35,9 @@
 {
     [super viewDidAppear:YES];
     self.images = [[NSMutableDictionary alloc] init];
-    imgurPost *post = [self.socialVC.album.posts firstObject];
+    /*imgurPost *post = [self.socialVC.album.posts firstObject];
     
-    [self.images setObject:self.socialVC.image forKey:[[post.imageURL pathComponents] lastObject]];
+    [self.images setObject:self.socialVC.image forKey:[[post.imageURL pathComponents] lastObject]];*/
 
 }
 
@@ -64,12 +64,12 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ImageCustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([ImageCustomTableViewCell class]) forIndexPath:indexPath];
-    if (indexPath.row == 0)
+   /* if (indexPath.row == 0)
     {
         cell.cellSocialImage.frame = CGRectMake(0, 0, self.socialVC.image.size.width, self.socialVC.image.size.height);
         [cell.cellSocialImage setImage:self.socialVC.image];
     }
-    else
+    else*/
     if (self.socialVC.album)
     {
         imgurPost* post = [self.socialVC.album.posts objectAtIndex:indexPath.row];
@@ -145,7 +145,7 @@
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 
-    if (self.socialVC.album )
+    if (self.socialVC.album)
     {
         imgurPost * post = [[self.socialVC.album posts] objectAtIndex:indexPath.row];
         UIImage * image = [self.images objectForKey:[[post.imageURL pathComponents] lastObject]];
@@ -153,13 +153,21 @@
         {
             return image.size.height;
         }
-        else
-            return 100;
+        else{
+            if (![[post.imageURL pathExtension] isEqualToString:@"gif"] ){
+                return  image.size.height;
+            }
+            else
+                return 100;
+        }
     }
-    else
+    /*else
         if (indexPath.row == 0){
             return self.socialVC.image.size.height;
-        }
+        }*/
+    else{
+        return self.socialVC.image.size.height;
+    }
     return 100;
 }
 
