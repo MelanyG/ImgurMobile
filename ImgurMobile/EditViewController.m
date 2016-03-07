@@ -91,8 +91,7 @@ typedef enum{
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor darkGrayColor];
     
-    self.imageViewWidthConstraint.constant = self.view.frame.size.width;
-    self.imageViewHeightConstraint.constant = self.view.frame.size.height;
+    [self prepareScrollView];
     
     [self updateUIWithImage:self.image];
     
@@ -108,8 +107,15 @@ typedef enum{
     
     self.FiltersMenuVC.currentImage = self.image;
     [self.FiltersMenuVC updateYourself];
+    self.FontsMenuVC.imageWidth = self.image.size.width;
     [self.FontsMenuVC updateYourself];
     [self.settingsMenuVC updateYourself];
+}
+
+- (void)prepareScrollView
+{
+    self.imageViewWidthConstraint.constant = self.view.frame.size.width;
+    self.imageViewHeightConstraint.constant = self.view.frame.size.height;
 }
 
 - (void)checkShouldShowAlert
@@ -181,6 +187,7 @@ typedef enum{
         }
         pinch.scale = 1.0;
     }
+    [self closeAllMenus];
 }
 
 - (void)prepare
@@ -671,9 +678,13 @@ typedef enum{
 
 - (UIImage *)getImageFromCurrentContext
 {
-    UIGraphicsBeginImageContextWithOptions(self.readyToGoImageView.frame.size, YES, 0.0);
-    
-    [self.readyToGoImageView.layer renderInContext:UIGraphicsGetCurrentContext()];
+    dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
+    {
+        UIGraphicsBeginImageContextWithOptions(self.readyToGoImageView.frame.size, YES, 0.0);
+        
+        [self.readyToGoImageView.layer renderInContext:UIGraphicsGetCurrentContext()];
+        
+    });
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
@@ -723,12 +734,31 @@ typedef enum{
 #pragma mark - fontDelegate
 - (void)setLabel:(UILabel *)label withPosition:(PositionType)position
 {
-    [self removeTextLabels];
-    label.tag = 911;
+    //[self removeTextLabels];
+    //label.tag = 911;
     
-    CGRect imageRect = [self.imageView calculateClientRectOfImage];
+    /*if (self.image.size.width > 100)
+    {
+        double pointCount = self.image.size.width / 100;
+        double newFontSize = label.font.pointSize + (pointCount * 3);
+        
+        UIFont *newFont = [UIFont fontWithName:label.font.fontName size:newFontSize];
+        
+        CGSize size = [label.text sizeWithAttributes:
+                       @{NSFontAttributeName: newFont}];
+        
+        CGRect frame = CGRectMake(0,
+                                  0,
+                                  size.width,
+                                  size.height);
+        label.frame = frame;
+        
+        label.font = newFont;
+    }*/
+    
+    //CGRect imageRect = [self.imageView calculateClientRectOfImage];
     CGRect renderingImageRect = self.readyToGoImageView.frame;
-    UILabel *renderLabel = [self deepLabelCopy:label];
+    //UILabel *renderLabel = [self deepLabelCopy:label];
     
     dispatch_queue_t queue;
     if ([NSThread isMainThread])
@@ -747,97 +777,98 @@ typedef enum{
         {
             case LeftTop:
             {
-                CGRect frame = CGRectMake(imageRect.origin.x,
+                /*CGRect frame = CGRectMake(imageRect.origin.x,
                                           imageRect.origin.y,
                                           label.frame.size.width,
                                           label.frame.size.height);
                 label.frame = frame;
-                [self.view insertSubview:label aboveSubview:self.imageView];
+                [self.view insertSubview:label aboveSubview:self.imageView];*/
                 
                 CGRect renderFrame = CGRectMake(renderingImageRect.origin.x,
                                                 renderingImageRect.origin.y,
                                                 label.frame.size.width,
                                                 label.frame.size.height);
-                renderLabel.frame = renderFrame;
-                [self.readyToGoImageView insertSubview:renderLabel aboveSubview:self.imageView];
+                label.frame = renderFrame;
+                [self.readyToGoImageView insertSubview:label aboveSubview:self.imageView];
             }
                 break;
                 
             case RightTop:
             {
-                CGRect frame = CGRectMake(imageRect.size.width - label.frame.size.width,
+                /*CGRect frame = CGRectMake(imageRect.size.width - label.frame.size.width,
                                           imageRect.origin.y,
                                           label.frame.size.width,
                                           label.frame.size.height);
                 label.frame = frame;
-                [self.view insertSubview:label aboveSubview:self.imageView];
+                [self.view insertSubview:label aboveSubview:self.imageView];*/
                 
                 CGRect renderFrame = CGRectMake(renderingImageRect.size.width - label.frame.size.width,
                                                 renderingImageRect.origin.y,
                                                 label.frame.size.width,
                                                 label.frame.size.height);
-                renderLabel.frame = renderFrame;
-                [self.readyToGoImageView insertSubview:renderLabel aboveSubview:self.imageView];
+                label.frame = renderFrame;
+                [self.readyToGoImageView insertSubview:label aboveSubview:self.imageView];
             }
                 break;
                 
             case LeftBottom:
             {
-                CGRect frame = CGRectMake(imageRect.origin.x,
+                /*CGRect frame = CGRectMake(imageRect.origin.x,
                                           imageRect.origin.y + imageRect.size.height - label.frame.size.height,
                                           label.frame.size.width,
                                           label.frame.size.height);
                 label.frame = frame;
-                [self.view insertSubview:label aboveSubview:self.imageView];
+                [self.view insertSubview:label aboveSubview:self.imageView];*/
                 
                 CGRect renderFrame = CGRectMake(renderingImageRect.origin.x,
                                                 renderingImageRect.origin.y + renderingImageRect.size.height - label.frame.size.height,
                                                 label.frame.size.width,
                                                 label.frame.size.height);
-                renderLabel.frame = renderFrame;
-                [self.readyToGoImageView insertSubview:renderLabel aboveSubview:self.imageView];
+                label.frame = renderFrame;
+                [self.readyToGoImageView insertSubview:label aboveSubview:self.imageView];
             }
                 break;
                 
             case RightBottom:
             {
-                CGRect frame = CGRectMake(imageRect.size.width - label.frame.size.width,
+                /*CGRect frame = CGRectMake(imageRect.size.width - label.frame.size.width,
                                           imageRect.origin.y + imageRect.size.height - label.frame.size.height,
                                           label.frame.size.width,
                                           label.frame.size.height);
                 label.frame = frame;
-                [self.view insertSubview:label aboveSubview:self.imageView];
+                [self.view insertSubview:label aboveSubview:self.imageView];*/
                 
                 CGRect renderFrame = CGRectMake(renderingImageRect.size.width - label.frame.size.width,
                                                 renderingImageRect.origin.y + renderingImageRect.size.height - label.frame.size.height,
                                                 label.frame.size.width,
                                                 label.frame.size.height);
-                renderLabel.frame = renderFrame;
-                [self.readyToGoImageView insertSubview:renderLabel aboveSubview:self.imageView];
+                label.frame = renderFrame;
+                [self.readyToGoImageView insertSubview:label aboveSubview:self.imageView];
             }
                 break;
                 
             case Center:
             {
-                CGRect frame = CGRectMake(imageRect.size.width / 2 - label.frame.size.width / 2,
+                /*CGRect frame = CGRectMake(imageRect.size.width / 2 - label.frame.size.width / 2,
                                           imageRect.origin.y + imageRect.size.height / 2 - label.frame.size.height / 2,
                                           label.frame.size.width,
                                           label.frame.size.height);
                 label.frame = frame;
-                [self.view insertSubview:label aboveSubview:self.imageView];
+                [self.view insertSubview:label aboveSubview:self.imageView];*/
                 
                 CGRect renderFrame = CGRectMake(renderingImageRect.size.width / 2 - label.frame.size.width / 2,
                                                 renderingImageRect.origin.y + renderingImageRect.size.height / 2 - label.frame.size.height / 2,
                                                 label.frame.size.width,
                                                 label.frame.size.height);
-                renderLabel.frame = renderFrame;
-                [self.readyToGoImageView insertSubview:renderLabel aboveSubview:self.imageView];
+                label.frame = renderFrame;
+                [self.readyToGoImageView insertSubview:label aboveSubview:self.imageView];
             }
                 break;
                 
             default:
                 break;
         }
+        self.imageView.image = [self getImageFromCurrentContext];
     });
 }
 
