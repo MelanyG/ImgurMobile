@@ -465,8 +465,7 @@
          //svc.socialImageDescription.text = (![self.selectedPost.postDescription isKindOfClass:[NSNull class]])?self.selectedPost.postDescription:@"null description";
          svc.imageTitel.title = (![self.selectedPost.title isKindOfClass:[NSNull class]])?self.selectedPost.title:@"null title";
          
-         svc.post = self.selectedPost;
-         svc.image = self.selectedImage;
+         svc.postObject = self.selectedPost;
          
          NSString *path; //= [[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:[[self.selectedPost.imageURL pathComponents]lastObject]];
          
@@ -479,16 +478,16 @@
              path = [[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:[[[[[(imgurAlbum *)self.selectedPost posts] firstObject] imageURL] pathComponents]lastObject]];
          }
          
-         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-             NSData *imageData = [NSData dataWithContentsOfFile:path];
-             UIImage *image;
-             if ([[path pathExtension] isEqualToString:@"gif"])
-                 image = [UIImage animatedImageWithAnimatedGIFData:imageData toSize:CGSizeMake(100, 100)];
-             else
-             {
-                 image = [UIImage imageWithData:imageData];  
-             }
-         });
+         NSData *imageData = [NSData dataWithContentsOfFile:path];
+         UIImage *image;
+         if ([[path pathExtension] isEqualToString:@"gif"])
+             image = [UIImage animatedImageWithAnimatedGIFData:imageData toSize:CGSizeMake(100, 100)];
+         else
+         {
+             image = [UIImage imageWithData:imageData];
+         }
+         svc.image = image;
+
      }
      if ([segue.identifier isEqualToString:@"pageSelectVC"])
      {
