@@ -30,11 +30,19 @@
         NSArray *messagesData = [data objectForKey:@"messages"];
         for (NSDictionary *dict in messagesData)
         {
+            double getDate = [[dict objectForKey:@"datetime"] doubleValue];
+            NSTimeInterval seconds = getDate / 1000;
+            NSDate *date = [NSDate dateWithTimeIntervalSince1970:seconds];
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init] ;
+            [dateFormatter setDateFormat:@"dd-MM HH:mm"];
+            NSString *dateString = [dateFormatter stringFromDate:date];
+            
             NSDictionary *mesageDict = [NSDictionary dictionaryWithObjectsAndKeys:
                                         [dict objectForKey:@"from"], @"FromUserName",
                                         [dict objectForKey:@"sender_id"], @"FromUserID",
                                         [dict objectForKey:@"id"], @"messageId",
-                                        [dict objectForKey:@"body"], @"message", nil];
+                                        [dict objectForKey:@"body"], @"message",
+                                        dateString, @"date", nil];
             [messages addObject:mesageDict];
         }
         conversation.messages = messages;
