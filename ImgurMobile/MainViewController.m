@@ -268,7 +268,7 @@
         NSArray *albums = [self.photosData objectForKey:@"albums"]  ;
         post = [[(imgurAlbum *)[albums objectAtIndex:indexPath.row] posts] firstObject];
         tempCell.ownerLabel.text = @"album";
-        tempCell.titleLabel.text = [[albums objectAtIndex:indexPath.row] albumTitle];
+        tempCell.titleLabel.text = [[albums objectAtIndex:indexPath.row] title];
         tempCell.pointsLabel.text = [[[albums objectAtIndex:indexPath.row] points] stringValue];
     }
     else
@@ -465,8 +465,30 @@
          //svc.socialImageDescription.text = (![self.selectedPost.postDescription isKindOfClass:[NSNull class]])?self.selectedPost.postDescription:@"null description";
          svc.imageTitel.title = (![self.selectedPost.title isKindOfClass:[NSNull class]])?self.selectedPost.title:@"null title";
          
-         svc.image = self.selectedImage;
          svc.post = self.selectedPost;
+         svc.image = self.selectedImage;
+         
+         NSString *path; //= [[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:[[self.selectedPost.imageURL pathComponents]lastObject]];
+         
+         if ([self.selectedPost isKindOfClass:[imgurPost class]])
+         {
+             path = [[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:[[self.selectedPost.imageURL pathComponents]lastObject]];
+         }
+         else
+         {
+             path = [[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:[[[[[(imgurAlbum *)self.selectedPost posts] firstObject] imageURL] pathComponents]lastObject]];
+         }
+         
+         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+             NSData *imageData = [NSData dataWithContentsOfFile:path];
+             UIImage *image;
+             if ([[path pathExtension] isEqualToString:@"gif"])
+                 image = [UIImage animatedImageWithAnimatedGIFData:imageData toSize:CGSizeMake(100, 100)];
+             else
+             {
+                 image = [UIImage imageWithData:imageData];  
+             }
+         });
      }
      if ([segue.identifier isEqualToString:@"pageSelectVC"])
      {

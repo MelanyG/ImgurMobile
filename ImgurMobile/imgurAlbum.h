@@ -10,7 +10,7 @@
 
 @interface imgurAlbum : NSObject
 
-@property (strong, nonatomic) NSString *albumTitle;
+@property (strong, nonatomic) NSString *title;
 @property (strong, nonatomic) NSString *albumDescription;
 @property (strong, nonatomic) NSNumber *points;
 @property (strong, nonatomic) NSNumber *downs;
