@@ -75,6 +75,7 @@
     self.tableView.dataSource = self;
     [self reloadData];
     self.navigationItem.title = self.conversation.receiverName;
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
 }
 
 - (void)dealloc
