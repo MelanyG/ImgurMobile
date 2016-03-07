@@ -1,5 +1,5 @@
 //
-//  NewMessageViewController.m
+//  NewConversationVC.m
 //  ImgurMobile
 //
 //  Created by alex4eetah on 3/6/16.
@@ -11,10 +11,10 @@
 #define IPHONE   UIUserInterfaceIdiomPhone
 
 
-#import "NewMessageViewController.h"
+#import "NewConversationVC.h"
 #import "imgurServerManager.h"
 
-@interface NewMessageViewController ()
+@interface NewConversationVC ()
 
 @property (weak, nonatomic) IBOutlet UITextField *receiverNameField;
 
@@ -26,7 +26,39 @@
 
 @end
 
-@implementation NewMessageViewController
+@implementation NewConversationVC
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    if ([self respondsToSelector:@selector(edgesForExtendedLayout)])
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+    
+    if (IDIOM == IPAD)
+    {
+#warning wrong
+        self.OFFSET_FOR_KEYBOARD = 150;
+    }
+    else if (IDIOM == IPHONE)
+    {
+        self.OFFSET_FOR_KEYBOARD = 500;
+    }
+    
+    
+    self.navigationItem.title = @"New mesage";
+}
+
 
 -(void)keyboardWillShow
 {
@@ -83,72 +115,24 @@
         }
         self.view.frame = rect;
         /*
-        double messageHeight;
-        if (movedUp)
-        {
-            messageHeight = self.view.frame.size.height * 2 / 3;
-        }
-        else
-        {
-            messageHeight = self.messageHeight;
-        }
-        self.messageField.frame = CGRectMake(self.messageField.frame.origin.x,
-                                             self.messageField.frame.origin.y,
-                                             self.messageField.frame.size.width,
-                                             messageHeight);*/
+         double messageHeight;
+         if (movedUp)
+         {
+         messageHeight = self.view.frame.size.height * 2 / 3;
+         }
+         else
+         {
+         messageHeight = self.messageHeight;
+         }
+         self.messageField.frame = CGRectMake(self.messageField.frame.origin.x,
+         self.messageField.frame.origin.y,
+         self.messageField.frame.size.width,
+         messageHeight);*/
         
         [UIView commitAnimations];
     }
 }
 
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillShow)
-                                                 name:UIKeyboardWillShowNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillHide)
-                                                 name:UIKeyboardWillHideNotification
-                                               object:nil];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UIKeyboardWillShowNotification
-                                                  object:nil];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UIKeyboardWillHideNotification
-                                                  object:nil];
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    if ([self respondsToSelector:@selector(edgesForExtendedLayout)])
-        self.edgesForExtendedLayout = UIRectEdgeNone;
-    
-    //self.messageHeight = self.messageField.frame.size.height;
-    
-    if (IDIOM == IPAD)
-    {
-        self.OFFSET_FOR_KEYBOARD = 150;
-    }
-    else if (IDIOM == IPHONE)
-    {
-        self.OFFSET_FOR_KEYBOARD = 500;
-    }
-    
-    
-    self.navigationItem.title = @"New mesage";
-}
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
@@ -192,7 +176,7 @@
     {
         [self.manager createMessageWithUser:self.receiverNameField.text
                                     Message:self.self.messageField.text
-                                 Completion:^(NSDictionary *dict) 
+                                 Completion:^(NSDictionary *dict)
          {
              if ([dict objectForKey:IMGUR_SERVER_MANAGER_ERROR_KEY])
              {
@@ -200,7 +184,7 @@
                      [self showAlertWithHeader:@"Wrong input" AndBody:@"Receiver name must consist of english laters and can't include white spaces"];
                  else
                      [self showAlertWithHeader:@"Error" AndBody:[dict objectForKey:IMGUR_SERVER_MANAGER_ERROR_KEY]];
-                  
+                 
              }
              else if ([dict objectForKey:IMGUR_SERVER_MANAGER_STATUS_KEY])
              {
@@ -225,5 +209,6 @@
     
     [self presentViewController:alertController animated:YES completion:nil];
 }
+
 
 @end

@@ -66,7 +66,7 @@
     
     imgurAlbum *album = [[imgurAlbum alloc] init];
     
-    album.albumTitle = [data objectForKey:@"title"];
+    album.title = [data objectForKey:@"title"];
     album.albumDescription = [data objectForKey:@"description"];
     album.points = [data objectForKey:@"points"];
     album.downs = [data objectForKey:@"downs"];

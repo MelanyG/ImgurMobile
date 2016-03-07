@@ -11,6 +11,9 @@
 #import "ImgurAccessToken.h"
 #import "buttonsVC.h"
 #import "Comment.h"
+#import "ImageTableViewController.h"
+#import "imgurPost.h"
+#import "imgurAlbum.h"
 
 @interface SocialViewController () <RESTAPIDelegate>
 
@@ -19,7 +22,7 @@
 @property (strong, nonatomic) NSString* accessToken;
 @property (strong, nonatomic) buttonsVC* bvc;
 @property (strong, nonatomic) NSDictionary *receivedData;
-
+@property (strong, nonatomic) ImageTableViewController* imageTableVC;
 
 @end
 
@@ -31,6 +34,11 @@
     {
         self.bvc = (buttonsVC*)segue.destinationViewController;
         self.bvc.socialVC = self.socialVCDelegate;
+    }
+    else if ([segue.identifier isEqualToString:@"socialContainerViewSegue"])
+    {
+        self.imageTableVC = (ImageTableViewController*)segue.destinationViewController;
+        self.imageTableVC.socialVC = self.socialVCDelegate;
     }
     
 }
@@ -48,15 +56,33 @@
 {
     [super viewDidLoad];
     
+    if ([self.postObject isKindOfClass:[imgurAlbum class]])
+    {
+        self.album = self.postObject;
+        self.albumID = self.album.albumID;
+        if ([self.album.albumDescription isKindOfClass:[NSString class]]) {
+            self.socialImageDescription.text = self.album.albumDescription;
+        }
+        else{
+            self.socialImageDescription.text = @"NO DESCRIPTION";
+        }
+        
+    }
+    else if ([self.postObject isKindOfClass:[imgurPost class]])
+    {
+        self.post = self.postObject;
+        self.imageID = self.post.postID;
+        if ([self.post.postDescription isKindOfClass:[NSString class]]) {
+            self.socialImageDescription.text = self.post.postDescription;
+        }
+        else{
+            self.socialImageDescription.text = @"NO DESCRIPTION";
+        }
+    }
+    
     self.set = [NSCharacterSet URLQueryAllowedCharacterSet];
     self.accessToken = [ImgurAccessToken sharedToken].token;
-    self.socialImage.image = self.image;
-    if ([self.post.postDescription isKindOfClass:[NSString class]]) {
-        self.socialImageDescription.text = self.post.postDescription;
-    }
-    else{
-        self.socialImageDescription.text = @"NO DESCRIPTION";
-    }
+   
     self.commentsArray = [[NSMutableArray alloc] init];
     
 
@@ -65,8 +91,14 @@
 
 - (void)commentsRequest
 {
+    NSString* urlString;
+    if (self.imageID) {
+        urlString = [NSString stringWithFormat:@"https://api.imgur.com/3/gallery/image/%@/comments", self.imageID];
+    }
+    else if (self.albumID){
+        urlString = [NSString stringWithFormat:@"https://api.imgur.com/3/gallery/album/%@/comments", self.albumID];
+    }
     
-    NSString* urlString = [NSString stringWithFormat:@"https://api.imgur.com/3/gallery/image/%@/comments", self.imageID];
     urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:self.set];
     NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
@@ -106,25 +138,21 @@
     return data;
 }
 
-/*- (void)commentsRequest
-{
-    NSString* urlString = [NSString stringWithFormat:@"https://api.imgur.com/3/gallery/image/%@/comments", self.imageID];
-    urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:self.set];
-    NSURL *url = [NSURL URLWithString:urlString];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    [request setValue:[NSString stringWithFormat:@"Bearer %@", self.accessToken] forHTTPHeaderField:@"Authorization"];
-    [request setHTTPMethod:@"GET"];
-    self.restApi.delegate = self;
-    [self.restApi httpRequest:request];
-    [self createCommentsArray];
-}*/
 
 -(void) postComment
 {
-    NSString* urlString = [NSString stringWithFormat:@"https://api.imgur.com/3/gallery/image/%@/%@", self.imageID, self.commentToPost];
+    NSString* urlString;
+    if (self.imageID) {
+        urlString =[NSString stringWithFormat:@"https://api.imgur.com/3/gallery/image/%@/comment",self.imageID];
+    }
+    else if (self.albumID){
+        urlString =[NSString stringWithFormat:@"https://api.imgur.com/3/gallery/album/%@/comment",self.albumID];
+    }
+    NSString* params = [NSString stringWithFormat:@"comment=%@",self.commentToPost];
     urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:self.set];
     NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
     [request setValue:[NSString stringWithFormat:@"Bearer %@", self.accessToken] forHTTPHeaderField:@"Authorization"];
     [request setHTTPMethod:@"POST"];
     self.restApi.delegate = self;
@@ -133,6 +161,7 @@
 }
 -(void) likeCommentRequestByID:(NSString*) commentID
 {
+    
     NSString* urlString = [NSString stringWithFormat:@"https://api.imgur.com/3/comment/%@/vote/up", commentID];
     urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:self.set];
     NSURL *url = [NSURL URLWithString:urlString];
@@ -158,7 +187,13 @@
 
 -(void) favoritesRequest
 {
-    NSString* urlString = [NSString stringWithFormat:@"https://api.imgur.com/3/image/%@/favorite", self.imageID];
+    NSString* urlString;
+    if (self.imageID) {
+        urlString = [NSString stringWithFormat:@"https://api.imgur.com/3/image/%@/favorite", self.imageID];
+    }
+    else if (self.albumID){
+        urlString = [NSString stringWithFormat:@"https://api.imgur.com/3/album/%@/favorite", self.albumID];
+    }
     urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:self.set];
     NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
@@ -171,7 +206,13 @@
 
 -(void) likeRequest
 {
-    NSString* urlString = [NSString stringWithFormat:@"https://api.imgur.com/3/gallery/image/%@/vote/up", self.imageID];
+    NSString* urlString;
+    if (self.imageID) {
+        urlString = [NSString stringWithFormat:@"https://api.imgur.com/3/gallery/image/%@/vote/up", self.imageID];
+    }
+    else if (self.albumID){
+        urlString = [NSString stringWithFormat:@"https://api.imgur.com/3/gallery/album/%@/vote/up", self.albumID];
+    }
     urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:self.set];
     NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
@@ -184,7 +225,13 @@
 
 -(void) dislikeRequest
 {
-    NSString* urlString = [NSString stringWithFormat:@"https://api.imgur.com/3/gallery/image/%@/vote/down", self.imageID];
+    NSString* urlString;
+    if (self.imageID) {
+        urlString = [NSString stringWithFormat:@"https://api.imgur.com/3/gallery/image/%@/vote/down", self.imageID];
+    }
+    else if (self.albumID){
+        urlString = [NSString stringWithFormat:@"https://api.imgur.com/3/gallery/album/%@/vote/down", self.albumID];
+    }
     urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:self.set];
     NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
