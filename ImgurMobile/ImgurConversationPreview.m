@@ -23,7 +23,7 @@
         conversation.lastMessage = [dictionary objectForKey:@"last_message_preview"];
         
         double getDate = [[dictionary objectForKey:@"datetime"] doubleValue];
-        NSTimeInterval seconds = getDate / 1000;
+        NSTimeInterval seconds = getDate;
         NSDate *date = [NSDate dateWithTimeIntervalSince1970:seconds];
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init] ;
         [dateFormatter setDateFormat:@"dd-MM HH:mm"];
