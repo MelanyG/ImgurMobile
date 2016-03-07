@@ -32,8 +32,10 @@
 
 @implementation ImgurPosting
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
+[GiFHUD setGifWithImageName:@"dog.gif"];
     self.token = [ImgurAccessToken sharedToken];
     self.navigationItem.title = @"Post";
    self.currentImage.image = self.image;
@@ -99,8 +101,8 @@ self.topic = [self.array objectAtIndex:row];
     NSString *title = [[self titleTextField] text];
     NSString *description = [[self commentTextField] text];
     self.sharedButton.enabled = NO;
-    [self.spinner startAnimating];
-
+    //[self.spinner startAnimating];
+    [GiFHUD show];
          [x shareImageWithImgurCommunity:title
                              description:description
                       access_token: self.token.token
@@ -117,7 +119,8 @@ self.topic = [self.array objectAtIndex:row];
             [av show];
                         NSLog(@"%@",result);
             self.sharedButton.enabled = YES;
-            [self.spinner stopAnimating];
+            //[self.spinner stopAnimating];
+            [GiFHUD dismiss];
 });
     } failureBlock:^(NSURLResponse *response, NSError *error, NSInteger status) {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -131,7 +134,8 @@ self.topic = [self.array objectAtIndex:row];
            NSLog(@"%@", [error localizedDescription]);
            NSLog(@"Err details: %@", [error description]);
             self.sharedButton.enabled = YES;
-[self.spinner stopAnimating];
+//[self.spinner stopAnimating];
+            [GiFHUD dismiss];
        });
    }];
     
@@ -177,11 +181,11 @@ self.topic = [self.array objectAtIndex:row];
 
 - (IBAction)loadImagesFromGallery:(id)sender
 {
-    
+    [GiFHUD show];
 
     NSDictionary* temp;
     temp = [[NSDictionary alloc]initWithDictionary:[self receiveDataOfAlbums]];
-    [self.spinner startAnimating];
+    //[self.spinner startAnimating];
     self.albumObjects = [NSArray arrayWithArray:[self parsingOfReceivedDataFromAlbums:temp]];
     NSInteger qtyOfAlbums = [self.albumObjects count];
     imgurServerManager*x = [[imgurServerManager alloc]init];
@@ -203,6 +207,7 @@ self.topic = [self.array objectAtIndex:row];
 
 -(NSDictionary*) receiveDataOfAlbums
 {
+    //[GiFHUD show];
 imgurServerManager*x = [[imgurServerManager alloc]init];
     NSDictionary* temp;
    temp = [[NSDictionary alloc]initWithDictionary:[x loadImagesFromUserGallery:self.token.token
@@ -365,7 +370,8 @@ imgurServerManager*x = [[imgurServerManager alloc]init];
 
 - (IBAction)postActionSelected:(UIButton *)sender
 {
-    [self.spinner startAnimating];
+    //[self.spinner startAnimating];
+    [GiFHUD show];
   NSString *title = [[self titleTextField] text];
   NSString *description = [[self commentTextField] text];
     self.postButton.enabled = NO;
@@ -395,7 +401,8 @@ imgurServerManager*x = [[imgurServerManager alloc]init];
                     self.postButton.enabled = YES;
                    self.deleteImageSelected.enabled = YES;
                   NSLog(@"%@",result);
-                   [self.spinner stopAnimating];
+                   //[self.spinner stopAnimating];
+                   [GiFHUD dismiss];
                });
            }
                failureBlock:^(NSURLResponse *response, NSError *error, NSInteger status)
@@ -411,7 +418,8 @@ imgurServerManager*x = [[imgurServerManager alloc]init];
                    NSLog(@"%@", [error localizedDescription]);
                    NSLog(@"Err details: %@", [error description]);
                    self.postButton.enabled = YES;
-                   [self.spinner stopAnimating];
+                   //[self.spinner stopAnimating];
+                   [GiFHUD dismiss];
                });
            }];
             
@@ -442,6 +450,7 @@ imgurServerManager*x = [[imgurServerManager alloc]init];
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:YES];
-[self.spinner stopAnimating];
+//[self.spinner stopAnimating];
+    [GiFHUD dismiss];
 }
 @end

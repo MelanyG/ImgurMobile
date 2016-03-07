@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "imgurServerManager.h"
 #import "ImgurAccessToken.h"
+#import "GiFHUD.h"
 
 
 @interface ImgurPosting : UIViewController <UIPickerViewDelegate>
