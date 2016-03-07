@@ -178,10 +178,10 @@ self.topic = [self.array objectAtIndex:row];
 - (IBAction)loadImagesFromGallery:(id)sender
 {
     
+
     NSDictionary* temp;
     temp = [[NSDictionary alloc]initWithDictionary:[self receiveDataOfAlbums]];
-       [self.spinner startAnimating];
-    
+    [self.spinner startAnimating];
     self.albumObjects = [NSArray arrayWithArray:[self parsingOfReceivedDataFromAlbums:temp]];
     NSInteger qtyOfAlbums = [self.albumObjects count];
     imgurServerManager*x = [[imgurServerManager alloc]init];
@@ -439,5 +439,9 @@ imgurServerManager*x = [[imgurServerManager alloc]init];
 
 }
 
-
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:YES];
+[self.spinner stopAnimating];
+}
 @end
