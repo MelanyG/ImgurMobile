@@ -37,6 +37,8 @@
     self.token = [ImgurAccessToken sharedToken];
     self.navigationItem.title = @"Post";
    self.currentImage.image = self.image;
+    
+    self.allSavedImages = [[NSMutableDictionary alloc]init];
     self.spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     [self.spinner setCenter:CGPointMake(self.view.frame.size.width/2.0, self.view.frame.size.height/2.0)]; // I do this because I'm in landscape mode
     [self.view addSubview:self.spinner]; // spinner is not visible until started
@@ -251,7 +253,9 @@ imgurServerManager*x = [[imgurServerManager alloc]init];
             image.descriptionImage = [[arrayWithDic[i]objectForKey:@"data"][j]objectForKey:@"description"];
             image.link = [[arrayWithDic[i]objectForKey:@"data"][j]objectForKey:@"link"];
             image.albumName = us.albumName;
-            [self saveImagesToDisc:image.link];
+            UIImage * imageFromURL = [self getImageFromURL:image.link];
+            [self.allSavedImages setObject:imageFromURL forKey:image.link];
+            //[self saveImagesToDisc:image.link];
             [tmp addObject:image];
         }
     }
@@ -429,6 +433,7 @@ imgurServerManager*x = [[imgurServerManager alloc]init];
     else if ([segue.identifier isEqualToString:@"UsersImagesSegue"])
     {
         UsersImagesTableViewController * ipvc = (UsersImagesTableViewController *)segue.destinationViewController;
+        ipvc.allImagesInDictionary = self.allSavedImages;
         ipvc.imagesList =  self.allUserImages;
     }
 

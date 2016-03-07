@@ -84,7 +84,7 @@
     NSString* title = self.currentImage.title;
     NSString* description = self.currentImage.descriptionImage;
     NSString* imageName = self.currentImage.link;
-    UIImage * imageFromURL = [self getImageFromURL:imageName];
+    //UIImage * imageFromURL = [self getImageFromURL:imageName];
     NSString* albumName = self.currentImage.albumName;
     //UIImage * imageFromWeb = [self loadImage:imageName ofType:@"jpg" inDirectory:self.documentsDirectoryPath];
     
@@ -92,7 +92,7 @@
    // UIImage* image = [UIImage imageNamed:imageName];
     customCell.customTitle.text = title;
     customCell.customDescription.text = description;
-  customCell.customImage.image = imageFromURL;
+  customCell.customImage.image = [self.allImagesInDictionary objectForKey:imageName];
     customCell.customAlbumName.text = albumName;
    // [customCell.customImage.image setObject:image forKey:[imageName absoluteString]];
     return customCell;
