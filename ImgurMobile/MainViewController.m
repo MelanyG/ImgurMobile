@@ -268,7 +268,7 @@
         NSArray *albums = [self.photosData objectForKey:@"albums"]  ;
         post = [[(imgurAlbum *)[albums objectAtIndex:indexPath.row] posts] firstObject];
         tempCell.ownerLabel.text = @"album";
-        tempCell.titleLabel.text = [[albums objectAtIndex:indexPath.row] albumTitle];
+        tempCell.titleLabel.text = [[albums objectAtIndex:indexPath.row] title];
         tempCell.pointsLabel.text = [[[albums objectAtIndex:indexPath.row] points] stringValue];
     }
     else
