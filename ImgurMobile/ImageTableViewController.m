@@ -11,6 +11,7 @@
 #import "SocialViewController.h"
 #import "imgurAlbum.h"
 #import "imgurPost.h"
+#import "UIImage+Animation.h"
 
 @interface ImageTableViewController ()
 
@@ -54,7 +55,17 @@
     if (self.socialVC.album) {
         imgurPost* post = [self.socialVC.album.posts objectAtIndex:indexPath.row];
         NSData * imageData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString:post.imageURL]];
-        self.image = [UIImage imageWithData: imageData];
+        UIImage * image;
+        if ([[post.imageURL pathExtension] isEqualToString:@"gif"] )
+        {
+            image = [UIImage animatedImageWithAnimatedGIFData:imageData];
+        }
+        else
+        {
+            image = [UIImage imageWithData: imageData];
+        }
+        
+        self.image = image;
         cell.cellSocialImage.frame = CGRectMake(0, 0, self.image.size.width, self.image.size.height);
         [cell.cellSocialImage setImage:self.image];
         
