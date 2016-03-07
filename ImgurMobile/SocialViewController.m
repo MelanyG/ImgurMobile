@@ -115,10 +115,12 @@
 
 -(void) postComment
 {
-    NSString* urlString = [NSString stringWithFormat:@"https://api.imgur.com/3/gallery/image/%@/%@", self.imageID, self.commentToPost];
+    NSString* urlString =[NSString stringWithFormat:@"https://api.imgur.com/3/gallery/image/%@/comment",self.imageID];
+    NSString* params = [NSString stringWithFormat:@"comment=%@",self.commentToPost];
     urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:self.set];
     NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
     [request setValue:[NSString stringWithFormat:@"Bearer %@", self.accessToken] forHTTPHeaderField:@"Authorization"];
     [request setHTTPMethod:@"POST"];
     self.restApi.delegate = self;
