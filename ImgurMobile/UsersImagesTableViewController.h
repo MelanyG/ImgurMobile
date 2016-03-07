@@ -14,6 +14,7 @@
 @interface UsersImagesTableViewController : UITableViewController
 
 @property (strong, nonatomic) NSArray* imagesList;
+@property (strong, nonatomic) NSDictionary* allImagesInDictionary;
 
 - (IBAction)backToPreviousPage:(id)sender;
 
