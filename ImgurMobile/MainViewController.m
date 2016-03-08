@@ -463,7 +463,6 @@
      {
          SocialViewController * svc = segue.destinationViewController;
          
-         svc.socialVCDelegate = svc;
          //[svc.socialImage setImage:self.selectedImage];
          
          //svc.socialImageDescription.text = (![self.selectedPost.postDescription isKindOfClass:[NSNull class]])?self.selectedPost.postDescription:@"null description";
