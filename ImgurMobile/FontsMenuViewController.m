@@ -14,7 +14,7 @@ UIColor * RGBA(CGFloat red, CGFloat green, CGFloat blue, CGFloat alpha)
     return [UIColor colorWithRed:red green:green blue:blue alpha:alpha];
 }
 
-@interface FontsMenuViewController ()
+@interface FontsMenuViewController ()<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIView *contentView;
 
@@ -24,8 +24,6 @@ UIColor * RGBA(CGFloat red, CGFloat green, CGFloat blue, CGFloat alpha)
 @property (weak, nonatomic) IBOutlet UISlider *blueSlider;
 @property (weak, nonatomic) IBOutlet UISlider *alphaSlider;
 @property (weak, nonatomic) IBOutlet UISlider *fontSizeSlider;
-
-@property (weak, nonatomic) IBOutlet UIImageView *colorIndicator;
 
 @property (weak, nonatomic) IBOutlet UIPickerView *fontPicker;
 @property (strong, nonatomic) NSArray *fontNamesArray;
@@ -60,7 +58,8 @@ UIColor * RGBA(CGFloat red, CGFloat green, CGFloat blue, CGFloat alpha)
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor clearColor];
     self.contentView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"glas_texture"]];
-   
+    self.inputTextField.delegate = self;
+    
     // border radius
     self.contentView.layer.cornerRadius = 5;
     
@@ -127,7 +126,9 @@ UIColor * RGBA(CGFloat red, CGFloat green, CGFloat blue, CGFloat alpha)
 
 - (void)setInitialFontSize
 {
-    self.fontSize = 10;
+    self.fontSizeSlider.minimumValue = self.imageWidth / 100;
+    self.fontSizeSlider.maximumValue = self.imageWidth / 20;
+    self.fontSize = self.fontSizeSlider.value;
     self.currentFont = [UIFont systemFontOfSize:self.fontSize];
     [self updateLabel];
 }
@@ -299,5 +300,11 @@ UIColor * RGBA(CGFloat red, CGFloat green, CGFloat blue, CGFloat alpha)
     [self updateLabel];
 }
 
+#pragma mark - UITextFieldDelegate
+- (BOOL)textFieldShouldReturn:(UITextField *)textField;
+{
+    [textField resignFirstResponder];
+    return YES;
+}
 
 @end

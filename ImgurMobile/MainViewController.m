@@ -48,7 +48,7 @@
 @implementation MainViewController
 
 - (void)viewDidLoad
-{
+{   [super viewDidLoad];
     self.token = [ImgurAccessToken sharedToken];
     
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
@@ -108,11 +108,25 @@
     }
     else
     {
-        self.loginVC = [[ImgurLoginViewController alloc]init];
-        [self.navigationController pushViewController:self.loginVC animated:YES];
+        
+        //self.loginVC = [[ImgurLoginViewController alloc]init];
+        //[self.navigationController pushViewController:self.loginVC animated:YES];
         self.LogInButton.enabled = NO;
+        
+        
+        
+        
+       // self.loginVC  = (ImgurLoginViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"Pop"];
+        //self.loginVC.modalPresentationStyle = UIModalPresentationPopover;
+        //self.loginVC.popoverPresentationController.sourceView = self;
+        
+        // Set the correct sourceRect given the sender's bounds
+        //self.loginVC.popoverPresentationController.sourceRect = ((UIView *)sender).bounds;
+        //[self presentViewController:self.loginVC animated:YES completion:nil];
+        [self performSegueWithIdentifier:@"Pop" sender:self];
+        //[self.LogInButton sendActionsForControlEvents:self];
     }
-    [super viewDidLoad];
+ 
     // self.navigationItem.title = self.token.userName;
 }
 
@@ -161,9 +175,12 @@
 
 -(void)callingLoginVC
 {
-    self.loginVC = [[ImgurLoginViewController alloc]init];
-    [self.navigationController pushViewController:self.loginVC animated:YES];
-    //[self reloadPage];
+    //self.loginVC = [[ImgurLoginViewController alloc]init];
+    //[self.navigationController pushViewController:self.loginVC animated:YES];
+ 
+     [self performSegueWithIdentifier:@"Pop" sender:self];
+    self.LogInButton.enabled = NO;
+   //[self reloadPage];
 }
 
 -(void) reloadPage
@@ -197,27 +214,14 @@
              //[self.navigationController pushViewController:self.loginVC animated:YES];
             
              
+//             [[[UIAlertView alloc] initWithTitle:@"Failed to enter into account"
+//                                         message:@"PLEASE LOG IN"
+//                                        delegate:nil
+//                               cancelButtonTitle:nil
+//                               otherButtonTitles:@"OK", nil] show];
              NSLog(@"%@", [resp objectForKey:IMGUR_SERVER_MANAGER_STATUS_KEY]);
-             if ([[resp objectForKey:IMGUR_SERVER_MANAGER_STATUS_KEY] isEqualToString:@"The access token provided is invalid."])
-             {
-//                 [self.manager updateAccessToken:[ImgurAccessToken sharedToken].refresh_token
-//                                    access_token:[ImgurAccessToken sharedToken].token
-//                                 completionBlock:^(NSString *result)
-//                  {
-//                      dispatch_async(dispatch_get_main_queue(),
-//                                     ^{
-//                                         [self.activityIndicator stopAnimating];
-//                                         self.activityIndicator = nil;
-//                                         [self reloadPage];
-//                                     });
-//                  }
-//                                    failureBlock:^(NSURLResponse *response, NSError *error, NSInteger status)
-//                  {
-//                      
-//                  }];
-
-                 ;
-             }
+             [self performSelectorOnMainThread:@selector(callingLoginVC) withObject:nil waitUntilDone:YES];
+             
          }
          else
          {
@@ -466,14 +470,12 @@
      {
          SocialViewController * svc = segue.destinationViewController;
          
-         svc.socialVCDelegate = svc;
          //[svc.socialImage setImage:self.selectedImage];
          
          //svc.socialImageDescription.text = (![self.selectedPost.postDescription isKindOfClass:[NSNull class]])?self.selectedPost.postDescription:@"null description";
          svc.imageTitel.title = (![self.selectedPost.title isKindOfClass:[NSNull class]])?self.selectedPost.title:@"null title";
          
-         svc.post = self.selectedPost;
-         svc.image = self.selectedImage;
+         svc.postObject = self.selectedPost;
          
          NSString *path; //= [[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:[[self.selectedPost.imageURL pathComponents]lastObject]];
          
@@ -486,16 +488,16 @@
              path = [[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:[[[[[(imgurAlbum *)self.selectedPost posts] firstObject] imageURL] pathComponents]lastObject]];
          }
          
-         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-             NSData *imageData = [NSData dataWithContentsOfFile:path];
-             UIImage *image;
-             if ([[path pathExtension] isEqualToString:@"gif"])
-                 image = [UIImage animatedImageWithAnimatedGIFData:imageData toSize:CGSizeMake(100, 100)];
-             else
-             {
-                 image = [UIImage imageWithData:imageData];  
-             }
-         });
+         NSData *imageData = [NSData dataWithContentsOfFile:path];
+         UIImage *image;
+         if ([[path pathExtension] isEqualToString:@"gif"])
+             image = [UIImage animatedImageWithAnimatedGIFData:imageData];
+         else
+         {
+             image = [UIImage imageWithData:imageData];
+         }
+         svc.image = image;
+         NSLog(@"lalala");
      }
      if ([segue.identifier isEqualToString:@"pageSelectVC"])
      {

@@ -38,6 +38,7 @@
     [self reloadData];
     
     [self addNavButtonDeletionProcess:NO];
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
 }
 
 - (void)reloadData
@@ -140,6 +141,7 @@
     
     cell.withWhomYouComunicate.text = previewConversation.receiverName;
     cell.messageLabel.text = previewConversation.lastMessage;
+    cell.whenLabel.text = previewConversation.date;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

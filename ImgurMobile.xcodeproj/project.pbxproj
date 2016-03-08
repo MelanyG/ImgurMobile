@@ -15,6 +15,9 @@
 		404587141C8B2E4C00D5C13D /* UsersImagesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 404587131C8B2E4C00D5C13D /* UsersImagesTableViewController.m */; };
 		404587171C8B373000D5C13D /* CustomCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 404587161C8B373000D5C13D /* CustomCellTableViewCell.m */; };
 		40B42AFF1C8858E200B76F8F /* LocalGalleryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 40B42AFE1C8858E200B76F8F /* LocalGalleryViewController.m */; };
+		40BDF0061C8DF80D00F2B7BB /* dog.gif in Resources */ = {isa = PBXBuildFile; fileRef = 40BDF0051C8DF80D00F2B7BB /* dog.gif */; };
+		40BDF0091C8DF91200F2B7BB /* GiFHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 40BDF0081C8DF91200F2B7BB /* GiFHUD.m */; };
+		40BDF00B1C8DFECE00F2B7BB /* DogRun.gif in Resources */ = {isa = PBXBuildFile; fileRef = 40BDF00A1C8DFECE00F2B7BB /* DogRun.gif */; };
 		40C4FA641C773BD3003CDB34 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 40C4FA631C773BD3003CDB34 /* main.m */; };
 		40C4FA671C773BD3003CDB34 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 40C4FA661C773BD3003CDB34 /* AppDelegate.m */; };
 		40C4FA6D1C773BD3003CDB34 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 40C4FA6B1C773BD3003CDB34 /* Main.storyboard */; };
@@ -115,6 +118,10 @@
 		404587161C8B373000D5C13D /* CustomCellTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCellTableViewCell.m; sourceTree = "<group>"; };
 		40B42AFD1C8858E200B76F8F /* LocalGalleryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalGalleryViewController.h; sourceTree = "<group>"; };
 		40B42AFE1C8858E200B76F8F /* LocalGalleryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalGalleryViewController.m; sourceTree = "<group>"; };
+		40BDF0051C8DF80D00F2B7BB /* dog.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = dog.gif; sourceTree = "<group>"; };
+		40BDF0071C8DF91200F2B7BB /* GiFHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GiFHUD.h; sourceTree = "<group>"; };
+		40BDF0081C8DF91200F2B7BB /* GiFHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GiFHUD.m; sourceTree = "<group>"; };
+		40BDF00A1C8DFECE00F2B7BB /* DogRun.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = DogRun.gif; sourceTree = "<group>"; };
 		40C4FA5F1C773BD3003CDB34 /* ImgurMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImgurMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		40C4FA631C773BD3003CDB34 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		40C4FA651C773BD3003CDB34 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -285,6 +292,10 @@
 		404587111C8B2E1D00D5C13D /* UsersImages */ = {
 			isa = PBXGroup;
 			children = (
+				40BDF0071C8DF91200F2B7BB /* GiFHUD.h */,
+				40BDF0081C8DF91200F2B7BB /* GiFHUD.m */,
+				40BDF00A1C8DFECE00F2B7BB /* DogRun.gif */,
+				40BDF0051C8DF80D00F2B7BB /* dog.gif */,
 				404587121C8B2E4C00D5C13D /* UsersImagesTableViewController.h */,
 				404587131C8B2E4C00D5C13D /* UsersImagesTableViewController.m */,
 				404587151C8B373000D5C13D /* CustomCellTableViewCell.h */,
@@ -648,6 +659,8 @@
 				EF01F6A41C8CCF850088CA3A /* ImageCustomTableViewCell.xib in Resources */,
 				EFEE04071C7B43E60054EEF2 /* Thumb Up-48.png in Resources */,
 				EF1F25101C7C583C0061DD53 /* Like Filled-48.png in Resources */,
+				40BDF00B1C8DFECE00F2B7BB /* DogRun.gif in Resources */,
+				40BDF0061C8DF80D00F2B7BB /* dog.gif in Resources */,
 				40C4FA721C773BD3003CDB34 /* LaunchScreen.storyboard in Resources */,
 				EFEE040E1C7B43EF0054EEF2 /* Share-48.png in Resources */,
 				40C4FA6F1C773BD3003CDB34 /* Assets.xcassets in Resources */,
@@ -703,6 +716,7 @@
 				6AC562FC1C776C5B006C03C0 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				6AEFD2D41C7BABAA00ADF2FC /* URLGen.m in Sources */,
 				6A6E1AD51C89D1D200C9E666 /* ImgurConversationPreview.m in Sources */,
+				40BDF0091C8DF91200F2B7BB /* GiFHUD.m in Sources */,
 				6ACB13EA1C7CE38F004237DD /* UIView+SuperClassChecker.m in Sources */,
 				EF11841F1C8335F8000FB6A1 /* RESTAPI.m in Sources */,
 				40C4FA861C78B8F3003CDB34 /* ImgurLoginViewController.m in Sources */,
