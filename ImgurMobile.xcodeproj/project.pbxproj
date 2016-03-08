@@ -495,8 +495,6 @@
 		975D23021C7F357E00D3A4B7 /* mainScreen */ = {
 			isa = PBXGroup;
 			children = (
-				976563891C8EF15400EBF1E9 /* MenuViewController.h */,
-				9765638A1C8EF15400EBF1E9 /* MenuViewController.m */,
 				EFA6C7221C77474E00EA73D5 /* MainViewController.h */,
 				EFA6C7231C77474E00EA73D5 /* MainViewController.m */,
 				976842231C7C8D6700F613B5 /* imgurCell.h */,
@@ -512,6 +510,8 @@
 				975D23041C7F3D9000D3A4B7 /* PageInfoViewController.m */,
 				970416211C85D57100B5C4F6 /* PageSelectViewController.h */,
 				970416221C85D57100B5C4F6 /* PageSelectViewController.m */,
+				976563891C8EF15400EBF1E9 /* MenuViewController.h */,
+				9765638A1C8EF15400EBF1E9 /* MenuViewController.m */,
 				97FBDD9E1C8AF75000326E03 /* UIImage+Animation.h */,
 				97FBDD9F1C8AF77200326E03 /* UIImage+Animation.m */,
 			);
