@@ -766,24 +766,10 @@ static NSString* imageID;
                            if (posts)
                            {
                                [albumsAndPosts setObject:posts forKey:@"posts"];
-                               /*for (imgurPost *post in posts)
-                               {
-                                   NSString *urlComentString = [self.URLgenerator getComentsIdsForID:post.postID URLIsAlbum:NO];
-                                   NSDictionary *loadedComentDict = [self.synchLoader loadJSONFromURL:urlComentString];
-                                   NSArray *comentsIDs = [self.parcer getCommetsArrayFromRsponceDict:loadedComentDict];
-                                   post.commentsIds = comentsIDs;
-                               }*/
                            }
                            if (albums)
                            {
                                [albumsAndPosts setObject:albums forKey:@"albums"];
-                               /*for (imgurAlbum *album in albums)
-                               {
-                                   NSString *urlComentString = [self.URLgenerator getComentsIdsForID:album.albumID URLIsAlbum:YES];
-                                   NSDictionary *loadedComentDict = [self.synchLoader loadJSONFromURL:urlComentString];
-                                   NSArray *comentsIDs = [self.parcer getCommetsArrayFromRsponceDict:loadedComentDict];
-                                   album.commentsIds = comentsIDs;
-                               }*/
                            }
                            
                            dispatch_async(dispatch_get_main_queue(), ^

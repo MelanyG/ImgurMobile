@@ -15,18 +15,11 @@
     CGSize imgViewSize=self.frame.size;                  // Size of UIImageView
     CGSize imgSize=self.image.size;                      // Size of the image, currently displayed
     
-    // Calculate the aspect, assuming imgView.contentMode==UIViewContentModeScaleAspectFit
-    
     CGFloat scaleW = imgViewSize.width / imgSize.width;
     CGFloat scaleH = imgViewSize.height / imgSize.height;
     CGFloat aspect=fmin(scaleW, scaleH);
     
     CGRect imageRect={ {0,0} , { imgSize.width*=aspect, imgSize.height*=aspect } };
-    
-    // Note: the above is the same as :
-    // CGRect imageRect=CGRectMake(0,0,imgSize.width*=aspect,imgSize.height*=aspect) I just like this notation better
-    
-    // Center image
     
     imageRect.origin.x=(imgViewSize.width-imageRect.size.width)/2;
     imageRect.origin.y=(imgViewSize.height-imageRect.size.height)/2;

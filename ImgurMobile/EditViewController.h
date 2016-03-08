@@ -10,11 +10,6 @@
 #import "EditProtocolHeader.h"
 
 @interface EditViewController : UIViewController <settingsMenuDelegate, rightMenuDelegate, filteringDelegate, fontDelegate>
-
 @property (nonatomic, strong) UIImage *image;
-
-
-
-
 
 @end

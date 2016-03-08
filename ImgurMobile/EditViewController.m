@@ -86,6 +86,7 @@ typedef enum{
 @synthesize isRightFilteringMenuOpened;
 @synthesize isRightTextMenuOpened;
 
+#pragma mark - setting
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -178,6 +179,7 @@ typedef enum{
     [self.view addGestureRecognizer:self.pinch];
 }
 
+#pragma mark - handles logic
 - (void)removeAllHandes
 {
     for (UIView *v in self.view.subviews)
@@ -750,31 +752,7 @@ typedef enum{
 #pragma mark - fontDelegate
 - (void)setLabel:(UILabel *)label withPosition:(PositionType)position
 {
-    //[self removeTextLabels];
-    //label.tag = 911;
-    
-    /*if (self.image.size.width > 100)
-    {
-        double pointCount = self.image.size.width / 100;
-        double newFontSize = label.font.pointSize + (pointCount * 3);
-        
-        UIFont *newFont = [UIFont fontWithName:label.font.fontName size:newFontSize];
-        
-        CGSize size = [label.text sizeWithAttributes:
-                       @{NSFontAttributeName: newFont}];
-        
-        CGRect frame = CGRectMake(0,
-                                  0,
-                                  size.width,
-                                  size.height);
-        label.frame = frame;
-        
-        label.font = newFont;
-    }*/
-    
-    //CGRect imageRect = [self.imageView calculateClientRectOfImage];
     CGRect renderingImageRect = self.readyToGoImageView.frame;
-    //UILabel *renderLabel = [self deepLabelCopy:label];
     
     dispatch_queue_t queue;
     if ([NSThread isMainThread])
@@ -793,13 +771,6 @@ typedef enum{
         {
             case LeftTop:
             {
-                /*CGRect frame = CGRectMake(imageRect.origin.x,
-                                          imageRect.origin.y,
-                                          label.frame.size.width,
-                                          label.frame.size.height);
-                label.frame = frame;
-                [self.view insertSubview:label aboveSubview:self.imageView];*/
-                
                 CGRect renderFrame = CGRectMake(renderingImageRect.origin.x,
                                                 renderingImageRect.origin.y,
                                                 label.frame.size.width,
@@ -811,13 +782,6 @@ typedef enum{
                 
             case RightTop:
             {
-                /*CGRect frame = CGRectMake(imageRect.size.width - label.frame.size.width,
-                                          imageRect.origin.y,
-                                          label.frame.size.width,
-                                          label.frame.size.height);
-                label.frame = frame;
-                [self.view insertSubview:label aboveSubview:self.imageView];*/
-                
                 CGRect renderFrame = CGRectMake(renderingImageRect.size.width - label.frame.size.width,
                                                 renderingImageRect.origin.y,
                                                 label.frame.size.width,
@@ -829,13 +793,6 @@ typedef enum{
                 
             case LeftBottom:
             {
-                /*CGRect frame = CGRectMake(imageRect.origin.x,
-                                          imageRect.origin.y + imageRect.size.height - label.frame.size.height,
-                                          label.frame.size.width,
-                                          label.frame.size.height);
-                label.frame = frame;
-                [self.view insertSubview:label aboveSubview:self.imageView];*/
-                
                 CGRect renderFrame = CGRectMake(renderingImageRect.origin.x,
                                                 renderingImageRect.origin.y + renderingImageRect.size.height - label.frame.size.height,
                                                 label.frame.size.width,
@@ -847,13 +804,6 @@ typedef enum{
                 
             case RightBottom:
             {
-                /*CGRect frame = CGRectMake(imageRect.size.width - label.frame.size.width,
-                                          imageRect.origin.y + imageRect.size.height - label.frame.size.height,
-                                          label.frame.size.width,
-                                          label.frame.size.height);
-                label.frame = frame;
-                [self.view insertSubview:label aboveSubview:self.imageView];*/
-                
                 CGRect renderFrame = CGRectMake(renderingImageRect.size.width - label.frame.size.width,
                                                 renderingImageRect.origin.y + renderingImageRect.size.height - label.frame.size.height,
                                                 label.frame.size.width,
@@ -865,13 +815,6 @@ typedef enum{
                 
             case Center:
             {
-                /*CGRect frame = CGRectMake(imageRect.size.width / 2 - label.frame.size.width / 2,
-                                          imageRect.origin.y + imageRect.size.height / 2 - label.frame.size.height / 2,
-                                          label.frame.size.width,
-                                          label.frame.size.height);
-                label.frame = frame;
-                [self.view insertSubview:label aboveSubview:self.imageView];*/
-                
                 CGRect renderFrame = CGRectMake(renderingImageRect.size.width / 2 - label.frame.size.width / 2,
                                                 renderingImageRect.origin.y + renderingImageRect.size.height / 2 - label.frame.size.height / 2,
                                                 label.frame.size.width,

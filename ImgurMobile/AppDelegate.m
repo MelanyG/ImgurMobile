@@ -23,63 +23,9 @@
 @implementation AppDelegate
 
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    
-    /*NotChalengingQueue *queue = [[NotChalengingQueue alloc] init];
-    imgurServerManager *manager = [[imgurServerManager alloc] init];
-    [manager getPhotosForPage:0 Section:hot Sort:viral Window:all Completion:^(NSDictionary *resp)
-     {
-         [queue addObject:resp];
-         
-         NSLog(@"%@",[queue getObject]);
-     }];*/
-   // NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
     self.token = [ImgurAccessToken sharedToken];
-//    self.token.userName = [defaults objectForKey:@"userName"];
-//    self.token.token = [defaults objectForKey:@"access_token"];
-//    self.token.refresh_token = [defaults objectForKey:@"refresh_token"];
-//    self.token.accountID = [defaults objectForKey:@"account_id"];
-//    self.token.expirationDate = [defaults objectForKey:@"expires_in"];
-    
-  /*  NotChalengingQueue *queue = [[NotChalengingQueue alloc] init];
-    imgurServerManager *manager = [imgurServerManager sharedManager];
-    
-    [manager getPhotosForPage:0 Section:hot Sort:viral Window:all Completion:^(NSDictionary *resp)
-     {
-         if ([resp objectForKey:IMGUR_SERVER_MANAGER_ERROR_KEY])
-         {
-             //get error
-         }
-         else if ([resp objectForKey:IMGUR_SERVER_MANAGER_STATUS_KEY])
-         {
-             //get statuscode
-         }
-         else
-         {
-             [queue addObject:resp];
-             
-             NSLog(@"%@",[queue getObject]);
-         }
-     }];*/
-
-   
-    
-   /* imgurServerManager *manager = [imgurServerManager sharedManager];
-    
-    [manager getComentsForId:@"CUs0622" IsAlbum:NO Completion:^(NSDictionary *resp)
-    {
-        
-    }];*/
-    
-    /*imgurServerManager *manager = [imgurServerManager sharedManager];
-     
-     [manager getAllConversationsPreviewForCurrentUserCompletion:^(NSArray *resp)
-     {
-     ImgurConversationPreview *prev = [resp firstObject];
-     [manager getConversationWithID:prev.conversationId ForPage:1 Completion:^(ImgurPagedConversation *resp) {
-     NSLog(@"%@",resp);
-     }];
-     }];*/
     
     return YES;
 }

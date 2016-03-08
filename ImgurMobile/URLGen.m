@@ -95,11 +95,11 @@
     NSString *url;
     if (section == top)
     {
-        url = [NSString stringWithFormat:@"%@gallery/%@/%@/%@/%d.json",self.baseURL,sectionStr,sortStr,windowStr,page];
+        url = [NSString stringWithFormat:@"%@gallery/%@/%@/%@/%ld.json",self.baseURL,sectionStr,sortStr,windowStr,(long)page];
     }
     else
     {
-        url = [NSString stringWithFormat:@"%@gallery/%@/%@/%d.json",self.baseURL,sectionStr,sortStr,page];
+        url = [NSString stringWithFormat:@"%@gallery/%@/%@/%ld.json",self.baseURL,sectionStr,sortStr,(long)page];
     }
     
     return url;
@@ -135,7 +135,7 @@
 
 - (NSString *)getURLForConversationWithID:(NSInteger)identifier Page:(NSInteger)page
 {
-    NSString *url = [NSString stringWithFormat:@"%@conversations/%@/%@/0", self.baseURL, [NSString stringWithFormat:@"%d",identifier], [NSString stringWithFormat:@"%d",page]];
+    NSString *url = [NSString stringWithFormat:@"%@conversations/%@/%@/0", self.baseURL, [NSString stringWithFormat:@"%ld",(long)identifier], [NSString stringWithFormat:@"%ld",(long)page]];
     return url;
 }
 
@@ -147,7 +147,7 @@
 
 - (NSString *)getURLDeletionOfConversationWithID:(NSInteger)identifier
 {
-    NSString *url = [NSString stringWithFormat:@"%@conversations/%d", self.baseURL, identifier];
+    NSString *url = [NSString stringWithFormat:@"%@conversations/%ld", self.baseURL, (long)identifier];
     return url;
 }
 
