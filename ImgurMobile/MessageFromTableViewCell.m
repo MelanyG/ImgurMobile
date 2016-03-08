@@ -10,4 +10,10 @@
 
 @implementation MessageFromTableViewCell
 
+- (void)layoutSubviews
+{
+    self.thisContainerView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+    self.thisContainerView.layer.borderWidth = 0.5;
+}
+
 @end

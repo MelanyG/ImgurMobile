@@ -33,6 +33,7 @@
 @property (assign, nonatomic) double OFFSET_FOR_KEYBOARD;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *inputViewBottomConstraint;
+@property (weak, nonatomic) IBOutlet UIView *inputView;
 
 @end
 
@@ -59,8 +60,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.FONT_SIZE = 14;
-    self.MESSAGE_WIDTH = self.view.frame.size.width - 110;
+    self.FONT_SIZE = 17;
+    self.MESSAGE_WIDTH = self.view.frame.size.width - 100;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillChange:)
@@ -71,10 +72,12 @@
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
     
+    self.inputView.layer.borderColor = [[UIColor darkGrayColor] CGColor];
+    self.inputView.layer.borderWidth = 1;
+    
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self reloadData];
-    self.navigationItem.title = self.conversation.receiverName;
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
 }
 
@@ -94,6 +97,7 @@
          weakSelf.messageInputField.text = nil;
          weakSelf.currentPageLabel.text = [NSString stringWithFormat:@"%ld page",self.conversation.page - 1];
          [weakSelf.tableView reloadData];
+         self.navigationItem.title = weakSelf.conversation.receiverName;
      }];
 }
 
@@ -216,14 +220,12 @@
     if ([cell isKindOfClass:[MessageFromTableViewCell class]])
     {
         ((MessageFromTableViewCell *)cell).messageLabel.text = [message objectForKey:@"message"];
-        ((MessageFromTableViewCell *)cell).fromLabel.text = [message objectForKey:@"FromUserName"];
-        ((MessageFromTableViewCell *)cell).timeLabel.text = [message objectForKey:@"date"];
+        ((MessageFromTableViewCell *)cell).descriptionLabel.text = [NSString stringWithFormat:@"You : %@",[message objectForKey:@"date"]];
     }
     else if ([cell isKindOfClass:[MessageInTableViewCell class]])
     {
         ((MessageInTableViewCell *)cell).messageLabel.text = [message objectForKey:@"message"];
-        ((MessageInTableViewCell *)cell).fromLabel.text = [message objectForKey:@"FromUserName"];
-        ((MessageInTableViewCell *)cell).timeLabel.text = [message objectForKey:@"date"];
+        ((MessageFromTableViewCell *)cell).descriptionLabel.text = [NSString stringWithFormat:@"%@ : %@", [message objectForKey:@"FromUserName"], [message objectForKey:@"date"]];
     }
 }
 
@@ -237,7 +239,7 @@
     
     CGSize size = [message sizeWithFont:[UIFont systemFontOfSize:self.FONT_SIZE] constrainedToSize:CGSizeMake(self.MESSAGE_WIDTH, 20000000000)];
     
-    CGFloat height = MAX(size.height + 55, 100);
+    CGFloat height = MAX(size.height + 39, 110);
     
     return height;
 }

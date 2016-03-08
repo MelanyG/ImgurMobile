@@ -10,7 +10,9 @@
 
 @interface MessageFromTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
-@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
-@property (weak, nonatomic) IBOutlet UILabel *fromLabel;
+@property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
+@property (weak, nonatomic) IBOutlet UIView *thisContainerView;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *offsetConstraint;
 
 @end
