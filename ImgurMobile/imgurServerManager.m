@@ -612,20 +612,26 @@ static NSString* imageID;
     [body appendData:[[NSString stringWithFormat:@"--%@--\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
     
     [request setHTTPBody:body];
+    __block BOOL IsError = NO;
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
         NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-        if (![responseDictionary valueForKeyPath:@"success"] )
+        if ([responseDictionary valueForKeyPath:@"success"])
         {
+  
+   
             if (failureBlock)
-            {
+            {             IsError = YES;
                 if (!error)
                 {
                     
                     error = [NSError errorWithDomain:@"imguruploader" code:10000 userInfo:@{NSLocalizedFailureReasonErrorKey : [responseDictionary valueForKeyPath:@"data.error"]}];
                 }
                 failureBlock(response, error, [[responseDictionary valueForKey:@"status"] intValue]);
+            
             }
-        } else
+            
+        }
+       if([responseDictionary valueForKeyPath:@"success"] && !IsError)
         {
             if (completion)
             {
