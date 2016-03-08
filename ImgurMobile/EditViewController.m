@@ -639,7 +639,7 @@ typedef enum{
         self.tapGesture.enabled = YES;
         self.fontsArrow.image = [UIImage imageNamed:@"arrow_right"];
     }
-    self.FontsMenuVC.shouldRespondOnSlideEvents = YES;
+    //self.FontsMenuVC.shouldRespondOnSlideEvents = YES;
 }
 
 #pragma mark - animations
@@ -902,13 +902,11 @@ typedef enum{
     
     dispatch_sync(queue, ^
     {
-        for (UIView *subview in self.view.subviews)
+        for (UIView *subview in self.readyToGoImageView.subviews)
         {
-            if (subview.tag == 911)
-            {
                 [subview removeFromSuperview];
-            }
         }
+        self.imageView.image = [self getImageFromCurrentContext];
     });
 }
 

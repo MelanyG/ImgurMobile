@@ -22,6 +22,10 @@
 
 @property (assign, nonatomic) double OFFSET_FOR_KEYBOARD;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *messageViewHeighConstraint;
+
+@property (weak, nonatomic) IBOutlet UIView *spacingView;
+
 @property (strong, nonatomic) imgurServerManager *manager;
 
 @end
@@ -36,32 +40,38 @@
         self.edgesForExtendedLayout = UIRectEdgeNone;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillShow)
-                                                 name:UIKeyboardWillShowNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillHide)
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
     
-    if (IDIOM == IPAD)
-    {
-#warning wrong
-        self.OFFSET_FOR_KEYBOARD = 150;
-    }
-    else if (IDIOM == IPHONE)
-    {
-        self.OFFSET_FOR_KEYBOARD = 500;
-    }
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillChange:)
+                                                 name:UIKeyboardDidShowNotification
+                                               object:nil];
     
+    [self adjustMessageHeight];
     
     self.navigationItem.title = @"New mesage";
 }
 
-
--(void)keyboardWillShow
+- (void)adjustMessageHeight
 {
+    if (IDIOM == IPAD)
+    {
+        self.messageViewHeighConstraint.constant = self.view.frame.size.height * 0.4;
+    }
+    else if (IDIOM == IPHONE)
+    {
+        self.messageViewHeighConstraint.constant = self.view.frame.size.height * 0.1;
+    }
+}
+
+- (void)keyboardWillChange:(NSNotification *)notification
+{
+    NSDictionary* keyboardInfo = [notification userInfo];
+    NSValue* keyboardFrameBegin = [keyboardInfo valueForKey:UIKeyboardFrameBeginUserInfoKey];
+    CGRect keyboardFrameBeginRect = [keyboardFrameBegin CGRectValue];
+    self.OFFSET_FOR_KEYBOARD = keyboardFrameBeginRect.size.height;
     if (self.view.frame.origin.y >= 0)
     {
         [self setViewMovedUp:YES];
@@ -99,6 +109,7 @@
 {
     if (self.messageField.isFirstResponder)
     {
+        
         [UIView beginAnimations:nil context:NULL];
         [UIView setAnimationDuration:0.3];
         
@@ -106,30 +117,18 @@
         if (movedUp)
         {
             rect.origin.y -= self.OFFSET_FOR_KEYBOARD;
-            rect.size.height += self.OFFSET_FOR_KEYBOARD;
+            rect.origin.y += self.spacingView.frame.size.height;
         }
         else
         {
             rect.origin.y += self.OFFSET_FOR_KEYBOARD;
-            rect.size.height -= self.OFFSET_FOR_KEYBOARD;
+            rect.origin.y -= self.spacingView.frame.size.height;
         }
         self.view.frame = rect;
-        /*
-         double messageHeight;
-         if (movedUp)
-         {
-         messageHeight = self.view.frame.size.height * 2 / 3;
-         }
-         else
-         {
-         messageHeight = self.messageHeight;
-         }
-         self.messageField.frame = CGRectMake(self.messageField.frame.origin.x,
-         self.messageField.frame.origin.y,
-         self.messageField.frame.size.width,
-         messageHeight);*/
         
         [UIView commitAnimations];
+        
+        
     }
 }
 
@@ -142,6 +141,11 @@
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     [self.view endEditing:YES];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [self adjustMessageHeight];
 }
 
 - (imgurServerManager *)manager

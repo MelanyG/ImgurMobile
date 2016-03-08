@@ -60,6 +60,8 @@ UIColor * RGBA(CGFloat red, CGFloat green, CGFloat blue, CGFloat alpha)
     self.contentView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"glas_texture"]];
     self.inputTextField.delegate = self;
     
+    [self performSliderActionLogic];
+    
     // border radius
     self.contentView.layer.cornerRadius = 5;
     
@@ -78,11 +80,11 @@ UIColor * RGBA(CGFloat red, CGFloat green, CGFloat blue, CGFloat alpha)
     [self.alphaSlider addTarget:self action:@selector(disableMenuPanning) forControlEvents:UIControlEventTouchDown];
     [self.fontSizeSlider addTarget:self action:@selector(disableMenuPanning) forControlEvents:UIControlEventTouchDown];
     
-    [self.redSlider addTarget:self action:@selector(disableMenuPanning) forControlEvents:UIControlEventTouchUpInside];
-    [self.greenSlider addTarget:self action:@selector(disableMenuPanning) forControlEvents:UIControlEventTouchUpInside];
-    [self.blueSlider addTarget:self action:@selector(disableMenuPanning) forControlEvents:UIControlEventTouchUpInside];
-    [self.alphaSlider addTarget:self action:@selector(disableMenuPanning) forControlEvents:UIControlEventTouchUpInside];
-    [self.fontSizeSlider addTarget:self action:@selector(disableMenuPanning) forControlEvents:UIControlEventTouchUpInside];
+    [self.redSlider addTarget:self action:@selector(enableMenuPanning) forControlEvents:UIControlEventTouchUpInside];
+    [self.greenSlider addTarget:self action:@selector(enableMenuPanning) forControlEvents:UIControlEventTouchUpInside];
+    [self.blueSlider addTarget:self action:@selector(enableMenuPanning) forControlEvents:UIControlEventTouchUpInside];
+    [self.alphaSlider addTarget:self action:@selector(enableMenuPanning) forControlEvents:UIControlEventTouchUpInside];
+    [self.fontSizeSlider addTarget:self action:@selector(enableMenuPanning) forControlEvents:UIControlEventTouchUpInside];
     
     [self.redSlider addTarget:self action:@selector(disableMenuPanning) forControlEvents:UIControlEventTouchUpOutside];
     [self.greenSlider addTarget:self action:@selector(disableMenuPanning) forControlEvents:UIControlEventTouchUpOutside];
@@ -115,7 +117,7 @@ UIColor * RGBA(CGFloat red, CGFloat green, CGFloat blue, CGFloat alpha)
 {
     self.view.tag = 2222;
     self.shouldPosition = NO;
-    self.shouldRespondOnSlideEvents = YES;
+    //self.shouldRespondOnSlideEvents = YES;
     self.fontPicker.delegate = self;
     self.inputTextField.text = @"choose text, You need";
     [self getArrayOfFontNames];
@@ -216,7 +218,7 @@ UIColor * RGBA(CGFloat red, CGFloat green, CGFloat blue, CGFloat alpha)
 - (void)updateLabel
 {
     __weak typeof(self) weakSelf = self;
-    dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
+    dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^
     {
         CGSize size = [weakSelf.inputTextField.text sizeWithAttributes:
                        @{NSFontAttributeName: [weakSelf.currentFont fontWithSize:weakSelf.fontSize + 1]}];
