@@ -35,6 +35,8 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *inputViewBottomConstraint;
 @property (weak, nonatomic) IBOutlet UIView *inputView;
 
+@property (assign, nonatomic) BOOL isInProgress;
+
 @end
 
 @implementation ConversationAndMessagingTVC
@@ -81,9 +83,20 @@
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
 }
 
+- (void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self scrollTableViewToBottom];
+}
+
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [self reloadData];
 }
 
 - (void)reloadData
@@ -95,16 +108,19 @@
      {
          weakSelf.conversation = resp;
          weakSelf.messageInputField.text = nil;
-         weakSelf.currentPageLabel.text = [NSString stringWithFormat:@"%ld page",self.conversation.page - 1];
+         weakSelf.currentPageLabel.text = [NSString stringWithFormat:@"%ld page",(long)self.conversation.page - 1];
          [weakSelf.tableView reloadData];
          self.navigationItem.title = weakSelf.conversation.receiverName;
+         [self scrollTableViewToBottom];
+         self.isInProgress = NO;
      }];
 }
 
 - (void)updateData
 {
-    self.currentPageLabel.text = [NSString stringWithFormat:@"%ld page",self.conversation.page - 1];
+    self.currentPageLabel.text = [NSString stringWithFormat:@"%ld page",(long)self.conversation.page - 1];
     [self.tableView reloadData];
+    [self scrollTableViewToBottom];
 }
 
 - (void)keyboardWillChange:(NSNotification *)notification
@@ -180,6 +196,17 @@
     }
 }
 
+
+#pragma mark - UITableView
+- (void)scrollTableViewToBottom
+{
+    if (self.tableView.contentSize.height > self.tableView.frame.size.height)
+    {
+        CGPoint offset = CGPointMake(0, self.tableView.contentSize.height - self.tableView.frame.size.height);
+        [self.tableView setContentOffset:offset animated:YES];
+    }
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
@@ -248,6 +275,21 @@
 {
     [self.view endEditing:YES];
     return NO;
+}
+
+- (void)scrollViewDidScroll: (UIScrollView *)scroll
+{
+    if (!self.isInProgress)
+    {
+        CGFloat currentOffset = scroll.contentOffset.y;
+        CGFloat maximumOffset = scroll.contentSize.height - scroll.frame.size.height;
+        
+        if (maximumOffset - currentOffset <= -50.0)
+        {
+            self.isInProgress = YES;
+            [self reloadData];
+        }
+    }
 }
 
 @end

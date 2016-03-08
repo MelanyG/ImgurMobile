@@ -18,6 +18,8 @@
 
 @property (strong, nonatomic) imgurServerManager *manager;
 
+@property (assign, nonatomic) BOOL isInProgress;
+
 @end
 
 @implementation ConversationPreviewTVC
@@ -41,6 +43,17 @@
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
 }
 
+- (void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self scrollTableViewToBottom];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [self reloadData];
+}
+
 - (void)reloadData
 {
     [self.manager getAllConversationsPreviewForCurrentUserCompletion:^(NSArray *resp)
@@ -53,6 +66,7 @@
              [self.tableView reloadData];
              self.navigationItem.title = @"Conversations";
          }
+         self.isInProgress = NO;
      }];
 }
 
@@ -110,6 +124,17 @@
     NewConversationVC *conversationVC = [[NewConversationVC alloc] init];
     conversationVC.delegate = self;
     [self.navigationController pushViewController:conversationVC animated:YES];
+}
+
+
+#pragma  mark - UITableView
+- (void)scrollTableViewToBottom
+{
+    if (self.tableView.contentSize.height > self.tableView.frame.size.height)
+    {
+        CGPoint offset = CGPointMake(0, self.tableView.contentSize.height - self.tableView.frame.size.height);
+        [self.tableView setContentOffset:offset animated:YES];
+    }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -195,6 +220,21 @@
                 [self addNavButtonDeletionProcess:NO];
             }
         }];
+    }
+}
+
+- (void)scrollViewDidScroll: (UIScrollView *)scroll
+{
+    if (!self.isInProgress)
+    {
+        CGFloat currentOffset = scroll.contentOffset.y;
+        CGFloat maximumOffset = scroll.contentSize.height - scroll.frame.size.height;
+        
+        if (maximumOffset - currentOffset <= -50.0)
+        {
+            self.isInProgress = YES;
+            [self reloadData];
+        }
     }
 }
 
