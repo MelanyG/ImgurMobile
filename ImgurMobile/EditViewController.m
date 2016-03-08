@@ -164,42 +164,6 @@ typedef enum{
     [self removeAllHandes];
 }
 
-- (void)handlePinch:(UIPinchGestureRecognizer *)pinch
-{
-    if (pinch.state == UIGestureRecognizerStateBegan)
-    {
-        [self closeAllMenus];
-    }
-    else if (pinch.state == UIGestureRecognizerStateChanged)
-    {
-        if (self.imageViewWidthConstraint.constant < self.view.frame.size.width * 10 || pinch.scale < 1)//max scale
-        {
-            CGFloat xDiferance = self.imageView.frame.size.width * pinch.scale - self.imageView.frame.size.width;
-            CGFloat yDiferance = self.imageView.frame.size.height * pinch.scale - self.imageView.frame.size.height;
-            
-            if (pinch.scale < 1 && (self.imageViewWidthConstraint.constant <= self.view.frame.size.width
-                                    || self.imageViewHeightConstraint.constant <= self.view.frame.size.height))//min scale
-            {
-                self.imageViewWidthConstraint.constant = self.view.frame.size.width;
-                self.imageViewHeightConstraint.constant = self.view.frame.size.height;
-            }
-            else
-            {
-                self.imageViewWidthConstraint.constant += xDiferance;
-                self.imageViewHeightConstraint.constant += yDiferance;
-            }
-        }
-        pinch.scale = 1.0;
-    }
-    else
-    {
-        CGFloat offsetX = (self.imageView.frame.size.width - self.view.frame.size.width) / 2;
-        CGFloat offsetY = (self.imageView.frame.size.height - self.view.frame.size.height) / 2;
-        CGRect rect = CGRectMake(offsetX, offsetY, self.view.frame.size.width, self.view.frame.size.height);
-        [self.scrollView scrollRectToVisible:rect animated:NO];
-    }
-}
-
 - (void)prepare
 {
     self.mode = FilteringMenu;
@@ -341,6 +305,8 @@ typedef enum{
                                    self.handleViewWidth,
                                    self.handleViewHeigh / 2);
     UILabel *label = [[UILabel alloc] initWithFrame:labelFrame];
+    label.backgroundColor = [UIColor colorWithWhite:0.8 alpha:0.2];
+    
     label.text = @"settings";
     label.textAlignment = NSTextAlignmentCenter;
     [self.leftHandleView addSubview:label];
@@ -373,6 +339,7 @@ typedef enum{
                                    self.handleViewWidth,
                                    self.handleViewHeigh / 2);
     UILabel *label = [[UILabel alloc] initWithFrame:labelFrame];
+    label.backgroundColor = [UIColor colorWithWhite:0.8 alpha:0.2];
     label.textAlignment = NSTextAlignmentCenter;
     
     
@@ -435,6 +402,45 @@ typedef enum{
 }
 
 #pragma mark - gestures
+- (void)handlePinch:(UIPinchGestureRecognizer *)pinch
+{
+    if (pinch.state == UIGestureRecognizerStateBegan)
+    {
+        [self closeAllMenus];
+    }
+    else if (pinch.state == UIGestureRecognizerStateChanged)
+    {
+        if (self.imageViewWidthConstraint.constant < self.view.frame.size.width * 10 || pinch.scale < 1)//max scale
+        {
+            CGFloat xDiferance = self.imageView.frame.size.width * pinch.scale - self.imageView.frame.size.width;
+            CGFloat yDiferance = self.imageView.frame.size.height * pinch.scale - self.imageView.frame.size.height;
+            
+            if (pinch.scale < 1 && (self.imageViewWidthConstraint.constant <= self.view.frame.size.width
+                                    || self.imageViewHeightConstraint.constant <= self.view.frame.size.height))//min scale
+            {
+                self.imageViewWidthConstraint.constant = self.view.frame.size.width;
+                self.imageViewHeightConstraint.constant = self.view.frame.size.height;
+            }
+            else
+            {
+                self.imageViewWidthConstraint.constant += xDiferance;
+                self.imageViewHeightConstraint.constant += yDiferance;
+            }
+        }
+        pinch.scale = 1.0;
+    }
+    else
+    {
+        CGPoint BigViewCenter = self.imageView.center;
+        CGRect frame = CGRectMake(self.imageView.frame.size.width - (BigViewCenter.x + self.view.frame.size.width / 2) ,
+                                  self.imageView.frame.size.height - (BigViewCenter.y + self.view.frame.size.height / 2) ,
+                                  self.view.frame.size.width,
+                                  self.view.frame.size.height);
+        
+        [self.scrollView scrollRectToVisible:frame animated:NO];
+    }
+}
+
 - (void)handleTap:(UITapGestureRecognizer *)tap
 {
     CGPoint location = [tap locationInView:self.view];

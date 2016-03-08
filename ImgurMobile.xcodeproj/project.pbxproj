@@ -66,6 +66,7 @@
 		6AE7F17A1C80CC4F005C4F80 /* UIActivityIndicatorView+manager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AE7F1791C80CC4F005C4F80 /* UIActivityIndicatorView+manager.m */; };
 		6AEFD2D11C7BAB2700ADF2FC /* ImgurLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AEFD2D01C7BAB2700ADF2FC /* ImgurLoader.m */; };
 		6AEFD2D41C7BABAA00ADF2FC /* URLGen.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AEFD2D31C7BABAA00ADF2FC /* URLGen.m */; };
+		6AFA3C1A1C8F5AA500C860E4 /* UIImage+AvarageColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AFA3C191C8F5AA500C860E4 /* UIImage+AvarageColor.m */; };
 		970416231C85D57100B5C4F6 /* PageSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 970416221C85D57100B5C4F6 /* PageSelectViewController.m */; };
 		973F0AE71C7DDF3200C67BCD /* ImgurPost+Description.m in Sources */ = {isa = PBXBuildFile; fileRef = 973F0AE61C7DDF3200C67BCD /* ImgurPost+Description.m */; };
 		975D23051C7F3D9000D3A4B7 /* PageInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 975D23041C7F3D9000D3A4B7 /* PageInfoViewController.m */; };
@@ -219,6 +220,8 @@
 		6AEFD2D01C7BAB2700ADF2FC /* ImgurLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImgurLoader.m; sourceTree = "<group>"; };
 		6AEFD2D21C7BABAA00ADF2FC /* URLGen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URLGen.h; sourceTree = "<group>"; };
 		6AEFD2D31C7BABAA00ADF2FC /* URLGen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLGen.m; sourceTree = "<group>"; };
+		6AFA3C181C8F5AA400C860E4 /* UIImage+AvarageColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+AvarageColor.h"; sourceTree = "<group>"; };
+		6AFA3C191C8F5AA500C860E4 /* UIImage+AvarageColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+AvarageColor.m"; sourceTree = "<group>"; };
 		970416211C85D57100B5C4F6 /* PageSelectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageSelectViewController.h; sourceTree = "<group>"; };
 		970416221C85D57100B5C4F6 /* PageSelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageSelectViewController.m; sourceTree = "<group>"; };
 		973F0AE51C7DDEDB00C67BCD /* ImgurPost+Description.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ImgurPost+Description.h"; sourceTree = "<group>"; };
@@ -479,6 +482,8 @@
 				6A8EE19A1C834AD6002DF4B6 /* UIImageView+imageRectGetter.h */,
 				6A8EE19B1C834AD6002DF4B6 /* UIImageView+imageRectGetter.m */,
 				6ACB13E71C7C9806004237DD /* EditProtocolHeader.h */,
+				6AFA3C181C8F5AA400C860E4 /* UIImage+AvarageColor.h */,
+				6AFA3C191C8F5AA500C860E4 /* UIImage+AvarageColor.m */,
 			);
 			name = Edit;
 			sourceTree = "<group>";
@@ -725,6 +730,7 @@
 				975D23051C7F3D9000D3A4B7 /* PageInfoViewController.m in Sources */,
 				6A6A6B0D1C7E257E00DE946E /* ImageFilterProcessor.m in Sources */,
 				97AEA2361C7B20DA0010CD99 /* NotChalengingQueue.m in Sources */,
+				6AFA3C1A1C8F5AA500C860E4 /* UIImage+AvarageColor.m in Sources */,
 				EF01F69F1C8CCF100088CA3A /* ImageTableViewController.m in Sources */,
 				6ADA0C591C89FEE3008F2F62 /* ConversationAndMessagingTVC.m in Sources */,
 				6AC6C30E1C8CD93C005ACC15 /* NewConversationVC.m in Sources */,
