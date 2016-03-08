@@ -34,7 +34,7 @@
             NSTimeInterval seconds = getDate;
             NSDate *date = [NSDate dateWithTimeIntervalSince1970:seconds];
             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init] ;
-            [dateFormatter setDateFormat:@"dd-MM HH:mm"];
+            [dateFormatter setDateFormat:@"EEE, MMM d, yyyy HH:mm"];
             NSString *dateString = [dateFormatter stringFromDate:date];
             
             NSDictionary *mesageDict = [NSDictionary dictionaryWithObjectsAndKeys:
