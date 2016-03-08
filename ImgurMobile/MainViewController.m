@@ -42,6 +42,7 @@
 @property (strong, nonatomic) UIImage *selectedImage;
 @property (strong, nonatomic) imgurPost * selectedPost;
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *showMenuButton;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *MenuVCConstraint;
 @end
 
@@ -135,7 +136,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (IBAction)showMenuVC:(UIBarButtonItem *)sender
+- (IBAction)showMenuVC
 {
     if ( self.MenuVCConstraint.constant == 0)
         self.MenuVCConstraint.constant = -205;
@@ -147,6 +148,12 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    UIButton *settingsView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 48, 48)];
+    [settingsView addTarget:self action:@selector(showMenuVC) forControlEvents:UIControlEventTouchUpInside];
+    [settingsView setBackgroundImage:[UIImage imageNamed:@"menu-icon"] forState:UIControlStateNormal];
+    UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithCustomView:settingsView];
+    [self.navigationItem setLeftBarButtonItem:settingsButton];
+    
     
     self.MenuVCConstraint.constant = -205;
     
@@ -504,12 +511,42 @@
          PageSelectViewController * psvc = segue.destinationViewController;
          psvc.delegate = self;
      }
+     if ([segue.identifier isEqualToString:@"menuEmbed"])
+     {
+         MenuViewController * mvc = segue.destinationViewController;
+         mvc.delegate = self;
+         mvc.MenuVCConstraint = self.MenuVCConstraint;
+     }
+     
 }
 //@property (weak, nonatomic) IBOutlet UIImageView *socialImage;
 //@property (strong, nonatomic) NSString* imageID;
 //@property (weak, nonatomic) IBOutlet UITextView *socialImageDescription;
 //@property (weak, nonatomic) IBOutlet UINavigationItem *imageTitel;
 //@property (strong, nonatomic) NSString* albumID;
+
+
+#pragma mark - MenuDelegate
+
+-(void) didSelectMenuItem: (NSUInteger) num
+{
+    switch (num)
+    {
+        case 0:
+            [self performSegueWithIdentifier:@"showConvPrew" sender:self];
+            break;
+        case 1:
+            [self performSegueWithIdentifier:@"Pop" sender:self];
+            break;
+        case 2:
+            [self performSegueWithIdentifier:@"showGalleryVC" sender:self];
+            break;
+        case 3:
+            [self logOutAction:self];
+            break;
+    }
+}
+
 
 - (IBAction)logOutAction:(id)sender
 {

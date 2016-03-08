@@ -31,7 +31,7 @@
 - (IBAction)showPageInfo:(UIButton *)sender
 {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    PageInfoViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"pop"];
+    PageInfoViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"pageInfo"];
     
     controller.modalPresentationStyle = UIModalPresentationPopover;
     [self presentViewController:controller animated:YES completion:nil];

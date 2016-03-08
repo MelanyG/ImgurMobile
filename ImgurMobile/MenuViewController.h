@@ -7,7 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+@protocol MenuDelegate <NSObject>
 
-@interface MenuViewController : UIViewController
+@required
+-(void) didSelectMenuItem: (NSUInteger) num;
+@end
+
+
+@interface MenuViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
+@property (weak,nonatomic) id<MenuDelegate> delegate;
+@property (weak, nonatomic) NSLayoutConstraint *MenuVCConstraint;
 
 @end
+
+
