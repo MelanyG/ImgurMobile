@@ -18,7 +18,7 @@
 @property (strong, nonatomic) UIImage* image;
 
 @property (strong, nonatomic) NSMutableDictionary *images;
-@property (strong, nonatomic) NSMutableArray* imagesToSend;
+
 
 @end
 
@@ -36,7 +36,7 @@
 {
     [super viewDidAppear:YES];
     self.images = [[NSMutableDictionary alloc] init];
-    self.imagesToSend = [[NSMutableArray alloc] init];
+    
     /*imgurPost *post = [self.socialVC.album.posts firstObject];
     
     [self.images setObject:self.socialVC.image forKey:[[post.imageURL pathComponents] lastObject]];*/
@@ -104,7 +104,6 @@
                 }
                 else{
                     [self.images setObject:image forKey:[[post.imageURL pathComponents] lastObject]];
-                    [self.imagesToSend addObject:image];
                 }
                 dispatch_async(dispatch_get_main_queue(),
                                ^{
@@ -152,20 +151,29 @@
 
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
+    CGFloat delta = 1.f;
     if (self.socialVC.album)
     {
+        
         imgurPost * post = [[self.socialVC.album posts] objectAtIndex:indexPath.row];
         UIImage * image = [self.images objectForKey:[[post.imageURL pathComponents] lastObject]];
         UIImage *placeholderImage = [UIImage imageNamed:@"placeholder"];
         if ([[image description] hasPrefix:@"<_UIAnimatedImage"])
         {
-            return image.size.height;
+            delta = 1.f;
+            if (self.image.size.width > self.view.frame.size.width) {
+                delta = self.image.size.width/self.view.frame.size.width;
+            }
+            return image.size.height/delta;
         }
         else{
             if (![[post.imageURL pathExtension] isEqualToString:@"gif"] ){
                 if (![image isEqual:placeholderImage]) {
-                    return  image.size.height;
+                    delta = 1.f;
+                    if (self.image.size.width > self.view.frame.size.width) {
+                        delta = self.image.size.width/self.view.frame.size.width;
+                    }
+                    return  image.size.height/delta;
                 }
                 return 100;
             }
@@ -175,13 +183,26 @@
     }
 
     else{
-        return self.socialVC.image.size.height;
+        delta = 1.f;
+        if (self.socialVC.image.size.width > self.view.frame.size.width) {
+            delta = self.socialVC.image.size.width/self.view.frame.size.width;
+            
+        }
+        return self.socialVC.image.size.height/delta;
     }
     return 100;
 }
--(void) tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
+
+-(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    self.socialVC.imageToEdit = [self.imagesToSend objectAtIndex:indexPath.row];
+    
+    if (self.socialVC.album) {
+        //self.socialVC.imageToEdit = [self.imagesToSend objectAtIndex:indexPath.row];
+        NSString* imageURLToSend = [[self.socialVC.album.posts objectAtIndex:indexPath.row] imageURL];
+        UIImage* imageToSend = [self.images objectForKey:[[imageURLToSend pathComponents] lastObject]];
+        self.socialVC.imageToEdit = imageToSend;
+        NSLog(@"%ld", (long)indexPath.row);
+    }
 }
 
 @end
