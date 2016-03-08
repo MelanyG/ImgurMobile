@@ -17,7 +17,8 @@
 
 @property (strong, nonatomic) UIImage* image;
 
-@property (strong,nonatomic) NSMutableDictionary *images;
+@property (strong, nonatomic) NSMutableDictionary *images;
+@property (strong, nonatomic) NSMutableArray* imagesToSend;
 
 @end
 
@@ -35,6 +36,7 @@
 {
     [super viewDidAppear:YES];
     self.images = [[NSMutableDictionary alloc] init];
+    self.imagesToSend = [[NSMutableArray alloc] init];
     /*imgurPost *post = [self.socialVC.album.posts firstObject];
     
     [self.images setObject:self.socialVC.image forKey:[[post.imageURL pathComponents] lastObject]];*/
@@ -100,8 +102,10 @@
                 if (image == nil) {
                     [self.images removeObjectForKey:[[post.imageURL pathComponents] lastObject]];
                 }
-                else
+                else{
                     [self.images setObject:image forKey:[[post.imageURL pathComponents] lastObject]];
+                    [self.imagesToSend addObject:image];
+                }
                 dispatch_async(dispatch_get_main_queue(),
                                ^{
                                    if ([self isRowIsVisible:indexPath.row])
@@ -153,26 +157,31 @@
     {
         imgurPost * post = [[self.socialVC.album posts] objectAtIndex:indexPath.row];
         UIImage * image = [self.images objectForKey:[[post.imageURL pathComponents] lastObject]];
+        UIImage *placeholderImage = [UIImage imageNamed:@"placeholder"];
         if ([[image description] hasPrefix:@"<_UIAnimatedImage"])
         {
             return image.size.height;
         }
         else{
             if (![[post.imageURL pathExtension] isEqualToString:@"gif"] ){
-                return  image.size.height;
+                if (![image isEqual:placeholderImage]) {
+                    return  image.size.height;
+                }
+                return 100;
             }
             else
                 return 100;
         }
     }
-    /*else
-        if (indexPath.row == 0){
-            return self.socialVC.image.size.height;
-        }*/
+
     else{
         return self.socialVC.image.size.height;
     }
     return 100;
+}
+-(void) tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    self.socialVC.imageToEdit = [self.imagesToSend objectAtIndex:indexPath.row];
 }
 
 @end
