@@ -46,7 +46,7 @@
 - (void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self scrollTableViewToBottom];
+    [self scrollToTop];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
@@ -128,12 +128,12 @@
 
 
 #pragma  mark - UITableView
-- (void)scrollTableViewToBottom
+-(void) scrollToTop
 {
-    if (self.tableView.contentSize.height > self.tableView.frame.size.height)
+    if ([self numberOfSectionsInTableView:self.tableView] > 0)
     {
-        CGPoint offset = CGPointMake(0, self.tableView.contentSize.height - self.tableView.frame.size.height);
-        [self.tableView setContentOffset:offset animated:YES];
+        NSIndexPath* top = [NSIndexPath indexPathForRow:NSNotFound inSection:0];
+        [self.tableView scrollToRowAtIndexPath:top atScrollPosition:UITableViewScrollPositionTop animated:YES];
     }
 }
 
@@ -228,9 +228,8 @@
     if (!self.isInProgress)
     {
         CGFloat currentOffset = scroll.contentOffset.y;
-        CGFloat maximumOffset = scroll.contentSize.height - scroll.frame.size.height;
         
-        if (maximumOffset - currentOffset <= -50.0)
+        if (currentOffset <= -50.0)
         {
             self.isInProgress = YES;
             [self reloadData];
