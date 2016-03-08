@@ -42,7 +42,7 @@
 @property (strong, nonatomic) UIImage *selectedImage;
 @property (strong, nonatomic) imgurPost * selectedPost;
 
-
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *MenuVCConstraint;
 @end
 
 @implementation MainViewController
@@ -114,10 +114,6 @@
     }
     [super viewDidLoad];
     // self.navigationItem.title = self.token.userName;
-    
-    
-    
-    
 }
 
 - (void) dealloc
@@ -125,9 +121,20 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+- (IBAction)showMenuVC:(UIBarButtonItem *)sender
+{
+    if ( self.MenuVCConstraint.constant == 0)
+        self.MenuVCConstraint.constant = -205;
+    else
+        self.MenuVCConstraint.constant = 0;
+
+}
+
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
+    self.MenuVCConstraint.constant = -205;
     
     self.imageCache = [[NSCache alloc] init];
     
