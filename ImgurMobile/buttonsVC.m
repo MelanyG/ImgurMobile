@@ -26,7 +26,7 @@
     if ([segue.identifier isEqualToString:@"editSegue"])
     {
         self.editVC = (EditViewController*)segue.destinationViewController;
-        self.editVC.image = self.socialVC.image;
+        self.editVC.image = self.socialVC.imageToEdit;
     }
     else if ([segue.identifier isEqualToString:@"commentsSegue"])
     {

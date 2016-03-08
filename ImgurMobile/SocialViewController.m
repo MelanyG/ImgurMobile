@@ -78,8 +78,9 @@
         else{
             self.socialImageDescription.text = @"NO DESCRIPTION";
         }
+        
     }
-    
+    self.imageToEdit = self.image;
     self.set = [NSCharacterSet URLQueryAllowedCharacterSet];
     self.accessToken = [ImgurAccessToken sharedToken].token;
    

@@ -27,6 +27,7 @@
 
 @property (strong, nonatomic) NSString* imageID;
 @property (strong, nonatomic) UIImage * image;
+@property (strong, nonatomic) UIImage* imageToEdit;
 
 @property (strong, nonatomic) id postObject;
 
