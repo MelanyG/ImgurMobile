@@ -536,10 +536,10 @@
             [self performSegueWithIdentifier:@"showConvPrew" sender:self];
             break;
         case 1:
-            [self performSegueWithIdentifier:@"Pop" sender:self];
+            [self performSegueWithIdentifier:@"showGalleryVC" sender:self];
             break;
         case 2:
-            [self performSegueWithIdentifier:@"showGalleryVC" sender:self];
+            [self performSegueWithIdentifier:@"Pop" sender:self];
             break;
         case 3:
             [self logOutAction:self];
