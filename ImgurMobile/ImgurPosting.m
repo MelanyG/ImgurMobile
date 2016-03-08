@@ -119,6 +119,7 @@ self.topic = [self.array objectAtIndex:row];
             [av show];
                         NSLog(@"%@",result);
             self.sharedButton.enabled = YES;
+            self.deleteImageSelected.enabled = YES;
             //[self.spinner stopAnimating];
             [GiFHUD dismiss];
 });
@@ -418,6 +419,7 @@ imgurServerManager*x = [[imgurServerManager alloc]init];
                    NSLog(@"%@", [error localizedDescription]);
                    NSLog(@"Err details: %@", [error description]);
                    self.postButton.enabled = YES;
+                   
                    //[self.spinner stopAnimating];
                    [GiFHUD dismiss];
                });
