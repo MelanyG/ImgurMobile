@@ -97,7 +97,11 @@
                 }
                 
                 self.image = image;
-                [self.images setObject:image forKey:[[post.imageURL pathComponents] lastObject]];
+                if (image == nil) {
+                    [self.images removeObjectForKey:[[post.imageURL pathComponents] lastObject]];
+                }
+                else
+                    [self.images setObject:image forKey:[[post.imageURL pathComponents] lastObject]];
                 dispatch_async(dispatch_get_main_queue(),
                                ^{
                                    if ([self isRowIsVisible:indexPath.row])

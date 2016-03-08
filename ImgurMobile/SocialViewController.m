@@ -33,12 +33,12 @@
     if ([segue.identifier isEqualToString:@"buttonsSegue"])
     {
         self.bvc = (buttonsVC*)segue.destinationViewController;
-        self.bvc.socialVC = self.socialVCDelegate;
+        self.bvc.socialVC = self;
     }
     else if ([segue.identifier isEqualToString:@"socialContainerViewSegue"])
     {
         self.imageTableVC = (ImageTableViewController*)segue.destinationViewController;
-        self.imageTableVC.socialVC = self.socialVCDelegate;
+        self.imageTableVC.socialVC = self;
     }
     
 }

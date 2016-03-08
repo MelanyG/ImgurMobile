@@ -30,7 +30,7 @@
 
 @property (strong, nonatomic) id postObject;
 
-@property (strong, nonatomic) SocialViewController * socialVCDelegate;
+
 
 - (void)commentsRequest;
 - (void) favoritesRequest;
