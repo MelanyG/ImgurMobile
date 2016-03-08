@@ -9,9 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "PageInfoDelegate.h"
 #import "ImgurLoginViewController.h"
+#import "MenuViewController.h"
 
 
-@interface MainViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, PageInfoDelegate, UIPopoverPresentationControllerDelegate>
+
+@interface MainViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, PageInfoDelegate, UIPopoverPresentationControllerDelegate, MenuDelegate>
 
 - (IBAction)logOutAction:(id)sender;
 

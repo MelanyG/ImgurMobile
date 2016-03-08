@@ -16,6 +16,11 @@
 @property (strong, nonatomic) NSArray *sectionPickerData;
 @property (strong, nonatomic) NSArray *sortPickerData;
 @property (strong, nonatomic) NSArray *windowPickerData;
+
+
+@property (weak, nonatomic) IBOutlet UIButton *OKButton;
+
+@property (strong, nonatomic) NSDictionary* info;
 @end
 
 @implementation PageInfoViewController
@@ -35,6 +40,21 @@
     self.sectionPickerData = [NSArray arrayWithObjects:@"hot", @"top", @"user", nil];
     self.sortPickerData = [NSArray arrayWithObjects:@"viral", @"topest", @"latest", @"rising", nil];
     self.windowPickerData = [NSArray arrayWithObjects:@"day", @"week", @"month", @"year", @"all", nil];
+    
+    self.OKButton.layer.cornerRadius = 4;
+    
+    NSMutableDictionary *info = [[NSMutableDictionary alloc] init];
+    [info setObject:[NSNumber numberWithInt:0] forKey:@"section"];
+    [info setObject:[NSNumber numberWithInt:0] forKey:@"sort"];
+    [info setObject:[NSNumber numberWithInt:0] forKey:@"window"];
+    self.info = info;
+    
+}
+
+- (IBAction)OKButtonPressed:(UIButton *)sender
+{
+    [self.delegate pageInfoDidChange:self.info];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -73,7 +93,7 @@
     [info setObject:[NSNumber numberWithInteger:[self.sectionPicker selectedRowInComponent:0]] forKey:@"section"];
     [info setObject:[NSNumber numberWithInteger:[self.sortPicker selectedRowInComponent:0]] forKey:@"sort"];
     [info setObject:[NSNumber numberWithInteger:[self.windowPicker selectedRowInComponent:0]] forKey:@"window"];
-    [self.delegate pageInfoDidChange:info];
+    self.info = info;
 }
 
 
