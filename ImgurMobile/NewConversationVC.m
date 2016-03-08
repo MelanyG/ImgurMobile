@@ -19,7 +19,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *receiverNameField;
 
 @property (weak, nonatomic) IBOutlet UITextView *messageField;
-//@property (assign, nonatomic) double messageHeight;
+
 @property (assign, nonatomic) double OFFSET_FOR_KEYBOARD;
 
 @property (strong, nonatomic) imgurServerManager *manager;

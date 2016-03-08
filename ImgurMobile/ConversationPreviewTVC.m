@@ -38,6 +38,7 @@
     [self reloadData];
     
     [self addNavButtonDeletionProcess:NO];
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
 }
 
 - (void)reloadData
