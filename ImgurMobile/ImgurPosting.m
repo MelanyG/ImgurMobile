@@ -35,15 +35,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-[GiFHUD setGifWithImageName:@"dog.gif"];
+    [GiFHUD setGifWithImageName:@"dog.gif"];
     self.token = [ImgurAccessToken sharedToken];
     self.navigationItem.title = @"Post";
-   self.currentImage.image = self.image;
+    self.currentImage.image = self.image;
     
     self.allSavedImages = [[NSMutableDictionary alloc]init];
     self.spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    [self.spinner setCenter:CGPointMake(self.view.frame.size.width/2.0, self.view.frame.size.height/2.0)]; // I do this because I'm in landscape mode
-    [self.view addSubview:self.spinner]; // spinner is not visible until started
+    [self.spinner setCenter:CGPointMake(self.view.frame.size.width/2.0, self.view.frame.size.height/2.0)];
+    [self.view addSubview:self.spinner];
     NSShadow *shadow = [[NSShadow alloc] init];
     shadow.shadowColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.8];
     shadow.shadowOffset = CGSizeMake(0, 1);
@@ -52,12 +52,9 @@
                                                            shadow, NSShadowAttributeName,
                                                            [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:21.0], NSFontAttributeName, nil]];
     
-    //[self.navigationItem.title setTintColor:[UIColor whiteColor]];
-    
-    
     self.sharedButton.enabled = NO;
     self.deleteImageSelected.enabled = NO;
-    //self.navigationItem.rightBarButtonItem = plus;
+    
     self.selectedTopic.delegate = self;
     self.array = [[NSArray alloc]initWithObjects:@"Funny", @"Aww", @"Storytime", @"Design & Art", @"No topic", @"Awesome", @"The More You Know", @"Current Events", @"Reaction", @"Inspiring", nil];
     
@@ -76,24 +73,16 @@
 
 -(NSString*) pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-self.topic = [self.array objectAtIndex:row];
-    //NSLog(@"Topic selected: %@",self.topic );
+    self.topic = [self.array objectAtIndex:row];
+    
     return [self.array objectAtIndex:row];
 }
-//- (NSAttributedString *)pickerView:(UIPickerView *)pickerView attributedTitleForRow:(NSInteger)row forComponent:(NSInteger)component
-//{
-//    //NSString *title = @"sample title";
-//    NSAttributedString *attString = [[NSAttributedString alloc] initWithString:title attributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
-//    
-//    return attString;
-//    
-//}
+
 - (void)didReceiveMemoryWarning
 {
-         [super didReceiveMemoryWarning];
-         // Dispose of any resources that can be recreated.
+    [super didReceiveMemoryWarning];
 }
-     
+
 
 - (IBAction)ShareWithCommunity:(UIButton *)sender
 {
@@ -101,72 +90,32 @@ self.topic = [self.array objectAtIndex:row];
     NSString *title = [[self titleTextField] text];
     NSString *description = [[self commentTextField] text];
     self.sharedButton.enabled = NO;
-    //[self.spinner startAnimating];
-    [GiFHUD show];
-         [x shareImageWithImgurCommunity:title
-                             description:description
-                      access_token: self.token.token
-                                   topic:self.topic
-                         completionBlock:^(NSString *result) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-            UIAlertView *av = [[UIAlertView alloc]
-                               initWithTitle:@"Sucessfully posted to wall!"
-                               message:@"Check out your Imgur Wall to see!"
-                               delegate:nil
-                               cancelButtonTitle:@"OK"
-                               otherButtonTitles:nil];
-            [av show];
-                        NSLog(@"%@",result);
-            self.sharedButton.enabled = YES;
-            self.deleteImageSelected.enabled = YES;
-            //[self.spinner stopAnimating];
-            [GiFHUD dismiss];
-});
-    } failureBlock:^(NSURLResponse *response, NSError *error, NSInteger status) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-           [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-           
-           [[[UIAlertView alloc] initWithTitle:@"Upload Failed"
-                                       message:[NSString stringWithFormat:@"%@ (Status code %ld)", [error localizedDescription], (long)status]
-                                      delegate:nil
-                             cancelButtonTitle:nil
-                             otherButtonTitles:@"OK", nil] show];
-           NSLog(@"%@", [error localizedDescription]);
-           NSLog(@"Err details: %@", [error description]);
-            self.sharedButton.enabled = YES;
-//[self.spinner stopAnimating];
-            [GiFHUD dismiss];
-       });
-   }];
     
-
-}
-
-- (IBAction)deleteImage:(id)sender
-{
-    self.sharedButton.enabled = NO;
-    imgurServerManager*x = [[imgurServerManager alloc]init];
-    [x deleteImage:self.token.token
-            completionBlock:^(NSString *result) {
+    [GiFHUD show];
+    [x shareImageWithImgurCommunity:title
+                        description:description
+                       access_token: self.token.token
+                              topic:self.topic
+                    completionBlock:^(NSString *result) {
                         dispatch_async(dispatch_get_main_queue(), ^{
                             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
                             UIAlertView *av = [[UIAlertView alloc]
-                                               initWithTitle:@"Sucessfully deleted!"
-                                               message:@""
+                                               initWithTitle:@"Sucessfully posted to wall!"
+                                               message:@"Check out your Imgur Wall to see!"
                                                delegate:nil
                                                cancelButtonTitle:@"OK"
                                                otherButtonTitles:nil];
                             [av show];
                             NSLog(@"%@",result);
                             self.sharedButton.enabled = YES;
+                            self.deleteImageSelected.enabled = YES;
+                            [GiFHUD dismiss];
                         });
-                    }
-      failureBlock:^(NSURLResponse *response, NSError *error, NSInteger status) {
+                    } failureBlock:^(NSURLResponse *response, NSError *error, NSInteger status) {
                         dispatch_async(dispatch_get_main_queue(), ^{
                             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
                             
-                            [[[UIAlertView alloc] initWithTitle:@"Deletion Failed"
+                            [[[UIAlertView alloc] initWithTitle:@"Upload Failed"
                                                         message:[NSString stringWithFormat:@"%@ (Status code %ld)", [error localizedDescription], (long)status]
                                                        delegate:nil
                                               cancelButtonTitle:nil
@@ -174,19 +123,56 @@ self.topic = [self.array objectAtIndex:row];
                             NSLog(@"%@", [error localizedDescription]);
                             NSLog(@"Err details: %@", [error description]);
                             self.sharedButton.enabled = YES;
-                            
+                            [GiFHUD dismiss];
                         });
                     }];
+    
+    
+}
 
+- (IBAction)deleteImage:(id)sender
+{
+    self.sharedButton.enabled = NO;
+    imgurServerManager*x = [[imgurServerManager alloc]init];
+    [x deleteImage:self.token.token
+   completionBlock:^(NSString *result) {
+       dispatch_async(dispatch_get_main_queue(), ^{
+           [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+           UIAlertView *av = [[UIAlertView alloc]
+                              initWithTitle:@"Sucessfully deleted!"
+                              message:@""
+                              delegate:nil
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil];
+           [av show];
+           NSLog(@"%@",result);
+           self.sharedButton.enabled = YES;
+       });
+   }
+      failureBlock:^(NSURLResponse *response, NSError *error, NSInteger status) {
+          dispatch_async(dispatch_get_main_queue(), ^{
+              [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+              
+              [[[UIAlertView alloc] initWithTitle:@"Deletion Failed"
+                                          message:[NSString stringWithFormat:@"%@ (Status code %ld)", [error localizedDescription], (long)status]
+                                         delegate:nil
+                                cancelButtonTitle:nil
+                                otherButtonTitles:@"OK", nil] show];
+              NSLog(@"%@", [error localizedDescription]);
+              NSLog(@"Err details: %@", [error description]);
+              self.sharedButton.enabled = YES;
+              
+          });
+      }];
+    
 }
 
 - (IBAction)loadImagesFromGallery:(id)sender
 {
     [GiFHUD show];
-
+    
     NSDictionary* temp;
     temp = [[NSDictionary alloc]initWithDictionary:[self receiveDataOfAlbums]];
-    //[self.spinner startAnimating];
     self.albumObjects = [NSArray arrayWithArray:[self parsingOfReceivedDataFromAlbums:temp]];
     NSInteger qtyOfAlbums = [self.albumObjects count];
     imgurServerManager*x = [[imgurServerManager alloc]init];
@@ -196,22 +182,22 @@ self.topic = [self.array objectAtIndex:row];
         NSDictionary* tmp;
         UserAlbum*us = self.albumObjects[i];
         tmp = [[NSDictionary alloc]initWithDictionary:[x loadExistingImages:self.token.token
-                                                                   idOfAlbun:us.idOfAlbum]];
+                                                                  idOfAlbun:us.idOfAlbum]];
         [array addObject:tmp];
     }
     self.allUserImages = [NSArray arrayWithArray:[self parsingImageData:array
-                                                  albumData:self.albumObjects]];
-
- 
+                                                              albumData:self.albumObjects]];
+    
+    
 }
 
 
 -(NSDictionary*) receiveDataOfAlbums
 {
-    //[GiFHUD show];
-imgurServerManager*x = [[imgurServerManager alloc]init];
+    
+    imgurServerManager*x = [[imgurServerManager alloc]init];
     NSDictionary* temp;
-   temp = [[NSDictionary alloc]initWithDictionary:[x loadImagesFromUserGallery:self.token.token
+    temp = [[NSDictionary alloc]initWithDictionary:[x loadImagesFromUserGallery:self.token.token
                                                                        username:self.token.userName
                                                                 completionBlock:^(NSString *result)
                                                     {
@@ -233,7 +219,7 @@ imgurServerManager*x = [[imgurServerManager alloc]init];
                                                                                              otherButtonTitles:@"OK", nil] show];
                                                                            
                                                                        });
-                                                        // return nil;
+                                                        
                                                     }]];
     
     
@@ -261,7 +247,6 @@ imgurServerManager*x = [[imgurServerManager alloc]init];
             image.albumName = us.albumName;
             UIImage * imageFromURL = [self getImageFromURL:image.link];
             [self.allSavedImages setObject:imageFromURL forKey:image.link];
-            //[self saveImagesToDisc:image.link];
             [tmp addObject:image];
         }
     }
@@ -277,16 +262,6 @@ imgurServerManager*x = [[imgurServerManager alloc]init];
     
     return result;
 }
-
-//- (void)saveImageWithData:(NSData *)imageData withName:(NSString *)name {
-//    NSData *data = imageData;
-//    //DLog(@"*** SIZE *** : Saving file of size %lu", (unsigned long)[data length]);
-//    NSFileManager *fileManager = [NSFileManager defaultManager];
-//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-//    NSString *documentsDirectory = [paths objectAtIndex:0];
-//    NSString *fullPath = [documentsDirectory stringByAppendingPathComponent:name];
-//    [fileManager createFileAtPath:fullPath contents:data attributes:nil];
-//}
 
 -(void) saveImage:(UIImage *)image withFileName:(NSString *)imageName ofType:(NSString *)extension inDirectory:(NSString *)directoryPath {
     if ([[extension lowercaseString] isEqualToString:@"png"])
@@ -310,45 +285,22 @@ imgurServerManager*x = [[imgurServerManager alloc]init];
     
     NSString * documentsDirectoryPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     
-    //Get Image From URL
     UIImage * imageFromURL = [self getImageFromURL:url];
-    //NSData *data = UIImagePNGRepresentation(myImageView.image);
-    //or
     NSData *data = UIImageJPEGRepresentation(imageFromURL, 0.8);    //Save Image to Directory
-   //[self saveImage:imageFromURL withFileName:url ofType:@"jpg" inDirectory:documentsDirectoryPath];
-    //[self saveImageWithData:data
-    //               withName:url];
     
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
     NSURL *urlLink = [NSURL URLWithString:url];
-    //NSURLSessionTask *task = [[NSURLSession sharedSession] dataTaskWithURL:urlLink
-    //                                                     completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
-    //                          {
-    //                              if (!error)
-    //                              {
-                                      static int finishedLoads = 0;
-                                      finishedLoads ++;
-                                      UIImage *image;
-                                      if ([urlRequest.URL.pathExtension isEqualToString:@"jpg"] )
-                                      {
-                                          NSString *libraryPath = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-                                          image = [UIImage imageWithData:data];
-                                          [UIImageJPEGRepresentation(image, 0) writeToFile:[libraryPath stringByAppendingPathComponent:[[url pathComponents] lastObject]]
-                                                                                 atomically:YES];
-                                      }
-    //                              }
-    //                              else
-    //                              {
-                                      //[self.imageCache removeObjectForKey:[urlRequest.URL absoluteString]];
-                                      //startedLoads--;
-                                      
-     //                                 NSLog(@"Image error:");
-    //                              }
-                                  
-    //                          }];
     
-    
-    
+    static int finishedLoads = 0;
+    finishedLoads ++;
+    UIImage *image;
+    if ([urlRequest.URL.pathExtension isEqualToString:@"jpg"] )
+    {
+        NSString *libraryPath = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+        image = [UIImage imageWithData:data];
+        [UIImageJPEGRepresentation(image, 0) writeToFile:[libraryPath stringByAppendingPathComponent:[[url pathComponents] lastObject]]
+                                              atomically:YES];
+    }
     
 }
 
@@ -371,61 +323,59 @@ imgurServerManager*x = [[imgurServerManager alloc]init];
 
 - (IBAction)postActionSelected:(UIButton *)sender
 {
-    //[self.spinner startAnimating];
+    
     [GiFHUD show];
-  NSString *title = [[self titleTextField] text];
-  NSString *description = [[self commentTextField] text];
+    NSString *title = [[self titleTextField] text];
+    NSString *description = [[self commentTextField] text];
     self.postButton.enabled = NO;
     NSData *imageData = UIImageJPEGRepresentation(self.currentImage.image, 0.5);
-       [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            imgurServerManager*x = [[imgurServerManager alloc]init];
-            NSLog(@"token in Post view Controler is: %@",self.token.token);
-             [x uploadPhoto:imageData
-                     title:title
-               description:description
-              access_token: self.token.token
-                     topic: self.topic
-           completionBlock:^(NSString *result)
-            {
-               dispatch_async(dispatch_get_main_queue(), ^{
-                   [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-                   UIAlertView *av = [[UIAlertView alloc]
-                                       initWithTitle:@"Sucessfully posted to photos & wall!"
-                                       message:@"Check out your Imgur Gallery to see!"
-                                       delegate:nil
-                                       cancelButtonTitle:@"OK"
-                                       otherButtonTitles:nil];
-                   [av show];
-                  self.sharedButton.enabled = YES;
-                    self.postButton.enabled = YES;
-                   self.deleteImageSelected.enabled = YES;
-                  NSLog(@"%@",result);
-                   //[self.spinner stopAnimating];
-                   [GiFHUD dismiss];
-               });
-           }
-               failureBlock:^(NSURLResponse *response, NSError *error, NSInteger status)
-            {
-               dispatch_async(dispatch_get_main_queue(), ^{
-                   [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-                   
-                   [[[UIAlertView alloc] initWithTitle:@"Upload Failed"
-                                               message:[NSString stringWithFormat:@"%@ (Status code %ld)", [error localizedDescription], (long)status]
-                                              delegate:nil
-                                     cancelButtonTitle:nil
-                                     otherButtonTitles:@"OK", nil] show];
-                   NSLog(@"%@", [error localizedDescription]);
-                   NSLog(@"Err details: %@", [error description]);
-                   self.postButton.enabled = YES;
-                   
-                   //[self.spinner stopAnimating];
-                   [GiFHUD dismiss];
-               });
-           }];
-            
-        });
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        imgurServerManager*x = [[imgurServerManager alloc]init];
+        NSLog(@"token in Post view Controler is: %@",self.token.token);
+        [x uploadPhoto:imageData
+                 title:title
+           description:description
+          access_token: self.token.token
+                 topic: self.topic
+       completionBlock:^(NSString *result)
+         {
+             dispatch_async(dispatch_get_main_queue(), ^{
+                 [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+                 UIAlertView *av = [[UIAlertView alloc]
+                                    initWithTitle:@"Sucessfully posted to photos & wall!"
+                                    message:@"Check out your Imgur Gallery to see!"
+                                    delegate:nil
+                                    cancelButtonTitle:@"OK"
+                                    otherButtonTitles:nil];
+                 [av show];
+                 self.sharedButton.enabled = YES;
+                 self.postButton.enabled = YES;
+                 self.deleteImageSelected.enabled = YES;
+                 NSLog(@"%@",result);
+                 [GiFHUD dismiss];
+             });
+         }
+          failureBlock:^(NSURLResponse *response, NSError *error, NSInteger status)
+         {
+             dispatch_async(dispatch_get_main_queue(), ^{
+                 [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+                 
+                 [[[UIAlertView alloc] initWithTitle:@"Upload Failed"
+                                             message:[NSString stringWithFormat:@"%@ (Status code %ld)", [error localizedDescription], (long)status]
+                                            delegate:nil
+                                   cancelButtonTitle:nil
+                                   otherButtonTitles:@"OK", nil] show];
+                 NSLog(@"%@", [error localizedDescription]);
+                 NSLog(@"Err details: %@", [error description]);
+                 self.postButton.enabled = YES;
+                 
+                 [GiFHUD dismiss];
+             });
+         }];
+        
+    });
     
 }
 
@@ -446,13 +396,13 @@ imgurServerManager*x = [[imgurServerManager alloc]init];
         ipvc.allImagesInDictionary = self.allSavedImages;
         ipvc.imagesList =  self.allUserImages;
     }
-
+    
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:YES];
-//[self.spinner stopAnimating];
+    
     [GiFHUD dismiss];
 }
 @end
