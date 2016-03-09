@@ -192,7 +192,13 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
             [defaults setObject:self.token.accountID forKey:@"account_id"];
             [defaults setObject:self.token.expirationDate forKey:@"expires_in"];
             [defaults setObject:self.token.dayOfLogin forKey:@"dayOfLogin"];
-            
+                             UIAlertView *av = [[UIAlertView alloc]
+                                                initWithTitle:@"Sucessfully Logged in!"
+                                                message:@"Press BACK button!!!"
+                                                delegate:nil
+                                                cancelButtonTitle:@"OK"
+                                                otherButtonTitles:nil];
+                             [av show];
             NSLog(@"Updated User is:%@", self.token.userName);
         [[NSNotificationCenter defaultCenter] postNotificationName:LoginNotification
                                                             object:nil

@@ -77,13 +77,13 @@
              {
                  dispatch_async(dispatch_get_main_queue(), ^{
                      [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-                     UIAlertView *av = [[UIAlertView alloc]
-                                        initWithTitle:@"Sucessfully received access_token!"
-                                        message:@"Go ahead!!!"
-                                        delegate:nil
-                                        cancelButtonTitle:@"OK"
-                                        otherButtonTitles:nil];
-                     [av show];
+//                     UIAlertView *av = [[UIAlertView alloc]
+//                                        initWithTitle:@"Sucessfully received access_token!"
+//                                        message:@"Go ahead!!!"
+//                                        delegate:nil
+//                                        cancelButtonTitle:@"OK"
+//                                        otherButtonTitles:nil];
+//                     [av show];
                      //self.sharedButton.enabled = YES;
                      NSLog(@"%@",result);
                  self.LogInButton.enabled = NO;
@@ -184,7 +184,11 @@
 {
     //self.loginVC = [[ImgurLoginViewController alloc]init];
     //[self.navigationController pushViewController:self.loginVC animated:YES];
- 
+    NSHTTPCookieStorage* cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    for (NSHTTPCookie* cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies])
+    {
+        [cookies deleteCookie:cookie];
+    }
      [self performSegueWithIdentifier:@"Pop" sender:self];
     self.LogInButton.enabled = NO;
    //[self reloadPage];
