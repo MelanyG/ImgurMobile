@@ -36,17 +36,10 @@
 {
     [super viewDidAppear:YES];
     self.images = [[NSMutableDictionary alloc] init];
-    
-    /*imgurPost *post = [self.socialVC.album.posts firstObject];
-    
-    [self.images setObject:self.socialVC.image forKey:[[post.imageURL pathComponents] lastObject]];*/
 
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+
 
 #pragma mark - Table view data source
 
@@ -66,12 +59,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ImageCustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([ImageCustomTableViewCell class]) forIndexPath:indexPath];
-   /* if (indexPath.row == 0)
-    {
-        cell.cellSocialImage.frame = CGRectMake(0, 0, self.socialVC.image.size.width, self.socialVC.image.size.height);
-        [cell.cellSocialImage setImage:self.socialVC.image];
-    }
-    else*/
+   
     if (self.socialVC.album)
     {
         imgurPost* post = [self.socialVC.album.posts objectAtIndex:indexPath.row];
@@ -86,9 +74,7 @@
                 
                 NSData * imageData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString:post.imageURL]];
                 UIImage * image;
-                static int i = 0;
-                i++;
-                NSLog(@"%@%d%@", @"oh gawd!!!! fuck we finished lowading ", i, @" images !!!!11111111adinadin");
+                
                 if ([[post.imageURL pathExtension] isEqualToString:@"gif"] )
                 {
                     image = [UIImage animatedImageWithAnimatedGIFData:imageData];
@@ -140,12 +126,12 @@
     NSArray *indexes = [self.tableView indexPathsForVisibleRows];
     for (NSIndexPath *index in indexes) {
         if (index.row == row) {
-                        NSLog(@"YES");
+            
             return YES;
 
         }
     }
-                NSLog(@"LOH");
+    
     return NO;
 }
 
@@ -197,7 +183,6 @@
 {
     
     if (self.socialVC.album) {
-        //self.socialVC.imageToEdit = [self.imagesToSend objectAtIndex:indexPath.row];
         NSString* imageURLToSend = [[self.socialVC.album.posts objectAtIndex:indexPath.row] imageURL];
         UIImage* imageToSend = [self.images objectForKey:[[imageURLToSend pathComponents] lastObject]];
         self.socialVC.imageToEdit = imageToSend;

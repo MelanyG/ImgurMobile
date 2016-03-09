@@ -23,17 +23,29 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"editSegue"])
-    {
-        self.editVC = (EditViewController*)segue.destinationViewController;
-        self.editVC.image = self.socialVC.imageToEdit;
+    
+    if ([segue.identifier isEqualToString:@"editSegue"]){
+        
+            self.editVC = (EditViewController*)segue.destinationViewController;
+            self.editVC.image = self.socialVC.imageToEdit;
+        
     }
+    
     else if ([segue.identifier isEqualToString:@"commentsSegue"])
     {
         UINavigationController* navVC = (UINavigationController*)segue.destinationViewController;
         self.commentsVC = (GeneralCommentsTableViewController*)[navVC topViewController];
         self.commentsVC.socialVC = self.socialVC;
     }
+    
+    
+}
+- (void)showAlertView
+{
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"NOT SELECTED" message:@"You didn't select the image, select image to go to Edit Mode" preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){}]];
     
 }
 -(void) viewDidLoad{
